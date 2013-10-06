@@ -132,7 +132,7 @@ public class Update implements Service {
         }
 
         // launching the service on the fly
-        context.getServlet().getEngine().loadConfigDB(dbms, Integer.valueOf(serviceId));
+        context.getServlet().getEngine(context.getNode()).loadConfigDB(dbms, Integer.valueOf(serviceId));
 
         return new Element(Jeeves.Elem.RESPONSE);
     }

@@ -1454,7 +1454,7 @@ public class SchemaManager {
             return new ArrayList<Element>();
 		} else {
 			Element root = Xml.loadFile(xmlConvFile);
-			ConfigurationOverrides.DEFAULT.updateWithOverrides(xmlConvFile, null, basePath, root);
+			ConfigurationOverrides.DEFAULT.updateWithOverrides(xmlConvFile, null, basePath, root, null);
 			
 			if (root.getName() != "conversions") throw new IllegalArgumentException("Schema conversions file "+xmlConvFile+" is invalid, no <conversions> root element");
 			@SuppressWarnings("unchecked")

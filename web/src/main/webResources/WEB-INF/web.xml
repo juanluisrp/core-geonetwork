@@ -184,7 +184,10 @@
 			<param-name>jeeves.configuration.overrides.file</param-name>
 			<param-value>${system.specific.overrides},${web.xml.main.config.overrides}${web.xml.widget.config.overrides}</param-value>
 		</init-param>
-        
+        <init-param>
+             <param-name>nodes</param-name>
+             <param-value>node1,node2</param-value>
+        </init-param>
         <!--
             Specified what geonetwork data directory to use.
             <init-param>
@@ -313,7 +316,15 @@
         <servlet-name>gn-servlet</servlet-name>
         <url-pattern>/srv/*</url-pattern>
     </servlet-mapping>
-
+    <servlet-mapping>
+        <servlet-name>gn-servlet</servlet-name>
+        <url-pattern>/node1/srv/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>gn-servlet</servlet-name>
+        <url-pattern>/node2/srv/*</url-pattern>
+    </servlet-mapping>
+    
     <!-- Web map context servlet -->
     <servlet>
         <servlet-name>wmc</servlet-name>

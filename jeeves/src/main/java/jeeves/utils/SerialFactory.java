@@ -83,7 +83,9 @@ public class SerialFactory
 		}
 
 		int newSerial = intSerial.intValue() +1;
-		htSerials.put(table, Integer.valueOf(newSerial));
+//		FIXME MULTINODE: Cannot use a htSerials cache built on a single dbms
+//		Options: Create
+//		htSerials.put(table, Integer.valueOf(newSerial));
 
 		return newSerial;
 	}

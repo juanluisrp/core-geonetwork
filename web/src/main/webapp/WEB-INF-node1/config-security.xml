@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+    http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context-3.0.xsd
+    http://www.springframework.org/schema/security
+    http://www.springframework.org/schema/security/spring-security-3.1.xsd"
+    xmlns:sec="http://www.springframework.org/schema/security"
+    xmlns:ctx="http://www.springframework.org/schema/context"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns="http://www.springframework.org/schema/beans">
+
+    <bean id="node1FilterChain"
+        class="org.springframework.security.web.DefaultSecurityFilterChain">
+        <constructor-arg>
+            <bean class="org.springframework.security.web.util.AntPathRequestMatcher">
+                <constructor-arg value="/node1/**"/>
+            </bean>
+        </constructor-arg>
+        <constructor-arg>
+            <ref bean="node1filter"/>
+        </constructor-arg>
+    </bean>
+    <bean id="node1filter" class="java.util.ArrayList">
+        <constructor-arg>
+            <list>
+                <ref bean="securityContextPersistenceFilter"/>
+                <ref bean="node1logoutFilter"/>
+                <ref bean="preAuthenticationFilter"/>
+                <ref bean="basicAuthenticationFilter"/>
+                <ref bean="node1formLoginFilter"/>
+                <ref bean="requestCacheFilter"/>
+                <ref bean="anonymousFilter"/>
+                <ref bean="sessionMgmtFilter"/>
+                <ref bean="node1exceptionTranslationFilter"/>
+                <ref bean="filterSecurityInterceptor"/>
+            </list>
+        </constructor-arg>
+    </bean>
+    
+   <!-- <bean id="node1sessionMgmtFilter" class="org.springframework.security.web.session.SessionManagementFilter" >
+        <constructor-arg ref="node1securityContextRepository" />
+    </bean>-->
+    <!--
+    <bean id="node1securityContextRepository" class='org.springframework.security.web.context.HttpSessionSecurityContextRepository'>
+        <property name="allowSessionCreation" value="true" />
+    </bean>-->
+    
+    <bean id="node1formLoginFilter"
+        class="org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter">
+        <property name="postOnly" value="true"/>
+        <property name="usernameParameter" value="username"/>
+        <property name="passwordParameter" value="password"/>
+        <property name="authenticationManager" ref="node1authenticationManager"/>
+        <property name="filterProcessesUrl" value="/node1/j_spring_security_check"/>
+        <property name="authenticationFailureHandler">
+            <bean
+                class="org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler">
+                <constructor-arg value="/login.jsp?failure=true&amp;site=node1"/>
+            </bean>
+        </property>
+        <property name="authenticationSuccessHandler">
+            <bean
+                class="org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler">
+                <property name="defaultTargetUrl" value="/"/>
+                <property name="targetUrlParameter" value="redirectUrl"/>
+            </bean>
+        </property>
+        <property name="sessionAuthenticationStrategy">
+            <bean
+                class="org.springframework.security.web.authentication.session.SessionFixationProtectionStrategy"
+            />
+        </property>
+    </bean>
+    <bean id="node1authenticationManager"
+        class="org.springframework.security.authentication.ProviderManager">
+        <property name="providers">
+            <list>
+                <!-- Check if the preAuthenticationFilter has already authenticated user -->
+                <ref bean="preFilterAuthenticationProvider"/>
+                <ref bean="node1geonetworkAuthenticationProvider"/>
+            </list>
+        </property>
+    </bean>
+    <bean class="org.fao.geonet.kernel.security.GeonetworkAuthenticationProvider"
+        id="node1geonetworkAuthenticationProvider">
+        <property name="node" value="node1"/>
+    </bean>
+
+    <bean id="node1logoutFilter"
+        class="org.springframework.security.web.authentication.logout.LogoutFilter">
+        <constructor-arg ref="logoutSuccessHandler"/>
+        <constructor-arg>
+            <list>
+                <bean
+                    class="org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler"/>
+                <bean
+                    class="org.springframework.security.web.authentication.logout.CookieClearingLogoutHandler">
+                    <constructor-arg>
+                        <array>
+                            <value>JSESSIONID</value>
+                        </array>
+                    </constructor-arg>
+                </bean>
+            </list>
+        </constructor-arg>
+        <property name="filterProcessesUrl" value="/node1/j_spring_security_logout"/>
+    </bean>
+
+    <bean id="node1exceptionTranslationFilter"
+        class="org.springframework.security.web.access.ExceptionTranslationFilter">
+        <property name="authenticationEntryPoint" ref="node1authenticationEntryPoint"/>
+        <property name="accessDeniedHandler" ref="accessDeniedHandler"/>
+    </bean>
+    <bean id="node1authenticationEntryPoint"
+        class="org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint">
+        <property name="loginFormUrl" value="/login.jsp?site=node1"/>
+    </bean>
+</beans>

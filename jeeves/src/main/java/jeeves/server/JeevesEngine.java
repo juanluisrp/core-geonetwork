@@ -99,13 +99,14 @@ public class JeevesEngine
 	private ProviderManager providerMan = new ProviderManager();
 	private ScheduleManager scheduleMan = new ScheduleManager();
 	private SerialFactory   serialFact  = new SerialFactory();
-
+	private ResourceManager resourceMan;
+	
 	private Logger appHandLogger = Log.createLogger(Log.APPHAND);
 	private List<Element> appHandList = new ArrayList<Element>();
 	private Vector<ApplicationHandler> vAppHandlers = new Vector<ApplicationHandler>();
 	private Vector<Activator> vActivators = new Vector<Activator>();
 	private XmlCacheManager xmlCacheManager = new XmlCacheManager();
-    private MonitorManager monitorManager;
+    private MonitorManager monitorManager = null;
     
     private List<Element> dbservices = new ArrayList<Element>();
     
@@ -118,9 +119,11 @@ public class JeevesEngine
 	//---------------------------------------------------------------------------
 
 	/** Inits the engine, loading all needed data
+	 * @param node TODO
 	  */
 
-	public void init(String appPath, String configPath, String baseUrl, JeevesServlet servlet) throws ServletException
+	public void init(String appPath, String configPath, String baseUrl, 
+	        JeevesServlet servlet, String node) throws ServletException
 	{
 		try
 		{
@@ -132,9 +135,9 @@ public class JeevesEngine
             ServletContext servletContext = null;
             if(servlet != null) servletContext= servlet.getServletContext();
 
-            ConfigurationOverrides.DEFAULT.updateLoggingAsAccordingToOverrides(servletContext, appPath);
+            ConfigurationOverrides.DEFAULT.updateLoggingAsAccordingToOverrides(servletContext, appPath, node);
 
-            monitorManager = new MonitorManager(servletContext, baseUrl);
+            this.monitorManager = new MonitorManager(servletContext, baseUrl);
 			this.appPath = appPath;
 
 			long start   = System.currentTimeMillis();
@@ -163,6 +166,7 @@ public class JeevesEngine
 
 			info("Path    : "+ appPath);
 			info("BaseURL : "+ baseUrl);
+            info("Node    : "+ node);
 
 			// obtain application context so we can configure the serviceManager with it but we will configure it a bit later
             JeevesApplicationContext jeevesAppContext = (JeevesApplicationContext) WebApplicationContextUtils.getWebApplicationContext(servletContext);
@@ -175,7 +179,8 @@ public class JeevesEngine
 			serviceMan.setSerialFactory(serialFact);
 			serviceMan.setBaseUrl(baseUrl);
 			serviceMan.setServlet(servlet);
-
+			serviceMan.setNode(node);
+			
 			scheduleMan.setAppPath(appPath);
 			scheduleMan.setProviderMan(providerMan);
 			scheduleMan.setMonitorManager(monitorManager);
@@ -183,23 +188,32 @@ public class JeevesEngine
 			scheduleMan.setSerialFactory(serialFact);
 			scheduleMan.setBaseUrl(baseUrl);
 			
-			loadConfigFile(servletContext, configPath, Jeeves.CONFIG_FILE, serviceMan);
+			loadConfigFile(servletContext, configPath, Jeeves.CONFIG_FILE, serviceMan, node);
 
 	        loadConfigDB(dbms, -1);
 	        
             info("Initializing profiles...");
             ProfileManager profileManager = serviceMan.loadProfiles(servletContext, profilesFile);
 
-            // Add ResourceManager as a bean to the spring application context so that GeonetworkAuthentication can access it
-            jeevesAppContext.getBeanFactory().registerSingleton("resourceManager", new ResourceManager(this.monitorManager, this.providerMan));
-            jeevesAppContext.getBeanFactory().registerSingleton("profileManager", profileManager);
-            jeevesAppContext.getBeanFactory().registerSingleton("serialFactory", serialFact);
-
+            // Add ResourceManager as a bean to the spring application context so that 
+            // GeonetworkAuthentication can access it.
+            this.resourceMan = new ResourceManager(this.monitorManager, this.providerMan);
+            if (!jeevesAppContext.getBeanFactory().containsSingleton("resourceManager")) {
+                jeevesAppContext.getBeanFactory().registerSingleton("resourceManager", this.resourceMan);
+            }
+            
+            if (!jeevesAppContext.getBeanFactory().containsSingleton("profileManager")) {
+                jeevesAppContext.getBeanFactory().registerSingleton("profileManager", profileManager);
+            }
+            if (!jeevesAppContext.getBeanFactory().containsSingleton("serialFactory")) {
+                jeevesAppContext.getBeanFactory().registerSingleton("serialFactory", serialFact);
+            }
+            
 			//--- handlers must be started here because they may need the context
 			//--- with the ProfileManager already loaded
 
 			for(int i=0; i<appHandList.size(); i++)
-				initAppHandler((Element) appHandList.get(i), servlet, jeevesAppContext);
+				initAppHandler((Element) appHandList.get(i), servlet, jeevesAppContext, node);
 
 			info("Starting schedule manager...");
 			scheduleMan.start();
@@ -288,7 +302,7 @@ public class JeevesEngine
 	//---------------------------------------------------------------------------
 
 	@SuppressWarnings("unchecked")
-	private void loadConfigFile(ServletContext servletContext, String path, String file, ServiceManager serviceMan) throws Exception
+	private void loadConfigFile(ServletContext servletContext, String path, String file, ServiceManager serviceMan, String node) throws Exception
 	{
 		file = path + file;
 
@@ -296,7 +310,7 @@ public class JeevesEngine
 
 		Element configRoot = Xml.loadFile(file);
 
-        ConfigurationOverrides.DEFAULT.updateWithOverrides(file, servletContext, appPath, configRoot);
+        ConfigurationOverrides.DEFAULT.updateWithOverrides(file, servletContext, appPath, configRoot, node);
 
 		Element elGeneral = configRoot.getChild(ConfigFile.Child.GENERAL);
 		Element elDefault = configRoot.getChild(ConfigFile.Child.DEFAULT);
@@ -364,7 +378,7 @@ public class JeevesEngine
 		{
 			Element include = includes.get(i);
 
-			loadConfigFile(servletContext, path, include.getText(), serviceMan);
+			loadConfigFile(servletContext, path, include.getText(), serviceMan, node);
 		}
 
 	}
@@ -394,9 +408,13 @@ public class JeevesEngine
             error("   Message   : " +e.getMessage());
             error("   Stack     : " +Util.getStackTrace(e));
 	    }
-
+		
+		String webinfDir = (null == serviceMan.getNode() ? 
+		        "WEB-INF" + File.separator : 
+		        "WEB-INF-" + serviceMan.getNode() + File.separator);
+		
         if (!new File(uploadDir).isAbsolute())
-			uploadDir = appPath + uploadDir;
+			uploadDir = appPath + webinfDir + uploadDir;
 
         if (!uploadDir.endsWith("/"))
             uploadDir += "/";
@@ -553,7 +571,7 @@ public class JeevesEngine
 	//---
 	//---------------------------------------------------------------------------
 
-	private void initAppHandler(Element handler, JeevesServlet servlet, JeevesApplicationContext jeevesApplicationContext) throws Exception
+	private void initAppHandler(Element handler, JeevesServlet servlet, JeevesApplicationContext jeevesApplicationContext, String node) throws Exception
 	{
 		if (handler == null)
 			info("Handler not found");
@@ -806,6 +824,14 @@ public class JeevesEngine
 		return serviceMan;
 	}
 
+    public ResourceManager getResourceMan() {
+        return resourceMan;
+    }
+    
+    public void setResourceMan(ResourceManager resourceMan) {
+        this.resourceMan = resourceMan;
+    }
+    
 	public ProfileManager getProfileManager() { return serviceMan.getProfileManager(); }
 	
     /**

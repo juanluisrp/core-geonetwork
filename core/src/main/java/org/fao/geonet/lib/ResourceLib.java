@@ -44,7 +44,7 @@ import java.util.Set;
 public class ResourceLib {
 	/**
 	 * Get GeoNetwork data directory defined on startup see
-	 * {@link Geonetwork#start(org.jdom.Element, ServiceContext)}.
+	 * {@link Geonetwork#startSingleNode(org.jdom.Element, ServiceContext)}.
 	 * 
 	 * @param context
 	 * @return

@@ -82,6 +82,7 @@ public class ServiceContext extends BasicContext
 	private Map<String, String> headers;
 
 	private String language;
+	private String node;
 	private String service;
 	private String ipAddress;
 	private String uploadDir;
@@ -239,13 +240,15 @@ public class ServiceContext extends BasicContext
 			}
 		};
 		
+		context.setNode(node);
+		
 		UserSession session = userSession;
 		if(userSession == null) {
 			session = new UserSession();
 		} 
 		
 		try {
-		servlet.getEngine().getServiceManager().dispatch(request,session,context);
+		    servlet.getEngine(node).getServiceManager().dispatch(request,session,context);
 		} catch (Exception e) {
 			Log.error(Log.XLINK_PROCESSOR,"Failed to parse result xml"+ request.getService());
 			throw new ServiceExecutionFailedException(request.getService(),e);
@@ -278,6 +281,14 @@ public class ServiceContext extends BasicContext
 
     public Integer getStatusCode() {
         return statusCode;
+    }
+
+    public String getNode() {
+        return node;
+    }
+
+    public void setNode(String node) {
+        this.node = node;
     }
 
 

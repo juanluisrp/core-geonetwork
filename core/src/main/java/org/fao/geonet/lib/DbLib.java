@@ -95,16 +95,17 @@ public class DbLib {
 	/**
 	 * Remove all objects in the database. Read the SQL file and check all
 	 * CREATE TABLE statements to collect the list of table to remove.
-	 * 
 	 * @param dbms
+	 * @param node TODO
+	 * 
 	 * @throws FileNotFoundException
 	 * @throws IOException
 	 */
-	public void removeObjects(ServletContext servletContext, Dbms dbms, String appPath, String filePath, String filePrefix)
+	public void removeObjects(ServletContext servletContext, Dbms dbms, String appPath, String filePath, String filePrefix, String node)
 			throws FileNotFoundException, IOException {
         if(Log.isDebugEnabled(Geonet.DB))
             Log.debug(Geonet.DB, "Removing database objects");
-		List<String> schema = loadSchemaFile(servletContext, dbms, appPath, filePath, filePrefix);
+		List<String> schema = loadSchemaFile(servletContext, dbms, appPath, filePath, filePrefix, node);
 
 		// --- step 1 : collect objects to remove
 		ArrayList<ObjectInfo> objects = new ArrayList<ObjectInfo>();
@@ -152,42 +153,43 @@ public class DbLib {
 	/**
 	 * Create database schema.
      * @param servletContext
-     *
-     * @param dbms
+	 * @param dbms
+	 * @param node TODO
      */
-	public void createSchema(ServletContext servletContext, Dbms dbms, String appPath, String filePath, String filePrefix) throws Exception {
+	public void createSchema(ServletContext servletContext, Dbms dbms, String appPath, String filePath, String filePrefix, String node) throws Exception {
         if(Log.isDebugEnabled(Geonet.DB))
             Log.debug(Geonet.DB, "Creating database schema");
 
-		List<String> schema = loadSchemaFile(servletContext, dbms, appPath, filePath, filePrefix);
-		runSQL(dbms, schema);
+		List<String> schema = loadSchemaFile(servletContext, dbms, appPath, filePath, filePrefix, node);
+		runSQL(dbms, schema, null);
 	}
 
-	public void insertData(ServletContext servletContext, Dbms dbms, String appPath, String filePath, String filePrefix) throws Exception {
+	public void insertData(ServletContext servletContext, Dbms dbms, String appPath, String filePath, String filePrefix, String node) throws Exception {
         if(Log.isDebugEnabled(Geonet.DB))
             Log.debug(Geonet.DB, "Filling database tables");
 
-		List<String> data = loadSqlDataFile(servletContext, dbms, appPath, filePath, filePrefix);
-		runSQL(dbms, data);
+		List<String> data = loadSqlDataFile(servletContext, dbms, appPath, filePath, filePrefix, node);
+		runSQL(dbms, data, null);
 	}
 
 	/**
 	 * SQL File MUST be in UTF-8.
-	 * 
 	 * @param dbms
 	 * @param sqlFile
+	 * @param node TODO
+	 * 
 	 * @throws Exception
 	 */
-	public void runSQL(ServletContext servletContext, Dbms dbms, File sqlFile) throws Exception {
-		runSQL(servletContext, dbms, sqlFile, true);
+	public void runSQL(ServletContext servletContext, Dbms dbms, File sqlFile, String node) throws Exception {
+		runSQL(servletContext, dbms, sqlFile, true, null);
 	}
 
-	public void runSQL(ServletContext servletContext, Dbms dbms, File sqlFile, boolean failOnError) throws Exception {
-		List<String> data = Lib.text.load(servletContext, sqlFile.getCanonicalPath(), Jeeves.ENCODING);
-		runSQL(dbms, data, failOnError);
+	public void runSQL(ServletContext servletContext, Dbms dbms, File sqlFile, boolean failOnError, String node) throws Exception {
+		List<String> data = Lib.text.load(servletContext, sqlFile.getCanonicalPath(), Jeeves.ENCODING, null);
+		runSQL(dbms, data, failOnError, null);
 	}
 	
-	private void runSQL(Dbms dbms, List<String> data, boolean failOnError) throws Exception {
+	private void runSQL(Dbms dbms, List<String> data, boolean failOnError, String node) throws Exception {
 		StringBuffer sb = new StringBuffer();
 
 		for (String row : data) {
@@ -222,8 +224,8 @@ public class DbLib {
 		}
 		dbms.commit();		
 	}
-	private void runSQL(Dbms dbms, List<String> data) throws Exception {
-		runSQL(dbms, data, true);
+	private void runSQL(Dbms dbms, List<String> data, String node) throws Exception {
+		runSQL(dbms, data, true, node);
 	}
 
 	/**
@@ -252,11 +254,12 @@ public class DbLib {
 	/**
 	 * 
 	 * @param dbms
+	 * @param node TODO
 	 * @return
 	 * @throws FileNotFoundException
 	 * @throws IOException
 	 */
-	private List<String> loadSchemaFile(ServletContext servletContext, Dbms dbms, String appPath, String filePath, String filePrefix) // FIXME :
+	private List<String> loadSchemaFile(ServletContext servletContext, Dbms dbms, String appPath, String filePath, String filePrefix, String node) // FIXME :
 																	// use
 																	// resource
 																	// dir
@@ -271,7 +274,7 @@ public class DbLib {
             Log.debug(Geonet.DB, "  Loading script:" + file);
 
 		// --- load the dbms schema
-		return Lib.text.load(servletContext, appPath, file);
+		return Lib.text.load(servletContext, appPath, file, node);
 	}
 
 	/**
@@ -299,13 +302,14 @@ public class DbLib {
 		return "";
 	}
 	
-	private List<String> loadSqlDataFile(ServletContext servletContext, Dbms dbms, String appPath, String filePath, String filePrefix)
+	private List<String> loadSqlDataFile(ServletContext servletContext, Dbms dbms, String appPath, 
+	        String filePath, String filePrefix, String node)
 			throws FileNotFoundException, IOException {
 		// --- find out which dbms data file to load
 		String file = checkFilePath(filePath, filePrefix, DatabaseType.lookup(dbms).toString());
 		
 		// --- load the sql data
-		return Lib.text.load(servletContext, appPath, file, Jeeves.ENCODING);
+		return Lib.text.load(servletContext, appPath, file, Jeeves.ENCODING, node);
 	}
 
 	private String getObjectName(String createStatem) {

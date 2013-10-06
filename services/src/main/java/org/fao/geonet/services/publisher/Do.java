@@ -221,7 +221,7 @@ public class Do implements Service {
             servletContext = context.getServlet().getServletContext();
         }
 		ConfigurationOverrides.DEFAULT.updateWithOverrides(geoserverConfigFile, 
-		        servletContext, context.getAppPath(), geoserverConfig);
+		        servletContext, context.getAppPath(), geoserverConfig, null);
 		
 		if (geoserverConfig == null) {
 			Log.error(MODULE, "Failed to load geoserver configuration file "

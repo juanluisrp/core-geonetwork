@@ -51,17 +51,17 @@ public class TextLib
 	//---
 	//---------------------------------------------------------------------------
 
-	public List<String> load(ServletContext servletContext, String appPath, String file) throws FileNotFoundException, IOException
+	public List<String> load(ServletContext servletContext, String appPath, String file, String node) throws FileNotFoundException, IOException
 	{
-		return load(servletContext, appPath, file, "ISO-8859-1");
+		return load(servletContext, appPath, file, "ISO-8859-1", node);
 	}
 
-	public List<String> load(ServletContext servletContext, String appPath, String file, String encoding) throws FileNotFoundException, IOException
+	public List<String> load(ServletContext servletContext, String appPath, String file, String encoding, String node) throws FileNotFoundException, IOException
 	{
 		FileInputStream is = new FileInputStream(file);
 		BufferedReader  ir = new BufferedReader(new InputStreamReader(is, encoding));
 
-		return ConfigurationOverrides.DEFAULT.loadTextFileAndUpdate(file, servletContext, appPath, ir);
+		return ConfigurationOverrides.DEFAULT.loadTextFileAndUpdate(file, servletContext, appPath, node, ir);
 	}
 	
 	//---------------------------------------------------------------------------

@@ -12,6 +12,10 @@
 
 	<alias name="filterChainProxy" alias="springSecurityFilterChain" />
 
+    <import resource="../WEB-INF-node1/config-security.xml"/>
+    <import resource="../WEB-INF-node2/config-security.xml"/>
+    
+
 	<bean id="filterChainProxy" class="org.springframework.security.web.FilterChainProxy">
 		<constructor-arg>
 			<list>
@@ -31,7 +35,12 @@
 				<sec:filter-chain pattern="/xml/schemas/**" filters="" />
 				<sec:filter-chain pattern="/xsl/harvesting/**" filters="" />
 				<sec:filter-chain pattern="/xsl/ownership/**" filters="" />
-				<ref bean="coreFilterChain"/>
+			    <!--<ref bean="coreFilterChain"/>-->
+			    <ref bean="node1FilterChain"/>
+			    <ref bean="node2FilterChain"/>
+			    
+				
+			    
  				<!-- <sec:filter-chain pattern="/**" filters="securityContextPersistenceFilter,
  				logoutFilter,
  				formLoginFilter,
@@ -45,7 +54,7 @@
 		</constructor-arg>
 	</bean>
 	
-	<bean id="coreFilterChain" class="org.springframework.security.web.DefaultSecurityFilterChain">
+	<!--<bean id="coreFilterChain" class="org.springframework.security.web.DefaultSecurityFilterChain">
 		<constructor-arg>
 			<bean class="org.springframework.security.web.util.AntPathRequestMatcher">
 				<constructor-arg value="/**"/>
@@ -60,8 +69,8 @@
 			<list>
 				<ref bean="securityContextPersistenceFilter" />
 				<ref bean="logoutFilter" />
-				<!-- A filter that check if an external service already authenticated user
-					 (default implementation does nothing but can be overridden) -->
+				<!-\- A filter that check if an external service already authenticated user
+					 (default implementation does nothing but can be overridden) -\->
 				<ref bean="preAuthenticationFilter" />
 				<ref bean="basicAuthenticationFilter" />
 				<ref bean="formLoginFilter" />
@@ -72,7 +81,7 @@
 				<ref bean="filterSecurityInterceptor" />
 			</list>
 		</constructor-arg>
-	</bean>
+	</bean>-->
 	<!-- A filter that check if an external service already authenticated user
 					 (default implementation does nothing but can be overridden) -->
 	<bean id="preAuthenticationFilter" class="org.fao.geonet.kernel.security.PassthroughFilter"/>

@@ -10,11 +10,11 @@
 	</xsl:template>
 
 	<xsl:template mode="script" match="/">
-		<script type="text/javascript" src="../../scripts/ext/adapter/ext/ext-base.js"></script>
-		<script type="text/javascript" src="../../scripts/ext/ext-all.js"></script>
-		<script type="text/javascript" src="../../scripts/openlayers/lib/OpenLayers.js"></script>
-		<script type="text/javascript" src="../../scripts/ext/form/FileUploadField.js"></script>
-		<script type="text/javascript" src="../../scripts/LogoManagerPanel.js"></script>
+		<script type="text/javascript" src="../../../scripts/ext/adapter/ext/ext-base.js"></script>
+	    <script type="text/javascript" src="../../../scripts/ext/ext-all.js"></script>
+	    <script type="text/javascript" src="../../../scripts/openlayers/lib/OpenLayers.js"></script>
+	    <script type="text/javascript" src="../../../scripts/ext/form/FileUploadField.js"></script>
+	    <script type="text/javascript" src="../../../scripts/LogoManagerPanel.js"></script>
 		<script type="text/javascript" language="JavaScript">
 			 Ext.onReady(function(){
 				new GeoNetwork.LogoManagerPanel('logoManager');

@@ -8,7 +8,10 @@
 		function init() {
 			<% 
 			Object language = null;
-
+			String nodeUrl = "";
+			if (request.getParameter("node") != null) {
+			    nodeUrl = nodeUrl + request.getParameter("node") + "/";
+			}
 			String redirectUrl;
 			org.springframework.security.web.savedrequest.SavedRequest savedRequest =     new org.springframework.security.web.savedrequest.HttpSessionRequestCache().getRequest(request, response);
 			if (savedRequest !=null) {
@@ -35,6 +38,7 @@
 					}
 				}
 			%>
+			var nodeUrl = "<%= nodeUrl %>"
 			var userLang = "<%= language %>"
 			if(!userLang) {
 				userLang = (navigator.language) ? navigator.language : navigator.userLanguage;
@@ -78,8 +82,11 @@
 			} else {
 				userLang = "eng";
 			}
-
-		  	window.location="srv/"+userLang+"/login.form"+window.location.search;
+			if (nodeUrl.length > 0) {
+			    window.location=nodeUrl+"srv/"+userLang+"/login.form"+window.location.search;
+			} else {
+			    window.location="srv/"+userLang+"/login.form"+window.location.search;
+			}
 		}
 		</script>
 	</head>

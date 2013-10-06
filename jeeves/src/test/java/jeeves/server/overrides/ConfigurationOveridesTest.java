@@ -65,8 +65,8 @@ public class ConfigurationOveridesTest {
         Element config = Xml.loadFile(classLoader.getResource("test-config.xml"));
         Element config2 = (Element) Xml.loadFile(classLoader.getResource("test-config.xml")).clone();
 
-        ConfigurationOverrides.DEFAULT.updateWithOverrides("config.xml", null, appPath, config);
-        ConfigurationOverrides.DEFAULT.updateWithOverrides("config2.xml", null, appPath, config2);
+        ConfigurationOverrides.DEFAULT.updateWithOverrides("config.xml", null, appPath, config, null);
+        ConfigurationOverrides.DEFAULT.updateWithOverrides("config2.xml", null, appPath, config2, null);
 
         assertLang("fre", config);
         assertLang("ger", config2);
@@ -102,7 +102,7 @@ public class ConfigurationOveridesTest {
     	BufferedReader reader = new BufferedReader(new InputStreamReader(resourceAsStream.openStream(), Jeeves.ENCODING));
     	try {
     	    // note first , is intentional to verify that it will be ignored
-			List<String> lines = new ConfigurationOverrides("/WEB-INF/overrides-config.xml,/WEB-INF/overrides-config-overlay.xml").loadTextFileAndUpdate("test-sql.sql", null, appPath, reader);
+			List<String> lines = new ConfigurationOverrides("/WEB-INF/overrides-config.xml,/WEB-INF/overrides-config-overlay.xml").loadTextFileAndUpdate("test-sql.sql", null, appPath, null, reader);
 			
 			assertEquals("CREATE TABLE NewRelations", lines.get(0).trim());
 			assertEquals("(", lines.get(1).trim());
@@ -176,7 +176,7 @@ public class ConfigurationOveridesTest {
     public void noUpdateConfig() throws JDOMException, IOException {
         Element config = Xml.loadFile(classLoader.getResource("test-config.xml"));
         Element unchanged = (Element) config.clone();
-        ConfigurationOverrides.DEFAULT.updateWithOverrides("config.xml", null, falseAppPath, config);
+        ConfigurationOverrides.DEFAULT.updateWithOverrides("config.xml", null, falseAppPath, config, null);
 
         assertLang("eng",config);
 

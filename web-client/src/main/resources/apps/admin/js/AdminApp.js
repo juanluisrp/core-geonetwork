@@ -375,6 +375,7 @@ GeoNetwork.adminApp = function() {
             catalogue = new GeoNetwork.Catalogue({
                         statusBarId : 'info',
                         hostUrl: '../../',
+                        siteUrl: '',
                         lang: 'en', 
                         mdOverlayedCmpId : 'resultsPanel'
                     });

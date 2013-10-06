@@ -37,6 +37,7 @@ web/src/main/webapp/WEB-INF/data/data/metadata_data
 web/src/main/webapp/WEB-INF/data/data/metadata_subversion
 web/src/main/webapp/WEB-INF/data/data/resources
 web/src/main/webapp/WEB-INF/data/index
+web/src/main/webapp/WEB-INF-*/data
 web-itest/jcs_caching
 datadir/
 web/src/main/webapp/WEB-INF/data/removed/

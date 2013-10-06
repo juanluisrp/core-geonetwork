@@ -92,6 +92,7 @@ public class ServiceManager
 	private SerialFactory   serialFact;
     private String  appPath;
     private String  baseUrl;
+    private String  node;
     private String  uploadDir;
     private int     maxUploadSize;
     private String  defaultLang;
@@ -139,7 +140,7 @@ public class ServiceManager
 
 	public ProfileManager loadProfiles(ServletContext servletContext, String file) throws Exception
 	{
-		profilMan = new ProfileManager(servletContext, appPath, appPath + Jeeves.Path.WEBINF + file);
+		profilMan = new ProfileManager(servletContext, appPath, appPath + Jeeves.Path.WEBINF + file, node);
 		return profilMan;
 	}
 
@@ -147,6 +148,7 @@ public class ServiceManager
 
 	public void registerContext(String name, Object context)
 	{
+	    System.err.println("registerContext " + name + " with " + context);
 		htContexts.put(name, context);
 	}
 	//---------------------------------------------------------------------------
@@ -353,12 +355,14 @@ public class ServiceManager
 		context.setUploadDir(uploadDir);
         context.setMaxUploadSize(maxUploadSize);
 		context.setServlet(servlet);
-
+		context.setNode(node);
+		
 		return context;
 	}
 
 	public void dispatch(ServiceRequest req, UserSession session) {
 		ServiceContext context = new ServiceContext(req.getService(), jeevesApplicationContext, xmlCacheManager, monitorManager, providMan, serialFact, profilMan, htContexts);
+		context.setNode(node);
 		dispatch(req, session, context);
 	}
 
@@ -933,7 +937,14 @@ public class ServiceManager
 		root.addContent(new Element(Jeeves.Elem.BASE_URL)    .setText(baseUrl));
 		root.addContent(new Element(Jeeves.Elem.LOC_URL)     .setText(baseUrl +"/loc/"+ lang));
 		root.addContent(new Element(Jeeves.Elem.BASE_SERVICE).setText(baseUrl +"/"+ Jeeves.Prefix.SERVICE));
-		root.addContent(new Element(Jeeves.Elem.LOC_SERVICE) .setText(baseUrl +"/"+ Jeeves.Prefix.SERVICE +"/"+ lang));
+		if (null == node) {
+		    root.addContent(new Element(Jeeves.Elem.LOC_SERVICE)
+		        .setText(baseUrl +"/"+ Jeeves.Prefix.SERVICE +"/"+ lang));
+		} else {
+		    root.addContent(new Element(Jeeves.Elem.LOC_SERVICE)
+		        .setText(baseUrl +"/"+ node + "/" + Jeeves.Prefix.SERVICE +"/"+ lang));
+		    root.addContent(new Element(Jeeves.Elem.NODE) .setText(node));
+		}
 	}
 
 	//---------------------------------------------------------------------------
@@ -957,6 +968,13 @@ public class ServiceManager
 	private void warning(String message) { Log.warning(Log.SERVICE, message); }
 	static  void error  (String message) { Log.error  (Log.SERVICE, message); }
 	public ProfileManager getProfileManager() { return profilMan; }
+
+    public String getNode() {
+        return node;
+    }
+    public void setNode(String node) {
+        this.node = node;
+    }
 }
 
 //=============================================================================

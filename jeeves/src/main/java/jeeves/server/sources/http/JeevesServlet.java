@@ -25,6 +25,10 @@ package jeeves.server.sources.http;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -50,7 +54,8 @@ public class JeevesServlet extends HttpServlet
 {
     private static final long serialVersionUID = 1L;
 	public static final String USER_SESSION_ATTRIBUTE_KEY = Jeeves.Elem.SESSION;
-	private transient JeevesEngine jeeves = new JeevesEngine();
+	private static transient JeevesEngine jeeves = new JeevesEngine();
+	private static final Map<String, JeevesEngine> jeevesNodeEngineMap = new HashMap<String, JeevesEngine>();
 	private boolean initialized = false;
 
 	//---------------------------------------------------------------------------
@@ -82,12 +87,31 @@ public class JeevesServlet extends HttpServlet
 
         String configPath = getServletConfig().getServletContext().getRealPath("/WEB-INF/config.xml");
         if (configPath == null) {
-            configPath = appPath + "WEB-INF" + File.separator;
+            configPath = appPath + "WEB-INF";
         } else {
-            configPath = new File(configPath).getParent() + File.separator;
+            configPath = new File(configPath).getParent();
         }
 
-        jeeves.init(appPath, configPath, baseUrl, this);
+        // Initialized a jeeves engine for baseUrl and initialize singletons properly
+        jeeves.init(appPath, configPath + File.separator, baseUrl, this, null);
+        
+        // Check for nodes to startup
+        String nodesToStartParameter = getInitParameter("nodes");
+        if (nodesToStartParameter!=null) {
+            List<String> nodes = Arrays.asList(nodesToStartParameter.split("\\s*,\\s*"));
+            
+            for (String node : nodes ){
+              JeevesEngine nodeEngine = new JeevesEngine();
+              Log.info(Log.MULTINODE, "Node: " + node);
+              String nodeConfigPath = configPath + "-" + node;
+              
+              nodeConfigPath = nodeConfigPath + File.separator;
+              Log.debug(Log.MULTINODE, "  configuration path: " + nodeConfigPath);
+                nodeEngine.init(appPath, nodeConfigPath + File.separator, baseUrl, this, node);
+                jeevesNodeEngineMap.put(node, nodeEngine);
+            }
+        }
+        
         initialized = true;
     }
 
@@ -100,6 +124,13 @@ public class JeevesServlet extends HttpServlet
 	public void destroy()
 	{
 		jeeves.destroy();
+		
+		if (!jeevesNodeEngineMap.isEmpty()){
+	        for (JeevesEngine engine : jeevesNodeEngineMap.values()) {
+	            engine.destroy();
+	        }
+	    }
+		
 		super .destroy();
 	}
 
@@ -156,9 +187,25 @@ public class JeevesServlet extends HttpServlet
 //			Log.debug(Log.REQUEST, "With value: "+req.getHeader(theHeader));
 //        }
 //		}
+        // Multinodes, define which engine is running the request
+        JeevesEngine engine = jeeves;
+        if (!jeevesNodeEngineMap.isEmpty()) {
+            for (String key : jeevesNodeEngineMap.keySet()) {
+              // Node request are structured like http://localhost:8080/geonetwork/<node>/srv/<language>/<serviceName>
+              if (req.getServletPath().startsWith("/" + key + "/")) {
+                engine = jeevesNodeEngineMap.get(key);
+                break;
+              }
+            }
+        }
+        String node = engine.getServiceManager().getNode();
+        System.err.println(engine);
+        
+        
 		HttpSession httpSession = req.getSession();
-        if(Log.isDebugEnabled(Log.REQUEST)) Log.debug(Log.REQUEST, "Session id is "+httpSession.getId());
-		UserSession session     = (UserSession) httpSession.getAttribute(USER_SESSION_ATTRIBUTE_KEY);
+//        if(Log.isDebugEnabled(Log.REQUEST)) 
+            Log.debug(Log.REQUEST, "Session id is "+httpSession.getId());
+		UserSession session     = (UserSession) httpSession.getAttribute(USER_SESSION_ATTRIBUTE_KEY + node);
 
 		//------------------------------------------------------------------------
 		//--- create a new session if doesn't exist
@@ -169,12 +216,14 @@ public class JeevesServlet extends HttpServlet
 
 			session = new UserSession();
 
-			httpSession.setAttribute(USER_SESSION_ATTRIBUTE_KEY, session);
+			httpSession.setAttribute(USER_SESSION_ATTRIBUTE_KEY + node, session);
 			session.setsHttpSession(httpSession);
 
             if(Log.isDebugEnabled(Log.REQUEST)) Log.debug(Log.REQUEST, "Session created for client : " + ip);
 		}
-
+		System.err.println(httpSession.getId());
+        System.err.println(session + " with key " + USER_SESSION_ATTRIBUTE_KEY + node);
+		System.err.println(session.getName());
 		//------------------------------------------------------------------------
 		//--- build service request
 
@@ -183,10 +232,10 @@ public class JeevesServlet extends HttpServlet
 		//--- create request
 
 		try {
-			srvReq = ServiceRequestFactory.create(req, res, jeeves.getUploadDir(), jeeves.getMaxUploadSize());
+			srvReq = ServiceRequestFactory.create(req, res, engine.getUploadDir(), engine.getMaxUploadSize());
 		} catch (FileUploadTooBigEx e) {
 			StringBuffer sb = new StringBuffer();
-			sb.append("File upload too big - exceeds "+jeeves.getMaxUploadSize()+" Mb\n");
+			sb.append("File upload too big - exceeds "+engine.getMaxUploadSize()+" Mb\n");
 			sb.append("Error : " +e.getClass().getName() +"\n");
 			res.sendError(400, sb.toString());
 
@@ -212,15 +261,28 @@ public class JeevesServlet extends HttpServlet
 
 		//--- execute request
 
-		jeeves.dispatch(srvReq, session);
+		engine.dispatch(srvReq, session);
 	}
 
 	public boolean isInitialized() { return initialized; }
 
-	public JeevesEngine getEngine() {
-		return jeeves;
-		
+	public static JeevesEngine getEngine(String node) {
+	    return (null == node)? jeeves : jeevesNodeEngineMap.get(node);
 	}
+	
+	 
+    public static String getNode(String url) {
+        Log.debug(Log.MULTINODE, "JeevesServlet.getSite for url : " + url);
+        if (!jeevesNodeEngineMap.isEmpty()) {
+            for (String key : jeevesNodeEngineMap.keySet()) {
+                if (url.startsWith("/" + key)) {
+                    Log.debug(Log.MULTINODE, "  found: " + key);
+                    return key;
+                }
+            }
+        }
+        return null;
+    }
 }
 
 //=============================================================================

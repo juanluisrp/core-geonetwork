@@ -797,6 +797,12 @@ GeoNetwork.app = function () {
                             /(http.*\/.*)\/apps\/tabsearch.*/, '')[1];
 
             urlParameters = GeoNetwork.Util.getParameters(location.href);
+            
+            var siteUrl = ''; 
+            if (urlParameters.site) {
+                siteUrl = urlParameters.site;
+            }
+            
             var lang = urlParameters.hl || GeoNetwork.Util.defaultLocale;
             
             if (urlParameters.extent) {
@@ -829,8 +835,9 @@ GeoNetwork.app = function () {
                 statusBarId : 'info',
                 lang : lang,
                 hostUrl : geonetworkUrl,
+                siteUrl: siteUrl,
                 mdOverlayedCmpId : 'resultsPanel',
-                adminAppUrl : geonetworkUrl + '/srv/' + lang + '/admin',
+                adminAppUrl : geonetworkUrl + siteUrl + '/srv/' + lang + '/admin',
                 // Declare default store to be used for records and
                 // summary
                 metadataStore : GeoNetwork.Settings.mdStore ? GeoNetwork.Settings

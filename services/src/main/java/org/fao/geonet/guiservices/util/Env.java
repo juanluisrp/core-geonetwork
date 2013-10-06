@@ -50,10 +50,11 @@ public class Env implements Service {
 	{
 		// reset the thread local
 		XmlSerializer.clearThreadLocal();
-
+		System.err.println("Env context is: " + context);
 		GeonetContext  gc = (GeonetContext) context.getHandlerContext(Geonet.CONTEXT_NAME);
-
-		Element response  = gc.getBean(SettingManager.class).getAllAsXML(true);
+        System.err.println("Env GN context is: " + gc);
+		
+        Element response  = gc.getBean(SettingManager.class).getAllAsXML(true);
 
         Element readOnly = new Element(READ_ONLY);
         readOnly.setText(Boolean.toString(gc.isReadOnly()));

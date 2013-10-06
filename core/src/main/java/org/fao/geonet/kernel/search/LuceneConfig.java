@@ -63,6 +63,7 @@ public class LuceneConfig {
 	private File configurationFile;
 	private File taxonomyConfigurationFile;
 	private String appPath;
+	private String node;
 	
     public static class Facet {
         /**
@@ -329,12 +330,23 @@ public class LuceneConfig {
 	 * @param luceneConfigXmlFile
 	 */
 	public LuceneConfig(String appPath, ServletContext servletContext, String luceneConfigXmlFile) {
+	    init(appPath, servletContext,  luceneConfigXmlFile, null);
+	}
+	
+	public LuceneConfig(String appPath, ServletContext servletContext, String luceneConfigXmlFile, String node) {
+        init(appPath, servletContext,  luceneConfigXmlFile, node);
+    }
+	
+    private void init(String appPath, ServletContext servletContext, String luceneConfigXmlFile, String node) {
         if(Log.isDebugEnabled(Geonet.SEARCH_ENGINE))
             Log.debug(Geonet.SEARCH_ENGINE, "Loading Lucene configuration ...");
+        
 		this.appPath = appPath;
-		this.configurationFile = new File(appPath + luceneConfigXmlFile);
+		this.node = node;
+		String webinfDir = (null == node) ? "WEB-INF" : "WEB-INF-" + node;
+        this.configurationFile = new File(appPath + luceneConfigXmlFile);
 		this.load(servletContext, luceneConfigXmlFile);
-		String taxonomyConfig = "WEB-INF/config-summary.xml";
+		String taxonomyConfig = webinfDir + File.separator + "config-summary.xml";
 		this.taxonomyConfigurationFile = new File(appPath + taxonomyConfig);
 		this.loadTaxonomy(servletContext, taxonomyConfig);
 	}
@@ -344,7 +356,7 @@ public class LuceneConfig {
 			luceneConfig = Xml.loadStream(new FileInputStream(
 					this.configurationFile));
 			if (servletContext != null) {
-				ConfigurationOverrides.DEFAULT.updateWithOverrides(luceneConfigXmlFile, servletContext, appPath, luceneConfig);
+				ConfigurationOverrides.DEFAULT.updateWithOverrides(luceneConfigXmlFile, servletContext, appPath, luceneConfig, node);
 			}
 			
 			// Main Lucene index configuration option
@@ -596,7 +608,7 @@ public class LuceneConfig {
 			Element taxonomyConfig = Xml.loadStream(new FileInputStream(
 					this.taxonomyConfigurationFile));
 			if (servletContext != null) {
-				ConfigurationOverrides.DEFAULT.updateWithOverrides(taxonomyConfigFile, servletContext, appPath, taxonomyConfig);
+				ConfigurationOverrides.DEFAULT.updateWithOverrides(taxonomyConfigFile, servletContext, appPath, taxonomyConfig, node);
 			}
 			
 			taxonomy = new HashMap<String, Map<String,FacetConfig>>();

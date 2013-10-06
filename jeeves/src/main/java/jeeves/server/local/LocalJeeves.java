@@ -130,7 +130,7 @@ public class LocalJeeves
 			// Init jeeves with proper config
 			jeeves = new JeevesEngine();
 			// null JeevesServlet arg because not running in servlet here
-			jeeves.init(appPath, configPath, baseUrl, null); 
+			jeeves.init(appPath, configPath, baseUrl, null, null); 
 
 			// Make session with all permissions
 			session = new UserSession();

@@ -73,14 +73,15 @@ public class ProfileManager
 	/** Given the user-profiles.xml file name, loads it abd inits its internal data
 	  * putting data in memory into a convenient way
 	 * @param appPath 
+	 * @param node TODO
 	  */
 
 	@SuppressWarnings("unchecked")
-	public ProfileManager(ServletContext servletContext, String appPath, String profilesFile) throws Exception
+	public ProfileManager(ServletContext servletContext, String appPath, String profilesFile, String node) throws Exception
 	{
 		Element elProfiles = Xml.loadFile(profilesFile);
 		if (servletContext != null) {
-		      ConfigurationOverrides.DEFAULT.updateWithOverrides(profilesFile, servletContext, appPath, elProfiles);
+		      ConfigurationOverrides.DEFAULT.updateWithOverrides(profilesFile, servletContext, appPath, elProfiles, node);
 		}
 		htProfiles  = new Hashtable<String, Element>(50);
 
@@ -301,7 +302,11 @@ public class ProfileManager
 		Map<String, AbstractSecurityInterceptor> evals = springContext.getBeansOfType(AbstractSecurityInterceptor.class);
 		Authentication authentication = context.getAuthentication();
 		
-		FilterInvocation fi = new FilterInvocation(null, "/srv/"+serviceContext.getLanguage()+"/"+serviceName, null);
+		String nodePrefix = "";
+		if (serviceContext.getNode() != null) {
+		    nodePrefix = "/" + serviceContext.getNode();
+		}
+		FilterInvocation fi = new FilterInvocation(null, nodePrefix + "/srv/"+serviceContext.getLanguage()+"/"+serviceName, null);
 		for(AbstractSecurityInterceptor securityInterceptor: evals.values()) {
 	    	if(securityInterceptor == null) return true;
 	    	

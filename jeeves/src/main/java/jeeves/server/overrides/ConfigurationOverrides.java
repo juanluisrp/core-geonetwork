@@ -202,9 +202,10 @@ public class ConfigurationOverrides {
      * 
      * @param context the servlet context that is loaded (maybe null.  If null appPath is used to resolve configuration files like: /WEB-INF/configuration-overrides.xml
      * @param appPath The path to the webapplication root.  If servlet is null (and therefore getResource cannot be used, this path is used to file files)
+     * @param node TODO
      */
-    public void updateLoggingAsAccordingToOverrides(ServletContext context, String appPath) throws JDOMException, IOException {
-        String resource = lookupOverrideParameter(context, appPath);
+    public void updateLoggingAsAccordingToOverrides(ServletContext context, String appPath, String node) throws JDOMException, IOException {
+        String resource = lookupOverrideParameter(context, appPath, node);
 
         ServletResourceLoader loader = new ServletResourceLoader(context,appPath);
         Element xml = loader.loadXmlResource(resource);
@@ -245,12 +246,14 @@ public class ConfigurationOverrides {
      *
      * @param configFile the path to the configuration file that has been loaded (and is the configRoot).  This is used to identify overrides
      * @param context
-     *@param appPath The path to the webapplication root.  If servlet is null (and therefore getResource cannot be used, this path is used to file files)
+     * @param appPath The path to the webapplication root.  If servlet is null (and therefore getResource cannot be used, this path is used to file files)
      * @param configElement the root element of the configuration (obtained by loading configFile)    @throws JDOMException
+     * @param node TODO
      * @throws IOException
      */
-    public void updateWithOverrides(String configFile, ServletContext context, String appPath, Element configElement) throws JDOMException, IOException {
-        String resource = lookupOverrideParameter(context,appPath);
+    public void updateWithOverrides(String configFile, ServletContext context, String appPath, 
+            Element configElement, String node) throws JDOMException, IOException {
+        String resource = lookupOverrideParameter(context,appPath, node);
 
         ServletResourceLoader loader = new ServletResourceLoader(context,appPath);
         updateConfig(loader,resource,configFile, configElement);
@@ -558,21 +561,22 @@ public class ConfigurationOverrides {
         Log.debug(Log.JEEVES, msg);
     }
 
-    private String lookupOverrideParameter(ServletContext context,String appPath) throws JDOMException, IOException {
+    private String lookupOverrideParameter(ServletContext context,String appPath, String node) throws JDOMException, IOException {
         if (_overrides != null) {
             return _overrides;
         }
         String resource;
         if(context == null) {
-            resource = lookupOverrideParamFromAppPath(appPath);
+            resource = lookupOverrideParamFromAppPath(appPath, node);
         } else {
-            resource = lookupOverrideParamFromServlet(context);
+            resource = lookupOverrideParamFromServlet(context, node);
         }
         return resource;
     }
 
-    private String lookupOverrideParamFromAppPath(String appPath) throws JDOMException, IOException {
-        File webInf = new File(appPath,"WEB-INF");
+    private String lookupOverrideParamFromAppPath(String appPath, String node) throws JDOMException, IOException {
+        String webinfDir = (null == node) ? "WEB-INF" : "WEB-INF-" + node;
+        File webInf = new File(appPath, webinfDir);
 		File webxmlFile = new File(webInf,"web.xml");
         String resource = null;
         if(webxmlFile.exists()) {
@@ -612,14 +616,16 @@ public class ConfigurationOverrides {
     	}
 	}
 
-	private String lookupOverrideParamFromServlet(ServletContext context) throws IOException, JDOMException {
-        String resource;
-        resource = System.getProperty(context.getServletContextName()+"."+OVERRIDES_KEY);
+	private String lookupOverrideParamFromServlet(ServletContext context, String node) throws IOException, JDOMException {
+        String resource = System.getProperty(context.getServletContextName()+"."+OVERRIDES_KEY);
+        String webinfDir = (null == node) ? "WEB-INF" : "WEB-INF-" + node;
+        
         if (resource == null || resource.trim().isEmpty()) {
             resource = System.getProperty(OVERRIDES_KEY);
         }
         if (resource == null || resource.trim().isEmpty()) {
-            resource = lookupOverrideParamFromConfigFile(context.getResource("/WEB-INF/" + CONFIG_OVERRIDES_FILENAME));
+            resource = lookupOverrideParamFromConfigFile(context.getResource(
+                    File.separator + webinfDir + File.separator + CONFIG_OVERRIDES_FILENAME));
         }
         if (resource == null || resource.trim().isEmpty()) {
             resource = context.getInitParameter(OVERRIDES_KEY);
@@ -897,9 +903,10 @@ public class ConfigurationOverrides {
      *
      * @param servletRelativePath file to load.  It is assumed to be with the servlet and is assumed to start with /.
      * @param context the ServletContext to use for locating the file
+     * @param node TODO
      * @return
      */
-    public Element loadXmlFileAndUpdate(String servletRelativePath, ServletContext context) {
+    public Element loadXmlFileAndUpdate(String servletRelativePath, ServletContext context, String node) {
         String appPath = context.getContextPath();
         Element elem = null;
         try {
@@ -908,7 +915,7 @@ public class ConfigurationOverrides {
             throw new RuntimeException(e);
         }
         try {
-            updateWithOverrides(servletRelativePath, context, appPath, elem);
+            updateWithOverrides(servletRelativePath, context, appPath, elem, node);
         } catch (Exception e) {
             e.printStackTrace();
             Log.error(Log.JEEVES, "Unable to read overrides for config.xml: "+e);
@@ -924,18 +931,19 @@ public class ConfigurationOverrides {
      * and the specifics for a particular platform can be configured using overrides
      * 
      * @param configFilePath The path to the files to be loaded and overriden.  IE /WEB-INF/server.prop
-     * @param contex the servlet context that is loaded (maybe null.  If null appPath is used to resolve configuration files like: /WEB-INF/configuration-overrides.xml
      * @param appPath The path to the webapplication root.  If servlet is null (and therefore getResource cannot be used, this path is used to file files)
+     * @param node TODO
      * @param reader a buffered reader opened to the file to be loaded.
-     * 
+     * @param contex the servlet context that is loaded (maybe null.  If null appPath is used to resolve configuration files like: /WEB-INF/configuration-overrides.xml
      * @return the array of lines in the file.
      * @throws JDOMException 
      */
-	public List<String> loadTextFileAndUpdate(String configFilePath, ServletContext context, String appPath, BufferedReader reader) throws IOException {
+	public List<String> loadTextFileAndUpdate(String configFilePath, ServletContext context, 
+	        String appPath, String node, BufferedReader reader) throws IOException {
 	    ServletResourceLoader loader = new ServletResourceLoader(context, appPath);
 	    
         try {
-            String resource = lookupOverrideParameter(context, appPath);
+            String resource = lookupOverrideParameter(context, appPath, node);
             return loadFileAndUpdate(loader, resource, configFilePath, reader);
         } catch (JDOMException e) {
             return loadFileAndUpdate(loader, null, configFilePath, reader);
@@ -994,8 +1002,9 @@ public class ConfigurationOverrides {
 	}
 
     @SuppressWarnings("unchecked")
-    public void importSpringConfigurations(XmlBeanDefinitionReader reader, ConfigurableBeanFactory beanFactory, ServletContext servletContext, String appPath) throws JDOMException, IOException {
-        String overridesResource = lookupOverrideParameter(servletContext, appPath);
+    public void importSpringConfigurations(XmlBeanDefinitionReader reader, 
+            ConfigurableBeanFactory beanFactory, ServletContext servletContext, String appPath, String node) throws JDOMException, IOException {
+        String overridesResource = lookupOverrideParameter(servletContext, appPath, node);
 
         ResourceLoader loader = new ServletResourceLoader(servletContext, appPath);
         
@@ -1034,9 +1043,9 @@ public class ConfigurationOverrides {
 
     @SuppressWarnings("unchecked")
     public void applyNonImportSpringOverides(JeevesApplicationContext jeevesApplicationContext, ServletContext servletContext,
-            String appPath) throws JDOMException, IOException {
+            String appPath, String node) throws JDOMException, IOException {
 
-        String overridesResource = lookupOverrideParameter(servletContext, appPath);
+        String overridesResource = lookupOverrideParameter(servletContext, appPath, node);
 
         ResourceLoader loader = new ServletResourceLoader(servletContext, appPath);
         

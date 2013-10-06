@@ -25,6 +25,7 @@ package org.fao.geonet.kernel.security;
 import jeeves.resources.dbms.Dbms;
 import jeeves.server.ProfileManager;
 import jeeves.server.resources.ResourceManager;
+import jeeves.server.sources.http.JeevesServlet;
 import jeeves.utils.Log;
 import jeeves.utils.PasswordUtil;
 
@@ -48,8 +49,17 @@ public class GeonetworkAuthenticationProvider extends AbstractUserDetailsAuthent
 
 	private ApplicationContext applicationContext;
 	private PasswordEncoder encoder;
+	private String node;
 
-	@Override
+	public String getNode() {
+        return node;
+    }
+
+    public void setNode(String node) {
+        this.node = node;
+    }
+
+    @Override
 	protected void additionalAuthenticationChecks(UserDetails userDetails,
 			UsernamePasswordAuthenticationToken authentication)
 			throws AuthenticationException {
@@ -71,8 +81,10 @@ public class GeonetworkAuthenticationProvider extends AbstractUserDetailsAuthent
 			throws AuthenticationException {
 		Dbms dbms = null;
 		ResourceManager resourceManager = null;
+		System.err.println("Authenticating in " + node + " ob: " + this);
 		try {
-			resourceManager = applicationContext.getBean(ResourceManager.class);
+			resourceManager = JeevesServlet.getEngine(node).getResourceMan();
+//			applicationContext.getBean(ResourceManager.class);
 			dbms = (Dbms) resourceManager.openDirect(Geonet.Res.MAIN_DB);
 			// Only check user with local db user (ie. authtype is '')
 			Element selectRequest = dbms.select("SELECT * FROM Users WHERE username=? AND authtype IS NULL", username);

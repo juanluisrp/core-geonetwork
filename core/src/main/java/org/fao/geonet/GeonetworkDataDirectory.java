@@ -25,10 +25,13 @@ public class GeonetworkDataDirectory {
 	/**
 	 * The default GeoNetwork data directory location.
 	 */
-	private static final String GEONETWORK_DEFAULT_DATA_DIR = "WEB-INF" + File.separator + "data"  + File.separator;
-	public static final String KEY_SUFFIX = ".dir";
+	private static final String GEONETWORK_DEFAULT_DATA_DIR = File.separator + "data"  + File.separator;
+    public static final String KEY_GEONETWORK = "geonetwork";
+    public static final String KEY_SUFFIX = ".dir";
 	public static final String GEONETWORK_DIR_KEY = "geonetwork.dir";
-
+	
+	private String node;
+	
 	private String systemDataDir;
 	private JeevesServlet jeevesServlet;
 
@@ -54,10 +57,29 @@ public class GeonetworkDataDirectory {
 	 */
 	public GeonetworkDataDirectory(String webappName, String path,
 			ServiceConfig handlerConfig, JeevesServlet jeevesServlet) {
+	    init(webappName, path, handlerConfig, jeevesServlet, null);
+	}
+	
+	/**
+	 * 
+	 * @param webappName
+	 * @param path
+	 * @param handlerConfig
+	 * @param jeevesServlet
+	 * @param node The node name. Can be null if single node.
+	 */
+	public GeonetworkDataDirectory(String webappName, String path,
+            ServiceConfig handlerConfig, JeevesServlet jeevesServlet, String node) {
+        init(webappName, path, handlerConfig, jeevesServlet, node);
+    }
+    
+	private void init(String webappName, String path, 
+	        ServiceConfig handlerConfig, JeevesServlet jeevesServlet, String node) {
         if (Log.isDebugEnabled(Geonet.DATA_DIRECTORY))
             Log.debug(Geonet.DATA_DIRECTORY,
 				"Check and create if needed GeoNetwork data directory");
 		this.jeevesServlet = jeevesServlet;
+		this.node = node;
 		setDataDirectory(webappName, path, handlerConfig);
 	}
 
@@ -134,14 +156,19 @@ public class GeonetworkDataDirectory {
 	private String setDataDirectory(String webappName, String path,
 			ServiceConfig handlerConfig) {
 
+	    String NODE_SUFFIX = "";
+	    if (null != node) {
+	        NODE_SUFFIX = node;
+	    }
+	    
 		// System property defined according to webapp name
 		systemDataDir = GeonetworkDataDirectory.lookupProperty(jeevesServlet,
-				handlerConfig, webappName + KEY_SUFFIX);
+				handlerConfig, webappName + NODE_SUFFIX + KEY_SUFFIX);
 
 		// GEONETWORK.dir is default
 		if (systemDataDir == null) {
 			systemDataDir = GeonetworkDataDirectory.lookupProperty(
-					jeevesServlet, handlerConfig, GEONETWORK_DIR_KEY);
+					jeevesServlet, handlerConfig,  KEY_GEONETWORK + NODE_SUFFIX + KEY_SUFFIX);
 		}
 		boolean useDefaultDataDir = false;
 		Log.warning(Geonet.DATA_DIRECTORY,
@@ -152,7 +179,7 @@ public class GeonetworkDataDirectory {
 		if (systemDataDir == null) {
 			Log.warning(Geonet.DATA_DIRECTORY,
 					"    - Data directory properties is not set. Use "
-							+ webappName + KEY_SUFFIX + " or " + GEONETWORK_DIR_KEY
+							+ webappName + NODE_SUFFIX + KEY_SUFFIX + " or " + KEY_GEONETWORK + KEY_SUFFIX
 							+ " properties.");
 			useDefaultDataDir = true;
 		} else {
@@ -177,13 +204,15 @@ public class GeonetworkDataDirectory {
 						"    - Data directory is not an absolute path. Relative path is not recommended.\n"
 								+ "Update "
 								+ webappName
-								+ KEY_SUFFIX + " or geonetwork.dir environment variable.");
+								+ NODE_SUFFIX + KEY_SUFFIX + " or geonetwork.dir environment variable.");
 				useDefaultDataDir = true;
 			}
 		}
 		
+		String webinfDir = (null == node) ? "WEB-INF":"WEB-INF-" + node;
+		
 		if (useDefaultDataDir) {
-			systemDataDir = path + GEONETWORK_DEFAULT_DATA_DIR;
+			systemDataDir = path + webinfDir + GEONETWORK_DEFAULT_DATA_DIR;
 			Log.warning(Geonet.DATA_DIRECTORY,
 					"    - Data directory provided could not be used. Using default location: "
 							+ systemDataDir);
@@ -224,7 +253,11 @@ public class GeonetworkDataDirectory {
 
 		handlerConfig.setValue(Geonet.Config.SYSTEM_DATA_DIR, systemDataDir);
 
-		initDataDirectory(path, handlerConfig);
+		// Only create datadir for main instance.
+		// Codelist and schema are shared among nodes.
+		if (this.node == null) {
+		    initDataDirectory(path, handlerConfig);
+		}
 
 		return systemDataDir;
 	}
@@ -247,7 +280,7 @@ public class GeonetworkDataDirectory {
 					"     - Copying codelists directory ...");
 			try {
 				BinaryFile.copyDirectory(new File(path
-						+ GEONETWORK_DEFAULT_DATA_DIR + "codelist"),
+						+ "WEB-INF" + File.separator + GEONETWORK_DEFAULT_DATA_DIR + "codelist"),
 						codelistDir);
 			} catch (IOException e) {
 				Log.info(Geonet.DATA_DIRECTORY,

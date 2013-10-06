@@ -33,9 +33,13 @@ public class GeonetContext {
     Class<StatusActions> statusActionsClass;
     boolean readOnly;
     ThreadPool threadPool;
-
+    String node = null;
+    
     // ---------------------------------------------------------------------------
-    /* package */GeonetContext() {
+    /* package */GeonetContext(String node) {
+        this.node = node;
+        System.err.println("### GeoNetwork context " +this);
+        System.err.println(this.node);
     }
 
     // ---------------------------------------------------------------------------
@@ -49,7 +53,13 @@ public class GeonetContext {
     }
 
     public <T> T getBean(Class<T> beanClass) {
-        return springAppContext.getBean(beanClass);
+        System.err.println(this);
+        System.err.println("getBean for " + beanClass.getSimpleName() + " in node " + node);
+        if (node == null) {
+            return springAppContext.getBean(beanClass);
+        } else {
+            return springAppContext.getBean(beanClass.getSimpleName() + node, beanClass);
+        }
     }
 
     // ---------------------------------------------------------------------------

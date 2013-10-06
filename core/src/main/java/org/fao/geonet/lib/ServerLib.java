@@ -49,29 +49,37 @@ public class ServerLib
 	//---
 	//---------------------------------------------------------------------------
 
-	public ServerLib(@Nullable ServletContext servletContext, String appPath) throws IOException
-	{
+    public ServerLib(@Nullable ServletContext servletContext, String appPath) throws IOException {
+        init(servletContext, appPath, null);
+    }
+    public ServerLib(@Nullable ServletContext servletContext, String appPath, String node) throws IOException {
+        init(servletContext, appPath, node);
+    }
+    private void init(@Nullable ServletContext servletContext, String appPath, String node) throws IOException
+    {
 		this.appPath = appPath;
 
 		serverProps = new Properties();
 		
+//		String webinfDir = ((null == node) ? "WEB-INF" : "WEB-INF-" + node);
+		String serverPropertiesFile = File.separator + "WEB-INF" + SERVER_PROPS;
 		InputStream stream = null;
 		if(servletContext != null) {
-		    stream = servletContext.getResourceAsStream(SERVER_PROPS);
+		    stream = servletContext.getResourceAsStream(serverPropertiesFile);
 		    if (stream == null) {
-		        stream = servletContext.getResourceAsStream(SERVER_PROPS.replace("/",File.separator));
+		        stream = servletContext.getResourceAsStream(serverPropertiesFile.replace("/",File.separator));
 		    }
 		}
 
 		if(stream == null) {
-		    stream = new FileInputStream(appPath + (SERVER_PROPS.replace("/",File.separator)));
+		    stream = new FileInputStream(appPath + (serverPropertiesFile.replace("/",File.separator)));
 		}
 
 		BufferedReader reader = new BufferedReader(new InputStreamReader(stream, Jeeves.ENCODING));
 		
 		try {
 			List<String> lines = ConfigurationOverrides.DEFAULT.loadTextFileAndUpdate(
-                    SERVER_PROPS, servletContext, appPath, reader);
+                    SERVER_PROPS, servletContext, appPath, node, reader);
 			StringBuilder b = new StringBuilder();
 			for (String string : lines) {
 				b.append(string);
@@ -103,7 +111,7 @@ public class ServerLib
 	private String     appPath;
 	private Properties serverProps;
 
-	private static final String SERVER_PROPS = "/WEB-INF/server.prop";
+	private static final String SERVER_PROPS = File.separator + "server.prop";
 }
 
 //=============================================================================

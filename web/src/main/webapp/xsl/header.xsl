@@ -2,7 +2,16 @@
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 
 	<xsl:include href="geo/utils.xsl"/>
-
+    
+    <xsl:variable name="relativePath">
+        <xsl:choose>
+            <xsl:when test="/root/gui/node">
+                <xsl:text>../../..</xsl:text>
+            </xsl:when>
+            <xsl:otherwise><xsl:text>../..</xsl:text></xsl:otherwise>
+        </xsl:choose>
+    </xsl:variable>
+    
 	<!--
 	main html header
 	-->

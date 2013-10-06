@@ -6,7 +6,7 @@
 	<xsl:include href="../header.xsl"/>
 	<xsl:include href="../banner.xsl"/>
 
-	<xsl:variable name="widgetPath">../../apps</xsl:variable>
+    <xsl:variable name="widgetPath"><xsl:value-of select="$relativePath"/>/apps</xsl:variable>
 	<xsl:variable name="indent" select="100"/>
 
 	<xsl:template mode="css" match="/" priority="2">

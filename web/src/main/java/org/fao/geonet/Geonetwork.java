@@ -57,6 +57,7 @@ import jeeves.utils.Xml;
 import jeeves.utils.XmlResolver;
 import jeeves.xlink.Processor;
 
+import org.fao.geonet.component.csw.CatalogDispatcher;
 import org.fao.geonet.constants.Geonet;
 import org.fao.geonet.csw.common.Csw;
 import org.fao.geonet.kernel.AccessManager;
@@ -134,11 +135,20 @@ public class Geonetwork implements ApplicationHandler {
 	//--- Start
 	//---
 	//---------------------------------------------------------------------------
-
+	public Object start(Element config, ServiceContext context) throws Exception {
+	    String node = context.getNode();
+	    
+	    if (null == node) {
+	        return startSingleNode(config, context);
+	    } else {
+	        return startMultiNode(config, context, node);
+	    }
+	}
+	
 	/**
      * Inits the engine, loading all needed data.
 	  */
-	public Object start(Element config, ServiceContext context) throws Exception {
+	public Object startSingleNode(Element config, ServiceContext context) throws Exception {
 		logger = context.getLogger();
 		this._applicationContext = context.getApplicationContext();
         ConfigurableListableBeanFactory beanFactory = context.getApplicationContext().getBeanFactory();
@@ -197,9 +207,9 @@ public class Geonetwork implements ApplicationHandler {
 		// --- Check current database and create database if an emty one is found
 		String dbConfigurationFilePath = path + "/WEB-INF/config-db.xml";
 		dbConfiguration = Xml.loadFile(dbConfigurationFilePath);
-        ConfigurationOverrides.DEFAULT.updateWithOverrides(dbConfigurationFilePath, servletContext, path, dbConfiguration);
+        ConfigurationOverrides.DEFAULT.updateWithOverrides(dbConfigurationFilePath, servletContext, path, dbConfiguration, null);
 
-		Pair<Dbms,Boolean> pair = initDatabase(context);
+		Pair<Dbms,Boolean> pair = initDatabase(context, null);
 		Dbms dbms = pair.one();
 		Boolean created = pair.two();
 
@@ -407,9 +417,7 @@ public class Geonetwork implements ApplicationHandler {
 
 		CatalogConfiguration.loadCatalogConfig(path, Csw.CONFIG_FILE);
 
-		//------------------------------------------------------------------------
-		//--- initialize catalogue services for the web
-
+		
 		logger.info("  - Open Archive Initiative (OAI-PMH) server...");
 
 		OaiPmhDispatcher oaipmhDis = new OaiPmhDispatcher(settingMan, schemaMan);
@@ -431,7 +439,7 @@ public class Geonetwork implements ApplicationHandler {
 
         logger.info("  - Harvest manager...");
 
-		GeonetContext gnContext = new GeonetContext();
+		GeonetContext gnContext = new GeonetContext(null);
 
         gnContext.springAppContext = context.getApplicationContext();
         gnContext.threadPool  = threadPool;
@@ -494,6 +502,342 @@ public class Geonetwork implements ApplicationHandler {
 		return gnContext;
 	}
 
+	@SuppressWarnings(value = "unchecked")
+	public Object startMultiNode(Element config, ServiceContext context, String node) throws Exception {
+	  
+	  logger = context.getLogger();
+
+	  path    = context.getAppPath();
+	  String baseURL = context.getBaseUrl();
+	  String webappName = baseURL.substring(1);
+	  
+	  ConfigurableListableBeanFactory beanFactory = context.getApplicationContext().getBeanFactory();
+
+	  // TODO : if webappName is "". ie no context
+	  
+	      ServletContext servletContext = null;
+	      if (context.getServlet() != null) {
+	          servletContext = context.getServlet().getServletContext();
+	      }
+	  ServerLib sl = new ServerLib(servletContext, path, node);
+	  String version = sl.getVersion();
+	  String subVersion = sl.getSubVersion();
+	
+	  logger.info("Initializing GeoNetwork " + version + "." + subVersion + " ...");
+	
+
+	  // Get main service config handler
+	  ServiceConfig handlerConfig = new ServiceConfig(config.getChildren());
+	  
+	  // Init configuration directory
+	  new GeonetworkDataDirectory(webappName, path, handlerConfig, context.getServlet());
+	  
+	//    // Get config handler properties
+	//    String systemDataDir = handlerConfig.getMandatoryValue(Geonet.Config.SYSTEM_DATA_DIR);
+	  String thesauriDir = handlerConfig.getMandatoryValue(Geonet.Config.CODELIST_DIR);
+	//    String luceneDir =  handlerConfig.getMandatoryValue(Geonet.Config.LUCENE_DIR);
+	//    String dataDir =  handlerConfig.getMandatoryValue(Geonet.Config.DATA_DIR);
+	//    String luceneConfigXmlFile = handlerConfig.getMandatoryValue(Geonet.Config.LUCENE_CONFIG);
+	//    String summaryConfigXmlFile = handlerConfig.getMandatoryValue(Geonet.Config.SUMMARY_CONFIG);
+	//    logger.info("Data directory: " + systemDataDir);
+	//
+	//    setProps(path, handlerConfig);
+	
+	  // =================
+	  // MULTISITE WEB-INF - GeonetworkDataDirectory & handlerConfig  
+	  
+	  // Get main service config handler
+	  ServiceConfig handlerConfigForNode = new ServiceConfig(config.getChildren());
+	  
+	  // Init configuration directory
+	  new GeonetworkDataDirectory(webappName + "/" + node, path, handlerConfigForNode, context.getServlet(), node);
+	
+	  
+	  // Get config handler properties
+	  String systemDataDir = handlerConfigForNode.getMandatoryValue(Geonet.Config.SYSTEM_DATA_DIR);
+	//    String thesauriDir = handlerConfigSITE.getMandatoryValue(Geonet.Config.CODELIST_DIR);
+	  String luceneDir =  handlerConfigForNode.getMandatoryValue(Geonet.Config.LUCENE_DIR);
+	  String dataDir =  handlerConfigForNode.getMandatoryValue(Geonet.Config.DATA_DIR);
+	  String luceneConfigXmlFile = handlerConfigForNode.getMandatoryValue(Geonet.Config.LUCENE_CONFIG);
+	  String summaryConfigXmlFile = handlerConfigForNode.getMandatoryValue(Geonet.Config.SUMMARY_CONFIG);
+	  logger.info("Data directory for site : " + systemDataDir);
+	
+	  setProps(path, handlerConfigForNode);    
+	  
+	  
+	  // Status actions class - load it
+	  String statusActionsClassName = handlerConfigForNode.getMandatoryValue(Geonet.Config.STATUS_ACTIONS_CLASS); 
+	  Class statusActionsClass = Class.forName(statusActionsClassName);
+
+	      String languageProfilesDir = handlerConfigForNode
+	              .getMandatoryValue(Geonet.Config.LANGUAGE_PROFILES_DIR);
+	  
+	  // MULTISITE WEB-INF-site
+	      String webinf = (null == node) ? "WEB-INF" : "WEB-INF-" + node;
+	      // FIXME MULTINODE : Not needed ?
+//	      JeevesJCS.setConfigFilename(path + "\\WEB-INF\\classes\\cache.ccf");
+	  //JeevesJCS.setConfigFilename(path + "\\" + webinf + "\\classes\\cache.ccf");
+	      JeevesJCS.setConfigFilename(path + "WEB-INF/classes/cache.ccf");
+
+        // force caches to be config'd so shutdown hook works correctly
+        JeevesJCS.getInstance(Processor.XLINK_JCS);
+        JeevesJCS.getInstance(XmlResolver.XMLRESOLVER_JCS);
+
+	  // --- Check current database and create database if an emty one is found
+	  
+	  
+	  String dbConfigurationFilePath = path + "WEB-INF" + File.separator + "config-db.xml";
+	  dbConfiguration = Xml.loadFile(dbConfigurationFilePath);
+	      ConfigurationOverrides.DEFAULT.updateWithOverrides(dbConfigurationFilePath, servletContext, path, dbConfiguration, node);
+	
+	  Pair<Dbms,Boolean> pair = initDatabase(context, node);
+	  Dbms dbms = pair.one();
+	  Boolean created = pair.two();
+	
+	  //------------------------------------------------------------------------
+	  //--- initialize thread pool 
+	
+	  logger.info("  - Thread Pool...");
+	  threadPool = new ThreadPool();
+	
+	  //------------------------------------------------------------------------
+	  //--- initialize settings subsystem
+	  logger.info("  - Setting manager...");
+	  SettingManager settingMan = null;
+	  HarvesterSettingsManager harvesterSettingsMan = null;
+      try {
+          settingMan = new SettingManager(dbms, context.getProviderManager());
+          harvesterSettingsMan = new HarvesterSettingsManager(dbms, context.getProviderManager());
+      } catch (Exception e) {
+          logger.info("     Failed to initialize setting managers. This is probably due to bad Settings table. Error is: " + 
+                      e.getMessage() + ". In case of database migration, the setting managers will be reinitialized.");
+      }
+      
+      
+	  // --- Migrate database if an old one is found
+	  migrateDatabase(servletContext, dbms, settingMan, harvesterSettingsMan, version, subVersion, context);
+      
+	  
+	  // TODO AKKA ThreadUtils multi instances ? 
+	  //--- initialize ThreadUtils with setting manager and rm props
+	  ThreadUtils.init(context.getResourceManager().getProps(Geonet.Res.MAIN_DB),
+	                   settingMan); 
+	
+	
+	  // FIXME MULTISITE Z39.50 DISABLED CAUSE Only one Server instance & Port is possible.
+	  logger.warning("  - Z39.50 DISABLED in mode MULTISITE");
+
+	  //------------------------------------------------------------------------
+	  //--- initialize SchemaManager
+	  
+	  // MULTISITE - shared a singleton SchemaManager instantiated with WEB-INF
+	
+	  logger.info("  - Schema manager...");
+	
+	  String schemaPluginsDir = handlerConfigForNode.getMandatoryValue(Geonet.Config.SCHEMAPLUGINS_DIR);
+	  String schemaCatalogueFile = systemDataDir + "config" + File.separator + Geonet.File.SCHEMA_PLUGINS_CATALOG;
+	  logger.info("      - Schema plugins directory: "+schemaPluginsDir);
+	  logger.info("      - Schema Catalog File     : "+schemaCatalogueFile);
+	  SchemaManager schemaMan = SchemaManager.getInstance(path, Resources.locateResourcesDir(context), 
+	          schemaCatalogueFile, schemaPluginsDir, context.getLanguage(), 
+	          handlerConfigForNode.getMandatoryValue(Geonet.Config.PREFERRED_SCHEMA), false);
+	
+	  //------------------------------------------------------------------------
+	  //--- initialize search and editing
+	
+	  logger.info("  - Search...");
+	
+	  boolean logSpatialObject = "true".equalsIgnoreCase(handlerConfigForNode.getMandatoryValue(Geonet.Config.STAT_LOG_SPATIAL_OBJECTS));
+	  boolean logAsynch = "true".equalsIgnoreCase(handlerConfigForNode.getMandatoryValue(Geonet.Config.STAT_LOG_ASYNCH));
+	  logger.info("  - Log spatial object: " + logSpatialObject);
+	  logger.info("  - Log in asynch mode: " + logAsynch);
+	      
+	  String luceneTermsToExclude = "";
+	  luceneTermsToExclude = handlerConfigForNode.getMandatoryValue(Geonet.Config.STAT_LUCENE_TERMS_EXCLUDE);
+	
+	  LuceneConfig lc = new LuceneConfig(path, servletContext, luceneConfigXmlFile, node);
+	      logger.info("  - Lucene configuration is:");
+	      logger.info(lc.toString());
+	     
+	  DataStore dataStore = context.getResourceManager().getDataStore(Geonet.Res.MAIN_DB);
+	  if (dataStore == null) {
+	    dataStore = createShapefileDatastore(luceneDir);
+	  }
+	
+	  //--- no datastore for spatial indexing means that we can't continue
+	  if (dataStore == null) {
+	    throw new IllegalArgumentException("GeoTools datastore creation failed - check logs for more info/exceptions");
+	  }
+	
+	  String maxWritesInTransactionStr = handlerConfigForNode.getMandatoryValue(Geonet.Config.MAX_WRITES_IN_TRANSACTION);
+	  int maxWritesInTransaction = SpatialIndexWriter.MAX_WRITES_IN_TRANSACTION;
+	  try {
+	    maxWritesInTransaction = Integer.parseInt(maxWritesInTransactionStr);
+	  } catch (NumberFormatException nfe) {
+	    logger.error ("Invalid config parameter: maximum number of writes to spatial index in a transaction (maxWritesInTransaction), Using "+maxWritesInTransaction+" instead.");
+	    nfe.printStackTrace();
+	  }
+
+	  String htmlCacheDir = handlerConfigForNode
+	      .getMandatoryValue(Geonet.Config.HTMLCACHE_DIR);
+	  
+	  SettingInfo settingInfo = new SettingInfo(settingMan);
+//	  searchMan = new SearchManager(appPath, luceneDir, htmlCacheDir, thesauriDir, summaryConfigXmlFile, 
+//	          logAsynch, logSpatialObject, luceneTermsToExclude, 
+//	          dataStore, maxWritesInTransaction, 
+//	          si, scm, servletContext, applicationContext)
+	  searchMan = new SearchManager(path, luceneDir, htmlCacheDir, thesauriDir, summaryConfigXmlFile, 
+	      logAsynch, logSpatialObject, luceneTermsToExclude, 
+	      dataStore, maxWritesInTransaction, 
+	      settingInfo, schemaMan, servletContext, context.getApplicationContext());
+	  
+	   
+	   // if the validator exists the proxyCallbackURL needs to have the external host and
+	   // servlet name added so that the cas knows where to send the validation notice
+	   ServerBeanPropertyUpdater.updateURL(settingInfo.getSiteUrl(true)+baseURL, servletContext);
+	
+	  //------------------------------------------------------------------------
+	  //--- extract intranet ip/mask and initialize AccessManager
+	
+	  logger.info("  - Access manager...");
+	
+	  AccessManager accessMan = new AccessManager(dbms, settingMan);
+	
+	  //------------------------------------------------------------------------
+	  //--- get edit params and initialize DataManager
+	
+	  logger.info("  - Xml serializer and Data manager...");
+	
+	  String useSubversion = handlerConfigForNode.getMandatoryValue(Geonet.Config.USE_SUBVERSION);
+	
+	  SvnManager svnManager = null;
+	  XmlSerializer xmlSerializer = null;
+	  if (useSubversion.equals("true")) {
+	    String subversionPath = handlerConfigForNode.getValue(Geonet.Config.SUBVERSION_PATH);
+	    svnManager = new SvnManager(context, settingMan, subversionPath, dbms, created);
+	    xmlSerializer = new XmlSerializerSvn(settingMan, svnManager);
+	  } else {
+	    xmlSerializer = new XmlSerializerDb(settingMan);
+	  }
+	  
+	  DataManagerParameter dataManagerParameter = new DataManagerParameter();
+	  dataManagerParameter.context = context;
+	  dataManagerParameter.svnManager = svnManager;
+	  dataManagerParameter.searchManager = searchMan;
+	  dataManagerParameter.xmlSerializer = xmlSerializer;
+	  dataManagerParameter.schemaManager = schemaMan;
+	  dataManagerParameter.accessManager = accessMan;
+	  dataManagerParameter.dbms = dbms;
+	  dataManagerParameter.settingsManager = settingMan;
+	  dataManagerParameter.baseURL = baseURL;
+	  dataManagerParameter.dataDir = dataDir;
+	  dataManagerParameter.thesaurusDir = thesauriDir;
+	  dataManagerParameter.appPath = path;
+	
+	  DataManager dataMan = new DataManager(dataManagerParameter);
+	
+	
+	      /**
+	       * Initialize iso languages mapper
+	       */
+	      IsoLanguagesMapper.getInstance().init(dbms);
+	      
+	      /**
+	       * Initialize language detector
+	       */
+	      LanguageDetector.init(path + languageProfilesDir, context, dataMan);
+	
+	  //------------------------------------------------------------------------
+	  //--- Initialize thesaurus
+	
+	  logger.info("  - Thesaurus...");
+	
+	  ThesaurusManager thesaurusMan = ThesaurusManager.getInstance(context, path, dataMan, context.getResourceManager(), thesauriDir);
+	
+	  
+	  logger.info("  - Catalogue services for the web...");
+	  CatalogConfiguration.loadCatalogConfig(path, Csw.CONFIG_FILE);
+	  
+	  //------------------------------------------------------------------------
+	  //--- initialize catalogue services for the web
+	
+	  logger.info("  - Open Archive Initiative (OAI-PMH) server...");
+	
+	  OaiPmhDispatcher oaipmhDis = new OaiPmhDispatcher(settingMan, schemaMan);
+	
+	
+	      //------------------------------------------------------------------------
+	  //--- initialize metadata notifier subsystem
+	      MetadataNotifierManager metadataNotifierMan = new MetadataNotifierManager(dataMan);
+	
+	      logger.info("  - Metadata notifier ...");
+	
+	      
+	      //------------------------------------------------------------------------
+	      //--- initialize metadata notifier subsystem
+	      logger.info("  - Metadata notifier ...");
+	      
+	  //------------------------------------------------------------------------
+	  //--- return application context
+	
+      GeonetContext gnContext = new GeonetContext(node);
+
+        gnContext.springAppContext = context.getApplicationContext();
+        gnContext.threadPool  = threadPool;
+        gnContext.statusActionsClass = statusActionsClass;
+        
+        HarvestManager harvestMan = new HarvestManager(context, gnContext, harvesterSettingsMan, dataMan);
+        
+        //------------------------------------------------------------------------
+        //--- return application context
+        
+        beanFactory.registerSingleton("AccessManager" + node, accessMan);
+        beanFactory.registerSingleton("DataManager" + node, dataMan);
+        beanFactory.registerSingleton("SearchManager" + node, searchMan);
+        beanFactory.registerSingleton("SchemaManager" + node, schemaMan);
+        beanFactory.registerSingleton("ServiceConfig" + node, handlerConfigForNode);
+        beanFactory.registerSingleton("SettingManager" + node, settingMan);
+        beanFactory.registerSingleton("HarvesterSettingsMan" + node, harvesterSettingsMan);
+        beanFactory.registerSingleton("ThesaurusManager" + node, thesaurusMan);
+        beanFactory.registerSingleton("OaipmhDisatcher" + node, oaipmhDis);
+        beanFactory.registerSingleton("MetadataNotifierManager" + node, metadataNotifierMan);
+        beanFactory.registerSingleton("SVNManager" + node, svnManager);
+        beanFactory.registerSingleton("XmlSerializer" + node, xmlSerializer);
+        beanFactory.registerSingleton("HarvestManager" + node, harvestMan);
+        
+
+	  
+//	  gnContext.statusActionsClass = statusActionsClass;
+	
+	  logger.info("Site ID is : " + gnContext.getSiteId());
+	
+	      // Creates a default site logo, only if the logo image doesn't exists
+	      // This can happen if the application has been updated with a new version preserving the database and
+	      // images/logos folder is not copied from old application 
+	      createSiteLogo(gnContext.getSiteId(), servletContext, context.getAppPath());
+	
+	      // Notify unregistered metadata at startup. Needed, for example, when the user enables the notifier config
+	      // to notify the existing metadata in database
+	      // TODO: Fix DataManager.getUnregisteredMetadata and uncomment next lines
+	      metadataNotifierControl = new MetadataNotifierControl(context, gnContext);
+	      metadataNotifierControl.runOnce();
+	
+	  //--- load proxy information from settings into Jeeves for observers such
+	  //--- as jeeves.utils.XmlResolver to use
+	  ProxyInfo pi = JeevesProxyInfo.getInstance();
+	  boolean useProxy = settingMan.getValueAsBool("system/proxy/use", false);
+	  if (useProxy) {
+	    String  proxyHost      = settingMan.getValue("system/proxy/host");
+	    String  proxyPort      = settingMan.getValue("system/proxy/port");
+	    String  username       = settingMan.getValue("system/proxy/username");
+	    String  password       = settingMan.getValue("system/proxy/password");
+	    pi.setProxyInfo(proxyHost, new Integer(proxyPort), username, password);
+	  }
+	
+	  return gnContext;
+	}
+	
+	
     /**
      * Sets up a periodic check whether GeoNetwork can successfully write to the database. If it can't, GeoNetwork will
      * automatically switch to read-only mode.
@@ -732,7 +1076,7 @@ public class Geonetwork implements ApplicationHandler {
     	                        anyMigrationAction = true;
     	                        logger.info("         - SQL migration file:" + filePath + " prefix:" + filePrefix + " ...");
     	                        try {
-    	                            Lib.db.insertData(servletContext, dbms, path, filePath, filePrefix);
+    	                            Lib.db.insertData(servletContext, dbms, path, filePath, filePrefix, context.getNode());
     	                        } catch (Exception e) {
     	                            logger.info("          Errors occurs during SQL migration file: " + e.getMessage());
     	                            e.printStackTrace();
@@ -798,10 +1142,11 @@ public class Geonetwork implements ApplicationHandler {
 	 * exists, try to migrate the content.
 	 * 
 	 * @param context
+	 * @param node TODO
 	 * @return Pair with Dbms channel and Boolean set to true if db created
 	 * @throws Exception
 	 */
-	private Pair<Dbms, Boolean> initDatabase(ServiceContext context) throws Exception {
+	private Pair<Dbms, Boolean> initDatabase(ServiceContext context, String node) throws Exception {
 		Dbms dbms = null;
 		try {
 			dbms = (Dbms) context.getResourceManager().open(Geonet.Res.MAIN_DB);
@@ -831,8 +1176,8 @@ public class Geonetwork implements ApplicationHandler {
 			    String filePrefix = file.getAttributeValue("filePrefix");
 			    logger.info("         - SQL create file:" + filePath + " prefix:" + filePrefix + " ...");
                 // Do we need to remove object before creating the database ?
-    			Lib.db.removeObjects(servletContext, dbms, path, filePath, filePrefix);
-    			Lib.db.createSchema(servletContext, dbms, path, filePath, filePrefix);
+    			Lib.db.removeObjects(servletContext, dbms, path, filePath, filePrefix, context.getNode());
+    			Lib.db.createSchema(servletContext, dbms, path, filePath, filePrefix, context.getNode());
 			}
 			
             @SuppressWarnings(value = "unchecked")
@@ -841,7 +1186,7 @@ public class Geonetwork implements ApplicationHandler {
                 String filePath = path + file.getAttributeValue("path");
                 String filePrefix = file.getAttributeValue("filePrefix");
                 logger.info("         - SQL data file:" + filePath + " prefix:" + filePrefix + " ...");
-                Lib.db.insertData(servletContext, dbms, path, filePath, filePrefix);
+                Lib.db.insertData(servletContext, dbms, path, filePath, filePrefix, context.getNode());
 	        }
 	        dbms.commit();
             
@@ -849,7 +1194,7 @@ public class Geonetwork implements ApplicationHandler {
 			String uuid = UUID.randomUUID().toString();
 			initLogo(servletContext, dbms, uuid, context.getAppPath());
 			
-			context.getServlet().getEngine().loadConfigDB(dbms, -1);
+			context.getServlet().getEngine(node).loadConfigDB(dbms, -1);
 			
 			created = true;
 		} else {
@@ -910,8 +1255,12 @@ public class Geonetwork implements ApplicationHandler {
 	 * @param path webapp path
 	 */
 	private void setProps(String path, ServiceConfig handlerConfig) {
-
-		String webapp = path + "WEB-INF" + FS;
+	    setProps(path, handlerConfig, null);
+	}
+	
+    private void setProps(String path, ServiceConfig handlerConfig, String node) {
+        String webinfDir = (null == node) ? "WEB-INF" : "WEB-INF-" + node;
+		String webapp = path + webinfDir + FS;
 
 		//--- Set jeeves.xml.catalog.files property
 		//--- this is critical to schema support so must be set correctly

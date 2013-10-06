@@ -108,6 +108,12 @@ GeoNetwork.Catalogue = Ext.extend(Ext.util.Observable, {
      */
     LANG: "en",
     
+    /** api: property[nodeUrl] 
+     *  
+     *  MultiNode mode
+     */
+    nodeUrl : null,
+    
     /** api: property[LANG] 
      * ``String`` Default language
      */

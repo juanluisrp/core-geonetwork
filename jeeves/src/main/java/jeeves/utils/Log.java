@@ -57,6 +57,7 @@ public final class Log
 	public static final String XML_RESOLVER = JEEVES + ".xmlresolver";
 	public static final String TRANSFORMER_FACTORY = JEEVES
 			+ ".transformerFactory";
+    public static final String MULTINODE = JEEVES + ".multinode";
 
     public static final class Dbms {
 

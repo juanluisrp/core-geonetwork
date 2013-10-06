@@ -47,7 +47,7 @@
 
             <tr><td class="configOption">
                 <xsl:if test="normalize-space($icon)">
-                    <img src="../../images/{$icon}" alt="{$desc}" class="configOption"/>
+                    <img src="{$relativePath}/images/{$icon}" alt="{$desc}" class="configOption"/>
                 </xsl:if>
             </td>
                 <td class="padded">
