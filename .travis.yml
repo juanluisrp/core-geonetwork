@@ -4,5 +4,9 @@ jdk:
   - openjdk6
 before_install:
   - export MAVEN_OPTS="-Xmx512M -XX:MaxPermSize=256M"
+install:
+  - mvn install -DskipTests -B -V
+  - mvn test -Ptravis -B -V
+  
 
 
