@@ -6,7 +6,8 @@ before_install:
   - export MAVEN_OPTS="-Xmx512M -XX:MaxPermSize=256M"
 install:
   - mvn install -DskipTests -B -V
-  - mvn test -Ptravis -B -V
-  
+  - mvn test -B -V
+after_failure:
+  - cat /home/travis/build/juanluisrp/core-geonetwork/e2e-tests/npm-debug.log
 
 
