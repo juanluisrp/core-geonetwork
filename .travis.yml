@@ -3,7 +3,7 @@ jdk:
   - oraclejdk7
   - openjdk6
 before_install:
-  - export MAVEN_OPTS="-Xmx512M -XX:MaxPermSize=256M"
+  - export MAVEN_OPTS="-Xmx1024M -XX:MaxPermSize=384M"
 install:
   - mvn install -DskipTests -B -V
   - mvn package test -B -V
