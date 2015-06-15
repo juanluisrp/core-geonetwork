@@ -1,9 +1,9 @@
 [submodule "geoserver"]
 	path = geoserver
-	url = http://github.so.kadaster.nl/NGR/chromedriver.git
+	url = http://github.so.kadaster.nl/NGR/core-geoserver.git
 [submodule "e2e-tests/chromedriver"]
 	path = e2e-tests/chromedriver
-	url = http://github.so.kadaster.nl/NGR/core-geoserver.git
+	url = http://github.so.kadaster.nl/NGR/chromedriver.git
 [submodule "web-ui/src/main/resources/catalog/lib/style/bootstrap"]
 	path = web-ui/src/main/resources/catalog/lib/style/bootstrap
 	url = http://github.so.kadaster.nl/NGR/bootstrap.git
