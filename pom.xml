@@ -140,7 +140,7 @@
         <plugin>
           <groupId>org.codehaus.mojo</groupId>
           <artifactId>findbugs-maven-plugin</artifactId>
-          <version>2.5.3</version>
+          <version>3.0.1</version>
           <configuration>
             <effort>Default</effort>
             <threshold>Default</threshold>
@@ -1161,9 +1161,9 @@
       </activation>
       <modules>
         <module>schemas-test</module>
-        <!--module>web-ui</module-->
+        <module>web-ui</module>
         <!--module>web-ui-docs</module-->
-        <module>web-client</module>
+        <!--module>web-client</module-->
         <module>web</module>
         <module>e2e-tests</module>
         <!--module>geoserver</module-->
