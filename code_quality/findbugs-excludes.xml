@@ -199,4 +199,47 @@
 		<Bug pattern="ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD" />
 	</Match>
 
+    <!-- TODO: The return value from a method is dereferenced without a null check, and the return value of that method is one that should generally be checked for null. This may lead to a NullPointerException when the code is executed.-->
+    <Match>
+        <Class name="org.fao.geonet.utils.IO" />
+        <Bug pattern="NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE" />
+        <Method name="copyDirectoryOrFile"/>
+    </Match>
+    <Match>
+        <Class name="org.fao.geonet.utils.IO" />
+        <Bug pattern="NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE" />
+        <Method name="moveDirectoryOrFile"/>
+    </Match>
+    <Match>
+        <Class name="org.fao.geonet.utils.IO" />
+        <Bug pattern="NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE" />
+        <Method name="touch"/>
+    </Match>
+    <Match>
+        <Class name="org.fao.geonet.utils.XmlResolver" />
+        <Bug pattern="NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE" />
+        <Method name="tryToResolveOnFs"/>
+    </Match>
+    <Match>
+        <Class name="org.fao.geonet.utils.nio.NioPathAwareCatalogResolver" />
+        <Bug pattern="NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE" />
+        <Method name="resolve"/>
+    </Match>
+    <!-- TODO: A boxed primitive is created from a String, just to extract the unboxed primitive value. It is more efficient to just call the static parseXXX method.-->
+    <Match>
+        <Class name="org.fao.geonet.domain.ISODate" />
+        <Bug pattern="DM_BOXED_PRIMITIVE_FOR_PARSING" />
+        <Method name="generateDate"/>
+    </Match>
+    <Match>
+        <Class name="org.fao.geonet.domain.Metadata" />
+        <Bug pattern="DM_BOXED_PRIMITIVE_FOR_PARSING" />
+        <Method name="createFromLuceneIndexDocument"/>
+    </Match>
+    <Match>
+        <Class name="org.fao.geonet.repository.specification.OperationAllowedSpecs" />
+        <Bug pattern="DM_BOXED_PRIMITIVE_FOR_PARSING" />
+        <Method name="hasMetadataId"/>
+    </Match>
+
 </FindBugsFilter>
