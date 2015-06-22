@@ -1,4 +1,4 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+< xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
   <modelVersion>4.0.0</modelVersion>
 
@@ -8,12 +8,11 @@
     <version>3.0.1-SNAPSHOT</version>
   </parent>
 
-
   <!-- =========================================================== -->
   <!--     Module Description                                      -->
   <!-- =========================================================== -->
   <artifactId>web-app</artifactId>
-  <packaging>war</packaging>
+  <packaging>dar</packaging>
   <name>GeoNetwork Web module</name>
   <description> GeoNetwork web module description (TODO). </description>
 
@@ -706,7 +705,37 @@
           <stopPort>8090</stopPort>
         </configuration>
       </plugin>
-
+        <plugin>
+            <groupId>com.xebialabs.deployit</groupId>
+            <artifactId>maven-deployit-plugin</artifactId>
+            <version>3.9.4</version>
+            <extensions>true</extensions>
+            <executions>
+                <execution>
+                    <id>deployit-generate-package</id>
+                    <phase>package</phase>
+                    <goals>
+                        <goal>generate-deployment-package</goal>
+                    </goals>
+                </execution>
+                <execution>
+                    <id>deployit-plugin-deploy</id>
+                    <phase>deploy</phase>
+                    <goals>
+                        <goal>deploy</goal>
+                    </goals>
+                </execution>
+            </executions>
+            <configuration>
+                <username>${deployit.username}</username>
+                <password>${deployit.password}</password>
+                <serverAddress>${deployit.server}</serverAddress>
+                <deletePreviouslyDeployedDar>true</deletePreviouslyDeployedDar>
+                <generateDeployedOnUpgrade>true</generateDeployedOnUpgrade>
+                <applicationName>pdok/${project.artifactId}</applicationName>
+                <environmentId>Environments/pdok-int/environment/pdok-geodatastore_int</environmentId>
+            </configuration>
+        </plugin>
     </plugins>
   </build>
   
@@ -778,6 +807,10 @@
   </profiles>
 
   <properties>
+    <deployit.username>jap-pdok-ont</deployit.username>
+    <deployit.password>Q1ae86ca</deployit.password>
+    <deployit.server>deployment-plp.cs.kadaster.nl</deployit.server>
+    <deployit.port>80</deployit.port>
     <geonetwork.version>${project.version}</geonetwork.version>
     <geonetwork.subversion>SNAPSHOT</geonetwork.subversion>
     <geonetwork.webapp.dir>${basedir}/src/main/webapp</geonetwork.webapp.dir>
