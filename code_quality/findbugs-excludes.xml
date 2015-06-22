@@ -55,6 +55,7 @@
       <Bug pattern="LG_LOST_LOGGER_DUE_TO_WEAK_REFERENCE" />
       <Method name="extractGeometriesFrom" />
     </Match>
+
     <Match>
       <Class name="org.fao.geonet.kernel.DataManager" />
       <Bug pattern="NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE" />
@@ -187,7 +188,11 @@
         </Or>
         <Bug pattern="DMI_EMPTY_DB_PASSWORD" />
     </Match>
-
+    <Match>
+        <Class name="org.fao.geonet.kernel.schema.SchemaLoader" />
+        <Bug pattern="RV_RETURN_VALUE_IGNORED_NO_SIDE_EFFECT" />
+        <Method name="recurseOnSubstitutionLinks" />
+    </Match>
 
 <!-- The following bugs are hard to fix should be fixed because they can cause problems in servers with multiple geonetworks running -->	
 	<Match>
@@ -241,11 +246,155 @@
         <Method name="updateSystemDataDirWithNodeSuffix"/>
     </Match>
     <Match>
-        <Class name="org.fao.geonet.kernel.GeonetworkDataDirectory" />
+        <Class name="org.fao.geonet.kernel.SchemaManager" />
         <Bug pattern="NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE" />
-        <Method name="updateSystemDataDirWithNodeSuffix"/>
+        <Method name="addSchema"/>
     </Match>
-
+    <Match>
+        <Class name="org.fao.geonet.kernel.SchemaManager" />
+        <Bug pattern="NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE" />
+        <Method name="configure"/>
+    </Match>
+    <Match>
+        <Class name="org.fao.geonet.kernel.SchemaManager" />
+        <Bug pattern="NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE" />
+        <Method name="processSchema"/>
+    </Match>
+    <Match>
+        <Class name="org.fao.geonet.kernel.SchemaManager" />
+        <Bug pattern="NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE" />
+        <Method name="accept"/>
+    </Match>
+    <Match>
+        <Class name="org.fao.geonet.kernel.ThesaurusManager" />
+        <Bug pattern="NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE" />
+        <Method name="loadRepositories"/>
+    </Match>
+    <Match>
+        <Class name="org.fao.geonet.kernel.mef.Importer" />
+        <Bug pattern="NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE" />
+        <Method name="handleMetadataFiles"/>
+    </Match>
+    <Match>
+        <Class name="org.fao.geonet.kernel.mef.MEF2Visitor" />
+        <Bug pattern="NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE" />
+        <Method name="handleBin"/>
+    </Match>
+    <Match>
+        <Class name="org.fao.geonet.kernel.mef.MEFExporter" />
+        <Bug pattern="NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE" />
+        <Method name="doExport"/>
+    </Match>
+    <Match>
+        <Class name="org.fao.geonet.kernel.SchemaManager" />
+        <Bug pattern="NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE" />
+        <Method name="accept"/>
+    </Match>
+    <Match>
+        <Class name="org.fao.geonet.kernel.SchemaManager" />
+        <Bug pattern="NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE" />
+        <Method name="accept"/>
+    </Match>
+    <Match>
+        <Class name="org.fao.geonet.kernel.mef.Importer" />
+        <Bug pattern="NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE" />
+        <Method name="handleMetadataFiles"/>
+    </Match>
+    <Match>
+        <Class name="org.fao.geonet.kernel.schema.MetadataSchema" />
+        <Bug pattern="NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE" />
+        <Method name="loadSchematronRules"/>
+    </Match>
+    <Match>
+        <Class name="org.fao.geonet.kernel.schema.MetadataSchema" />
+        <Bug pattern="NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE" />
+        <Method name="accept"/>
+    </Match>
+    <Match>
+        <Class name="org.fao.geonet.kernel.SchemaManager$1" />
+        <Bug pattern="NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE" />
+        <Method name="accept"/>
+    </Match>
+    <Match>
+        <Class name="org.fao.geonet.kernel.mef.Importer$1" />
+        <Bug pattern="NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE" />
+        <Method name="handleMetadataFiles"/>
+    </Match>
+    <Match>
+        <Class name="org.fao.geonet.kernel.mef.MEFVisitor" />
+        <Bug pattern="NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE" />
+        <Method name="handleBin"/>
+    </Match>
+    <Match>
+        <Class name="org.fao.geonet.kernel.schema.MetadataSchema$SchematronReportRulesFilter" />
+        <Bug pattern="NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE" />
+        <Method name="accept"/>
+    </Match>
+    <Match>
+        <Class name="org.fao.geonet.kernel.search.SearchManager" />
+        <Bug pattern="NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE" />
+        <Method name="createAnalyzer"/>
+    </Match>
+    <Match>
+        <Class name="org.fao.geonet.kernel.search.SearchManager" />
+        <Bug pattern="NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE" />
+        <Method name="initHardCodedAnalyzers"/>
+    </Match>
+    <Match>
+        <Class name="org.fao.geonet.kernel.search.index.FSDirectoryFactory" />
+        <Bug pattern="NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE" />
+        <Method name="findLatestIndexDir"/>
+    </Match>
+    <Match>
+        <Class name="org.fao.geonet.kernel.search.index.FSDirectoryFactory" />
+        <Bug pattern="NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE" />
+        <Method name="listIndices"/>
+    </Match>
+    <Match>
+        <Class name="org.fao.geonet.resources.Resources$1" />
+        <Bug pattern="NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE" />
+        <Method name="accept"/>
+    </Match>
+    <Match>
+        <Class name="org.fao.geonet.resources.Resources" />
+        <Bug pattern="NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE" />
+        <Method name="copyLogo"/>
+    </Match>
+    <Match>
+        <Class name="org.fao.geonet.resources.Resources" />
+        <Bug pattern="NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE" />
+        <Method name="findImagePath"/>
+    </Match>
+    <Match>
+        <Class name="org.fao.geonet.resources.Resources" />
+        <Bug pattern="NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE" />
+        <Method name="locateResource"/>
+    </Match>
+    <Match>
+        <Class name="org.fao.geonet.services.thumbnail.Set$FileWrappingMultipartFile" />
+        <Bug pattern="NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE" />
+        <Method name="getName"/>
+    </Match>
+    <Match>
+        <Class name="org.fao.geonet.services.thumbnail.Set$FileWrappingMultipartFile" />
+        <Bug pattern="NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE" />
+        <Method name="getOriginalFilename"/>
+    </Match>
+    <Match>
+        <Class name="org.fao.geonet.services.util.z3950.Repositories" />
+        <Bug pattern="NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE" />
+        <Method name="getBackupPath"/>
+    </Match>
+    <Match>
+        <Class name="org.fao.geonet.util.LangUtils" />
+        <Bug pattern="NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE" />
+        <Method name="translate"/>
+    </Match>
+    <Match>
+        <Class name="org.geonetwork.map.wmc.WmcServlet" />
+        <Bug pattern="NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE" />
+        <Method name="init"/>
+    </Match>
     <!-- TODO: A boxed primitive is created from a String, just to extract the unboxed primitive value. It is more efficient to just call the static parseXXX method.-->
     <Match>
         <Class name="org.fao.geonet.domain.ISODate" />
@@ -272,5 +421,131 @@
         <Bug pattern="DM_BOXED_PRIMITIVE_FOR_PARSING" />
         <Method name="unsetOperation"/>
     </Match>
+    <Match>
+        <Class name="org.fao.geonet.kernel.SvnManager" />
+        <Bug pattern="DM_BOXED_PRIMITIVE_FOR_PARSING" />
+        <Method name="commitMetadataPrivileges"/>
+    </Match>
+    <Match>
+        <Class name="org.fao.geonet.kernel.SvnManager" />
+        <Bug pattern="DM_BOXED_PRIMITIVE_FOR_PARSING" />
+        <Method name="commitMetadataStatus"/>
+    </Match>
+    <Match>
+        <Class name="org.fao.geonet.kernel.XmlSerializer" />
+        <Bug pattern="DM_BOXED_PRIMITIVE_FOR_PARSING" />
+        <Method name="updateDb"/>
+    </Match>
+    <Match>
+        <Class name="org.fao.geonet.kernel.mef.Importer" />
+        <Bug pattern="DM_BOXED_PRIMITIVE_FOR_PARSING" />
+        <Method name="handleInfo"/>
+    </Match>
+    <Match>
+        <Class name="org.fao.geonet.kernel.mef.Importer" />
+        <Bug pattern="DM_BOXED_PRIMITIVE_FOR_PARSING" />
+        <Method name="apply"/>
+    </Match>
+    <Match>
+        <Class name="org.fao.geonet.kernel.metadata.DefaultStatusActions" />
+        <Bug pattern="DM_BOXED_PRIMITIVE_FOR_PARSING" />
+        <Method name="getTranslatedStatusName"/>
+    </Match>
+    <Match>
+        <Class name="org.fao.geonet.kernel.metadata.DefaultStatusActions" />
+        <Bug pattern="DM_BOXED_PRIMITIVE_FOR_PARSING" />
+        <Method name="onEdit"/>
+    </Match>
+    <Match>
+        <Class name="org.fao.geonet.kernel.metadata.DefaultStatusActions" />
+        <Bug pattern="DM_BOXED_PRIMITIVE_FOR_PARSING" />
+        <Method name="statusChange"/>
+    </Match>
+    <Match>
+        <Class name="org.fao.geonet.kernel.mef.Importer$1" />
+        <Bug pattern="DM_BOXED_PRIMITIVE_FOR_PARSING" />
+        <Method name="handleInfo"/>
+    </Match>
+    <Match>
+        <Class name="org.fao.geonet.kernel.mef.Importer$1$1" />
+        <Bug pattern="DM_BOXED_PRIMITIVE_FOR_PARSING" />
+        <Method name="apply"/>
+    </Match>
+    <Match>
+        <Class name="org.fao.geonet.kernel.search.LuceneConfig$LuceneConfigNumericField" />
+        <Bug pattern="DM_BOXED_PRIMITIVE_FOR_PARSING" />
+        <Method name="new"/>
+    </Match>
+    <Match>
+        <Class name="org.fao.geonet.notifier.MetadataNotifierManager$DeleteTask" />
+        <Bug pattern="DM_BOXED_PRIMITIVE_FOR_PARSING" />
+        <Method name="new"/>
+    </Match>
+    <Match>
+        <Class name="org.fao.geonet.notifier.MetadataNotifierManager$UpdateTask" />
+        <Bug pattern="DM_BOXED_PRIMITIVE_FOR_PARSING" />
+        <Method name="new"/>
+    </Match>
+    <Match>
+        <Class name="org.fao.geonet.lib.ResourceLib" />
+        <Bug pattern="DM_BOXED_PRIMITIVE_FOR_PARSING" />
+        <Method name="getDir"/>
+    </Match>
+    <Match>
+        <Class name="org.fao.geonet.kernel.search.LuceneConfig" />
+        <Bug pattern="DM_BOXED_PRIMITIVE_FOR_PARSING" />
+        <Method name="load"/>
+    </Match>
 
+    <!-- TODO: Create classes or unmutable lists for arrays -->
+    <Match>
+        <Class name="org.fao.geonet.kernel.search.UserQueryInput" />
+        <Bug pattern="MS_MUTABLE_COLLECTION_PKGPROTECT" />
+    </Match>
+<!-- TODO: Inconsistent synchronization
+The fields of this class appear to be accessed inconsistently with respect to synchronization.  This bug report indicates that the bug pattern detector judged that
+The class contains a mix of locked and unlocked accesses,
+The class is not annotated as javax.annotation.concurrent.NotThreadSafe,
+At least one locked access was performed by one of the class's own methods, and
+The number of unsynchronized field accesses (reads and writes) was no more than one third of all accesses, with writes being weighed twice as high as reads
+A typical bug matching this bug pattern is forgetting to synchronize one of the methods in a class that is intended to be thread-safe.
+You can select the nodes labeled "Unsynchronized access" to show the code locations where the detector believed that a field was accessed without synchronization.
+Note that there are various sources of inaccuracy in this detector; for example, the detector cannot statically detect all situations in which a lock is held.  Also, even when the detector is accurate in distinguishing locked vs. unlocked accesses, the code in question may still be correct.
+
+Bug kind and pattern: IS - IS2_INCONSISTENT_SYNC -->
+    <Match>
+        <Class name="org.fao.geonet.resources.ResourceFilter" />
+        <Bug pattern="IS2_INCONSISTENT_SYNC" />
+    </Match>
+<!-- TODO:Inefficient use of keySet iterator instead of entrySet iterator
+This method accesses the value of a Map entry, using a key that was retrieved from a keySet iterator. It is more efficient to use an iterator on the entrySet of the map, to avoid the Map.get(key) lookup.
+
+Bug kind and pattern: WMI - WMI_WRONG_MAP_ITERATOR-->
+    <Match>
+        <Class name="org.fao.geonet.kernel.schema.SchemaLoader" />
+        <Bug pattern="WMI_WRONG_MAP_ITERATOR" />
+    </Match>
+    <Match>
+        <Class name="org.fao.geonet.kernel.search.UserQueryInput" />
+        <Bug pattern="WMI_WRONG_MAP_ITERATOR" />
+        <Method name="getTextCriteria"/>
+    </Match>
+<!-- TODO: Return value of method without side effect is ignored
+This code calls a method and ignores the return value. However our analysis shows that the method (including its implementations in subclasses if any) does not produce any effect other than return value. Thus this call can be removed.
+We are trying to reduce the false positives as much as possible, but in some cases this warning might be wrong. Common false-positive cases include:
+- The method is designed to be overridden and produce a side effect in other projects which are out of the scope of the analysis.
+- The method is called to trigger the class loading which may have a side effect.
+- The method is called just to get some exception.
+If you feel that our assumption is incorrect, you can use a @CheckReturnValue annotation to instruct FindBugs that ignoring the return value of this method is acceptable.
+
+Bug kind and pattern: RV - RV_RETURN_VALUE_IGNORED_NO_SIDE_EFFECT-->
+    <Match>
+        <Class name="org.fao.geonet.kernel.schema.SchemaLoader" />
+        <Bug pattern="RV_RETURN_VALUE_IGNORED_NO_SIDE_EFFECT" />
+    </Match>
+    <Match>
+        <Class name="org.fao.geonet.resources.Resources" />
+        <Bug pattern="RV_RETURN_VALUE_IGNORED_NO_SIDE_EFFECT" />
+        <Method name="loadResource"/>
+    </Match>
 </FindBugsFilter>
