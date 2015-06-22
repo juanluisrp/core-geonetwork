@@ -5,8 +5,8 @@ import com.google.common.collect.Maps;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpRequestBase;
 import org.fao.geonet.csw.common.Csw;
-import org.fao.geonet.kernel.harvest.AbstractHarvesterIntegrationTest;
 import org.fao.geonet.MockRequestFactoryGeonet;
+import org.fao.geonet.kernel.harvest.DummyAbstractHarvesterIntegrationTest;
 import org.fao.geonet.utils.MockXmlRequest;
 import org.fao.geonet.utils.Xml;
 import org.jdom.Element;
@@ -21,7 +21,7 @@ import javax.annotation.Nullable;
  * Date: 10/18/13
  * Time: 4:01 PM
  */
-public class CswHarvesterIntegrationTest extends AbstractHarvesterIntegrationTest {
+public class CswHarvesterIntegrationTest extends DummyAbstractHarvesterIntegrationTest {
     private static final String HOST = "localhost";
     private static final int PORT = 8080;
     private static final String PROTOCOL = "http";
@@ -34,7 +34,7 @@ public class CswHarvesterIntegrationTest extends AbstractHarvesterIntegrationTes
         super("csw");
     }
 
-    protected void mockHttpRequests(MockRequestFactoryGeonet bean) {
+    protected void mockHttpRequests(MockRequestFactoryGeonet bean) throws Exception {
         final MockXmlRequest cswServerRequest = new MockXmlRequest(HOST, PORT, PROTOCOL);
         cswServerRequest.when(CAPABILITIES_URL)
                 .thenReturn(fileStream("capabilities.xml"));
@@ -98,6 +98,7 @@ public class CswHarvesterIntegrationTest extends AbstractHarvesterIntegrationTes
         bean.registerRequest(true, HOST, PORT, PROTOCOL, cswServerRequest);
         bean.registerRequest(true, null, 80, PROTOCOL, cswServerRequest);
     }
+
 
     protected void customizeParams(Element params) {
         addCswSpecificParams(params, getOutputSchema());
