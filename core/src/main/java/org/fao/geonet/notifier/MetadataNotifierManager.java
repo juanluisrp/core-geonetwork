@@ -161,7 +161,7 @@ public class MetadataNotifierManager {
         private String uuid;
 
         UpdateTask(Element ISO19139, String metadataId, String uuid) {
-            this.metadataId = Integer.valueOf(metadataId);
+            this.metadataId = Integer.parseInt(metadataId);
             this.uuid = uuid;
             this.ISO19139 = ISO19139;
         }
@@ -216,7 +216,7 @@ public class MetadataNotifierManager {
         private String uuid;
 
         DeleteTask(String metadataId, String uuid) {
-            this.metadataId = Integer.valueOf(metadataId);
+            this.metadataId = Integer.parseInt(metadataId);
             this.uuid = uuid;
         }
 

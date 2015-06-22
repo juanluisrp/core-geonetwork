@@ -502,10 +502,8 @@ public class SchemaLoader
 				mds.addElement(name,type,new ArrayList<String>(),new ArrayList<String>(), "");
 				mdt.addElementWithType(name,type,ee.min,ee.max);
 			}
-		} else if (!isAbstract) {
-			mdt.addRefElementWithType(ee.ref,type,ee.min,ee.max);
 		} else {
-		    Log.warning(Geonet.SCHEMA_MANAGER, "WARNING: element "+ee.ref+" from "+baseName+" has fallen through the logic (abstract: "+isAbstract+") - ignoring");
+			mdt.addRefElementWithType(ee.ref, type, ee.min, ee.max);
 		}
 	}
 
