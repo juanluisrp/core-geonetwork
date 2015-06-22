@@ -225,6 +225,27 @@
         <Bug pattern="NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE" />
         <Method name="resolve"/>
     </Match>
+    <Match>
+        <Class name="jeeves.server.dispatchers.guiservices.XmlCacheManager" />
+        <Bug pattern="NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE" />
+        <Method name="get"/>
+    </Match>
+    <Match>
+        <Class name="org.fao.geonet.kernel.GeonetworkDataDirectory" />
+        <Bug pattern="NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE" />
+        <Method name="initDataDirectory"/>
+    </Match>
+    <Match>
+        <Class name="org.fao.geonet.kernel.GeonetworkDataDirectory" />
+        <Bug pattern="NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE" />
+        <Method name="updateSystemDataDirWithNodeSuffix"/>
+    </Match>
+    <Match>
+        <Class name="org.fao.geonet.kernel.GeonetworkDataDirectory" />
+        <Bug pattern="NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE" />
+        <Method name="updateSystemDataDirWithNodeSuffix"/>
+    </Match>
+
     <!-- TODO: A boxed primitive is created from a String, just to extract the unboxed primitive value. It is more efficient to just call the static parseXXX method.-->
     <Match>
         <Class name="org.fao.geonet.domain.ISODate" />
@@ -240,6 +261,16 @@
         <Class name="org.fao.geonet.repository.specification.OperationAllowedSpecs" />
         <Bug pattern="DM_BOXED_PRIMITIVE_FOR_PARSING" />
         <Method name="hasMetadataId"/>
+    </Match>
+    <Match>
+        <Class name="org.fao.geonet.kernel.DataManager" />
+        <Bug pattern="DM_BOXED_PRIMITIVE_FOR_PARSING" />
+        <Method name="setOperation"/>
+    </Match>
+    <Match>
+        <Class name="org.fao.geonet.kernel.DataManager" />
+        <Bug pattern="DM_BOXED_PRIMITIVE_FOR_PARSING" />
+        <Method name="unsetOperation"/>
     </Match>
 
 </FindBugsFilter>
