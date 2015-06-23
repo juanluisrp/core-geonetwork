@@ -94,7 +94,14 @@ public class Update {
             if (!filter.getKey().startsWith(OCCUR_PREFIX)) {
                 final ServiceParam param = new ServiceParam(filter.getKey(), filter.getValue());
                 Character occur = occurMapping.get(filter.getKey());
-                param.setOccur(occur == null ? '+' : occur);
+                if(occur == null)
+                {
+                    param.setOccur('+');
+                }
+                else
+                {
+                    param.setOccur(occur);
+                }
                 params.add(param);
             }
         }
