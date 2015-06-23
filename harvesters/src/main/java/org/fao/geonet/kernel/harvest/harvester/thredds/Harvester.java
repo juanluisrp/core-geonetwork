@@ -1096,13 +1096,13 @@ class Harvester extends BaseAligner implements IHarvester<HarvestResult>
 	
 	private void processServices(Element cata, Path serviceStyleSheet) throws Exception {
 
-		for (String sUrl : services.keySet()) {
+		for (Map.Entry tsEntry : services.Entry()) {
 		
-			ThreddsService ts = services.get(sUrl);
+			ThreddsService ts = ((ThreddsService)ts.getValue());
 			InvService serv = ts.service;
 
             if(log.isDebugEnabled()) log.debug("Processing Thredds service: "+serv.toString());
-
+			String sUrl	= tsEntry.getKey().toString();
 			String sUuid = Sha1Encoder.encodeString (sUrl);
 
 			//--- TODO: if service is WCS or WMS then pass the full service url to 
