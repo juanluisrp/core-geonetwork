@@ -425,6 +425,11 @@
         <Bug pattern="NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE" />
         <Method name="accept"/>
     </Match>
+    <Match>
+        <Class name="org.forg.fao.geonet.monitor.service.LogConfig" />
+        <Bug pattern="NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE" />
+        <Method name="getLog"/>
+    </Match>
     <!-- TODO: A boxed primitive is created from a String, just to extract the unboxed primitive value. It is more efficient to just call the static parseXXX method.-->
     <Match>
         <Class name="org.fao.geonet.domain.ISODate" />
