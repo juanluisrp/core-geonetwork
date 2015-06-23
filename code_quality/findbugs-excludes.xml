@@ -583,4 +583,286 @@ Bug kind and pattern: RV - RV_RETURN_VALUE_IGNORED_NO_SIDE_EFFECT-->
         <Bug pattern="RV_RETURN_VALUE_IGNORED_NO_SIDE_EFFECT" />
         <Method name="loadResource"/>
     </Match>
+
+    <!-- TODO: Services findbugs -->
+    <Match>
+        <Class name="org.fao.geonet.guiservices.csw.virtual.Update"/>
+        <Bug name="DM_BOXED_PRIMITIVE_FOR_PARSING"/>
+    </Match>
+    <Match>
+        <Class name="org.fao.geonet.guiservices.templates.AddDefault"/>
+        <Bug name="NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE"/>
+    </Match>
+    <Match>
+        <Class name="org.fao.geonet.services.config.DoActions"/>
+        <Bug name="DM_BOXED_PRIMITIVE_FOR_PARSING"/>
+    </Match>
+    <Match>
+        <Class name="org.fao.geonet.services.crs.Constant"/>
+        <Bug name="MS_MUTABLE_COLLECTION_PKGPROTECT"/>
+    </Match>
+    <Match>
+        <Class name="org.fao.geonet.services.crs.Search"/>
+        <Bug name="DM_BOXED_PRIMITIVE_FOR_PARSING"/>
+    </Match>
+    <Match>
+        <Class name="org.fao.geonet.services.log.List"/>
+        <Bug name="NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE"/>
+    </Match>
+    <Match>
+        <Class name="org.fao.geonet.services.log.List"/>
+        <Bug name="SS_SHOULD_BE_STATIC"/>
+    </Match>
+    <Match>
+        <Class name="org.fao.geonet.services.log.ListLogFilesResponse$LogFileResponse"/>
+        <Bug name="URF_UNREAD_FIELD"/>
+    </Match>
+    <Match>
+        <Class name="org.fao.geonet.services.log.ListLogFilesResponse$LogFileResponse"/>
+        <Bug name="URF_UNREAD_FIELD"/>
+    </Match>
+    <Match>
+        <Class name="org.fao.geonet.services.logo.Set"/>
+        <Bug name="REC_CATCH_EXCEPTION"/>
+    </Match>
+    <Match>
+        <Class name="org.fao.geonet.services.metadata.Create"/>
+        <Bug name="DM_BOXED_PRIMITIVE_FOR_PARSING"/>
+    </Match>
+    <Match>
+        <Class name="org.fao.geonet.services.metadata.ImportFromDir$ImportCallable"/>
+        <Bug name="DM_BOXED_PRIMITIVE_FOR_PARSING"/>
+    </Match>
+    <Match>
+        <Class name="org.fao.geonet.services.metadata.ImportFromDir$MefOrXmlFileFilter"/>
+        <Bug name="NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE"/>
+    </Match>
+    <Match>
+        <Class name="org.fao.geonet.services.metadata.Rate"/>
+        <Bug name="DM_BOXED_PRIMITIVE_FOR_PARSING"/>
+    </Match>
+    <Match>
+        <Class name="org.fao.geonet.services.metadata.XslProcessing"/>
+        <Bug name="DM_BOXED_PRIMITIVE_FOR_PARSING"/>
+    </Match>
+    <Match>
+        <Class name="org.fao.geonet.services.metadata.format.AbstractFormatService"/>
+        <Bug name="NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE"/>
+    </Match>
+    <Match>
+        <Class name="org.fao.geonet.services.metadata.format.AbstractFormatService"/>
+        <Bug name="NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE"/>
+    </Match>
+    <Match>
+        <Class name="org.fao.geonet.services.metadata.format.ConfigFile"/>
+        <Bug name="NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE"/>
+    </Match>
+    <Match>
+        <Class name="org.fao.geonet.services.metadata.format.ConfigFile"/>
+        <Bug name="NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE"/>
+    </Match>
+    <Match>
+        <Class name="org.fao.geonet.services.metadata.format.ConfigFile"/>
+        <Bug name="NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE"/>
+    </Match>
+    <Match>
+        <Class name="org.fao.geonet.services.metadata.format.Format"/>
+        <Bug name="NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE"/>
+    </Match>
+    <Match>
+        <Class name="org.fao.geonet.services.metadata.format.Format"/>
+        <Bug name="NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE"/>
+    </Match>
+    <Match>
+        <Class name="org.fao.geonet.services.metadata.format.Format$1"/>
+        <Bug name="NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE"/>
+    </Match>
+    <Match>
+        <Class name="org.fao.geonet.services.metadata.format.Format$2"/>
+        <Bug name="NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE"/>
+    </Match>
+    <Match>
+        <Class name="org.fao.geonet.services.metadata.format.Format$2"/>
+        <Bug name="NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE"/>
+    </Match>
+    <Match>
+        <Class name="org.fao.geonet.services.metadata.format.Format$2"/>
+        <Bug name="NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE"/>
+    </Match>
+    <Match>
+        <Class name="org.fao.geonet.services.metadata.format.Format$2"/>
+        <Bug name="NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE"/>
+    </Match>
+    <Match>
+        <Class name="org.fao.geonet.services.metadata.format.Format$2"/>
+        <Bug name="NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE"/>
+    </Match>
+    <Match>
+        <Class name="org.fao.geonet.services.metadata.format.ListBundleFiles"/>
+        <Bug name="NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE"/>
+    </Match>
+    <Match>
+        <Class name="org.fao.geonet.services.metadata.format.ListBundleFiles"/>
+        <Bug name="NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE"/>
+    </Match>
+    <Match>
+        <Class name="org.fao.geonet.services.metadata.format.ListBundleFiles"/>
+        <Bug name="NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE"/>
+    </Match>
+    <Match>
+        <Class name="org.fao.geonet.services.metadata.format.ListBundleFiles"/>
+        <Bug name="NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE"/>
+    </Match>
+    <Match>
+        <Class name="org.fao.geonet.services.metadata.format.ListBundleFiles"/>
+        <Bug name="NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE"/>
+    </Match>
+    <Match>
+        <Class name="org.fao.geonet.services.metadata.format.Resource"/>
+        <Bug name="NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE"/>
+    </Match>
+    <Match>
+        <Class name="org.fao.geonet.services.metadata.format.cache.FilesystemStore"/>
+        <Bug name="NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE"/>
+    </Match>
+    <Match>
+        <Class name="org.fao.geonet.services.metadata.format.cache.FilesystemStore"/>
+        <Bug name="NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE"/>
+    </Match>
+    <Match>
+        <Class name="org.fao.geonet.services.metadata.format.cache.FilesystemStore$2"/>
+        <Bug name="NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE"/>
+    </Match>
+    <Match>
+        <Class name="org.fao.geonet.services.metadata.format.cache.FilesystemStore$2"/>
+        <Bug name="NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE"/>
+    </Match>
+    <Match>
+        <Class name="org.fao.geonet.services.metadata.format.cache.FilesystemStore$2"/>
+        <Bug name="NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE"/>
+    </Match>
+    <Match>
+        <Class name="org.fao.geonet.services.metadata.format.groovy.template.TNodeFactory"/>
+        <Bug name="MS_MUTABLE_COLLECTION_PKGPROTECT"/>
+    </Match>
+    <Match>
+        <Class name="org.fao.geonet.services.metadata.format.groovy.template.TemplateType"/>
+        <Bug name="NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE"/>
+    </Match>
+    <Match>
+        <Class name="org.fao.geonet.services.metadata.format.groovy.template.TemplateType"/>
+        <Bug name="NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE"/>
+    </Match>
+    <Match>
+        <Class name="org.fao.geonet.services.metadata.format.groovy.util.AssociatedLink"/>
+        <Bug name="EQ_DOESNT_OVERRIDE_EQUALS"/>
+    </Match>
+    <Match>
+        <Class name="org.fao.geonet.services.metadata.format.groovy.util.LinkType"/>
+        <Bug name="URF_UNREAD_PUBLIC_OR_PROTECTED_FIELD"/>
+    </Match>
+    <Match>
+        <Class name="org.fao.geonet.services.metadata.format.groovy.util.LinkType"/>
+        <Bug name="URF_UNREAD_PUBLIC_OR_PROTECTED_FIELD"/>
+    </Match>
+    <Match>
+        <Class name="org.fao.geonet.services.metadata.format.groovy.util.LinkType"/>
+        <Bug name="URF_UNREAD_PUBLIC_OR_PROTECTED_FIELD"/>
+    </Match>
+    <Match>
+        <Class name="org.fao.geonet.services.metadata.format.groovy.util.LinkType"/>
+        <Bug name="UUF_UNUSED_PUBLIC_OR_PROTECTED_FIELD"/>
+    </Match>
+    <Match>
+        <Class name="org.fao.geonet.services.metadata.replace.MassiveXslMetadataReindexer"/>
+        <Bug name="DM_BOXED_PRIMITIVE_FOR_PARSING"/>
+    </Match>
+    <Match>
+        <Class name="org.fao.geonet.services.metadata.replace.MassiveXslMetadataReindexer"/>
+        <Bug name="DM_NUMBER_CTOR"/>
+    </Match>
+    <Match>
+        <Class name="org.fao.geonet.services.metadata.replace.MassiveXslMetadataReindexer"/>
+        <Bug name="UC_USELESS_OBJECT"/>
+    </Match>
+    <Match>
+        <Class name="org.fao.geonet.services.publisher.Do"/>
+        <Bug name="NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE"/>
+    </Match>
+    <Match>
+        <Class name="org.fao.geonet.services.publisher.Do"/>
+        <Bug name="NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE"/>
+    </Match>
+    <Match>
+        <Class name="org.fao.geonet.services.publisher.GeoFile"/>
+        <Bug name="NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE"/>
+    </Match>
+    <Match>
+        <Class name="org.fao.geonet.services.publisher.GeoFile$1"/>
+        <Bug name="NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE"/>
+    </Match>
+    <Match>
+        <Class name="org.fao.geonet.services.publisher.GeoFile$2"/>
+        <Bug name="NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE"/>
+    </Match>
+    <Match>
+        <Class name="org.fao.geonet.services.publisher.GeoServerRest"/>
+        <Bug name="NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE"/>
+    </Match>
+    <Match>
+        <Class name="org.fao.geonet.services.region.ListRegionsResponse"/>
+        <Bug name="URF_UNREAD_FIELD"/>
+    </Match>
+    <Match>
+        <Class name="org.fao.geonet.services.region.ListRegionsResponse$CategoryResponse"/>
+        <Bug name="URF_UNREAD_FIELD"/>
+    </Match>
+    <Match>
+        <Class name="org.fao.geonet.services.region.ListRegionsResponse$RegionResponse"/>
+        <Bug name="URF_UNREAD_FIELD"/>
+    </Match>
+    <Match>
+        <Class name="org.fao.geonet.services.region.ListRegionsResponse$RegionResponse"/>
+        <Bug name="URF_UNREAD_FIELD"/>
+    </Match>
+    <Match>
+        <Class name="org.fao.geonet.services.region.ListRegionsResponse$RegionResponse"/>
+        <Bug name="URF_UNREAD_FIELD"/>
+    </Match>
+    <Match>
+        <Class name="org.fao.geonet.services.region.ListRegionsResponse$RegionResponse"/>
+        <Bug name="URF_UNREAD_FIELD"/>
+    </Match>
+    <Match>
+        <Class name="org.fao.geonet.services.region.ListRegionsResponse$RegionResponse"/>
+        <Bug name="URF_UNREAD_FIELD"/>
+    </Match>
+    <Match>
+        <Class name="org.fao.geonet.services.region.ListRegionsResponse$RegionResponse"/>
+        <Bug name="URF_UNREAD_FIELD"/>
+    </Match>
+    <Match>
+        <Class name="org.fao.geonet.services.region.ListRegionsResponse$RegionResponse"/>
+        <Bug name="URF_UNREAD_FIELD"/>
+    </Match>
+    <Match>
+        <Class name="org.fao.geonet.services.resources.DownloadArchive"/>
+        <Bug name="NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE"/>
+    </Match>
+    <Match>
+        <Class name="org.fao.geonet.services.resources.handlers.DefaultResourceDownloadHandler"/>
+        <Bug name="NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE"/>
+    </Match>
+    <Match>
+        <Class name="org.fao.geonet.services.thesaurus.List"/>
+        <Bug name="NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE"/>
+    </Match>
+    <Match>
+        <Class name="org.fao.geonet.services.user.Get"/>
+        <Bug name="DM_BOXED_PRIMITIVE_FOR_PARSING"/>
+    </Match>
+    <Match>
+        <Class name="org.fao.geonet.services.user.UserGroups"/>
+        <Bug name="DM_BOXED_PRIMITIVE_FOR_PARSING"/>
+    </Match>
 </FindBugsFilter>
