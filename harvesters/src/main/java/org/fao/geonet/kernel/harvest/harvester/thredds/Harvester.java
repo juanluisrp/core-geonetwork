@@ -1098,7 +1098,7 @@ class Harvester extends BaseAligner implements IHarvester<HarvestResult>
 
 		for (Map.Entry tsEntry : services.Entry()) {
 		
-			ThreddsService ts = ((ThreddsService)ts.getValue());
+			ThreddsService ts = ((ThreddsService)tsEntry.getValue());
 			InvService serv = ts.service;
 
             if(log.isDebugEnabled()) log.debug("Processing Thredds service: "+serv.toString());
