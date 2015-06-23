@@ -594,6 +594,16 @@ Bug kind and pattern: RV - RV_RETURN_VALUE_IGNORED_NO_SIDE_EFFECT-->
         <Method name="exec"/>
     </Match>
     <Match>
+        <Class name="org.fao.geonet.guiservices.csw.virtual.Update"/>
+        <Bug pattern="DM_BOXED_PRIMITIVE_FOR_PARSING"/>
+        <Method name="exec"/>
+    </Match>
+    <Match>
+        <Class name="org.fao.geonet.guiservices.templates.AddDefault"/>
+        <Bug pattern="NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE"/>
+        <Method name="exec"/>
+    </Match>
+    <Match>
         <Class name="org.fao.geonet.services.config.DoActions"/>
         <Bug pattern="DM_BOXED_PRIMITIVE_FOR_PARSING"/>
         <Method name="doActions"/>
