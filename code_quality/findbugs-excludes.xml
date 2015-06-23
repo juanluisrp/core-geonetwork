@@ -928,4 +928,20 @@ Bug kind and pattern: RV - RV_RETURN_VALUE_IGNORED_NO_SIDE_EFFECT-->
         <Bug pattern="DM_BOXED_PRIMITIVE_FOR_PARSING"/>
         <Method name="exec"/>
     </Match>
+    <!-- TODO: WRO4J findbug matches -->
+    <Match>
+        <Class name="org.fao.geonet.wro4j.GeonetWroModelFactory"/>
+        <Bug pattern="NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE"/>
+        <Method name="addTemplateResourceFrom"/>
+    </Match>
+    <Match>
+        <Class name="org.fao.geonet.wro4j.GeonetWroModelFactory"/>
+        <Bug pattern="NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE"/>
+        <Method name="addTemplateResourceFrom"/>
+    </Match>
+    <Match>
+        <Class name="org.fao.geonet.wro4j.GeonetWroModelFactory"/>
+        <Bug pattern="NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE"/>
+        <Method name="addTemplateResourceFrom"/>
+    </Match>
 </FindBugsFilter>
