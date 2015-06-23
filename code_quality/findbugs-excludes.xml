@@ -395,6 +395,31 @@
         <Bug pattern="NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE" />
         <Method name="init"/>
     </Match>
+    <Match>
+        <Class name="org.fao.geonet.kernel.harvest.harvester.geonet.Aligner" />
+        <Bug pattern="NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE" />
+        <Method name="extractValidMetadataForImport"/>
+    </Match>
+    <Match>
+        <Class name="org.fao.geonet.kernel.harvest.harvester.geonet.Aligner" />
+        <Bug pattern="NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE" />
+        <Method name="removeOldFile"/>
+    </Match>
+    <Match>
+        <Class name="org.fao.geonet.kernel.harvest.harvester.localfilesystem.LocalFsHarvesterFileVisitor" />
+        <Bug pattern="NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE" />
+        <Method name="visitFile"/>
+    </Match>
+    <Match>
+        <Class name="org.fao.geonet.services.harvesting.Info" />
+        <Bug pattern="NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE" />
+        <Method name="getIcons"/>
+    </Match>
+    <Match>
+        <Class name="org.fao.geonet.services.harvesting.Info$1" />
+        <Bug pattern="NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE" />
+        <Method name="accept"/>
+    </Match>
     <!-- TODO: A boxed primitive is created from a String, just to extract the unboxed primitive value. It is more efficient to just call the static parseXXX method.-->
     <Match>
         <Class name="org.fao.geonet.domain.ISODate" />
