@@ -934,4 +934,15 @@ Bug kind and pattern: RV - RV_RETURN_VALUE_IGNORED_NO_SIDE_EFFECT-->
         <Bug pattern="NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE"/>
         <Method name="addTemplateResourceFrom"/>
     </Match>
+    <!-- TODO: Web findbug matches -->
+    <Match>
+        <Class name="org.fao.geonet.Geonetwork"/>
+        <Bug pattern="DM_BOXED_PRIMITIVE_FOR_PARSING"/>
+        <Method name="start"/
+    </Match>
+    <Match>
+        <Class name="org.fao.geonet.Geonetwork"/>
+        <Bug pattern="UC_USELESS_CONDITION"/>
+        <Method name="start"/>
+    </Match>
 </FindBugsFilter>
