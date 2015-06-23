@@ -583,9 +583,4 @@ Bug kind and pattern: RV - RV_RETURN_VALUE_IGNORED_NO_SIDE_EFFECT-->
         <Bug pattern="RV_RETURN_VALUE_IGNORED_NO_SIDE_EFFECT" />
         <Method name="loadResource"/>
     </Match>
-    <Match>
-        <Class name="com.yammer.metrics.core.HealthCheck$Result" />
-        <Bug pattern="RV_RETURN_VALUE_IGNORED_NO_SIDE_EFFECT" />
-        <Method name="unhealthy"/>
-    </Match>
 </FindBugsFilter>
