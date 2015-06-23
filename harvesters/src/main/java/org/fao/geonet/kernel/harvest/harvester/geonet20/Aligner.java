@@ -346,7 +346,7 @@ public class Aligner
 
             if (catId != null) {
                 //--- it is not necessary to query the db. Anyway...
-                if (!dataMan.isCategorySet(id, Integer.valueOf(catId))) {
+                if (!dataMan.isCategorySet(id, Integer.parseInt(catId))) {
                     if (log.isDebugEnabled()) {
                         log.debug("  - Setting category : " + catName);
                     }
