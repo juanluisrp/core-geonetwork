@@ -938,7 +938,7 @@ Bug kind and pattern: RV - RV_RETURN_VALUE_IGNORED_NO_SIDE_EFFECT-->
     <Match>
         <Class name="org.fao.geonet.Geonetwork"/>
         <Bug pattern="DM_BOXED_PRIMITIVE_FOR_PARSING"/>
-        <Method name="start"/
+        <Method name="start"/>
     </Match>
     <Match>
         <Class name="org.fao.geonet.Geonetwork"/>
