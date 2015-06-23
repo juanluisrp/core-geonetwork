@@ -1096,7 +1096,7 @@ class Harvester extends BaseAligner implements IHarvester<HarvestResult>
 	
 	private void processServices(Element cata, Path serviceStyleSheet) throws Exception {
 
-		for (Map.Entry tsEntry : services.Entry()) {
+		for (Map.Entry tsEntry : services.entrySet()) {
 		
 			ThreddsService ts = ((ThreddsService)tsEntry.getValue());
 			InvService serv = ts.service;
