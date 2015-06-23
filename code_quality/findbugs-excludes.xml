@@ -416,6 +416,11 @@
         <Method name="getIcons"/>
     </Match>
     <Match>
+        <Class name="org.fao.geonet.services.harvesting.Info" />
+        <Bug pattern="NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE" />
+        <Method name="getStylesheets"/>
+    </Match>
+    <Match>
         <Class name="org.fao.geonet.services.harvesting.Info$1" />
         <Bug pattern="NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE" />
         <Method name="accept"/>
