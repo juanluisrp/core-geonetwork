@@ -16,6 +16,7 @@
 
     <xsl:variable name="currentView" select="$config/editor/views/view[tab/@id = $tab]"/>
     <div class="gn-scroll-spy"
+        data-gn-scroll-spy="gn-editor-{$metadataId}"
       data-watch=""
         data-all-depth="{if ($isFlatMode) then 'true' else 'false'}"
         data-ng-hide="gnSchemaConfig.hideScrollSpy"   >
@@ -140,6 +141,13 @@
                     <i class="fa"
                       data-ng-class="gnCurrentEdit.displayAttributes ? 'fa-check-square-o' : 'fa-square-o'"/>
                     &#160;<span data-translate="">toggleAttributes</span>
+                  </a>
+                </li>
+                <li>
+                <a data-ng-click="toggleTooltips(true)" href="">
+                    <i class="fa"
+                      data-ng-class="gnCurrentEdit.displayTooltips ? 'fa-check-square-o' : 'fa-square-o'"/>
+                    &#160;<span data-translate="">toggleTooltips</span>
                   </a>
                 </li>
               </xsl:otherwise>

@@ -306,17 +306,20 @@
                   <xsl:if test="helper">
                     <!-- Get them, it may contains multiple helpers with context (eg. different for service and dataset) -->
                     <xsl:variable name="helper" select="gn-fn-metadata:getHelper($schema, helper/@name, helper/@context, helper/@xpath)"/>
+                    <xsl:variable name="node" select="$metadata/descendant::*[gn:element/@ref = $matchingNodeValue/*/gn:element/@parent]"/>
                     
+                    <!-- propose the helper matching the current node type -->
                     <xsl:choose>
-                      <xsl:when test="count($helper) > 1">
+                      <xsl:when test="count($helper) > 1 and $node">
                         <!-- If more than one, get the one matching the context of the matching element. -->
                         <xsl:variable name="chooseHelperBasedOnElement" 
-                          select="gn-fn-metadata:getHelper($helper, 
-                          $metadata/descendant::*[gn:element/@ref = $matchingNodeValue/*/gn:element/@parent])"/>
+                                      select="gn-fn-metadata:getHelper($helper, $node)"/>
                         <xsl:copy-of select="$chooseHelperBasedOnElement"/>
                       </xsl:when>
                       <xsl:otherwise>
-                        <xsl:copy-of select="$helper"/>
+                        <!-- Return the first helper as the node
+                        does not exist yet in the record. -->
+                        <xsl:copy-of select="$helper[1]"/>
                       </xsl:otherwise>
                     </xsl:choose>
                   </xsl:if>
@@ -362,12 +365,6 @@
                   XPATH mode which will create the new element at the 
                   correct location. -->
             <xsl:variable name="id" select="concat('_X', gn:element/@ref, '_replace')"/>
-            <xsl:variable name="nodetmp">  
-               <xsl:call-template name="backtrackingSearch">
-                <xsl:with-param name="node" select="$base"/>
-                <xsl:with-param name="ref" select="gn:element/@ref"/>
-               </xsl:call-template>
-            </xsl:variable>
             <xsl:call-template name="render-element-template-field">
               <xsl:with-param name="name" select="$strings/*[name() = $name]"/>
               <xsl:with-param name="id" select="$id"/>
@@ -376,7 +373,6 @@
               <xsl:with-param name="keyValues" select="$keyValues"/>
               <xsl:with-param name="refToDelete" select="if ($refToDelete) then $refToDelete/gn:element else ''"/>
               <xsl:with-param name="isFirst" select="position() = 1"/>
-              <xsl:with-param name="parentName" select="$nodetmp" />
             </xsl:call-template>
           </xsl:for-each>
           
@@ -403,13 +399,6 @@
               </template>
             </xsl:variable>
             
-            <xsl:variable name="nodetmp">  
-               <xsl:call-template name="backtrackingSearch">
-                <xsl:with-param name="node" select="$base"/>
-                <xsl:with-param name="ref" select="gn:element/@ref"/>
-               </xsl:call-template>
-            </xsl:variable>
-            
             <xsl:call-template name="render-element-template-field">
               <xsl:with-param name="name" select="$strings/*[name() = $name]"/>
               <xsl:with-param name="id" select="$id"/>
@@ -417,31 +406,11 @@
               <xsl:with-param name="isExisting" select="false()"/>
               <xsl:with-param name="template" select="$templateWithoutGnCopyElement"/>
               <xsl:with-param name="isMissingLabel" select="$strings/*[name() = $isMissingLabel]"/>
-              <xsl:with-param name="parentName" select="$nodetmp" />
             </xsl:call-template>
           </xsl:if>
         </xsl:when>
       </xsl:choose>
     </xsl:if>
-  </xsl:template>
-  
-  <!-- Get the name of the parent given a base node and the ref we are looking for -->
-  <xsl:template name="backtrackingSearch">
-    <xsl:param name="node"/>
-    <xsl:param name="ref" />
-    <xsl:choose>
-	    <xsl:when test="$ref=$node/gn:element/@ref">
-	        <xsl:value-of select="name($node/..)"/>
-	    </xsl:when>
-	    <xsl:otherwise>
-	       <xsl:for-each select="$node/*">	         
-	           <xsl:call-template name="backtrackingSearch">
-	               <xsl:with-param name="node" select="."/>
-	               <xsl:with-param name="ref" select="$ref"/>
-	           </xsl:call-template>
-           </xsl:for-each>
-	    </xsl:otherwise>
-     </xsl:choose>
   </xsl:template>
 
   <xsl:template mode="form-builder" match="section[@template]">

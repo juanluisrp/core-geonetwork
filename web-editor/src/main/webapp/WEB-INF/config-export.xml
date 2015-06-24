@@ -45,7 +45,8 @@
 		<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
 		<service name="xml_iso19115to19139">
-			<class name=".services.metadata.Convert" />
+			<class name=".services.metadata.Show" />
+			<output sheet="conversion/export/xml_iso19115_to_19139.xsl" contentType="text/xml; charset=UTF-8"/>
 			<error id="operation-not-allowed" sheet="error-embedded.xsl" statusCode="403">
 				<xml name="error" file="xml/privileges-error.xml" />
 			</error>

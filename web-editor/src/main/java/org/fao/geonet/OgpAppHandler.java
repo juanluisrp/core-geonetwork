@@ -24,7 +24,6 @@
 package org.fao.geonet;
 
 import com.vividsolutions.jts.geom.MultiPolygon;
-
 import jeeves.config.springutil.ServerBeanPropertyUpdater;
 import jeeves.interfaces.ApplicationHandler;
 import jeeves.server.JeevesEngine;
@@ -33,25 +32,14 @@ import jeeves.server.ServiceConfig;
 import jeeves.server.context.ServiceContext;
 import jeeves.server.sources.http.ServletPathFinder;
 import jeeves.xlink.Processor;
-
 import org.apache.commons.lang.StringUtils;
 import org.fao.geonet.constants.Geonet;
-import org.fao.geonet.domain.Metadata;
-import org.fao.geonet.domain.Pair;
-import org.fao.geonet.domain.Profile;
-import org.fao.geonet.domain.Setting;
-import org.fao.geonet.domain.User;
+import org.fao.geonet.domain.*;
 import org.fao.geonet.entitylistener.AbstractEntityListenerManager;
 import org.fao.geonet.exceptions.OperationAbortedEx;
 import org.fao.geonet.inspireatom.InspireAtomType;
 import org.fao.geonet.inspireatom.harvester.InspireAtomHarvesterScheduler;
-import org.fao.geonet.kernel.DataManager;
-import org.fao.geonet.kernel.GeonetworkDataDirectory;
-import org.fao.geonet.kernel.SchemaManager;
-import org.fao.geonet.kernel.SvnManager;
-import org.fao.geonet.kernel.ThesaurusManager;
-import org.fao.geonet.kernel.XmlSerializer;
-import org.fao.geonet.kernel.XmlSerializerSvn;
+import org.fao.geonet.kernel.*;
 import org.fao.geonet.kernel.csw.CswHarvesterResponseExecutionService;
 import org.fao.geonet.kernel.harvest.HarvestManager;
 import org.fao.geonet.kernel.metadata.StatusActions;
@@ -102,6 +90,8 @@ import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.web.context.request.ServletWebRequest;
 
+import javax.servlet.ServletContext;
+import javax.sql.DataSource;
 import java.io.File;
 import java.net.URI;
 import java.net.URL;
@@ -116,9 +106,6 @@ import java.util.UUID;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
-
-import javax.servlet.ServletContext;
-import javax.sql.DataSource;
 
 /**
  * This is the main class, it handles http connections and inits the system.
@@ -613,8 +600,8 @@ public class OgpAppHandler implements ApplicationHandler {
             Path logo =logosDir.resolve(nodeUuid + ".png");
             if (!Files.exists(logo)) {
                 final ServletContext servletContext = context.getServlet().getServletContext();
-                byte[] logoData = Resources.loadImage(servletContext, appPath, "images/logos/OGP-icon-24.png", 
-											new byte[0]).one();
+                byte[] logoData = Resources.loadImage(servletContext, appPath,
+                        "images/harvesting/GN3.png", new byte[0]).one();
                 Files.write(logo, logoData);
             }
         } catch (Throwable e) {

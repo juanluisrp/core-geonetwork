@@ -96,23 +96,6 @@
          <version>${spring.version}</version>
           <scope>compile</scope>
       </dependency>
-
- 	<!-- This is to avoid 406 error with spring -->
-	<dependency>
-	    <groupId>com.fasterxml.jackson.core</groupId>
-	    <artifactId>jackson-databind</artifactId>
-	   <version>2.1.2</version>
-	</dependency>
- 	<dependency>  
-        <groupId>javax.xml.bind</groupId>  
-        <artifactId>jaxb-api</artifactId>  
-        <version>2.2.11</version>  
-    </dependency> 
-     <dependency>
-		<groupId>com.sun.xml.bind</groupId>
-		<artifactId>jaxb-impl</artifactId>
-		<version>2.2.7</version>
-	</dependency>
  
       <!-- Z39.50, SRU  stuff (ie: Spring, CQL, ...)  -->
     <dependency>
@@ -428,6 +411,7 @@
 	    <artifactId>jsoup</artifactId>
 	    <version>0.2.2</version>
 	</dependency>
+
     <dependency>
       <groupId>${project.groupId}</groupId>
       <artifactId>geonetwork-client</artifactId>
@@ -491,11 +475,7 @@
       <artifactId>schema-dublin-core</artifactId>
       <version>${project.version}</version>
     </dependency>
-    <dependency>
-      <groupId>${project.groupId}</groupId>
-      <artifactId>ogp-services</artifactId>
-      <version>${project.version}</version>
-    </dependency>
+
   </dependencies>
 
   
@@ -618,7 +598,9 @@
               </includes>
               <targetPath>WEB-INF/data/config/schema_plugins</targetPath>
             </resource>
-            <!-- <resource>
+            <!--
+            Enable to use ExtJS UI
+            <resource>
               <directory>${project.basedir}/../web-client/src/main/resources</directory>
             </resource> -->
             <resource>
@@ -665,7 +647,16 @@
             </resource>-->
           </webResources>
             <!-- <packagingExcludes>WEB-INF/data/**</packagingExcludes> -->
-          <packagingExcludes>xml/schemas/**</packagingExcludes>
+          <packagingExcludes>
+            xml/schemas/**,
+            catalog/lib/style/bootstrap/docs/**,
+            catalog/lib/style/bootstrap/fonts/**,
+            catalog/lib/style/bootstrap/grunt/**,
+            catalog/lib/style/bootstrap/test-infra/**,
+            catalog/lib/style/font-awesome/css/**,
+            catalog/lib/style/font-awesome/src/**,
+            catalog/lib/style/font-awesome/scss/**
+          </packagingExcludes>
 <!--          <warSourceDirectory>src/main/geonetwork</warSourceDirectory> -->
           <webXml>${build.webapp.resources}/WEB-INF/web.xml</webXml>
           <attachClasses>true</attachClasses>
@@ -703,6 +694,12 @@
             <contextPath>/geonetwork</contextPath>
             <descriptor>${project.build.directory}/WEB-INF/web.xml</descriptor>
             <baseResource implementation="org.eclipse.jetty.util.resource.ResourceCollection">
+              <!--
+                 Enable to use ExtJS UI
+                 Add
+                 ${rootProjectDir}/web-client/src/main/resources/
+                 to resourcesAsCSV
+               -->
               <resourcesAsCSV>
                 ${project.basedir}/src/main/webapp,
                 ${rootProjectDir}/web-ui/src/main/resources/,
@@ -788,26 +785,7 @@
       <properties>
         <env>inspire</env>
       </properties>
-    </profile>
-    <!--<profile>
-      <id>widgets</id>
-      <properties>
-        <web.xml.widget.config.overrides>/WEB-INF/config-overrides-widget.xml</web.xml.widget.config.overrides>
-      </properties>
-    </profile>
-    <profile>
-      <id>widgets-tab</id>
-      <properties>
-          <web.xml.widget.config.overrides>/WEB-INF/config-overrides-widgettab.xml</web.xml.widget.config.overrides>
-      </properties>
-    </profile>
-    <profile>
-		<id>html5ui</id>
-		<properties>
-			<web.xml.widget.config.overrides>/WEB-INF/config-overrides-html5ui.xml</web.xml.widget.config.overrides>
-		</properties>
-    </profile>-->
-    
+    </profile>    
   </profiles>
 
   <properties>

@@ -42,18 +42,16 @@
   <xsl:variable name="angularApp" select="
     if ($service = 'admin.console') then 'gn_admin'
     else if ($service = 'catalog.signin' or
+              $service = 'new.account' or 
               $service = 'new.password' or 
               $service = 'error' or
               $service = 'service-not-allowed' or
               $service = 'node-change-warning') then 'gn_login'
-    else if ($service = 'new.account' or
-      $service = 'ogp.new.account') then 'ogp_login'
     else if ($service = 'contact.us') then 'gn_contact_us'
     else if ($service = 'catalog.edit') then 'gn_editor'
     else if ($service = 'catalog.viewer') then 'gn_viewer'
     else if ($service = 'catalog.search') then 'gn_search'
 	else if ($service = 'md.viewer') then 'gn_formatter_viewer'
-    else if ($service = 'ogp.edit') then 'ogp_editor'
     else 'gn'"/>
 
   <xsl:variable name="customFilename" select="concat($angularApp, '_', $searchView)"></xsl:variable>

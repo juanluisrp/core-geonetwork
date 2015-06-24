@@ -7,8 +7,9 @@
             <span class="icon-bar"></span>
         </button>
         <p class="navbar-text brand">
-            <img class="gn-logo" src="../../images/logos/OGP-icon-24.png" alt="OGP logo"/>
-            <a href="ogp.edit">OGP METADATA TOOLKIT</a>
+            <img class="gn-logo"
+                 data-ng-src="../../images/logos/{{info.site.siteId}}.png?{{info.site.lastUpdate}}"/>
+            <a href="catalog.edit">{{info.site.name}}</a>
 
         </p>
     </div>
