@@ -56,7 +56,7 @@
 						</deployable-->
 						<deployable>
 							<name>pgds-war</name>
-							<type>file.Folder</type>
+							<type>tomcat.War</type>
 							<location>../web/target/geonetwork.war</location>
 						</deployable>
 					</deployables>
