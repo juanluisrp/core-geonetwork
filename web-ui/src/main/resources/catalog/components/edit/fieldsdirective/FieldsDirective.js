@@ -79,7 +79,7 @@
               element.on('$destroy', function () {
                 element.off();
               });
-              scope.gnCurrentEdit = gnCurrentEdit;
+
               var tooltipIconCompiled = $compile(iconTemplate)(scope);
 
               if (isField && element.attr('type') !== 'hidden') {
