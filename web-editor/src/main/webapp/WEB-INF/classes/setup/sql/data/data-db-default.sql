@@ -688,395 +688,368 @@ INSERT INTO UserAddress (userid, addressid) VALUES  (1, 1);
 --- =====================================================================
 INSERT INTO metadata(ID, DATA, CHANGEDATE, CREATEDATE, DISPLAYORDER, DOCTYPE, EXTRA, POPULARITY, RATING, ROOT, SCHEMAID, TITLE, ISTEMPLATE, ISHARVESTED, HARVESTURI, HARVESTUUID, GROUPOWNER, OWNER, SOURCE, UUID)
 VALUES (1,
-  '<?xml version="1.0" encoding="UTF-8"?>
-<?xml-stylesheet type="text/xsl" href="../process/url-host-relocator.xsl"?>
-<MD_Metadata xmlns="http://www.isotc211.org/2005/gmd"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:gml="http://www.opengis.net/gml"
-    xmlns:gts="http://www.isotc211.org/2005/gts" xmlns:gco="http://www.isotc211.org/2005/gco"
-    xmlns:xlink="http://www.w3.org/1999/xlink"
-    xmlns:gmd="http://www.isotc211.org/2005/gmd">
-    <fileIdentifier>
-        <gco:CharacterString/>
-    </fileIdentifier>
-    <language>
-        <LanguageCode codeList="" codeListValue="eng"/>
-    </language>
-    <characterSet>
-        <MD_CharacterSetCode codeListValue="utf8"
-            codeList="./resources/codeList.xml#MD_CharacterSetCode"/>
-    </characterSet>
-    <contact>
-        <CI_ResponsibleParty>
-            <individualName>
-                <gco:CharacterString/>
-            </individualName>
-            <organisationName>
-                <gco:CharacterString/>
-            </organisationName>
-            <positionName>
-                <gco:CharacterString/>
-            </positionName>
-            <contactInfo>
-                <CI_Contact>
-                    <phone>
-                        <CI_Telephone>
-                            <voice>
-                                <gco:CharacterString/>
-                            </voice>
-                            <facsimile>
-                                <gco:CharacterString/>
-                            </facsimile>
-                        </CI_Telephone>
-                    </phone>
-                    <address>
-<CI_Address>
-<deliveryPoint>
-<gco:CharacterString/>
-</deliveryPoint>
-<city>
-<gco:CharacterString/>
-</city>
-<administrativeArea>
-<gco:CharacterString/>
-</administrativeArea>
-<postalCode>
-<gco:CharacterString/>
-</postalCode>
-<country>
-<gco:CharacterString/>
-</country>
-<electronicMailAddress>
-<gco:CharacterString/>
-</electronicMailAddress>
-</CI_Address>
-</address>
-                </CI_Contact>
-            </contactInfo>
-            <role>
-                <CI_RoleCode codeListValue="pointOfContact"
-                    codeList="./resources/codeList.xml#CI_RoleCode"/>
-            </role>
-        </CI_ResponsibleParty>
-    </contact>
-    <dateStamp>
-        <gco:DateTime>2005-03-31T19:13:30</gco:DateTime>
-    </dateStamp>
-    <metadataStandardName>
-        <gco:CharacterString>ISO 19115:2003/19139</gco:CharacterString>
-    </metadataStandardName>
-    <metadataStandardVersion>
-        <gco:CharacterString>1.0</gco:CharacterString>
-    </metadataStandardVersion>
-    <referenceSystemInfo>
-        <MD_ReferenceSystem>
-            <referenceSystemIdentifier>
-                <RS_Identifier>
-                    <code>
-                        <gco:CharacterString>WGS 1984</gco:CharacterString>
-                    </code>
-                </RS_Identifier>
-            </referenceSystemIdentifier>
-        </MD_ReferenceSystem>
-    </referenceSystemInfo>
-    <identificationInfo>
-        <MD_DataIdentification>
-            <citation>
-                <CI_Citation>
-                    <title>
-                        <gco:CharacterString>Template for Vector data in ISO19139
-                            (preferred!)</gco:CharacterString>
-                    </title>
-                    <date>
-                        <CI_Date>
-                            <date>
-                                <gco:DateTime/>
-                            </date>
-                            <dateType>
-                                <CI_DateTypeCode codeListValue="publication"
-                                    codeList="./resources/codeList.xml#CI_DateTypeCode"/>
-                            </dateType>
-                        </CI_Date>
-                    </date>
-                    <edition>
-                        <gco:CharacterString>http://localhost:8080/demodem/editioin</gco:CharacterString>
-                    </edition>
-                </CI_Citation>
-            </citation>
-            <abstract>
-                <gco:CharacterString>The ISO19115 metadata standard is the preferred metadata
-                    standard to use. If unsure what templates to start with, use this
-                    one.</gco:CharacterString>
-            </abstract>
-            <purpose>
-                <gco:CharacterString/>
-            </purpose>
-            <status>
-                <MD_ProgressCode codeListValue="onGoing"
-                    codeList="./resources/codeList.xml#MD_ProgressCode"/>
-            </status>
-            <pointOfContact>
-                <CI_ResponsibleParty>
-                    <individualName>
-                        <gco:CharacterString/>
-                    </individualName>
-                    <organisationName>
-                        <gco:CharacterString/>
-                    </organisationName>
-                    <positionName>
-                        <gco:CharacterString/>
-                    </positionName>
-                    <contactInfo>
-                        <CI_Contact>
-                            <phone>
-                                <CI_Telephone>
-                                    <voice>
-                                        <gco:CharacterString/>
-                                    </voice>
-                                    <facsimile>
-                                        <gco:CharacterString/>
-                                    </facsimile>
-                                </CI_Telephone>
-                            </phone>
-                            <address>
-<CI_Address>
-<deliveryPoint>
-<gco:CharacterString/>
-</deliveryPoint>
-<city>
-<gco:CharacterString/>
-</city>
-<administrativeArea>
-<gco:CharacterString/>
-</administrativeArea>
-<postalCode>
-<gco:CharacterString/>
-</postalCode>
-<country>
-<gco:CharacterString/>
-</country>
-<electronicMailAddress>
-<gco:CharacterString/>
-</electronicMailAddress>
-</CI_Address>
-</address>
-                        </CI_Contact>
-                    </contactInfo>
-                    <role>
-                        <CI_RoleCode codeListValue="originator"
-                            codeList="./resources/codeList.xml#CI_RoleCode"/>
-                    </role>
-                </CI_ResponsibleParty>
-            </pointOfContact>
-            <resourceMaintenance>
-                <MD_MaintenanceInformation>
-                    <maintenanceAndUpdateFrequency>
-                        <MD_MaintenanceFrequencyCode codeListValue="asNeeded"
-                            codeList="./resources/codeList.xml#MD_MaintenanceFrequencyCode"/>
-                    </maintenanceAndUpdateFrequency>
-                </MD_MaintenanceInformation>
-            </resourceMaintenance>
-            <graphicOverview>
-                <MD_BrowseGraphic>
-                    <fileName>
-                        <gco:CharacterString/>
-                    </fileName>
-                    <fileDescription>
-                        <gco:CharacterString>thumbnail</gco:CharacterString>
-                    </fileDescription>
-                </MD_BrowseGraphic>
-            </graphicOverview>
-            <graphicOverview>
-                <MD_BrowseGraphic>
-                    <fileName>
-                        <gco:CharacterString/>
-                    </fileName>
-                    <fileDescription>
-                        <gco:CharacterString>large_thumbnail</gco:CharacterString>
-                    </fileDescription>
-                </MD_BrowseGraphic>
-            </graphicOverview>
-            <descriptiveKeywords>
-                <MD_Keywords>
-                    <keyword>
-                        <gco:CharacterString/>
-                    </keyword>
-                    <type>
-                        <MD_KeywordTypeCode codeListValue="theme"
-                            codeList="./resources/codeList.xml#MD_KeywordTypeCode"/>
-                    </type>
-                </MD_Keywords>
-            </descriptiveKeywords>
-            <descriptiveKeywords>
-                <MD_Keywords>
-                    <keyword>
-                        <gco:CharacterString>World</gco:CharacterString>
-                    </keyword>
-                    <type>
-                        <MD_KeywordTypeCode codeListValue="place"
-                            codeList="./resources/codeList.xml#MD_KeywordTypeCode"/>
-                    </type>
-                </MD_Keywords>
-            </descriptiveKeywords>
-            <resourceConstraints>
-                <MD_LegalConstraints>
-                    <accessConstraints>
-                        <MD_RestrictionCode codeListValue="copyright"
-                            codeList="./resources/codeList.xml#MD_RestrictionCode"/>
-                    </accessConstraints>
-                    <useConstraints>
-                        <MD_RestrictionCode codeListValue="otherRestictions"
-                            codeList="./resources/codeList.xml#MD_RestrictionCode"/>
-                    </useConstraints>
-                    <otherConstraints>
-                        <gco:CharacterString/>
-                    </otherConstraints>
-                </MD_LegalConstraints>
-            </resourceConstraints>
-            <spatialRepresentationType>
-                <MD_SpatialRepresentationTypeCode codeListValue="vector"
-                    codeList="./resources/codeList.xml#MD_SpatialRepresentationTypeCode"/>
-            </spatialRepresentationType>
-            <spatialResolution>
-                <MD_Resolution>
-                    <equivalentScale>
-                        <MD_RepresentativeFraction>
-                            <denominator>
-                                <gco:Integer/>
-                            </denominator>
-                        </MD_RepresentativeFraction>
-                    </equivalentScale>
-                </MD_Resolution>
-            </spatialResolution>
-            <language>
-                <gmd:LanguageCode codeList="" codeListValue="eng"/>
-            </language>
-            <characterSet>
-                <MD_CharacterSetCode codeListValue="utf8"
-                    codeList="./resources/codeList.xml#MD_CharacterSetCode"/>
-            </characterSet>
-            <topicCategory>
-                <MD_TopicCategoryCode>boundaries</MD_TopicCategoryCode>
-            </topicCategory>
-            <extent>
-                <EX_Extent>
-                    <temporalElement>
-                        <EX_TemporalExtent>
-                            <extent>
-                                <gml:TimePeriod gml:id="">
-                                    <gml:beginPosition/>
-                                    <gml:endPosition/>
-                                </gml:TimePeriod>
-                            </extent>
-                        </EX_TemporalExtent>
-                    </temporalElement>
-                </EX_Extent>
-            </extent>
-            <extent>
-                <EX_Extent>
-                    <geographicElement>
-                        <EX_GeographicBoundingBox>
-                            <westBoundLongitude>
-                                <gco:Decimal>-180</gco:Decimal>
-                            </westBoundLongitude>
-                            <eastBoundLongitude>
-                                <gco:Decimal>180</gco:Decimal>
-                            </eastBoundLongitude>
-                            <southBoundLatitude>
-                                <gco:Decimal>-90</gco:Decimal>
-                            </southBoundLatitude>
-                            <northBoundLatitude>
-                                <gco:Decimal>90</gco:Decimal>
-                            </northBoundLatitude>
-                        </EX_GeographicBoundingBox>
-                    </geographicElement>
-                </EX_Extent>
-            </extent>
-            <supplementalInformation>
-                <gco:CharacterString>You can customize the template to suit your needs. You can add
-                    and remove fields and fill out default information (e.g. contact details).
-                    Fields you can not change in the default view may be accessible in the more
-                    comprehensive (and more complex) advanced view. You can even use the XML editor
-                    to create custom structures, but they have to be validated by the system, so
-                    know what you do :-)</gco:CharacterString>
-            </supplementalInformation>
-        </MD_DataIdentification>
-    </identificationInfo>
-    <distributionInfo>
-        <MD_Distribution>
-            <transferOptions>
-                <MD_DigitalTransferOptions>
-                    <onLine>
-                        <CI_OnlineResource>
-                            <linkage>
-                                <URL></URL>
-                            </linkage>
-                            <protocol>
-                                <gco:CharacterString>WWW:LINK-1.0-http--link</gco:CharacterString>
-                            </protocol>
-                            <name>
-                                <gco:CharacterString/>
-                            </name>
-                            <description>
-                                <gco:CharacterString/>
-                            </description>
-                        </CI_OnlineResource>
-                    </onLine>
-                    <onLine>
-                        <CI_OnlineResource>
-                            <linkage>
-                                <URL/>
-                            </linkage>
-                            <protocol>
-                                <gco:CharacterString>WWW:DOWNLOAD-1.0-http--download</gco:CharacterString>
-                            </protocol>
-                            <name>
-                                <gco:CharacterString/>
-                            </name>
-                            <description>
-                                <gco:CharacterString/>
-                            </description>
-                        </CI_OnlineResource>
-                    </onLine>
-                    <onLine>
-                        <CI_OnlineResource>
-                            <linkage>
-                                <URL/>
-                            </linkage>
-                            <protocol>
-                                <gco:CharacterString>OGC:WMS-1.1.1-http-get-map</gco:CharacterString>
-                            </protocol>
-                            <name>
-                                <gco:CharacterString/>
-                            </name>
-                            <description>
-                                <gco:CharacterString/>
-                            </description>
-                        </CI_OnlineResource>
-                    </onLine>
-                </MD_DigitalTransferOptions>
-            </transferOptions>
-        </MD_Distribution>
-    </distributionInfo>
-    <dataQualityInfo>
-        <DQ_DataQuality>
-            <scope>
-                <DQ_Scope>
-                    <level>
-                        <MD_ScopeCode codeListValue="dataset"
-                            codeList="./resources/codeList.xml#MD_ScopeCode"/>
-                    </level>
-                </DQ_Scope>
-            </scope>
-            <lineage>
-                <LI_Lineage>
-                    <statement>
-                        <gco:CharacterString/>
-                    </statement>
-                </LI_Lineage>
-            </lineage>
-        </DQ_DataQuality>
-    </dataQualityInfo>
-</MD_Metadata>',
+  '<gmd:MD_Metadata xmlns:gmd="http://www.isotc211.org/2005/gmd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:gml="http://www.opengis.net/gml" xmlns:gts="http://www.isotc211.org/2005/gts" xmlns:gco="http://www.isotc211.org/2005/gco" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:geonet="http://www.fao.org/geonetwork">
+  <gmd:fileIdentifier>
+    <gco:CharacterString />
+  </gmd:fileIdentifier>
+  <gmd:language>
+    <gmd:LanguageCode codeList="" codeListValue="eng" />
+  </gmd:language>
+  <gmd:characterSet>
+    <gmd:MD_CharacterSetCode codeListValue="utf8" codeList="./resources/codeList.xml#MD_CharacterSetCode" />
+  </gmd:characterSet>
+  <gmd:contact>
+    <gmd:CI_ResponsibleParty>
+      <gmd:individualName>
+        <gco:CharacterString />
+      </gmd:individualName>
+      <gmd:organisationName>
+        <gco:CharacterString />
+      </gmd:organisationName>
+      <gmd:positionName>
+        <gco:CharacterString />
+      </gmd:positionName>
+      <gmd:contactInfo>
+        <gmd:CI_Contact>
+          <gmd:phone>
+            <gmd:CI_Telephone>
+              <gmd:voice>
+                <gco:CharacterString />
+              </gmd:voice>
+              <gmd:facsimile>
+                <gco:CharacterString />
+              </gmd:facsimile>
+            </gmd:CI_Telephone>
+          </gmd:phone>
+          <gmd:address>
+            <gmd:CI_Address>
+              <gmd:deliveryPoint>
+                <gco:CharacterString />
+              </gmd:deliveryPoint>
+              <gmd:city>
+                <gco:CharacterString />
+              </gmd:city>
+              <gmd:administrativeArea>
+                <gco:CharacterString />
+              </gmd:administrativeArea>
+              <gmd:postalCode>
+                <gco:CharacterString />
+              </gmd:postalCode>
+              <gmd:country>
+                <gco:CharacterString />
+              </gmd:country>
+              <gmd:electronicMailAddress>
+                <gco:CharacterString />
+              </gmd:electronicMailAddress>
+            </gmd:CI_Address>
+          </gmd:address>
+        </gmd:CI_Contact>
+      </gmd:contactInfo>
+      <gmd:role>
+        <gmd:CI_RoleCode codeListValue="pointOfContact" codeList="./resources/codeList.xml#CI_RoleCode" />
+      </gmd:role>
+    </gmd:CI_ResponsibleParty>
+  </gmd:contact>
+  <gmd:dateStamp>
+    <gco:DateTime>2005-03-31T19:13:30</gco:DateTime>
+  </gmd:dateStamp>
+  <gmd:metadataStandardName>
+    <gco:CharacterString>ISO 19115:2003/19139</gco:CharacterString>
+  </gmd:metadataStandardName>
+  <gmd:metadataStandardVersion>
+    <gco:CharacterString>1.0</gco:CharacterString>
+  </gmd:metadataStandardVersion>
+  <gmd:referenceSystemInfo>
+    <gmd:MD_ReferenceSystem>
+      <gmd:referenceSystemIdentifier>
+        <gmd:RS_Identifier>
+          <gmd:code>
+            <gco:CharacterString>WGS 1984</gco:CharacterString>
+          </gmd:code>
+        </gmd:RS_Identifier>
+      </gmd:referenceSystemIdentifier>
+    </gmd:MD_ReferenceSystem>
+  </gmd:referenceSystemInfo>
+  <gmd:identificationInfo>
+    <gmd:MD_DataIdentification>
+      <gmd:citation>
+        <gmd:CI_Citation>
+          <gmd:title>
+            <gco:CharacterString>Template for Vector data in ISO19139 (preferred!)</gco:CharacterString>
+          </gmd:title>
+          <gmd:date>
+            <gmd:CI_Date>
+              <gmd:date>
+                <gco:Date />
+              </gmd:date>
+              <gmd:dateType>
+                <gmd:CI_DateTypeCode codeListValue="publication" codeList="./resources/codeList.xml#CI_DateTypeCode" />
+              </gmd:dateType>
+            </gmd:CI_Date>
+          </gmd:date>
+          <gmd:edition>
+            <gco:CharacterString>http://localhost:8080/demodem/editioin</gco:CharacterString>
+          </gmd:edition>
+        </gmd:CI_Citation>
+      </gmd:citation>
+      <gmd:abstract>
+        <gco:CharacterString>The ISO19115 metadata standard is the preferred metadata standard to use. If unsure what templates to start with, use this one.</gco:CharacterString>
+      </gmd:abstract>
+      <gmd:purpose>
+        <gco:CharacterString />
+      </gmd:purpose>
+      <gmd:status>
+        <gmd:MD_ProgressCode codeListValue="onGoing" codeList="./resources/codeList.xml#MD_ProgressCode" />
+      </gmd:status>
+      <gmd:pointOfContact>
+        <gmd:CI_ResponsibleParty>
+          <gmd:individualName>
+            <gco:CharacterString />
+          </gmd:individualName>
+          <gmd:organisationName>
+            <gco:CharacterString />
+          </gmd:organisationName>
+          <gmd:positionName>
+            <gco:CharacterString />
+          </gmd:positionName>
+          <gmd:contactInfo>
+            <gmd:CI_Contact>
+              <gmd:phone>
+                <gmd:CI_Telephone>
+                  <gmd:voice>
+                    <gco:CharacterString />
+                  </gmd:voice>
+                  <gmd:facsimile>
+                    <gco:CharacterString />
+                  </gmd:facsimile>
+                </gmd:CI_Telephone>
+              </gmd:phone>
+              <gmd:address>
+                <gmd:CI_Address>
+                  <gmd:deliveryPoint>
+                    <gco:CharacterString />
+                  </gmd:deliveryPoint>
+                  <gmd:city>
+                    <gco:CharacterString />
+                  </gmd:city>
+                  <gmd:administrativeArea>
+                    <gco:CharacterString />
+                  </gmd:administrativeArea>
+                  <gmd:postalCode>
+                    <gco:CharacterString />
+                  </gmd:postalCode>
+                  <gmd:country>
+                    <gco:CharacterString />
+                  </gmd:country>
+                  <gmd:electronicMailAddress>
+                    <gco:CharacterString />
+                  </gmd:electronicMailAddress>
+                </gmd:CI_Address>
+              </gmd:address>
+            </gmd:CI_Contact>
+          </gmd:contactInfo>
+          <gmd:role>
+            <gmd:CI_RoleCode codeListValue="originator" codeList="./resources/codeList.xml#CI_RoleCode" />
+          </gmd:role>
+        </gmd:CI_ResponsibleParty>
+      </gmd:pointOfContact>
+      <gmd:resourceMaintenance>
+        <gmd:MD_MaintenanceInformation>
+          <gmd:maintenanceAndUpdateFrequency>
+            <gmd:MD_MaintenanceFrequencyCode codeListValue="asNeeded" codeList="./resources/codeList.xml#MD_MaintenanceFrequencyCode" />
+          </gmd:maintenanceAndUpdateFrequency>
+        </gmd:MD_MaintenanceInformation>
+      </gmd:resourceMaintenance>
+      <gmd:graphicOverview>
+        <gmd:MD_BrowseGraphic>
+          <gmd:fileName>
+            <gco:CharacterString />
+          </gmd:fileName>
+          <gmd:fileDescription>
+            <gco:CharacterString>thumbnail</gco:CharacterString>
+          </gmd:fileDescription>
+        </gmd:MD_BrowseGraphic>
+      </gmd:graphicOverview>
+      <gmd:graphicOverview>
+        <gmd:MD_BrowseGraphic>
+          <gmd:fileName>
+            <gco:CharacterString />
+          </gmd:fileName>
+          <gmd:fileDescription>
+            <gco:CharacterString>large_thumbnail</gco:CharacterString>
+          </gmd:fileDescription>
+        </gmd:MD_BrowseGraphic>
+      </gmd:graphicOverview>
+      <gmd:descriptiveKeywords>
+        <gmd:MD_Keywords>
+          <gmd:keyword>
+            <gco:CharacterString />
+          </gmd:keyword>
+          <gmd:type>
+            <gmd:MD_KeywordTypeCode codeListValue="theme" codeList="./resources/codeList.xml#MD_KeywordTypeCode" />
+          </gmd:type>
+        </gmd:MD_Keywords>
+      </gmd:descriptiveKeywords>
+      <gmd:descriptiveKeywords>
+        <gmd:MD_Keywords>
+          <gmd:keyword>
+            <gco:CharacterString>World</gco:CharacterString>
+          </gmd:keyword>
+          <gmd:type>
+            <gmd:MD_KeywordTypeCode codeListValue="place" codeList="./resources/codeList.xml#MD_KeywordTypeCode" />
+          </gmd:type>
+        </gmd:MD_Keywords>
+      </gmd:descriptiveKeywords>
+      <gmd:resourceConstraints>
+        <gmd:MD_LegalConstraints>
+          <gmd:accessConstraints>
+            <gmd:MD_RestrictionCode codeListValue="copyright" codeList="./resources/codeList.xml#MD_RestrictionCode" />
+          </gmd:accessConstraints>
+          <gmd:useConstraints>
+            <gmd:MD_RestrictionCode codeListValue="otherRestictions" codeList="./resources/codeList.xml#MD_RestrictionCode" />
+          </gmd:useConstraints>
+          <gmd:otherConstraints>
+            <gco:CharacterString />
+          </gmd:otherConstraints>
+        </gmd:MD_LegalConstraints>
+      </gmd:resourceConstraints>
+      <gmd:spatialRepresentationType>
+        <gmd:MD_SpatialRepresentationTypeCode codeListValue="vector" codeList="./resources/codeList.xml#MD_SpatialRepresentationTypeCode" />
+      </gmd:spatialRepresentationType>
+      <gmd:spatialResolution>
+        <gmd:MD_Resolution>
+          <gmd:equivalentScale>
+            <gmd:MD_RepresentativeFraction>
+              <gmd:denominator>
+                <gco:Integer />
+              </gmd:denominator>
+            </gmd:MD_RepresentativeFraction>
+          </gmd:equivalentScale>
+        </gmd:MD_Resolution>
+      </gmd:spatialResolution>
+      <gmd:language>
+        <gmd:LanguageCode codeList="" codeListValue="eng" />
+      </gmd:language>
+      <gmd:characterSet>
+        <gmd:MD_CharacterSetCode codeListValue="utf8" codeList="./resources/codeList.xml#MD_CharacterSetCode" />
+      </gmd:characterSet>
+      <gmd:topicCategory>
+        <gmd:MD_TopicCategoryCode>boundaries</gmd:MD_TopicCategoryCode>
+      </gmd:topicCategory>
+      <gmd:extent>
+        <gmd:EX_Extent>
+          <gmd:temporalElement>
+            <gmd:EX_TemporalExtent>
+              <gmd:extent>
+                <gml:TimePeriod gml:id="">
+                  <gml:beginPosition />
+                  <gml:endPosition />
+                </gml:TimePeriod>
+              </gmd:extent>
+            </gmd:EX_TemporalExtent>
+          </gmd:temporalElement>
+        </gmd:EX_Extent>
+      </gmd:extent>
+      <gmd:extent>
+        <gmd:EX_Extent>
+          <gmd:geographicElement>
+            <gmd:EX_GeographicBoundingBox>
+              <gmd:westBoundLongitude>
+                <gco:Decimal>-180</gco:Decimal>
+              </gmd:westBoundLongitude>
+              <gmd:eastBoundLongitude>
+                <gco:Decimal>180</gco:Decimal>
+              </gmd:eastBoundLongitude>
+              <gmd:southBoundLatitude>
+                <gco:Decimal>-90</gco:Decimal>
+              </gmd:southBoundLatitude>
+              <gmd:northBoundLatitude>
+                <gco:Decimal>90</gco:Decimal>
+              </gmd:northBoundLatitude>
+            </gmd:EX_GeographicBoundingBox>
+          </gmd:geographicElement>
+        </gmd:EX_Extent>
+      </gmd:extent>
+      <gmd:supplementalInformation>
+        <gco:CharacterString>You can customize the template to suit your needs. You can add and remove fields and fill out default information (e.g. contact details). Fields you can not change in the default view may be accessible in the more comprehensive (and more complex) advanced view. You can even use the XML editor to create custom structures, but they have to be validated by the system, so know what you do :-)</gco:CharacterString>
+      </gmd:supplementalInformation>
+    </gmd:MD_DataIdentification>
+  </gmd:identificationInfo>
+  <gmd:distributionInfo>
+    <gmd:MD_Distribution>
+      <gmd:transferOptions>
+        <gmd:MD_DigitalTransferOptions>
+          <gmd:onLine>
+            <gmd:CI_OnlineResource>
+              <gmd:linkage>
+                <gmd:URL />
+              </gmd:linkage>
+              <gmd:protocol>
+                <gco:CharacterString>WWW:LINK-1.0-http--link</gco:CharacterString>
+              </gmd:protocol>
+              <gmd:name>
+                <gco:CharacterString />
+              </gmd:name>
+              <gmd:description>
+                <gco:CharacterString />
+              </gmd:description>
+            </gmd:CI_OnlineResource>
+          </gmd:onLine>
+          <gmd:onLine>
+            <gmd:CI_OnlineResource>
+              <gmd:linkage>
+                <gmd:URL />
+              </gmd:linkage>
+              <gmd:protocol>
+                <gco:CharacterString>WWW:DOWNLOAD-1.0-http--download</gco:CharacterString>
+              </gmd:protocol>
+              <gmd:name>
+                <gco:CharacterString />
+              </gmd:name>
+              <gmd:description>
+                <gco:CharacterString />
+              </gmd:description>
+            </gmd:CI_OnlineResource>
+          </gmd:onLine>
+          <gmd:onLine>
+            <gmd:CI_OnlineResource>
+              <gmd:linkage>
+                <gmd:URL />
+              </gmd:linkage>
+              <gmd:protocol>
+                <gco:CharacterString>OGC:WMS-1.1.1-http-get-map</gco:CharacterString>
+              </gmd:protocol>
+              <gmd:name>
+                <gco:CharacterString />
+              </gmd:name>
+              <gmd:description>
+                <gco:CharacterString />
+              </gmd:description>
+            </gmd:CI_OnlineResource>
+          </gmd:onLine>
+        </gmd:MD_DigitalTransferOptions>
+      </gmd:transferOptions>
+    </gmd:MD_Distribution>
+  </gmd:distributionInfo>
+  <gmd:dataQualityInfo>
+    <gmd:DQ_DataQuality>
+      <gmd:scope>
+        <gmd:DQ_Scope>
+          <gmd:level>
+            <gmd:MD_ScopeCode codeListValue="dataset" codeList="./resources/codeList.xml#MD_ScopeCode" />
+          </gmd:level>
+        </gmd:DQ_Scope>
+      </gmd:scope>
+      <gmd:lineage>
+        <gmd:LI_Lineage>
+          <gmd:statement>
+            <gco:CharacterString />
+          </gmd:statement>
+        </gmd:LI_Lineage>
+      </gmd:lineage>
+    </gmd:DQ_DataQuality>
+  </gmd:dataQualityInfo>
+</gmd:MD_Metadata>',
 '2015-05-27T15:44:36', '2015-05-20T16:25:09', 0, null, null, 0, 0, 'MD_Metadata', 'iso19139', null, 'y', 'n', null, null, 1, 1, '4a5ac7b9-b98b-497c-9b2b-4c83d60d2704', '0634a3c3-3026-4cc9-884d-d4d6f2523fc3');
 
 -- Add View and Download permissions to this template to the group ALL.

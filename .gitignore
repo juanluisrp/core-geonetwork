@@ -98,5 +98,6 @@ web-editor/.springBeans
 web-editor/src/main/webapp/WEB-INF/data/0*
 web-editor/src/main/webapp/WEB-INF/data_*
 web-editor/src/main/webapp/WEB-INF/data/config/schema_plugins/schemaplugin-uri-catalog.xml
+web-editor/src/main/webapp/WEB-INF/data/wro4j-cache.*
  
 *.old
