@@ -65,7 +65,7 @@
   module.directive('gnFieldTooltip',
       ['gnSchemaManagerService', 'gnCurrentEdit', '$compile',
         function (gnSchemaManagerService, gnCurrentEdit, $compile) {
-          var iconTemplate = "<a class='btn field-tooltip'><span class='fa fa-question-circle'></span></a>";
+          var iconTemplate = "<a class='btn field-tooltip' data-ng-show='gnCurrentEdit.displayTooltips'><span class='fa fa-question-circle'></span></a>";
 
           return {
             restrict: 'A',
@@ -79,6 +79,7 @@
               element.on('$destroy', function () {
                 element.off();
               });
+              scope.gnCurrentEdit = gnCurrentEdit;
               var tooltipIconCompiled = $compile(iconTemplate)(scope);
 
               if (isField && element.attr('type') !== 'hidden') {
