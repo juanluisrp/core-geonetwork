@@ -11,11 +11,16 @@
     Open Source catalog application to manage spatially referenced
     resources through the web.</description>
   <url>http://geonetwork-opensource.org</url>
-  <scm>
+  <!--scm>
     <connection>
       scm:git:https://github.com/geonetwork/core-geonetwork
     </connection>
     <url>https://github.com/geonetwork/core-geonetwork</url>
+  </scm-->
+  <scm>
+	<url>git@github.so.kadaster.nl:NGR/core-geonetwork.git</url>
+	<connection>scm:git:git@github.so.kadaster.nl:NGR/core-geonetwork.git</connection>
+	<developerConnection>scm:git:git@github.so.kadaster.nl:NGR/core-geonetwork.git</developerConnection>
   </scm>
   <inceptionYear>2003</inceptionYear>
   <issueManagement>
