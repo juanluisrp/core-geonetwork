@@ -10,7 +10,7 @@
 	<!-- =========================================================== -->
 	<!--     Module Description                                      -->
 	<!-- =========================================================== -->
-	<artifactId>pgds-dar</artifactId>
+	<artifactId>pdok-pgds-dar</artifactId>
 	<packaging>dar</packaging>
 	<build>
 		<plugins>
