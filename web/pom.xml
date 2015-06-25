@@ -13,7 +13,7 @@
   <!--     Module Description                                      -->
   <!-- =========================================================== -->
   <artifactId>web-app</artifactId>
-  <packaging>dar</packaging>
+  <packaging>war</packaging>
   <name>GeoNetwork Web module</name>
   <description> GeoNetwork web module description (TODO). </description>
 
@@ -706,7 +706,7 @@
           <stopPort>8090</stopPort>
         </configuration>
       </plugin>
-        <plugin>
+        <!--plugin>
             <groupId>com.xebialabs.deployit</groupId>
             <artifactId>maven-deployit-plugin</artifactId>
             <version>3.9.4</version>
@@ -735,8 +735,20 @@
                 <generateDeployedOnUpgrade>true</generateDeployedOnUpgrade>
                 <applicationName>pdok/${project.artifactId}</applicationName>
                 <environmentId>Environments/pdok-int/environment/pdok-geodatastore_int</environmentId>
+                <deployables>
+                    <deployable>
+                        <name>pgds-war</name>
+                        <type>tomcat.War</type>
+                        <contextRoot>geonetwork</contextRoot>
+                        <groupId>org-geonetwork-opensource</groupId>
+                        <artifactId>web-app</artifactId>
+                        <version>${project.version}</version>
+                        <scanPlaceholders>true</scanPlaceholders>
+                        <excludeFileNamesRegex>.*\.(gif|html|jar|jpg|js|mef|pdf|png|psd|txt|xsl)</excludeFileNamesRegex>
+                    </deployable>
+                </deployables>
             </configuration>
-        </plugin>
+        </plugin-->
     </plugins>
   </build>
   
@@ -808,10 +820,10 @@
   </profiles>
 
   <properties>
-    <deployit.username>jap-pdok-ont</deployit.username>
+    <!--deployit.username>jap-pdok-ont</deployit.username>
     <deployit.password>Q1ae86ca</deployit.password>
     <deployit.server>deployment-plp.cs.kadaster.nl</deployit.server>
-    <deployit.port>80</deployit.port>
+    <deployit.port>80</deployit.port-->
     <geonetwork.version>${project.version}</geonetwork.version>
     <geonetwork.subversion>SNAPSHOT</geonetwork.subversion>
     <geonetwork.webapp.dir>${basedir}/src/main/webapp</geonetwork.webapp.dir>
