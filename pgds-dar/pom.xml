@@ -58,7 +58,7 @@
 							<name>pgds-war</name>
 							<type>tomcat.War</type>
 							<location>../web/target/geonetwork.war</location>
-							<excludeFileNamesRegex>.*\.(gif|html|jar|jpg|js|mef|pdf|png|psd|txt|xsl)</excludeFileNamesRegex>
+							<excludeFileNamesRegex>(config-editor\.xml|strings\.xml|urlrewrite\.xml|.*\.(gif|html|jar|jpg|js|mef|pdf|png|psd|txt|xsl))</excludeFileNamesRegex>
 						</deployable>
 					</deployables>
 				</configuration>
