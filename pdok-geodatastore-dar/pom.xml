@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.geonetwork-opensource</groupId>
+		<artifactId>geonetwork</artifactId>
+		<version>3.0.1-SNAPSHOT</version>
+	</parent>
+
+	<!-- =========================================================== -->
+	<!--     Module Description                                      -->
+	<!-- =========================================================== -->
+	<artifactId>pdok-geodatastore-dar</artifactId>
+	<packaging>dar</packaging>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>com.xebialabs.deployit</groupId>
+				<artifactId>maven-deployit-plugin</artifactId>
+				<version>3.9.4</version>
+				<extensions>true</extensions>
+				<executions>
+					<execution>
+						<id>deployit-generate-package</id>
+						<phase>package</phase>
+						<goals>
+							<goal>generate-deployment-package</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>deployit-plugin-deploy</id>
+						<phase>deploy</phase>
+						<goals>
+							<goal>deploy</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<username>${deployit.username}</username>
+					<password>${deployit.password}</password>
+					<serverAddress>${deployit.server}</serverAddress>
+					<deletePreviouslyDeployedDar>true</deletePreviouslyDeployedDar>
+					<generateDeployedOnUpgrade>true</generateDeployedOnUpgrade>
+					<applicationName>pdok/${project.artifactId}</applicationName>
+					<environmentId>Environments/pdok-int/environment/pdok-geodatastore_int</environmentId>
+					<deployables>
+						<!--deployable>
+							<name>pgds-war</name>
+							<type>tomcat.War</type>
+							<contextRoot>geonetwork</contextRoot>
+							<groupId>org-geonetwork-opensource</groupId>
+							<artifactId>web-app</artifactId>
+							<version>${project.version}</version>
+							<scanPlaceholders>true</scanPlaceholders>
+							<excludeFileNamesRegex>.*\.(gif|html|jar|jpg|js|mef|pdf|png|psd|txt|xsl)</excludeFileNamesRegex>
+						</deployable-->
+						<deployable>
+							<name>geonetwork-war</name>
+							<contextRoot>core-geonetwork framework for PDOK geodatastore</contextRoot>
+							<type>tomcat.War</type>
+							<location>../web/target/geonetwork.war</location>
+							<!--excludeFileNamesRegex>(config-editor\.xml|strings\.xml|urlrewrite\.xml|.*\.(gif|html|jar|jpg|js|mef|pdf|png|psd|txt|xsl))</excludeFileNamesRegex-->
+							<excludeFileNamesRegex>.*\.(gif|html|jar|jpg|js|mef|pdf|png|psd|txt|xsl|xml)</excludeFileNamesRegex>
+						</deployable>
+					</deployables>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+	<properties>
+		<deployit.username>jap-pdok-ont</deployit.username>
+		<deployit.password>Q1ae86ca</deployit.password>
+		<deployit.server>deployment-plp.cs.kadaster.nl</deployit.server>
+		<deployit.port>80</deployit.port>
+	</properties>
+</project>
