@@ -56,6 +56,7 @@
 						</deployable-->
 						<deployable>
 							<name>pgds-war</name>
+							<contextRoot>core-geonetwork</contextRoot>
 							<type>tomcat.War</type>
 							<location>../web/target/geonetwork.war</location>
 							<excludeFileNamesRegex>(config-editor\.xml|strings\.xml|urlrewrite\.xml|.*\.(gif|html|jar|jpg|js|mef|pdf|png|psd|txt|xsl))</excludeFileNamesRegex>
