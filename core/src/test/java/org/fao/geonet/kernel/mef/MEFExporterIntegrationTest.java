@@ -14,10 +14,7 @@ import static org.junit.Assert.assertTrue;
 
 public class MEFExporterIntegrationTest extends AbstractCoreIntegrationTest {
 
-    //TODO: Make this test work synchronously consistently to be able to add it to CI/CD test suite.
     @Test
-    public void dummyTest() {}
-    //@Test
     public void testDoExport() throws Exception {
         ServiceContext context = createServiceContext();
         loginAsAdmin(context);

@@ -30,8 +30,6 @@ public class LuceneSearcherPresentTest extends AbstractCoreIntegrationTest {
 
     //TODO: Make this test work synchronously consistently to be able to add it to CI/CD test suite.
     @Test
-    public void dummyTest() {}
-    //@Test
     public void testBuildPrivilegesMetadataInfo() throws Exception {
         final ServiceContext serviceContext = createServiceContext();
         loginAsAdmin(serviceContext);
