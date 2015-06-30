@@ -18,9 +18,7 @@
     <url>https://github.com/geonetwork/core-geonetwork</url>
   </scm-->
   <scm>
-	<url>git@github.so.kadaster.nl:NGR/core-geonetwork.git</url>
-	<connection>scm:git:git@github.so.kadaster.nl:NGR/core-geonetwork.git</connection>
-	<developerConnection>scm:git:git@github.so.kadaster.nl:NGR/core-geonetwork.git</developerConnection>
+	<connection>scm:git:http://github.so.kadaster.nl/NGR/core-geonetwork.git</connection>
   </scm>
   <inceptionYear>2003</inceptionYear>
   <issueManagement>
