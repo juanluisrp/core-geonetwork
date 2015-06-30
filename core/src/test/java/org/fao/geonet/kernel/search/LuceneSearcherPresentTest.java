@@ -81,12 +81,12 @@ public class LuceneSearcherPresentTest extends AbstractCoreIntegrationTest {
 
             assertNull(Xml.selectElement(info, "edit"));
             assertNull(Xml.selectElement(info, "owner"));
-            //TODO: Check why guestdownload is no longer part of MetadataInfo
+            //TODO: Check why guestdownload is no longer part of info.
             //assertEqualsText("false", info, "guestdownload");
             assertEqualsText("true", info, "isPublishedToAll");
             assertEqualsText("true", info, "view");
             assertEqualsText("false", info, "notify");
-            //TODO: Inverted three assertions, Check why download, dynamic and featured are no longer false.
+			//TODO: inverted three assertions, Check why download, dynamic and featured are no longer false.
             assertEqualsText("true", info, "download");
             assertEqualsText("true", info, "dynamic");
             assertEqualsText("true", info, "featured");
