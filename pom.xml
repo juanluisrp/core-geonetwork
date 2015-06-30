@@ -341,7 +341,8 @@
                 <forkCount>4</forkCount>
                 <excludes>
                     <exclude>**/*PerformanceTest.java</exclude>
-                    <exclude>**/*PerformanceTest.java</exclude>
+                    <exclude>**/*MEFExporterIntegrationTest.java</exclude>
+                    <exclude>**/*LuceneSearcherPresentTest.java</exclude>
                 </excludes>
             </configuration>
         </plugin>
