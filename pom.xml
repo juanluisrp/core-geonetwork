@@ -343,6 +343,7 @@
                 <forkCount>4</forkCount>
                 <excludes>
                     <exclude>**/*PerformanceTest.java</exclude>
+                    <exclude>**/*PerformanceTest.java</exclude>
                 </excludes>
             </configuration>
         </plugin>
@@ -1154,7 +1155,6 @@
     <module>services</module>
     <module>wro4j</module>
     <module>inspire-atom</module>
-    <module>pdok-geodatastore-dar</module>
   </modules>
 
   <profiles>
@@ -1173,6 +1173,8 @@
         <module>web</module>
         <module>e2e-tests</module>
         <!--module>geoserver</module-->
+		
+		<module>pdok-geodatastore-dar</module>
       </modules>
     </profile>
     <!-- Python and Latex are required to build the documentation. -->
