@@ -475,12 +475,12 @@ public class Aligner extends BaseAligner
         if(!localRating) {
             String rating = general.getChildText("rating");
             if (rating != null) {
-                metadata.getDataInfo().setRating(Integer.valueOf(rating));
+                metadata.getDataInfo().setRating(Integer.parseInt(rating));
             }
         }
 
         if (popularity != null) {
-            metadata.getDataInfo().setPopularity(Integer.valueOf(popularity));
+            metadata.getDataInfo().setPopularity(Integer.parseInt(popularity));
         }
 
 
@@ -783,12 +783,12 @@ public class Aligner extends BaseAligner
         if(!localRating) {
             String rating = general.getChildText("rating");
             if (rating != null) {
-                metadata.getDataInfo().setRating(Integer.valueOf(rating));
+                metadata.getDataInfo().setRating(Integer.parseInt(rating));
             }
         }
         
         if (popularity != null) {
-            metadata.getDataInfo().setPopularity(Integer.valueOf(popularity));
+            metadata.getDataInfo().setPopularity(Integer.parseInt(popularity));
         }
 
         if (params.createRemoteCategory) {

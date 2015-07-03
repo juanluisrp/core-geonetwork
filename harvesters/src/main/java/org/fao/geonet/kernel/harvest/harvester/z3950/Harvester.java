@@ -175,7 +175,6 @@ class Harvester extends BaseAligner implements IHarvester<Z3950ServerResults> {
             // -- build a map of collection code versus repository name for
             // -- assigning the categories
             Map <String,String> codes = new HashMap<String,String>();
-            Map <String,String> catCodes = new HashMap<String,String>();
 
             final MetadataCategoryRepository categoryRepository = this.context.getBean(MetadataCategoryRepository.class);
             // -- add new category for each repository
@@ -196,7 +195,6 @@ class Harvester extends BaseAligner implements IHarvester<Z3950ServerResults> {
                     // sanitize the name of the category
                     String categName = repoName.replaceAll("[^\\w]","");
                     categName = categName.toLowerCase();
-                    catCodes.put(repoId.getAttributeValue("serverCode")+":"+repoId.getAttributeValue("code"), categName);
 
                     if (categoryRepository.findOneByNameIgnoreCase(categName) == null) {
                         MetadataCategory category = new MetadataCategory();

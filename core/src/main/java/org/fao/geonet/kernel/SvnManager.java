@@ -692,8 +692,8 @@ public class SvnManager implements AfterCommitTransactionListener, BeforeRollbac
     private void commitMetadataOwner(ISVNEditor editor, String id) throws Exception {
 
         // get owner from the database
-        Set<Integer> ids = new HashSet<Integer>();
-        ids.add(Integer.valueOf(id));
+        //Set<Integer> ids = new HashSet<Integer>();
+        //ids.add(Integer.parseInt(id));
         Metadata metadata = this.context.getBean(MetadataRepository.class).findOne(id);
         User user = this.context.getBean(UserRepository.class).findOne(metadata.getSourceInfo().getOwner());
         // Backwards compatibility.  Format the metadata as XML in same format as previous versions.

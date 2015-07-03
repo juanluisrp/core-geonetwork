@@ -1312,8 +1312,9 @@ public class SchemaManager {
 		List<String> removes = new ArrayList<String>();
 
 		// process each schema to see whether its dependencies are present
-		for (String schemaName : hmSchemas.keySet()) {
-			Schema schema = hmSchemas.get(schemaName);
+		for (Map.Entry schemaEntry : hmSchemas.entrySet()) {
+			Schema schema = (Schema)schemaEntry.getValue();
+            String schemaName = (String)schemaEntry.getKey();
 			try {
 				checkDepends(schemaName, schema.getDependElements());
 			} catch (Exception e) {
@@ -1342,10 +1343,11 @@ public class SchemaManager {
 		List<String> myDepends = new ArrayList<String>();
 
 		// process each schema to see whether its dependencies are present
-		for (String schemaNameToTest : hmSchemas.keySet()) {
-			if (schemaNameToTest.equals(schemaName)) continue;
+		for (Map.Entry schemaEntryToTest : hmSchemas.entrySet()) {
+			if (schemaEntryToTest.getKey().toString().equals(schemaName)) continue;
 
-			Schema schema = hmSchemas.get(schemaNameToTest);
+			Schema schema = (Schema)schemaEntryToTest.getValue();
+            String schemaNameToTest = (String)schemaEntryToTest.getKey();
 			List<Element> dependsList = schema.getDependElements();
 			for (Element depends : dependsList) {
 				if (depends.getText().equals(schemaName)) {
