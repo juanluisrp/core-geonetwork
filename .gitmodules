@@ -1,12 +1,15 @@
+[submodule "geoserver"]
+	        path = geoserver
+		        url = https://github.com/geonetwork/core-geoserver.git
 [submodule "e2e-tests/chromedriver"]
-	path = e2e-tests/chromedriver
-	url = http://github.so.kadaster.nl/NGR/chromedriver.git
+	        path = e2e-tests/chromedriver
+		        url = https://github.com/geonetwork/core-geoserver.git
 [submodule "web-ui/src/main/resources/catalog/lib/style/bootstrap"]
-	path = web-ui/src/main/resources/catalog/lib/style/bootstrap
-	url = http://github.so.kadaster.nl/NGR/bootstrap.git
+	        path = web-ui/src/main/resources/catalog/lib/style/bootstrap
+		        url = https://github.com/twbs/bootstrap.git
 [submodule "web-ui/src/main/resources/catalog/lib/style/font-awesome"]
-	path = web-ui/src/main/resources/catalog/lib/style/font-awesome
-	url = http://github.so.kadaster.nl/NGR/Font-Awesome.git
+	        path = web-ui/src/main/resources/catalog/lib/style/font-awesome
+		        url = https://github.com/FortAwesome/Font-Awesome.git
 [submodule "geodatastore"]
-	path = geodatastore
-	url = http://github.so.kadaster.nl/NGR/geodatastore.git
+	        path = geodatastore
+		        url = git@eos.geocat.net:ngr/geodatastore.git
