@@ -29,130 +29,132 @@ import org.jdom.Element;
 //=============================================================================
 
 @SuppressWarnings("serial")
-public abstract class JeevesException extends RuntimeException
-{
-	//--------------------------------------------------------------------------
-	//---
-	//--- Constructor
-	//---
-	//--------------------------------------------------------------------------
+public abstract class JeevesException extends RuntimeException {
+    //--------------------------------------------------------------------------
+    //---
+    //--- Constructor
+    //---
+    //--------------------------------------------------------------------------
 
-	public JeevesException(String message, Object object)
-	{
-		super(message, object instanceof Throwable ? (Throwable) object : null);
+    public JeevesException(String message, Object object) {
+        super(message, object instanceof Throwable ? (Throwable) object : null);
 
-		this.object = object;
-		this.code   = -1;
-	}
+        this.object = object;
+        this.code = -1;
+    }
 
-	//--------------------------------------------------------------------------
-	//---
-	//--- API methods
-	//---
-	//--------------------------------------------------------------------------
+    //--------------------------------------------------------------------------
+    //---
+    //--- API methods
+    //---
+    //--------------------------------------------------------------------------
 
-	public String getId()    { return id;     }
-	public Object getObject(){ return object; }
-	public int    getCode()  { return code;   }
+    public String getId() {
+        return id;
+    }
 
-	//--------------------------------------------------------------------------
+    public Object getObject() {
+        return object;
+    }
 
-	public String toString()
-	{
-		return getClass().getSimpleName() +" : "+ getMessage();
-	}
+    public int getCode() {
+        return code;
+    }
 
-	//--------------------------------------------------------------------------
+    //--------------------------------------------------------------------------
 
-	public static Element toElement(Throwable t)
-	{
-		String msg = t.getMessage();
-		String cls = t.getClass().getSimpleName();
-		String id  = Constants.ERROR;
-		Object obj = null;
+    public String toString() {
+        return getClass().getSimpleName() + " : " + getMessage();
+    }
 
-		if (t instanceof JeevesException)
-		{
-			JeevesException je = (JeevesException) t;
+    //--------------------------------------------------------------------------
 
-			id  = je.getId();
-			obj = je.getObject();
-		}
+    public static Element toElement(Throwable t) {
+        String msg = t.getMessage();
+        String cls = t.getClass().getSimpleName();
+        String id = Constants.ERROR;
+        Object obj = null;
 
-		Element error = new Element(Constants.ERROR)
-								.addContent(new Element("message").setText(msg))
-								.addContent(new Element("class")  .setText(cls))
-								.addContent(getStackTrace(t, 10));
+        if (t instanceof JeevesException) {
+            JeevesException je = (JeevesException) t;
 
-		error.setAttribute("id", id);
+            id = je.getId();
+            obj = je.getObject();
+        }
 
-		if (obj != null)
-		{
-			Element elObj = new Element("object");
+        Element error = new Element(Constants.ERROR)
+                .addContent(new Element("message").setText(msg))
+                .addContent(new Element("class").setText(cls))
+                .addContent(getStackTrace(t, 10));
 
-			if (obj instanceof Element)	elObj.addContent(((Element) obj).detach());
-				else								elObj.setText(obj.toString());
+        error.setAttribute("id", id);
 
-			error.addContent(elObj);
-		}
+        if (obj != null) {
+            Element elObj = new Element("object");
 
-		return error;
-	}
+            if (obj instanceof Element) elObj.addContent(((Element) obj).detach());
+            else elObj.setText(obj.toString());
 
-	//--------------------------------------------------------------------------
-	//---
-	//--- Private methods
-	//---
-	//--------------------------------------------------------------------------
+            error.addContent(elObj);
+        }
 
-	private static Element getStackTrace(Throwable t, int depth)
-	{
-		Element stack = new Element("stack");
+        return error;
+    }
+
+    //--------------------------------------------------------------------------
+    //---
+    //--- Private methods
+    //---
+    //--------------------------------------------------------------------------
+
+    private static Element getStackTrace(Throwable t, int depth) {
+        Element stack = new Element("stack");
         boolean writing = true;
-		for (StackTraceElement ste : t.getStackTrace())
-		{
-			String clas = ste.getClassName();
-			String file = ste.getFileName();
-			String meth = ste.getMethodName();
-			String line = Integer.toString(ste.getLineNumber());
+        for (StackTraceElement ste : t.getStackTrace()) {
+            String clas = ste.getClassName();
+            String file = ste.getFileName();
+            String meth = ste.getMethodName();
+            String line = Integer.toString(ste.getLineNumber());
 
-			Element at = new Element("at");
+            Element at = new Element("at");
 
-			at.setAttribute("class",  (clas == null) ? "???" : clas);
-			at.setAttribute("file",   (file == null) ? "???" : file);
-			at.setAttribute("line",   line);
-			at.setAttribute("method", (meth == null) ? "???" : meth);
+            at.setAttribute("class", (clas == null) ? "???" : clas);
+            at.setAttribute("file", (file == null) ? "???" : file);
+            at.setAttribute("line", line);
+            at.setAttribute("method", (meth == null) ? "???" : meth);
 
 
             if (--depth >= 0 || (clas != null && (
-                    clas.startsWith("org.fao") || 
-                    clas.startsWith("org.wfp") || 
-                    clas.startsWith("jeeves")  ||
-                    clas.startsWith("org.geonetwork")))) {
+                    clas.startsWith("org.fao") ||
+                            clas.startsWith("org.wfp") ||
+                            clas.startsWith("jeeves") ||
+                            clas.startsWith("org.geonetwork")))) {
                 writing = true;
                 stack.addContent(at);
             } else if (writing) {
                 stack.addContent(new Element("skip").setText("..."));
                 writing = false;
             }
-		}
+        }
 
-		return stack;
-	}
+        return stack;
+    }
 
-	//--------------------------------------------------------------------------
-	//---
-	//--- Variables
-	//---
-	//--------------------------------------------------------------------------
+    //--------------------------------------------------------------------------
+    //---
+    //--- Variables
+    //---
+    //--------------------------------------------------------------------------
 
-	protected String id;
-	protected Object object;
+    protected String id;
+    protected Object object;
 
-	/** this is the error code that will be returned. For HTTP connections,
-	    this will be the status code */
+    /**
+     * this is the error code that will be returned. For HTTP connections,
+     * this will be the status code
+     */
 
-	protected int code;
+    protected int code;
 }
 
 //=============================================================================

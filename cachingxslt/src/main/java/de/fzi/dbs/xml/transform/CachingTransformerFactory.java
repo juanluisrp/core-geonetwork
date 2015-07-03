@@ -4,16 +4,16 @@ import net.sf.saxon.TransformerFactoryImpl;
 import org.apache.log4j.Logger;
 import org.fao.geonet.utils.CachedTransformer;
 
-import java.io.File;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.HashMap;
-import java.util.Map;
 import javax.xml.transform.Source;
 import javax.xml.transform.Templates;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.stream.StreamSource;
+import java.io.File;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.HashMap;
+import java.util.Map;
 
 
 /**
@@ -103,7 +103,7 @@ public class CachingTransformerFactory extends TransformerFactoryImpl implements
         if (templatesCacheEntry != null) {
             // Check timestamp of modification
             if (templatesCacheEntry.lastModified
-                < templatesCacheEntry.templatesFile.lastModified())
+                    < templatesCacheEntry.templatesFile.lastModified())
                 templatesCacheEntry = null;
         }
         // If no templatesEntry is found or this entry was obsolete
@@ -113,8 +113,8 @@ public class CachingTransformerFactory extends TransformerFactoryImpl implements
             if (!file.exists()) {
                 throw new TransformerConfigurationException(
                         "Requested transformation ["
-                        + file.getAbsolutePath()
-                        + "] does not exist.");
+                                + file.getAbsolutePath()
+                                + "] does not exist.");
             }
 
             // Create new cache entry
