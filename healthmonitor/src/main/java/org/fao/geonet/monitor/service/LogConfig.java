@@ -12,6 +12,7 @@ import java.util.zip.ZipOutputStream;
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.io.IOUtils;
 import org.apache.log4j.FileAppender;
 import org.apache.log4j.Logger;
 import org.fao.geonet.constants.Geonet;
@@ -105,9 +106,8 @@ public class LogConfig {
                     zos.write(bytes, 0, read);
                 }
             } finally {
-                assert zos != null;
-                zos.flush();
-                zos.close();
+                if (zos != null) zos.flush();
+                IOUtils.closeQuietly(zos);
             }
         } else {
             throw new RuntimeException("No log file found for download. Check logger configuration.");

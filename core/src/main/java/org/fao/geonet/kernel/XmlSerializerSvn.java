@@ -120,8 +120,6 @@ public class XmlSerializerSvn extends XmlSerializer {
 		// old XML comes from the database
 		updateDb(id, xml, changeDate, xml.getQualifiedName(), updateDateStamp, uuid);
 
-		// set subversion manager to record history on this metadata when commit
-		// takes place
 		svnMan.setHistory(id, context);
 
 	}

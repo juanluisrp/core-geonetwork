@@ -15,9 +15,11 @@ import org.fao.geonet.kernel.DataManager;
 import org.fao.geonet.kernel.mef.MEFLibIntegrationTest;
 import org.fao.geonet.utils.Xml;
 import org.jdom.Element;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.test.context.ContextConfiguration;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
@@ -28,10 +30,7 @@ public class LuceneSearcherPresentTest extends AbstractCoreIntegrationTest {
     @Autowired
     private DataManager dataManager;
 
-    //TODO: Make this test work synchronously consistently to be able to add it to CI/CD test suite.
-    @Test
-    public void dummyTest() {}
-    //@Test
+    @Ignore
     public void testBuildPrivilegesMetadataInfo() throws Exception {
         final ServiceContext serviceContext = createServiceContext();
         loginAsAdmin(serviceContext);
@@ -81,19 +80,22 @@ public class LuceneSearcherPresentTest extends AbstractCoreIntegrationTest {
 
             assertNull(Xml.selectElement(info, "edit"));
             assertNull(Xml.selectElement(info, "owner"));
-            //TODO: Check why guestdownload is no longer part of MetadataInfo
-            //assertEqualsText("false", info, "guestdownload");
+
+            assertEqualsText("false", info, "guestdownload");
             assertEqualsText("true", info, "isPublishedToAll");
             assertEqualsText("true", info, "view");
             assertEqualsText("false", info, "notify");
-            //TODO: Inverted three assertions, Check why download, dynamic and featured are no longer false.
-            assertEqualsText("true", info, "download");
-            assertEqualsText("true", info, "dynamic");
-            assertEqualsText("true", info, "featured");
+            assertEqualsText("false", info, "download");
+            assertEqualsText("false", info, "dynamic");
+            assertEqualsText("false", info, "featured");
         } finally {
             searchManager.releaseIndexReader(indexAndTaxonomy);
         }
     }
 
+    @Test
+    public void testDummy() {
+
+    }
 
 }

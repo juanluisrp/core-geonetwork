@@ -263,7 +263,6 @@
     getValidation: 'md.validate@json',
     mdSelect: 'metadata.select?_content_type=json', // TODO: CHANGE
 
-    mdGetPDF: 'pdf',
     mdGetPDFSelection: 'pdf.selection.search', // TODO: CHANGE
     mdGetRDF: 'rdf.metadata.get',
     mdGetMEF: 'mef.export',
@@ -461,6 +460,9 @@
               }
             });
             angular.extend(gnConfig, response.data);
+            if (window.location.search.indexOf('with3d') !== -1) {
+              gnConfig['map.is3DModeAllowed'] = true;
+            }
             defer.resolve(gnConfig);
           });
           return defer.promise;
@@ -503,7 +505,8 @@
       $.extend(true, this, k);
       var listOfArrayFields = ['topicCat', 'category',
         'securityConstraints', 'resourceConstraints', 'legalConstraints',
-        'denominator', 'resolution', 'geoDesc', 'geoBox',
+        'denominator', 'resolution', 'geoDesc', 'geoBox', 'inspirethemewithac',
+        'status', 'status_text',
         'mdLanguage', 'datasetLang', 'type'];
       var record = this;
       this.linksCache = [];
@@ -551,6 +554,9 @@
         this['geonet:info'].isPublishedToAll = this.isPublished() ?
             'false' : 'true';
       },
+
+
+
       getLinks: function() {
         return this.link;
       },

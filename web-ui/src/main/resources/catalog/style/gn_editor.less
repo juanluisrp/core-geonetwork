@@ -146,7 +146,7 @@ form.gn-editor {
       color: #6a6a6a;
       font-weight: 200;
       padding-top: 0px;
-      line-height: 1em;
+      line-height: 22px;
 
   }
   
@@ -180,8 +180,17 @@ form.gn-editor {
    * line instead of 100% width in input group.
    */
   .gn-date-picker {
-    > input.gn-date {
-      width: 50%;
+    > input[type=date] {
+      width: 60%;
+    }
+    > input[type=time] {
+      width: 40%;
+    }
+    > input[type=date].gn-notime {
+      width: 100%;
+    }
+    > input[type=time].hidden {
+      width: 0%;
     }
     .gn-indeterminate-position {
       display: table-cell;
@@ -250,7 +259,8 @@ form.gn-editor {
   .gn-field {
       border-radius: 3px;
       margin: 0px;
-      padding: 5px;
+      padding-top: 4px;
+      padding-bottom: 4px;
   }
   .field-bg {
       background-color: #f7f7f7;
