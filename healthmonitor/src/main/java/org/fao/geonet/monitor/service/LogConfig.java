@@ -106,7 +106,6 @@ public class LogConfig {
                     zos.write(bytes, 0, read);
                 }
             } finally {
-                IOUtils.closeQuietly(in);
                 if (zos != null) zos.flush();
                 IOUtils.closeQuietly(zos);
             }
