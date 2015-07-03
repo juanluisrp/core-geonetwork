@@ -26,18 +26,20 @@ package org.fao.geonet.exceptions;
 //=============================================================================
 
 @SuppressWarnings("serial")
-public abstract class BadInputEx extends JeevesClientEx {
-    //--------------------------------------------------------------------------
-    //---
-    //--- Constructor
-    //---
-    //--------------------------------------------------------------------------
+public abstract class BadInputEx extends JeevesClientEx
+{
+	//--------------------------------------------------------------------------
+	//---
+	//--- Constructor
+	//---
+	//--------------------------------------------------------------------------
 
-    public BadInputEx(String message, Object object) {
-        super(message, object);
+	public BadInputEx(String message, Object object)
+	{
+		super(message, object);
 
-        id = "bad-input";
-    }
+		id = "bad-input";
+	}
 }
 
 //=============================================================================

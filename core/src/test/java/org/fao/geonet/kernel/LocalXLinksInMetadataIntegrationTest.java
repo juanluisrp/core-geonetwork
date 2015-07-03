@@ -98,9 +98,6 @@ public class LocalXLinksInMetadataIntegrationTest extends AbstractCoreIntegratio
         assertEquals(1, _serviceManager.getNumberOfCalls());
         final Element loadedMetadataKeepXLinkAttributesNotEdit = _dataManager.getMetadata(context, id, false, false, true);
         assertEqualsText(keyword1, loadedMetadataKeepXLinkAttributesNotEdit, xpath, GCO, GMD);
-
-        //Changed this to always increment, this value was 1.
-        //TODO: Fix test to match what the expected value is here or validate that this assumption is true.
         assertEquals(2, _serviceManager.getNumberOfCalls());
 
         final Element loadedMetadataNoXLinkAttributesEdit = _dataManager.getMetadata(context, id, false, true, false);

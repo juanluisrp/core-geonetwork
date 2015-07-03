@@ -72,8 +72,7 @@ public class GetKeywordByIdTest extends AbstractServiceIntegrationTest {
                 ISO19139Namespaces.GMD);
     }
 
-    //@Test
-    //TODO: Check why returns two values.
+    @Test
     public void testExecTextGroupOnly() throws Exception {
         final String thesaurusKey = firstThesaurusKey();
         final java.util.List<KeywordBean> keywordBeans = getExampleKeywords(thesaurusKey, 2);

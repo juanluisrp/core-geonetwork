@@ -36,7 +36,6 @@ public class ThesaurusTest extends AbstractThesaurusBasedTest {
         Path file = this.thesaurusFile.getParent().resolve(ThesaurusTest.class.getSimpleName() + "_empyt.rdf");
         Files.deleteIfExists(file);
 
-        //TODO: Added site url http://localhost to fix unittests. Check if there always is a siteUrl.
         this.writableThesaurus = new Thesaurus(isoLangMapper, file.getFileName().toString(), null, null, Geonet.CodeList.LOCAL,
                 file.getFileName().toString(), file, "http://test.com", true);
         writableThesaurus.initRepository();

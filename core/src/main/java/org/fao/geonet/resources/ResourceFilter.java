@@ -109,6 +109,7 @@ public class ResourceFilter implements Filter {
                 if (filename.equals("images/logos/GN3.ico")) {
                     favicon = loadResource(resourcesDir, servletContext, appPath, "images/logos/GN3.ico", favicon.one(), favicon.two());
                     AddFavIcon(nodeId, favicon);
+
                     httpServletResponse.setContentLength(favicon.one().length);
                     httpServletResponse.addHeader("Cache-Control", "max-age=" + FIVE_DAYS + ", public");
                     response.getOutputStream().write(favicon.one());
@@ -144,7 +145,6 @@ public class ResourceFilter implements Filter {
             }
         }
     }
-
     public synchronized void destroy() {
         servletContext = null;
         defaultImage = null;

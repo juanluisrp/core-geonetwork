@@ -26,18 +26,20 @@ package org.fao.geonet.exceptions;
 //=============================================================================
 
 @SuppressWarnings("serial")
-public class BadFormatEx extends BadInputEx {
-    //--------------------------------------------------------------------------
-    //---
-    //--- Constructor
-    //---
-    //--------------------------------------------------------------------------
+public class BadFormatEx extends BadInputEx
+{
+	//--------------------------------------------------------------------------
+	//---
+	//--- Constructor
+	//---
+	//--------------------------------------------------------------------------
 
-    public BadFormatEx(String reason) {
-        super(reason, null);
+	public BadFormatEx(String reason)
+	{
+		super(reason, null);
 
-        id = "bad-format";
-    }
+		id = "bad-format";
+	}
 }
 
 //=============================================================================

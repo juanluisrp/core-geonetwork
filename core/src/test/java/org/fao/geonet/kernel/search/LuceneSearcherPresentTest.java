@@ -29,8 +29,7 @@ public class LuceneSearcherPresentTest extends AbstractCoreIntegrationTest {
     private SearchManager searchManager;
     @Autowired
     private DataManager dataManager;
-    
-    //TODO: Make this test work synchronously consistently to be able to add it to CI/CD test suite.
+
     @Ignore
     public void testBuildPrivilegesMetadataInfo() throws Exception {
         final ServiceContext serviceContext = createServiceContext();
@@ -81,15 +80,14 @@ public class LuceneSearcherPresentTest extends AbstractCoreIntegrationTest {
 
             assertNull(Xml.selectElement(info, "edit"));
             assertNull(Xml.selectElement(info, "owner"));
-            //TODO: Check why guestdownload is no longer part of info.
-            //assertEqualsText("false", info, "guestdownload");
+
+            assertEqualsText("false", info, "guestdownload");
             assertEqualsText("true", info, "isPublishedToAll");
             assertEqualsText("true", info, "view");
             assertEqualsText("false", info, "notify");
-			//TODO: inverted three assertions, Check why download, dynamic and featured are no longer false.
-            assertEqualsText("true", info, "download");
-            assertEqualsText("true", info, "dynamic");
-            assertEqualsText("true", info, "featured");
+            assertEqualsText("false", info, "download");
+            assertEqualsText("false", info, "dynamic");
+            assertEqualsText("false", info, "featured");
         } finally {
             searchManager.releaseIndexReader(indexAndTaxonomy);
         }

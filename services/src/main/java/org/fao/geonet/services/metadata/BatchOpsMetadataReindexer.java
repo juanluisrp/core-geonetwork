@@ -93,7 +93,7 @@ public class BatchOpsMetadataReindexer extends MetadataIndexerProcessor {
                 int start = index;
                 int count = Math.min(perThread, ids.length - start);
                 // create threads to process this chunk of ids
-                jobs.add(createCallable(ids, start, count));
+                jobs.add(new BatchOpsCallable(ids, start, count, getDataManager()));
 
                 index += count;
             }
@@ -118,10 +118,6 @@ public class BatchOpsMetadataReindexer extends MetadataIndexerProcessor {
                 executor.shutdown();
             }
         }
-    }
-
-    protected BatchOpsCallable createCallable(int[] ids, int start, int count) {
-        return new BatchOpsCallable(ids, start, count, getDataManager());
     }
 }
 
