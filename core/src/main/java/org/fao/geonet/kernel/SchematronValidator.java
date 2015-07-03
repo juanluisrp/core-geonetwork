@@ -69,8 +69,7 @@ public class SchematronValidator {
                                                            final MetadataSchema metadataSchema) {
         List<ApplicableSchematron> applicableSchematron = Lists.newArrayList();
         SchematronRepository schematronRepository = ApplicationContextHolder.get().getBean(SchematronRepository.class);
-        //Unused SchemaManager schemaManager = ApplicationContextHolder.get().getBean(SchemaManager.class);
-
+        
         final List<Schematron> schematronList = schematronRepository.findAllBySchemaName(metadataSchema.getName());
 
         //Loop through all xsl files
@@ -148,7 +147,7 @@ public class SchematronValidator {
         report.setAttribute("required", requirement.toString(), Edit.NAMESPACE);
 
         try {
-            Map<String,Object> params = new HashMap<>();
+            Map<String,Object> params = new HashMap<String, Object>();
             params.put("lang", lang);
             params.put("rule", ruleId);
             params.put("thesaurusDir", thesaurusManager.getThesauriDirectory().toString());
@@ -160,7 +159,7 @@ public class SchematronValidator {
                 // add results to persistent validation information
                 int firedRules = 0;
                 @SuppressWarnings("unchecked")
-                Iterator i = xmlReport.getDescendants(new ElementFilter("fired-rule", Geonet.Namespaces.SVRL));
+                Iterator<Element> i = xmlReport.getDescendants(new ElementFilter("fired-rule", Geonet.Namespaces.SVRL));
                 while (i.hasNext()) {
                     i.next();
                     firedRules ++;

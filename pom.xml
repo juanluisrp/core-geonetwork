@@ -11,16 +11,14 @@
     Open Source catalog application to manage spatially referenced
     resources through the web.</description>
   <url>http://geonetwork-opensource.org</url>
-  <!--scm>
+    <!--scm>
     <connection>
       scm:git:https://github.com/geonetwork/core-geonetwork
     </connection>
     <url>https://github.com/geonetwork/core-geonetwork</url>
-  </scm-->
-  <scm>
-	<url>git@github.so.kadaster.nl:NGR/core-geonetwork.git</url>
-	<connection>scm:git:git@github.so.kadaster.nl:NGR/core-geonetwork.git</connection>
-	<developerConnection>scm:git:git@github.so.kadaster.nl:NGR/core-geonetwork.git</developerConnection>
+    </scm-->
+    <scm>
+        <connection>scm:git:http://github.so.kadaster.nl/NGR/core-geonetwork.git</connection>
   </scm>
   <inceptionYear>2003</inceptionYear>
   <issueManagement>
@@ -120,7 +118,7 @@
         <plugin>
           <groupId>net.alchim31.maven</groupId>
           <artifactId>yuicompressor-maven-plugin</artifactId>
-          <version>1.5.1</version>
+          <version>0.9</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
@@ -135,7 +133,7 @@
           <plugin>
               <groupId>org.apache.maven.plugins</groupId>
               <artifactId>maven-release-plugin</artifactId>
-              <version>2.1</version>
+                    <version>2.1</version>
           </plugin>
           <plugin>
               <groupId>org.mortbay.jetty</groupId>
@@ -145,7 +143,7 @@
         <plugin>
           <groupId>org.codehaus.mojo</groupId>
           <artifactId>findbugs-maven-plugin</artifactId>
-          <version>3.0.1</version>
+          <version>2.5.3</version>
           <configuration>
             <effort>Default</effort>
             <threshold>Default</threshold>
@@ -320,7 +318,7 @@
       <!-- artifact assembly -->
       <plugin>
         <artifactId>maven-assembly-plugin</artifactId>
-        <version>2.2-beta-5</version>
+        <version>2.5.4</version>
         <configuration>
           <descriptors>
             <descriptor>release/zip-war.xml</descriptor>
@@ -1154,7 +1152,6 @@
     <module>services</module>
     <module>wro4j</module>
     <module>inspire-atom</module>
-    <module>pdok-geodatastore-dar</module>
   </modules>
 
   <profiles>
@@ -1168,11 +1165,12 @@
       <modules>
         <module>schemas-test</module>
         <module>web-ui</module>
-        <!--module>web-ui-docs</module-->
-        <!--module>web-client</module-->
+                <!--module>web-ui-docs</module-->
+                <!--module>web-client</module-->
         <module>web</module>
         <module>e2e-tests</module>
-        <!--module>geoserver</module-->
+                <!--module>geoserver</module-->
+                <module>pdok-geodatastore-dar</module>
       </modules>
     </profile>
     <!-- Python and Latex are required to build the documentation. -->
@@ -1211,7 +1209,8 @@
     <wro.version>1.7.7</wro.version>
     <node.version>v0.10.24</node.version>
     <npm.version>1.3.23</npm.version>
-    <print-lib.version>2.1.0</print-lib.version>
+    <print-lib.version>2.1.1</print-lib.version>
     <flying-saucer>9.0.7</flying-saucer>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
 </project>
