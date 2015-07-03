@@ -153,12 +153,12 @@
 
     <!--  Spring logging configuration -->
     <logger name="org.springframework" additivity="false">
-        <level value="WARN" />
+        <level value="INFO" />
         <appender-ref ref="consoleAppender" />
         <appender-ref ref="fileAppender" />
     </logger>
     <logger name="org.springframework.beans" additivity="false">
-        <level value="WARN" />
+        <level value="DEBUG" />
         <appender-ref ref="fileAppender" />
     </logger>
     <logger name="org.springframework.security">

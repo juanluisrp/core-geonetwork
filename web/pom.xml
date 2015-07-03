@@ -785,6 +785,16 @@
         <env>inspire</env>
       </properties>
     </profile>
+    <profile>
+      <id>geodatastore</id>
+      <dependencies>
+        <dependency>
+          <groupId>nl.kadaster.pdok</groupId>
+          <artifactId>pdok-geodatastore</artifactId>
+          <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+      </dependencies>
+    </profile>
   </profiles>
 
   <properties>

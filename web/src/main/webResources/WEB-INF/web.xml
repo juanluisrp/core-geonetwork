@@ -67,10 +67,10 @@
         <filter-class>org.tuckey.web.filters.urlrewrite.UrlRewriteFilter</filter-class>
         <!-- set the amount of seconds the conf file will be checked for reload. can be a valid integer (0 denotes
             check every time, empty/not set denotes no reload check) -->
-        <!--<init-param>-->
-            <!--<param-name>confReloadCheckInterval</param-name>-->
-            <!--<param-value>0</param-value>-->
-        <!--</init-param>-->
+        <init-param>
+            <param-name>confReloadCheckInterval</param-name>
+            <param-value>0</param-value>
+        </init-param>
 
 
         <!-- sets up log level (will be logged to context log). Can be: TRACE, DEBUG, INFO (default), WARN, ERROR,
@@ -78,7 +78,7 @@
             sysout:DEBUG -->
         <init-param>
             <param-name>logLevel</param-name>
-            <param-value>WARN</param-value>
+            <param-value>DEBUG</param-value>
         </init-param>
 
         <!-- you can disable status page if desired. Can be: true, false (default true) -->
