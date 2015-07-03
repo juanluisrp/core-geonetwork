@@ -1,3 +1,4 @@
+	ignore = dirty
 [submodule "e2e-tests/chromedriver"]
 	path = e2e-tests/chromedriver
 	url = https://github.so.kadaster.nl/NGR/chromedriver.git
