@@ -1,0 +1,294 @@
+@font-face {
+	font-family: 'pdok';
+	src:url('../catalog/views/geodatastore/less/fonts/pdok.eot?o7tw0k');
+	src:url('../catalog/views/geodatastore/less/fonts/pdok.eot?#iefixo7tw0k') format('embedded-opentype'),
+		url('../catalog/views/geodatastore/less/fonts/pdok.ttf?o7tw0k') format('truetype'),
+		url('../catalog/views/geodatastore/less/fonts/pdok.woff?o7tw0k') format('woff'),
+		url('../catalog/views/geodatastore/less/fonts/pdok.svg?o7tw0k#pdok') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+
+i {
+	font-family: 'pdok';
+	speak: none;
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	line-height: 1;
+
+	/* Better Font Rendering =========== */
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+.pdok-i-csv:before {
+	content: "\e600";
+}
+.pdok-i-json:before {
+	content: "\e601";
+}
+.pdok-i-gml:before {
+	content: "\e602";
+}
+
+body {
+  font-family: Verdana, Arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.42857143;
+  color: #000;
+  background: #f3f5f6;
+  border-top: 1px solid #535353;
+  padding: 0;
+}
+.wrapper {
+  /*height: 100px;*/
+}
+header {
+  height: 90px;
+  padding: 15px 25px;
+}
+/*.topdrop {
+  border-radius: 10px;
+  border: 3px dashed lightgrey;
+  height: 100%;
+  float: right;
+  width: 100%;
+  width: -webkit-calc(100% - 160px);
+  width: -moz-calc(100% - 160px);
+  width: calc(100% - 160px);
+}*/
+
+.topdrop {
+  color: #154273;
+  float: right;
+}
+.topdrop H4{
+  float: left;
+  margin-right: 15px;
+  margin-top: 30px
+}
+.topdrop i{
+  margin-top: -2px
+}
+.branding {
+}
+.nav-tabs {
+  border-bottom: 8px solid #f6d4b2;
+}
+.nav-tabs>li.first {
+  margin-left: 25px;
+}
+.nav-tabs>li>a {
+  border-radius: 0px 0px 0 0;
+  text-decoration: none;
+}
+.nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover {
+  cursor: default;
+  background-color: #f6d4b2;
+  border: 1px solid #f6d4b2;
+  border-bottom-color: transparent;
+  color: #000;
+}
+.nav-tabs>li>a:focus, .nav-tabs>li>a:hover {
+  background-color: #f6d4b2;
+  border: 1px solid #f6d4b2;
+}
+.nav-tabs>li>a {
+  color: #000;
+}
+section {
+  width: 50%;
+  overflow: scroll;
+  float: left;
+  padding: 25px;
+}
+aside {
+  width: 50%;
+  overflow: scroll;
+}
+aside #metadata {
+  overflow: scroll;
+  background-color: #E26F02;
+  padding: 25px;
+  /*display: none;*/
+  height: 100%;
+}
+a {
+  color: #E26F02;
+  text-decoration: underline;
+}
+a:hover {
+  color: #154273;
+  text-decoration: none;
+}
+
+#feedback { font-size: 1.4em; }
+#selectable .ui-selecting { background: #f6d4b2; }
+#selectable li:hover { background: #f6d4b2; }
+
+#selectable .ui-selected { background: #fff; border-color: #E26F02; }
+#selectable li.ui-selected:hover, li#dropzone:hover { background: #fff; cursor: auto;}
+#selectable { list-style-type: none; margin: 0; padding: 0; }
+#selectable li { 
+  padding: 10px; 
+  margin:20px 0px;
+  border:1px solid #f3f5f6;
+  border-radius: 5px;
+  background-color:#f3f5f6; 
+  cursor: pointer;
+  /*box-shadow: 0px 0px 10px darkgray ;*/
+  position: relative;
+}
+#selectable li .title { 
+  margin-bottom: 5px;
+}
+#selectable li .title span { 
+  font-size: 18px;
+}
+#overview #selectable li .title span { 
+  min-height: 50px;
+  display: block;
+}
+#selectable li .message { 
+  padding-left: 5px;
+  overflow: auto;
+  background-color: transparent;
+}
+#overview #selectable li .message { 
+  padding-left: 0px;
+  margin-left: -2px;
+}
+#selectable li .progress { 
+  margin-bottom: 0px;
+  background-color: white;
+}
+#selectable  li.ui-selected .progress { 
+  background-color: #f3f5f6;
+}
+
+.progress-bar-inqueue {
+  background-color: lightgrey;
+}
+.floatright {
+  float: right;
+}
+.arrow-left {
+  position: absolute;
+  right: -26px;
+  width: 0; 
+  height: 0; 
+  border-top: 10px solid transparent;
+  border-bottom: 10px solid transparent; 
+  border-right:10px solid #E26F02; 
+  visibility: hidden;
+}
+.delete {
+  visibility: hidden;
+  opacity:0;
+}
+.ui-selected .arrow-left, .ui-selected .delete, #selectable li:hover .delete {
+  visibility: visible;
+  opacity:1;
+}
+#selectable li:hover .delete { 
+  transition:opacity 0.5s linear;
+}
+footer, nav.verytop {
+  padding: 5px 0;
+  font-size: small;
+  height: 30px;
+}
+footer a, nav.verytop a {
+  color: darkgrey;
+}
+footer a:hover, nav.verytop a:hover {
+  color: #E26F02;
+}
+footer ul, .verytop ul {
+  list-style: none;
+  padding: 0px;
+}
+footer ul li, .verytop ul li {
+  float: left;
+  padding: 0 10px;
+}
+footer ul li.last, .verytop ul li.last {
+  padding-right: 0px;
+}
+footer ul li.first, .verytop ul li.first {
+  padding-left: 0px;
+}
+.userlog {
+  margin: -5px 25px 0 0;
+}
+.userlog .log {
+  font-size: smaller;
+  margin-top: -3px;
+}
+.userlog .log a, #metadata a {
+  color: white;
+}
+.userlog .log a i, .verytop a i  {
+  margin-right: 5px
+}
+
+.thumb {
+  float: left;
+  border: solid 1px black;
+  height: 75px;
+  width: 75px;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  background-position:center center; 
+  background-repeat:no-repeat; 
+  margin-right: 10px;
+}
+#k1 .thumb {
+  background-image:url('../catalog/views/geodatastore/imgages/thumb-h.png');
+}
+#k2 .thumb {
+  background-image:url('../catalog/views/geodatastore/images/thumb-v.png');
+}
+#k4 .thumb {
+  background-image:url('../catalog/views/geodatastore/imgages/thumbnail.png');
+}
+.value {
+  color: white;
+  font-weight: bold;
+}
+.thumbcont {
+  border: solid 1px black;
+  width: 100%;
+}
+.thumbcont img{
+  width: 100%;
+  min-height: 80px;
+}
+.thumbact {
+  padding: 0 10px;
+  margin-top: -40px;
+  display: inline-block;
+  width: calc(100% - 30px);
+  position: absolute;
+}
+li#dropzone {
+  border-radius: 10px;
+  border: 3px dashed lightgrey;
+  min-height: 80px;
+  background-color: white;
+  padding: 10px 20px;
+}
+li#dropzone p {
+  margin: 10px 10px;
+  text-align: right;
+  width: 152px;
+}
+li#dropzone .fa-4x {
+  margin-left: 15px;
+  color: lightgrey;
+}
+  
