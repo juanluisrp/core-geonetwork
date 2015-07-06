@@ -7,3 +7,6 @@
 [submodule "web-ui/src/main/resources/catalog/lib/style/font-awesome"]
 	        path = web-ui/src/main/resources/catalog/lib/style/font-awesome
 		        url = http://github.so.kadaster.nl/NGR/Font-Awesome.git
+[submodule "geodatastore"]
+	        path = geodatastore
+		        url = http://github.so.kadaster.nl/NGR/geodatastore.git
