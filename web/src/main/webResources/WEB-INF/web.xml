@@ -78,7 +78,7 @@
             sysout:DEBUG -->
         <init-param>
             <param-name>logLevel</param-name>
-            <param-value>DEBUG</param-value>
+            <param-value>INFO</param-value>
         </init-param>
 
         <!-- you can disable status page if desired. Can be: true, false (default true) -->
