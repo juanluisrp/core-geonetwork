@@ -11,14 +11,21 @@
     Open Source catalog application to manage spatially referenced
     resources through the web.</description>
   <url>http://geonetwork-opensource.org</url>
-    <!--scm>
+  <!--scm>
     <connection>
       scm:git:https://github.com/geonetwork/core-geonetwork
     </connection>
     <url>https://github.com/geonetwork/core-geonetwork</url>
-    </scm-->
-    <scm>
-        <connection>scm:git:http://github.so.kadaster.nl/NGR/core-geonetwork.git</connection>
+  </scm-->
+  <scm>
+    <url>http://github.so.kadaster.nl/NGR/core-geonetwork</url>
+    <connection>
+    scm:git:http://github.so.kadaster.nl/NGR/core-geonetwork.git
+    </connection>
+    <developerConnection>
+    scm:git:git@github.so.kadaster.nl:NGR/core-geonetwork.git
+    </developerConnection>
+    <tag>core-geonetwork-parent-pom-3.0.1.0-SNAPSHOT</tag>
   </scm>
   <inceptionYear>2003</inceptionYear>
   <issueManagement>
@@ -1170,8 +1177,9 @@
                 <!--module>web-client</module-->
         <module>web</module>
         <module>e2e-tests</module>
-                <!--module>geoserver</module-->
-                <module>pdok-geodatastore-dar</module>
+        <!--module>geoserver</module-->		
+        <module>pdok-geodatastore</module><module>pdok-geodatastore</module>
+        <module>pdok-geodatastore-dar</module>
       </modules>
     </profile>
     <!-- Python and Latex are required to build the documentation. -->
@@ -1188,14 +1196,22 @@
       </modules>
     </profile>
   </profiles>
-
   <distributionManagement>
+    <repository>
+      <id>releases-repo</id>
+      <name>Nexus Releases Repo</name>
+      <url>
+      http://mvnrepository.so.kadaster.nl:8081/nexus/content/repositories/releases/
+      </url>
+    </repository>
+  </distributionManagement>
+  <!--distributionManagement>
     <snapshotRepository>
       <id>scp-repository.geonetwork-opensource.org</id>
       <name>GeoNetwork opensource repositories</name>
       <url>scpexe://TO DEFINED</url>
     </snapshotRepository>
-  </distributionManagement>
+  </distributionManagement-->
 
   <properties>
     <jetty.version>8.1.9.v20130131</jetty.version>
