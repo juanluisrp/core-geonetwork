@@ -147,7 +147,7 @@ public class SchematronValidator {
         report.setAttribute("required", requirement.toString(), Edit.NAMESPACE);
 
         try {
-            Map<String,Object> params = new HashMap<String,Object>();
+            Map<String,Object> params = new HashMap<String, Object>();
             params.put("lang", lang);
             params.put("rule", ruleId);
             params.put("thesaurusDir", thesaurusManager.getThesauriDirectory().toString());

@@ -217,7 +217,7 @@ public class LuceneConfig {
 
 			if (version != null) {
 				try {
-					LUCENE_VERSION = Version.valueOf("LUCENE_" + version);
+					LUCENE_VERSION = Version.parseLeniently("LUCENE_" + version);
 					if (LUCENE_VERSION == null) {
 					    LUCENE_VERSION = Geonet.LUCENE_VERSION;
 					}

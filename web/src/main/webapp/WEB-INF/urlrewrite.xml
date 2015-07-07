@@ -261,7 +261,26 @@
         <from>^/opensearch/(.*)/download?(.*)$</from>
         <to type="forward">/srv/$1/atom.download</to>
     </rule>
+    <!-- Rules for direct links (for RDF at least) -->
+    <rule>
+        <note>
+            Retrieves xml format for a metadata. No language
+            Example URL: http://localhost:8080/geonetwork/metadata/da165110-88fd-11da-a88f-000d939bc5d8
+        </note>
+        <from>^/(metadata|resource)/(.*)$</from>
+        <to type="forward">/srv/eng/xml.metadata.get?uuid=$1</to>
+    </rule>
 
+    <rule>
+        <note>
+            Retrieves xml format for a thesaurus
+            Example URL: http://localhost:8080/geonetwork/thesaurus/external.theme.inspire-service-taxonomy
+        </note>
+        <from>^/thesaurus/(.*)$</from>
+        <to type="forward">/srv/eng/thesaurus.download?ref=$1</to>
+    </rule>
+
+    <!-- /Rules for direct links (for RDF at least) -->
     <!-- Sitemap URLs -->
     <rule>
         <note>
@@ -304,6 +323,48 @@
         <to type="forward">/srv/eng/portal.sitemap</to>
     </rule>
     <!-- Sitemap URLs -->
+
+
+    <!-- Geodatastore Rewrites -->
+    <rule>
+        <note>
+            Geodatastore search query
+        </note>
+        <from>^/geodatastore/api/datasets</from>
+        <to type="forward" last="true">/srv/dut/q@json</to>
+    </rule>
+    <rule>
+        <note>
+            Geodatastore delete metadata
+        </note>
+        <condition type="method">DELETE</condition>
+        <from>/srv/dut/geodatastore/api/dataset/(.+)</from>
+        <to type="forward">/srv/dut/md.delete?_content_type=json&amp;id=$1</to>
+    </rule>
+
+    <rule>
+        <note>
+            Geodatastore
+        </note>
+        <from>^/geodatastore/api/(.*)$</from>
+        <to type="forward">/srv/dut/geodatastore/api/$1</to>
+    </rule>
+
+    <rule>
+        <note>
+            Geodatastore available codelists
+        </note>
+        <from>^/geodatastore/registry</from>
+        <to type="forward">/srv/dut/geodatastore/registry</to>
+    </rule>
+
+    <rule>
+        <note>
+            Geodatastore
+        </note>
+        <from>^/geodatastore/registry/(.*)$</from>
+        <to type="forward">/srv/dut/geodatastore/registry/$1</to>
+    </rule>
 
     <!-- hide jsession id from google bot -->
     <outbound-rule encodefirst="true">
