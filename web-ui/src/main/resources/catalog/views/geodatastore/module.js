@@ -8,11 +8,13 @@
   goog.require('gn_search');
   goog.require('gn_search_geodatastore_config');
   goog.require('gn_search_geodatastore_directive');
+  goog.require('gn_login_controller');
+  goog.require('geodatastore_login');
 
   var module = angular.module('gn_search_geodatastore',
-      ['gn_search', 'ngRoute', 'gn_search_geodatastore_config',
+      ['gn_search', 'geodatastore_login', 'gn_login_controller', 'ngRoute', 'gn_search_geodatastore_config',
        'gn_search_geodatastore_directive', 'gn_mdactions_directive']);
-  
+
 
   module.controller('geoDataStoreMainController', [function() {
 

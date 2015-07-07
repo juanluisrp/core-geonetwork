@@ -112,7 +112,7 @@
         <level value="WARN" />
     </logger>
     <logger name="geonetwork.wro4j">
-        <level value="WARN" />
+        <level value="DEBUG" />
     </logger>
 
     <!--  Jeeves module and submodule logger configuration -->
@@ -187,7 +187,7 @@
         <level value="WARN" />
     </logger>
     <logger name="ro.isdc.wro.http" additivity="false">
-        <level value="WARN" />
+        <level value="DEBUG" />
         <appender-ref ref="allConsoleAppender" />
         <appender-ref ref="fileAppender" />
     </logger>
