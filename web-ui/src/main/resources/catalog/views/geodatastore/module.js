@@ -16,7 +16,8 @@
        'gn_search_geodatastore_directive', 'gn_mdactions_directive']);
 
 
-  module.controller('geoDataStoreMainController', [function() {
+  module.controller('geoDataStoreMainController', ['$scope', function($scope) {
+    $scope.loadCatalogInfo();
 
   }]);
   module.controller("geoDataStoreController", ['$scope', function ($scope) {

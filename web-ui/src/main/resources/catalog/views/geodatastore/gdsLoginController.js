@@ -10,8 +10,10 @@
         var cred = credentials || {};
         $http.post('../../j_spring_security_check#' + $location.path(), $.param(cred),
             {headers : { 'Content-Type': 'application/x-www-form-urlencoded' }}).success(function(data) {
-              $scope.loadCatalogInfo();
-          callback && callback();
+              $scope.loadCatalogInfo().then(function() {
+                callback && callback();
+              });
+
         }).error(function() {
           $rootScope.authenticated = false;
           callback && callback();
@@ -23,7 +25,7 @@
       $scope.credentials = {};
       $scope.login = function() {
         authenticate($scope.credentials, function() {
-          if ($rootScope.authenticated) {
+          if ($scope.authenticated) {
             $scope.signinFailure = false;
           } else {
             $scope.signinFailure = true;
