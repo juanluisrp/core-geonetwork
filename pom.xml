@@ -205,7 +205,7 @@
           <groupId>org.codehaus.groovy.maven</groupId>
           <artifactId>gmaven-plugin</artifactId>
           <version>1.0</version>
-          <executions>
+          <!--executions>
               <execution>
                   <id>Check memory settings</id>
                   <goals>
@@ -254,7 +254,7 @@
                           ]]></source>
                   </configuration>
               </execution>
-          </executions>
+          </executions-->
       </plugin>
       <!--     Compilation.                                        -->
       <plugin>
@@ -1174,7 +1174,7 @@
         <!--module>web-ui-docs</module-->
         <!--module>web-client</module-->
         <module>web</module>
-        <module>e2e-tests</module>
+        <!--module>e2e-tests</module-->
         <!--module>geoserver</module-->		
 	<module>pdok-geodatastore</module>
         <!--	<module>pdok-geodatastore-dar</module>-->
