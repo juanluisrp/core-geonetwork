@@ -118,7 +118,7 @@
         <plugin>
           <groupId>net.alchim31.maven</groupId>
           <artifactId>yuicompressor-maven-plugin</artifactId>
-          <version>0.9</version>
+          <version>1.5.1</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
@@ -1152,6 +1152,7 @@
     <module>services</module>
     <module>wro4j</module>
     <module>inspire-atom</module>
+	<module>pdok-geodatastore</module>
   </modules>
 
   <profiles>
