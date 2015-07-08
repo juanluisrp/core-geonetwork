@@ -791,7 +791,7 @@
         <dependency>
           <groupId>nl.kadaster.pdok</groupId>
           <artifactId>pdok-geodatastore</artifactId>
-          <version>3.0.2-SNAPSHOT</version>
+          <version>${project.version}</version>
         </dependency>
       </dependencies>
     </profile>
