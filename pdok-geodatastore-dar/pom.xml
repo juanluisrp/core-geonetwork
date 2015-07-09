@@ -42,7 +42,7 @@
 					<deletePreviouslyDeployedDar>true</deletePreviouslyDeployedDar>
 					<generateDeployedOnUpgrade>true</generateDeployedOnUpgrade>
 					<applicationName>pdok/${project.artifactId}</applicationName>
-					<environmentId>Environments/pdok-int/environment/pdok-geodatastore_int</environmentId>
+					<environmentId>Environments/pdok-ont/environment/pdok-geonetwork_ont</environmentId>
 					<deployables>
 						<!--deployable>
 							<name>pgds-war</name>
