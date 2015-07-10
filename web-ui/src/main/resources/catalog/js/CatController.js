@@ -211,6 +211,8 @@
                 $scope.searchInfo = data;
               });
         });
+        return userLogin;
+
       };
 
 
