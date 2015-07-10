@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>org.geonetwork-opensource</groupId>
 		<artifactId>geonetwork</artifactId>
-		<version>3.0.1-SNAPSHOT</version>
+		<version>3.0.10-SNAPSHOT</version>
 	</parent>
 
 	<!-- =========================================================== -->
@@ -17,7 +17,7 @@
 			<plugin>
 				<groupId>com.xebialabs.deployit</groupId>
 				<artifactId>maven-deployit-plugin</artifactId>
-				<version>3.9.4</version>
+				<version>4.5.2</version>
 				<extensions>true</extensions>
 				<executions>
 					<execution>
@@ -42,7 +42,7 @@
 					<deletePreviouslyDeployedDar>true</deletePreviouslyDeployedDar>
 					<generateDeployedOnUpgrade>true</generateDeployedOnUpgrade>
 					<applicationName>pdok/${project.artifactId}</applicationName>
-					<environmentId>Environments/pdok-int/environment/pdok-geodatastore_int</environmentId>
+					<environmentId>Environments/pdok-ont/environment/pdok-geonetwork_ont</environmentId>
 					<deployables>
 						<!--deployable>
 							<name>pgds-war</name>

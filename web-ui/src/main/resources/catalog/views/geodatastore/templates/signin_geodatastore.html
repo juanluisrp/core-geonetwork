@@ -1,0 +1,98 @@
+<div class="container"
+     xmlns="http://www.w3.org/1999/html">
+    <nav class="verytop">
+        <div class="floatright">
+            <ul>
+                <li><a href="#">Contact</a></li>
+                <li class="last"><a href="#">Help</a></li>
+            </ul>
+        </div>
+        <ul>
+            <li class="first"><a href="#"><i class="fa fa-print"></i>Print</a></li>
+        </ul>
+    </nav>
+    <div class="page">
+        <header>
+            <div class="topdrop">
+                <div class="floatright">
+                    <i class="fa fa-cloud-upload fa-5x floatright"></i><h4>Publiceer uw open data</h4>
+                </div>
+            </div>
+            <div class="branding">
+                <a href="#" title="Ga naar de homepagina"><img height="57px"
+                                                               src="../../catalog/views/geodatastore/images/PDOK-GDS-logo.svg"
+                                                               alt="Publieke Dienstverlening Op de Kaart"></a>
+            </div>
+        </header>
+        <nav class="tabs">
+
+        </nav>
+        <div data-ng-controller="GdsLoginController">
+            <div class="row top-buffer">
+                <div class="col-md-2 col-md-offset-5 text-center">
+                    <i class="fa fa-cloud-upload fa-10x"></i>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3 text-center lead">
+                    Een beschrijving van het systeem,
+                    wat zijn de voordelen en hoe mensen kunnen profiteren
+                    van open data.
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3 bottom-buffer">
+                    <form name="gnSigninForm"
+                          role="form" data-ng-if="user['@authenticated'] != 'true'" data-ng-submit="login()">
+                        <input type="hidden" name="redirectUrl" data-ng-model="redirectUrl" value="{{redirectUrl}}"/>
+                        <div class="row">
+                            <div class="form-group col-xs-6 col-md-6">
+                                <label class="control-label"
+                                       for="inputUsername">Gebruikersnaam</label>
+                                <input type="text" class="form-control" id="inputUsername" name="username" autofocus=""
+                                       placeholder="{{'username' | translate}}" data-ng-model="credentials.username" required=""/>
+
+                            </div>
+
+                            <div class="form-group col-xs-6 col-md-6">
+                                <label class="control-label"
+                                       for="inputPassword">Wachtwoord</label>
+
+                                <input type="password" class="form-control" id="inputPassword" name="password"
+                                       data-ng-model="credentials.password" placeholder="{{'password' | translate}}" required=""/>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-8 col-md-8">
+                                <a href="http://nationaalgeoregister.nl/geonetwork/srv/dut/search#hoekaniktoevoegen" target="_blank">Account aanvragen</a>
+                            </div>
+                            <div class="col-xs-4 col-md-4">
+                                <button type="submit" class="btn btn-primary pull-right" data-ng-disabled="!gnSigninForm.$valid">
+                                    <i class="fa fa-signin"/>
+                                    <span>Inloggen</span>
+                                </button>
+                                </div>
+                        </div>
+                        <div class="row top-buffer">
+                            <div>
+                                <p class="alert alert-danger" data-ng-show="signinFailure">
+                                    <strong data-translate="">signinFailure</strong>
+
+                                </p>
+                            </div>
+
+                        </div>
+                    </form>
+                </div>
+
+
+
+            </div>
+
+        </div>
+    </div>
+    <footer data-ng-include="'../../catalog/views/geodatastore/templates/footer.html'">
+
+    </footer>
+</div>
+</div>
