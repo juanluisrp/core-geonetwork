@@ -10,9 +10,10 @@
   goog.require('gn_search_geodatastore_directive');
   goog.require('gn_login_controller');
   goog.require('geodatastore_login');
+  goog.require('geodatastore_fileupload');
 
   var module = angular.module('gn_search_geodatastore',
-      ['blueimp.fileupload', 'gn_search', 'geodatastore_login', 'gn_login_controller', 'ngRoute', 'gn_search_geodatastore_config',
+      ['geodatastore_fileupload', 'gn_search', 'geodatastore_login', 'gn_login_controller', 'ngRoute', 'gn_search_geodatastore_config',
        'gn_search_geodatastore_directive', 'gn_mdactions_directive']);
 
 
