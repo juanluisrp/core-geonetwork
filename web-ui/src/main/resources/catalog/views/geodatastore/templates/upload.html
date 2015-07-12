@@ -18,7 +18,7 @@
             <header>
                 <div class="topdrop">
                     <div class="floatright">
-                        <i class="fa fa-cloud-upload fa-5x floatright"></i><h4>Upload nieuwe datasets</h4>
+                        <i class="fa fa-cloud-upload fa-5x floatright"></i><h4>Nieuwe dataset uploaden</h4>
                     </div>
                 </div>
                 <div class="branding">
@@ -44,7 +44,7 @@
                             <div class="floatright">
                                 <i class="fa fa-cloud-upload fa-4x floatright"></i>
                             </div>
-                            <div>Slepen en neerzetten hier of<br/>
+                            <div>Sleep de bestanden hierop of<br/>
                                 <span class="btn btn-default btn-sm fileinput-button" data-ng-class="{disabled: disabled}">
                                     <i class="fa fa-folder-open-o fa-fw"></i>
                                     <span>selecteer bestanden</span>
@@ -76,97 +76,24 @@
                            </div>
                        </li>
 
-                        <li id="k1">
+					   <li data-ng-repeat="md in searchResults.records" ng-click="setMD(md)">					   
                             <div class="arrow-left"></div>
                             <div class="title">
                                 <div class="floatright">
                                     <a class="delete" href="#" data-toggle="tooltip" data-placement="top" title="verwijderen"><i class="fa fa-trash-o fa-lg"></i></a>
                                 </div>
-                                <i class="fa fa-file-code-o fa-lg fa-fw" style="vertical-align: 12%"></i>
-                                <span>lantaarnpaal.gml</span>
+                                <i class="fa {{getFileType(md)}} fa-lg fa-fw" style="vertical-align: 12%"></i>
+                                <span>{{getFileName(md)}}</span>
                             </div>
-                            <div class="message alert-success">
+                            <div class="message alert-success" ng-show="getStatus(md)=='publish'">
                                 <button type="button" class="btn btn-default btn-sm floatright"><i class="fa fa-share fa-fw"></i>Publiceren</button>
                                 <i class="fa fa-check fa-fw" style="font-size:1em; margin-right: 4px"></i>Data is klaar om te worden gedeeld</div>
-                        </li>
-                        <li id="k2">
-                            <div class="arrow-left"></div>
-                            <div class="title">
-                                <div class="floatright">
-                                    <a class="delete" href="#" data-toggle="tooltip" data-placement="top" title="verwijderen"><i class="fa fa-trash-o fa-lg"></i></a>
-                                </div>
-                                <i class="fa fa-file-archive-o fa-lg fa-fw" style="vertical-align: 12%"></i>
-                                <span>inkomensverdeling2010.shp.zip</span>
-                            </div>
-                            <div class="message alert-info"><i class="fa fa-pencil fa-fw" style="font-size:1em; margin-right: 4px"></i>Gelieve voltooi de dataset informatie om te kunnen publiceren.</div>
-                        </li>
-                        <li id="k3">
-                            <div class="arrow-left"></div>
-                            <div class="title">
-                                <div class="floatright">
-                                    <a class="delete" href="#" data-toggle="tooltip" data-placement="top" title="verwijderen"><i class="fa fa-trash-o fa-lg"></i></a>
-                                </div>
-                                <i class="fa fa-file-archive-o fa-lg fa-fw" style="vertical-align: 12%"></i>
-                                <span>boomlocaties2012.shp.zip</span>
-                            </div>
-                            <div class="message alert-danger"><i class="fa fa-exclamation-triangle fa-fw" style="font-size:1em; margin-right: 4px"></i>Upload fout. Klik hier voor meer informatie.</div>
-                        </li>
-                        <li>
-                            <div class="arrow-left"></div>
-                            <div class="title">
-                                <div class="floatright">
-                                    <a class="delete" href="#" data-toggle="tooltip" data-placement="top" title="onderbreken"><i class="fa fa-times fa-lg"></i></a>
-                                </div>
-                                <i class="pdok-i-csv fa-lg fa-fw" style="vertical-align: 12%; margin: 0 2px;"></i>
-                                <span>onderhoudsplan-wijken-2019.csv</span>
-                            </div>
-                            <div class="progress">
-                                <div class="progress-bar active" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%">
-                                </div>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="arrow-left"></div>
-                            <div class="title">
-                                <div class="floatright">
-                                    <a class="delete" href="#" data-toggle="tooltip" data-placement="top" title="onderbreken"><i class="fa fa-times fa-lg"></i></a>
-                                </div>
-                                <i class="fa fa-file-pdf-o fa-lg fa-fw" style="vertical-align: 12%"></i>
-                                <span>beheerplan-terrein-rustenburg.pdf</span>
-                            </div>
-                            <div class="progress">
-                                <div class="progress-bar progress-bar-striped progress-bar-inqueue active" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
-                                </div>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="arrow-left"></div>
-                            <div class="title">
-                                <div class="floatright">
-                                    <a class="delete" href="#" data-toggle="tooltip" data-placement="top" title="onderbreken"><i class="fa fa-times fa-lg"></i></a>
-                                </div>
-                                <i class="pdok-i-json fa-lg fa-fw" style="vertical-align: 12%; margin: 0 2px;"></i>
-                                <span>bestandsnaam.json</span>
-                            </div>
-                            <div class="progress">
-                                <div class="progress-bar progress-bar-striped progress-bar-inqueue active" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
-                                </div>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="arrow-left"></div>
-                            <div class="title">
-                                <div class="floatright">
-                                    <a class="delete" href="#" data-toggle="tooltip" data-placement="top" title="onderbreken"><i class="fa fa-times fa-lg"></i></a>
-                                </div>
-                                <i class="fa fa-file-pdf-o fa-lg fa-fw" style="vertical-align: 12%"></i>
-                                <span>Een zeer lange, lange bestandsnaam om te zien hoe het werkt op verschillende lijnen.zip</span>
-                            </div>
-                            <div class="progress">
-                                <div class="progress-bar progress-bar-striped progress-bar-inqueue active" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
-                                </div>
-                            </div>
-                        </li>
+							<div class="message alert-info" ng-show="getStatus(md)=='metadataMissing'">
+								<i class="fa fa-pencil fa-fw" style="font-size:1em; margin-right: 4px"></i>Voltooi de dataset informatie om te kunnen publiceren.</div>
+							<div class="message alert-danger" ng-show="getStatus(md)=='error'">
+								<i class="fa fa-exclamation-triangle fa-fw" style="font-size:1em; margin-right: 4px"></i>Upload fout. Klik hier voor meer informatie.</div>
+						</li>
+						
                     </ol>
                 </form>
                 <div>
@@ -177,11 +104,11 @@
                                     <span aria-hidden="true">&laquo;</span>
                                 </a>
                             </li>
-                            <li class="active"><a href="#">1</a></li>
-                            <li><a href="#">2</a></li>
-                            <li><a href="#">3</a></li>
+                            <li class="active" data-ng-click="updateResults(1)"><a href="#">1</a></li>
+                            <li><a href="#" data-ng-click="updateResults(2)">2</a></li>
+                            <li><a href="#" data-ng-click="updateResults(3)">3</a></li>
                             <li class="disabled"><a href="#">...</a></li>
-                            <li><a href="#">9</a></li>
+                            <li><a href="#" data-ng-click="updateResults(9)">9</a></li>
                             <li>
                                 <a href="#" aria-label="Next">
                                     <span aria-hidden="true">&raquo;</span>
@@ -189,72 +116,72 @@
                             </li>
                         </ul>
                     </nav>
-                    <span style="margin-top:6px; display: inline-block;">44 datasets</span>
+                    <span style="margin-top:6px; display: inline-block;">{{searchResults.records.length}} datasets</span>
                 </div>
             </section>
             <aside>
-                <div id="metadata">
+                <div id="metadata" ng-show="hasSelected">
                     <form>
                         <div class="form-group">
                             <label for="tt">Titel</label>
-                            <input class="form-control" id="tt" tabindex=1>
+                            <input class="form-control" id="tt" tabindex="1" ng-model="mdSelected.defaultTitle">
                         </div>
                         <div class="form-group">
                             <label for="os">Omschrijving</label>
-                            <textarea rows="5" class="form-control" id="os" tabindex=2>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed fermentum, ante sed venenatis gravida, est nisi dignissim purus, sit amet aliquam nulla orci eget ipsum. Maecenas ex justo, pulvinar vitae mollis eu, vestibulum non turpis. Praesent euismod odio vel orci vehicula, eget maximus velit egestas. Fusce porta ornare orci, eget feugiat sem. Proin placerat, lectus auctor auctor gravida, lacus massa suscipit nulla, ut iaculis purus nunc id odio. Nulla facilisi. Cras pharetra bibendum porttitor.</textarea>
+                            <textarea rows="5" class="form-control" id="os" ng-model="mdSelected.abstract" tabindex=2></textarea>
                         </div>
                         <div class="form-group">
                             <label for="ow">Onderwerp</label>
-                            <select class="form-control" id="ow" tabindex=3>
+                            <select class="form-control" id="ow" tabindex=3  ng-model="mdSelected.topicCat[0]" >
                                 <option>Selecteer</option>
-                                <option>Beeldspraak / Dekking van de Aarde</option>
-                                <option>Binnenwateren</option>
-                                <option>Biota (flora, fauna, habitat)</option>
-                                <option>Economie</option>
-                                <option>Geo-wetenschappelijke informatie</option>
-                                <option>Gezondheid</option>
-                                <option>Grenzen</option>
-                                <option>Intelligentie / Military</option>
-                                <option>Klimatologie / Meteorologie</option>
-                                <option>Landbouw</option>
-                                <option>Locatie</option>
-                                <option>Maatschappij</option>
-                                <option>Milieu</option>
-                                <option>Oceans</option>
-                                <option>Planning / Kadaster</option>
-                                <option>Structuur</option>
-                                <option>Utilities / Communicatie</option>
-                                <option>Verhoging</option>
-                                <option>Vervoer</option>
+                                <option value="imageryBaseMapsEarthCover">Luchtfoto / Dekking van de Aarde</option>
+                                <option value="inlandWaters">Binnenwateren</option>
+                                <option value="biota">Biota (flora, fauna, habitat)</option>
+                                <option value="economy">Economie</option>
+                                <option value="geoscientificInformation">Geo-wetenschappelijke informatie</option>
+                                <option value="health">Gezondheid</option>
+                                <option value="boundaries">Grenzen</option>
+                                <option value="intelligenceMilitary">Inlichtingen / Defensie</option>
+                                <option value="climatologyMeteorologyAtmosphere">Klimatologie / Meteorologie</option>
+                                <option value="farming">Landbouw</option>
+                                <option value="location">Locatie</option>
+                                <option value="society">Maatschappij</option>
+                                <option value="environment">Milieu</option>
+                                <option value="oceans">Oceanen</option>
+                                <option value="planningCadastre">Planning / Kadaster</option>
+                                <option value="structure">Structuur</option>
+                                <option value="utilitiesCommunication">Nuts diensten / Communicatie</option>
+                                <option value="elevation">Hoogte</option>
+                                <option value="transportation">Vervoer</option>
                             </select>
                         </div>
                         <div class="form-group">
                             <label for="tw">Trefwoorden</label>
-                            <input class="form-control" id="tw" placeholder="komma gescheiden lijst" tabindex=4>
+                            <input class="form-control" id="tw" placeholder="komma gescheiden lijst" tabindex=4 >
                         </div>
                         <div class="form-group">
                             <label for="bh">Beschrijving herkomst</label>
-                            <input class="form-control" id="bh" tabindex=5 value="">
+                            <input class="form-control" id="bh" tabindex=5  ng-model="mdSelected.lineage">
                         </div>
                         <div class="form-group">
                             <label for="lk">Lokatie</label>
-                            <input class="form-control" id="lk" tabindex=5 value="">
+                            <input class="form-control" id="lk" tabindex=5 ng-model="mdSelected.location">
                         </div>
                         <div class="form-group">
                             <label for="odl">Open Data Licentie</label>
-                            <select class="form-control" id="odl" tabindex=7>
-                                <option>Public Domain</option>
-                                <option>CC0 (Creative Commons)</option>
-                                <option>CC-BY (Creative Commons Naamsvermelding)</option>
+                            <select class="form-control" id="odl" tabindex=7  ng-model="mdSelected.legalConstraints[1]">
+                                <option value="PublicDomain">Public Domain</option>
+                                <option value="CC0">CC0 (Creative Commons)</option>
+                                <option value="CC-BY">CC-BY (Creative Commons Naamsvermelding)</option>
                             </select>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group"  ng-model="mdSelected.usageConstraints">
                             <label for="gb">Gebruiksbeperkingen</label>
                             <input class="form-control" id="gb" tabindex=5 value="">
                         </div>
                         <div class="form-group">
                             <label for="tps">Toepassingsschaal</label>
-                            <select class="form-control" id="tps" tabindex=9>
+                            <select class="form-control" id="tps" tabindex=9  ng-model="mdSelected.resolution[0]">
                                 <option value="1000000">Landelijk</option>
                                 <option value="100000">Provinciaal</option>
                                 <option value="25000">Gemeentelijk</option>
@@ -265,7 +192,8 @@
                         </div>
                         <div class="form-group">
                             <label for="exampleInputFile">Afbeelding</label>
-                            <div><button type="button" id="upload" class="btn btn-default btn-sm floatright"><i class="fa fa-cloud-upload fa-fw"></i></button><input class="form-control" type="file" id="exampleInputFile" style="width:85%"></div>
+							<!-- todo: show a preview of the uploaded image -->
+                            <div><button type="button" id="upload" class="btn btn-default btn-sm floatright"><i class="fa fa-cloud-upload fa-fw"></i></button><input class="form-control" type="file" id="exampleInputFile" style="width:85%"  ng-model="mdSelected.image[0]"></div>
                         </div>
                         <div class="form-group" style="border-top: solid 1px; padding-top: 15px;">
                             <div class="floatright">

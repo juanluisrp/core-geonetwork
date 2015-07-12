@@ -17,13 +17,123 @@
        'gn_search_geodatastore_directive', 'gn_mdactions_directive']);
 
 
-  module.controller('geoDataStoreMainController', ['$scope', function($scope) {
+  module.controller('gnsSearchController', [
+    '$scope', 'gnSearchSettings',
+    function($scope, gnSearchSettings) {
+      $scope.searchObj = {
+        permalink: false,
+        params: {
+          sortBy: 'popularity',
+		  filter: '',
+          from: 1,
+          to: 9
+        }
+      };
+    }]);	   
+
+  module.controller('geoDataStoreMainController', [
+    '$scope',
+    '$http',
+    '$translate',
+    'gnUtilityService',
+    'gnSearchSettings',
+    'gnViewerSettings',	
+    'Metadata',
+	'gnSearchManagerService',
+	function($scope, $http, $translate,
+             gnUtilityService, gnSearchSettings, gnViewerSettings,Metadata,gnSearchManagerService) {
     $scope.loadCatalogInfo();
+    $scope.searchResults = { records: [] };
 
+
+	  $scope.updateResults = function(page,any,order){
+	    if (!any) any="";
+		if (!order) order="popularity";
+		
+		  gnSearchManagerService.gnSearch({
+		  _isTemplate: 'n',
+		  _content_type:'json',
+		  fast: 'index',
+		  type: 'dataset',
+		  _owner:$scope.user.id,
+		  from: (page-1)*5+1,
+		  any: any,
+		  sortBy:order,
+		  to: page*5
+		}).then(function(data) {
+		  var searchResults = { records: []};
+		  for (var i = 0; i < data.metadata.length; i++) {
+			searchResults.records.push(new Metadata(data.metadata[i]));
+		  }
+		  
+		  $scope.searchResults = searchResults;
+
+		  });
+	  }
+	  
+	  //get the status of a dataset, a dataset can be published if all fields are completed
+	  $scope.getStatus = function(md){
+
+		if (md.defaultTitle!=''&&md.abstract!=''&&md.lineage!=''&&md.keyword.length>0&&md.topicCat.length>0)
+			return 'publish';
+		else 
+			return 'metadataMissing';
+	  }
+	  
+	  $scope.updateResults(1);
+	  
+	  $scope.mdSelected;
+	  $scope.hasSelected = false;
+	  $scope.formModified = false;
+	  $scope.setMD = function(md){
+		$scope.mdSelected=md;
+		$scope.hasSelected=true;
+		/*
+		  set the form fields
+		*/
+		if (!md.keyword) md.keyword = [];
+		$("#tw").val(md.keyword.join(','));
+	  }
+	  
+	  //grab the filetype either from format or from file extension
+	  $scope.getFileType = function (md){
+		var ftype="";
+		fprops = md.link[0].split('|');
+	    if (fprops.length > 3 && fprops[3]!='') type = fprops[3]
+		else ftype = fprops[0].split(".")[1];
+	  
+	  if (["zip","rar","application/zip"].indexOf(ftype) > 0) {
+		return "fa-file-archive-o";
+	  } else if (["xls","xlsx","ods"].indexOf(ftype) > 0) {
+		return "fa-file-excel-o";
+	  } else if (["doc","docx","rtf"].indexOf(ftype) > 0) {
+		return "fa-file-word-o";
+	  } else if (["ppt","pptx"].indexOf(ftype) > 0) {
+		return "fa-file-powerpoint-o";
+	  } else if (["csv"].indexOf(ftype) > 0) {
+		return "pdok-i-csv";
+	  } else {
+	   return "fa-file-code-o";
+	  }
+	  
+	  
+	  }
+
+	  //grab the filename from metadata, for now take the first link, later check which link is the correct link, sometimes filename is empty then use file desc
+	  $scope.getFileName = function (md){
+		if (md.link.length==0){
+			return md.defaultTitle
+		} else {
+			fprops = md.link[0].split('|');
+			if (fprops[0]!='') return fprops[0]
+			else if (fprops[1]!='') return fprops[1]
+			else return fprops[2];
+		}
+	  }
+	  
   }]);
+  
   module.controller("geoDataStoreController", ['$scope', function ($scope) {
-
-
 
   }]);
 
