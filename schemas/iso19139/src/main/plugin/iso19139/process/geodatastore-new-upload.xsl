@@ -88,7 +88,7 @@
   <xsl:template match="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:citation/gmd:CI_Citation/gmd:date/gmd:CI_Date/gmd:date[../gmd:dateType/gmd:CI_DateTypeCode[@codeListValue='publication']]">
     <xsl:copy>
       <!-- Datum waarop de dataset is gepubliceerd -->
-      <gco:Date><xsl:value-of select="$publicationDate"></xsl:value-of></gco:Date>
+      <gco:DateTime><xsl:value-of select="$publicationDate"></xsl:value-of></gco:DateTime>
     </xsl:copy>
   </xsl:template>
 
@@ -96,9 +96,10 @@
   <xsl:template match="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:citation/gmd:CI_Citation/gmd:date/gmd:CI_Date/gmd:date[../gmd:dateType/gmd:CI_DateTypeCode[@codeListValue='creation']]">
     <xsl:copy>
       <!-- Datum waarop de dataset is gepubliceerd -->
-      <gco:Date><xsl:value-of select="$publicationDate"></xsl:value-of></gco:Date>
+      <gco:DateTime><xsl:value-of select="$publicationDate"></xsl:value-of></gco:DateTime>
     </xsl:copy>
   </xsl:template>
+
 
   <!-- identifier -->
   <xsl:template match="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:citation/gmd:CI_Citation/gmd:identifier/gmd:MD_Identifier/gmd:code">
@@ -139,11 +140,18 @@
   <xsl:template match="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:descriptiveKeywords/gmd:MD_Keywords">
     <xsl:copy>
       <xsl:variable name="keywordList" select="tokenize($keywords, $keywordSeparator)"/>
-      <xsl:for-each select="$keywordList">
-        <gmd:keyword>
-          <gco:CharacterString><xsl:value-of select="." /></gco:CharacterString>
-        </gmd:keyword>
-      </xsl:for-each>
+      <xsl:choose>
+        <xsl:when test="count($keywordList) = 0">
+          <gmd:keyword></gmd:keyword>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:for-each select="$keywordList">
+            <gmd:keyword>
+              <gco:CharacterString><xsl:value-of select="." /></gco:CharacterString>
+            </gmd:keyword>
+          </xsl:for-each>
+        </xsl:otherwise>
+      </xsl:choose>
     </xsl:copy>
   </xsl:template>
 
@@ -174,7 +182,7 @@
     <xsl:variable name="topicList" select="tokenize($topics, $topicSeparator)"/>
     <xsl:choose>
       <xsl:when test="count($topicList) = 0">
-        <gmd:topicCategory></gmd:topicCategory>
+        <!-- do not add any topic category -->
       </xsl:when>
       <xsl:otherwise>
         <xsl:for-each select="$topicList">
@@ -250,7 +258,7 @@
   </xsl:template>
 
   <!-- CI_OnlineResource -->
-  <xsl:template match="/gmd:MD_Metadata/gmd:distributionInfo/gmd:MD_Distribution/gmd:transferOptions/gmd:MD_DigitalTransferOptions/gmd:onLine/gmd:CI_OnlineResource">
+<!--  <xsl:template match="/gmd:MD_Metadata/gmd:distributionInfo/gmd:MD_Distribution/gmd:transferOptions/gmd:MD_DigitalTransferOptions/gmd:onLine/gmd:CI_OnlineResource">
     <xsl:copy>
       <gmd:linkage>
         <gmd:URL><xsl:value-of select="$downloadUri"></xsl:value-of></gmd:URL>
@@ -262,7 +270,7 @@
         <gco:CharacterString><xsl:value-of select="$fileName" /></gco:CharacterString>
       </gmd:name>
     </xsl:copy>
-  </xsl:template>
+  </xsl:template>-->
 
 
   <!-- lineage -->

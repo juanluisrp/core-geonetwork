@@ -7,10 +7,12 @@ import jeeves.server.UserSession;
 import jeeves.server.context.ServiceContext;
 import jeeves.server.context.ServiceExecutionFailedException;
 import jeeves.server.dispatchers.ServiceManager;
+import jeeves.server.sources.http.ServletPathFinder;
 import jeeves.services.ReadWriteController;
 import nl.kadaster.pdok.bussiness.MetadataUtil;
 import org.apache.commons.lang.StringUtils;
 import org.fao.geonet.ApplicationContextHolder;
+import org.fao.geonet.NodeInfo;
 import org.fao.geonet.constants.Geonet;
 import org.fao.geonet.domain.*;
 import org.fao.geonet.exceptions.BadParameterEx;
@@ -20,10 +22,7 @@ import org.fao.geonet.exceptions.UnAuthorizedException;
 import org.fao.geonet.kernel.DataManager;
 import org.fao.geonet.kernel.GeonetworkDataDirectory;
 import org.fao.geonet.kernel.setting.SettingManager;
-import org.fao.geonet.repository.GroupRepository;
-import org.fao.geonet.repository.MetadataRepository;
-import org.fao.geonet.repository.UserGroupRepository;
-import org.fao.geonet.repository.UserRepository;
+import org.fao.geonet.repository.*;
 import org.fao.geonet.repository.specification.UserGroupSpecs;
 import org.fao.geonet.schema.iso19139.ISO19139SchemaPlugin;
 import org.fao.geonet.services.metadata.XslProcessing;
@@ -46,6 +45,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.annotation.Nonnull;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
@@ -82,14 +82,21 @@ public class GeodatastoreApi {
     @Autowired private SettingManager settingManager;
     @Autowired
     private XslProcessing xslProcessing;
+    @Autowired
+    ServletContext servletContext;
+
+
 
     public GeodatastoreApi() {
         System.out.println("New GeodatastoreApi instance");
+
     }
 
 
     @RequestMapping(value = "/api/dataset", method = RequestMethod.POST)
-    public @ResponseBody ResponseEntity<Object> uploadDataset(@RequestParam("files[]") MultipartFile file, @PathVariable("lang") String lang, HttpServletRequest request, Model model) throws Exception {
+    public @ResponseBody ResponseEntity<Object> uploadDataset(@RequestParam("files[]") MultipartFile file,
+                                                              @PathVariable("lang") String lang, HttpServletRequest request,
+                                                              Model model) throws Exception {
         if (!file.isEmpty()) {
 
             ServiceContext context = serviceManager.createServiceContext("geodatastore.api.dataset", lang, request);
@@ -116,7 +123,7 @@ public class GeodatastoreApi {
             ISODate creationDate = new ISODate();
             Map<String, Object> templateParameters = prepareTemplateParameters(organisation, organisationEmail,
                     new ArrayList<String>(), new ArrayList<String>(), "Nederland", "2", "5", "50", "54",
-                    file.getContentType(), "http://example.com/geonetwork/id/dataset/" + uuid.toString(), file.getName(),
+                    file.getContentType(), "http://example.com/geonetwork/id/dataset/" + uuid.toString(), file.getOriginalFilename(),
                     uuid.toString(), creationDate);
 
             Element metadata = metadataUtil.fillXmlTemplate(templateParameters);
@@ -140,12 +147,14 @@ public class GeodatastoreApi {
 
             context.info("UPLOADED:" + fname + "," + createdId + "," + context.getIpAddress() + "," + username);
 
+            ServletPathFinder pathFinder = new ServletPathFinder(servletContext);
+            String downloadUrl = getSiteURL(pathFinder) + "/id/dataset/" + uuid.toString() ;
             Map<String, String[]> allParams = Maps.newHashMap(request.getParameterMap());
             // Set parameter and process metadata to reference the uploaded file
-            allParams.put("url", new String[]{file.getOriginalFilename()});
+            allParams.put("url", new String[]{downloadUrl});
             allParams.put("name", new String[]{file.getOriginalFilename()});
-            allParams.put("desc", new String[]{""});
-            allParams.put("protocol", new String[]{"WWW:DOWNLOAD-1.0-http--download"});
+            allParams.put("desc", new String[]{"Geodatastore uploaded file"});
+            allParams.put("protocol", new String[]{"download"});
 
             String process = "onlinesrc-add";
             XslProcessingReport report = new XslProcessingReport(process);
@@ -187,11 +196,11 @@ public class GeodatastoreApi {
 
         parameters.put("metadataModifiedDate", creationDate.toString());
         parameters.put("lineage", "");
-        parameters.put("title", "New uploaded file");
+        parameters.put("title", fileName);
         parameters.put("publicationDate", creationDate.toString());
 
         parameters.put("uuid", uuid);
-        parameters.put("abstract", "New uploaded file abstract");
+        parameters.put("abstract", "");
         parameters.put("thumbnailUri", "");
 
         String keyworkdList = Joiner.on("#").join(keywords);
@@ -275,6 +284,22 @@ public class GeodatastoreApi {
             return new ResponseEntity<String>(Xml.getJSON(responseXML), responseHeaders, HttpStatus.OK);
         }
     }
+
+   /**
+     * Return complete site URL including language
+     * eg. http://localhost:8080/geonetwork/srv/eng
+     *
+     * @return
+     */
+    private @Nonnull String getSiteURL(ServletPathFinder servletPathFinder) {
+        String baseURL = servletPathFinder.getBaseUrl();
+        String protocol = settingManager.getValue(Geonet.Settings.SERVER_PROTOCOL);
+        String host    = settingManager.getValue(Geonet.Settings.SERVER_HOST);
+        String port    = settingManager.getValue(Geonet.Settings.SERVER_PORT);
+
+        return protocol + "://" + host + (port.equals("80") ? "" : ":" + port) + baseURL;
+    }
+
 
 
 
