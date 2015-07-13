@@ -35,14 +35,7 @@ import org.fao.geonet.exceptions.XSDValidationErrorEx;
 import org.fao.geonet.utils.nio.NioPathAwareEntityResolver;
 import org.fao.geonet.utils.nio.NioPathHolder;
 import org.fao.geonet.utils.nio.PathStreamSource;
-import org.jdom.Attribute;
-import org.jdom.Content;
-import org.jdom.DocType;
-import org.jdom.Document;
-import org.jdom.Element;
-import org.jdom.JDOMException;
-import org.jdom.Namespace;
-import org.jdom.Text;
+import org.jdom.*;
 import org.jdom.filter.ElementFilter;
 import org.jdom.input.SAXBuilder;
 import org.jdom.output.Format;
@@ -56,16 +49,15 @@ import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 import org.xml.sax.helpers.DefaultHandler;
 
-import java.io.BufferedOutputStream;
-import java.io.ByteArrayInputStream;
-import java.io.DataInputStream;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.PrintStream;
-import java.io.StringReader;
-import java.lang.reflect.Method;
+import javax.xml.XMLConstants;
+import javax.xml.transform.*;
+import javax.xml.transform.sax.SAXResult;
+import javax.xml.transform.stream.StreamResult;
+import javax.xml.transform.stream.StreamSource;
+import javax.xml.validation.Schema;
+import javax.xml.validation.SchemaFactory;
+import javax.xml.validation.ValidatorHandler;
+import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -80,26 +72,7 @@ import java.nio.file.FileSystemNotFoundException;
 import java.nio.file.Files;
 import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.UUID;
-import javax.xml.XMLConstants;
-import javax.xml.transform.Result;
-import javax.xml.transform.Source;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerException;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.URIResolver;
-import javax.xml.transform.sax.SAXResult;
-import javax.xml.transform.stream.StreamResult;
-import javax.xml.transform.stream.StreamSource;
-import javax.xml.validation.Schema;
-import javax.xml.validation.SchemaFactory;
-import javax.xml.validation.ValidatorHandler;
+import java.util.*;
 
 import static org.fao.geonet.Constants.ENCODING;
 
@@ -118,8 +91,9 @@ public final class Xml
 
     /**
      *
-     * @param validate
-     * @return
+     * @param validate <code>boolean</code> indicating if
+     *                 validation should occur.
+     * @return The SAX Builder.
      */
 	private static SAXBuilder getSAXBuilder(boolean validate, Path base) {
 		SAXBuilder builder = getSAXBuilderWithPathXMLResolver(validate, base);
@@ -157,8 +131,8 @@ public final class Xml
     /**
      * Loads an xml file from a URL and returns its root node.
      *
-     * @param url
-     * @return
+     * @param url <code>URL</code>
+     * @return <code>Element</code> Its root node.
      * @throws IOException
      * @throws JDOMException
      */
@@ -186,9 +160,9 @@ public final class Xml
     /**
      * Loads an xml file from a URL after posting content to the URL.
      *
-     * @param url
-     * @param xmlQuery
-     * @return
+     * @param url <code>URL</code>
+     * @param xmlQuery <code>Element</code> The content
+     * @return <code>Element</code> An XML file.
      * @throws IOException
      * @throws JDOMException
      */
@@ -254,8 +228,8 @@ public final class Xml
      * Reads file into byte array, detects charset and converts from this  
 		 * charset to UTF8
      *
-     * @param file file to decode and convert to UTF8
-     * @return
+     * @param file <code>Path</code> file to decode and convert to UTF8
+     * @return <code>byte[]</code>
      * @throws IOException
      * @throws CharacterCodingException
      */
@@ -289,7 +263,7 @@ public final class Xml
      *
      * @param buf byte array to decode and convert to UTF8
      * @param charsetName charset to decode byte array into
-     * @return
+     * @return <code>byte[]</code>
      * @throws CharacterCodingException
      */
 
@@ -329,9 +303,10 @@ public final class Xml
      * Loads xml from a string and returns its root node 
 		 * (validates the xml if required).
      *
-     * @param data 
-     * @param validate
-     * @return
+     * @param data <code>String</code>
+     * @param validate <code>boolean</code> indicating if
+     *                 validation should occur.
+     * @return <code>Element</code>
      * @throws IOException
      * @throws JDOMException
      */
@@ -357,8 +332,8 @@ public final class Xml
     /**
      * Loads xml from an input stream and returns its root node.
      *
-     * @param input
-     * @return
+     * @param input <code>InputStream</code>
+     * @return <code>Element</code>
      * @throws IOException
      * @throws JDOMException
      */
@@ -381,9 +356,9 @@ public final class Xml
     /**
      * Transforms an xml tree into another using a stylesheet on disk.
      *
-     * @param xml
-     * @param styleSheetPath
-     * @return
+     * @param xml <code>Element</code> XML Tree to transform
+     * @param styleSheetPath <code>Path</code> The stylesheet on disk.
+     * @return <code>Element</code> Transformed XML
      * @throws Exception
      */
 	public static Element transform(Element xml, Path styleSheetPath) throws Exception {
@@ -397,10 +372,10 @@ public final class Xml
      * Transforms an xml tree into another using a stylesheet on disk and pass parameters.
      *
      *
-     * @param xml
-     * @param styleSheetPath
-     * @param params
-     * @return
+     * @param xml <code>Element</code> XML Tree to transform.
+     * @param styleSheetPath <code>Path</code> The stylesheet on disk.
+     * @param params <code>Map&lt;String, Object&gt;</code> Parameters to pass.
+     * @return <code>Element</code> Transformed XML
      * @throws Exception
      */
 	public static Element transform(Element xml, Path styleSheetPath, Map<String, Object> params) throws Exception
@@ -414,9 +389,9 @@ public final class Xml
     /**
      * Transforms an xml tree putting the result to a stream (uses a stylesheet on disk).
      *
-     * @param xml
-     * @param styleSheetPath
-     * @param out
+     * @param xml <code>Element</code> XML Tree to transform.
+     * @param styleSheetPath <code>Path</code> The stylesheet on disk.
+     * @param out <code>OutputStream</code> The Stream
      * @throws Exception
      */
 	public static void transform(Element xml, Path styleSheetPath, OutputStream out) throws Exception
@@ -430,9 +405,9 @@ public final class Xml
     /**
      * Transforms an xml tree putting the result to a stream  - no parameters.
      *
-     * @param xml
-     * @param styleSheetPath
-     * @param result
+     * @param xml <code>Element</code> XML Tree to transform.
+     * @param styleSheetPath <code>String</code> The stylesheet on disk.
+     * @param result <code>Element</code> Transformed XML
      * @throws Exception
      */
 	public static void transform(Element xml, String styleSheetPath, Result result) throws Exception
@@ -454,11 +429,11 @@ public final class Xml
 
     /**
      * Transforms an xml tree putting the result to a stream. Sends xml snippet as parameter.
-     * @param xml
-     * @param xslt
-     * @param result
-     * @param xmlParamName
-     * @param xmlParam
+     * @param xml <code>Element</code> XML Tree to transform.
+     * @param xslt <code>Source</code> The Source XSLT
+     * @param result <code>Element</code> Transformed XML
+     * @param xmlParamName <code>String</code> Param name
+     * @param xmlParam <code>String</code> Xml param
      * @throws Exception
      */
     public static void transformWithXmlParam(Element xml, Source xslt, Result result,
@@ -495,10 +470,10 @@ public final class Xml
 	private static class JeevesURIResolver implements URIResolver {
 
     /**
-     *
-     * @param href
-     * @param base
-     * @return
+     * Resolves a Jeeves URI.
+     * @param href <code>String</code>
+     * @param base <code>String</code>
+     * @return <code>Source</code>
      * @throws TransformerException
      */
      public Source resolve(String href, String base) throws TransformerException {
@@ -571,10 +546,10 @@ public final class Xml
      * Transforms an xml tree putting the result to a stream with optional parameters.
      *
      *
-     * @param xml
-     * @param styleSheetPath
-     * @param result
-     * @param params
+     * @param xml <code>Element</code>
+     * @param styleSheetPath <code>Path</code>
+     * @param result <code>Result</code>
+     * @param params <code>Map&lt;String, Object&gt;</code>
      * @throws Exception
      */
 	public static void
@@ -690,8 +665,8 @@ public final class Xml
     /**
      * Writes an xml element to a stream.
      *
-     * @param doc
-     * @param out
+     * @param doc <code>Document</code>
+     * @param out <code>OutputStream</code>
      * @throws IOException
      */
 	public static void writeResponse(Document doc, OutputStream out) throws IOException
@@ -705,8 +680,8 @@ public final class Xml
     /**
      * Converts an xml element to a string.
      *
-     * @param data
-     * @return
+     * @param data <code>Element</code>
+     * @return <code>String</code>
      */
 	public static String getString(Element data)
 	{
@@ -749,8 +724,8 @@ public final class Xml
     }
     /**
      *
-     * @param data
-     * @return
+     * @param data <code>DocType</code>
+     * @return <code>String</code>
      */
 	public static String getString(DocType data)
 	{
@@ -763,8 +738,8 @@ public final class Xml
 
     /**
      *
-     * @param data
-     * @return
+     * @param data <code>Document</code>
+     * @return <code>String</code>
      */
 	public static String getString(Document data)
 	{
@@ -778,10 +753,10 @@ public final class Xml
     /**
      * Creates and prepares an XPath element - simple xpath (like "a/b/c").
      *
-     * @param xml
-     * @param xpath
-     * @param theNSs
-     * @return
+     * @param xml <code>Element</code>
+     * @param xpath <code>String</code>
+     * @param theNSs <code>List&lt;Namespace&gt;</code>
+     * @return <code>XPath</code>
      * @throws JDOMException
      */
 	private static XPath prepareXPath(Element xml, String xpath, List<Namespace> theNSs) throws JDOMException
@@ -799,10 +774,10 @@ public final class Xml
     /**
      * Retrieves a single XML element given a simple xpath (like "a/b/c").
      *
-     * @param xml
-     * @param xpath
-     * @param theNSs
-     * @return
+     * @param xml <code>Element</code>
+     * @param xpath <code>String</code> a simple XPath
+     * @param theNSs <code>List&lt;Namespace&gt;</code>
+     * @return <code>Object</code> The XML element.
      * @throws JDOMException
      */
 	public static Object selectSingle(Element xml, String xpath, List<Namespace> theNSs) throws JDOMException {
@@ -817,9 +792,9 @@ public final class Xml
     /**
      * Retrieves a single XML element as a JDOM element given a simple xpath.
      *
-     * @param xml
-     * @param xpath
-     * @return
+     * @param xml <code>Element</code>
+     * @param xpath <code>String</code> a simple XPath
+     * @return <code>Element</code>
      * @throws JDOMException
      */
 	public static Element selectElement(Element xml, String xpath) throws JDOMException {
@@ -831,10 +806,10 @@ public final class Xml
     /**
      * Retrieves a single XML element as a JDOM element given a simple xpath.
      *
-     * @param xml
-     * @param xpath
-     * @param theNSs
-     * @return
+     * @param xml <code>Element</code>
+     * @param xpath <code>String</code> a simple XPath
+     * @param theNSs <code>List&lt;Namespace&gt;</code>
+     * @return <code>Element</code>
      * @throws JDOMException
      */
 	public static Element selectElement(Element xml, String xpath, List<Namespace> theNSs) throws JDOMException {
@@ -855,10 +830,10 @@ public final class Xml
     /**
      * Evaluates an XPath expression on an element and returns Elements.
      *
-     * @param xml
-     * @param xpath
-     * @param theNSs
-     * @return
+     * @param xml <code>Element</code>
+     * @param xpath <code>String</code> a simple XPath
+     * @param theNSs <code>List&lt;Namespace&gt;</code>
+     * @return <code>List&lt;?&gt;</code> List of elements
      * @throws JDOMException
      */
 	public static List<?> selectNodes(Element xml, String xpath, List<Namespace> theNSs) throws JDOMException {
@@ -869,10 +844,10 @@ public final class Xml
     /**
      * Evaluates an XPath expression on an document and returns Elements.
      *
-     * @param xml
-     * @param xpath
-     * @param theNSs
-     * @return
+     * @param xml <code>Element</code>
+     * @param xpath <code>String</code> a simple XPath
+     * @param theNSs <code>List&lt;Namespace&gt;</code>
+     * @return <code>List&lt;?&gt;</code> List of elements
      * @throws JDOMException
      */
 	public static List<?> selectDocumentNodes(Element xml, String xpath, List<Namespace> theNSs) throws JDOMException {
@@ -889,9 +864,9 @@ public final class Xml
 
     /**
      * Evaluates an XPath expression on an element and returns Elements.
-     * @param xml
-     * @param xpath
-     * @return
+     * @param xml <code>Element</code>
+     * @param xpath <code>String</code> a simple XPath
+     * @return <code>List&lt;?&gt;</code> List of elements
      * @throws JDOMException
      */
 	public static List<?> selectNodes(Element xml, String xpath) throws JDOMException {
@@ -903,9 +878,9 @@ public final class Xml
     /**
      * Evaluates an XPath expression on an element and returns string result.
      *
-     * @param xml
-     * @param xpath
-     * @return
+     * @param xml <code>Element</code>
+     * @param xpath <code>String</code> a simple XPath
+     * @return <code>String</code>
      * @throws JDOMException
      */
 	public static String selectString(Element xml, String xpath) throws JDOMException {
@@ -917,10 +892,10 @@ public final class Xml
     /**
      * Evaluates an XPath expression on an element and returns string result.
      *
-     * @param xml
-     * @param xpath
-     * @param theNSs
-     * @return
+     * @param xml <code>Element</code>
+     * @param xpath <code>String</code> a simple XPath
+     * @param theNSs <code>List&lt;Namespace&gt;</code>
+     * @return <code>String</code>
      * @throws JDOMException
      */
 	public static String selectString(Element xml, String xpath, List<Namespace> theNSs) throws JDOMException {
@@ -935,9 +910,9 @@ public final class Xml
     /**
      * Evaluates an XPath expression on an element and returns true/false.
      *
-     * @param xml
-     * @param xpath
-     * @return
+     * @param xml <code>Element</code>
+     * @param xpath <code>String</code> a simple XPath
+     * @return <code>boolean</code>
      * @throws JDOMException
      */
 	public static boolean selectBoolean(Element xml, String xpath) throws JDOMException {
@@ -950,10 +925,10 @@ public final class Xml
     /**
      * Evaluates an XPath expression on an element and returns true/false.
      *
-     * @param xml
-     * @param xpath
-     * @param theNSs
-     * @return
+     * @param xml <code>Element</code>
+     * @param xpath <code>String</code> a simple XPath
+     * @param theNSs <code>List&lt;Namespace&gt;</code>
+     * @return <code>boolean</code>
      * @throws JDOMException
      */
 	public static boolean selectBoolean(Element xml, String xpath, List<Namespace> theNSs) throws JDOMException {
@@ -965,9 +940,9 @@ public final class Xml
     /**
      * Evaluates an XPath expression on an element and returns number result.
      *
-     * @param xml
-     * @param xpath
-     * @return
+     * @param xml <code>Element</code>
+     * @param xpath <code>String</code> a simple XPath
+     * @return <code>Number</code>
      * @throws JDOMException
      */
 	public static Number selectNumber(Element xml, String xpath) throws JDOMException {
@@ -979,10 +954,10 @@ public final class Xml
     /**
      * Evaluates an XPath expression on an element and returns number result.
      *
-     * @param xml
-     * @param xpath
-     * @param theNSs
-     * @return
+     * @param xml <code>Element</code>
+     * @param xpath <code>String</code> a simple XPath
+     * @param theNSs <code>List&lt;Namespace&gt;</code>
+     * @return <code>Number</code>
      * @throws JDOMException
      */
 	public static Number selectNumber(Element xml, String xpath, List<Namespace> theNSs) throws JDOMException {
@@ -998,12 +973,12 @@ public final class Xml
      * search on uuid. Extract uuid from matched element if
      * elementName is null or from the elementName child.
      *
-     * @param element
+     * @param element <code>Element</code>
      * @param elementFilter Filter to get element descendants
      * @param elementName   Child element to get value from. If null, filtered element value is returned
-     * @param elementNamespace
+     * @param elementNamespace <code>List&lt;Namespace&gt;</code>
      * @param attributeName Attribute name to get value from. If null, TODO: improve
-     * @return
+     * @return <code>Set&lt;String&gt;</code>
      */
     public static Set<String> filterElementValues(Element element,
                                                      ElementFilter elementFilter,
@@ -1114,7 +1089,7 @@ public final class Xml
 
 		/**
 		 * Set namespace to use for report elements
-		 * @param ns
+		 * @param ns <code>Namespace</code>
 		 */
 		public void setNs(Namespace ns) {
 			this.ns = ns;
@@ -1130,7 +1105,7 @@ public final class Xml
     /**
      * Validates an XML document using the hints in the DocType (DTD validation) or schemaLocation attribute hint.
      *
-     * @param doc
+     * @param doc <code>Document</code>
      * @throws Exception
      */
 	public synchronized static void validate(Document doc) throws Exception {
@@ -1156,7 +1131,7 @@ public final class Xml
     /**
      * Validates an XML document using the hints in the schemaLocation attribute.
      *
-     * @param xml
+     * @param xml <code>Element</code>
      * @throws Exception
      */
 	public synchronized static void validate(Element xml) throws Exception {
@@ -1175,7 +1150,7 @@ public final class Xml
      * Validates an xml document with respect to an xml schema described by .xsd file path.
      *
      * @param schemaPath
-     * @param xml
+     * @param xml <code>Element</code>
      * @throws Exception
      */
 	public static void validate(Path schemaPath, Element xml) throws Exception
@@ -1189,8 +1164,8 @@ public final class Xml
     /**
      * Validates an xml document with respect to schemaLocation hints.
      *
-     * @param xml
-     * @return
+     * @param xml <code>Element</code>
+     * @return <code>Element</code>
      * @throws Exception
      */
     public static Element validateInfo(Element xml) throws Exception
@@ -1210,9 +1185,9 @@ public final class Xml
     /**
      * Validates an xml document with respect to schemaLocation hints using supplied error handler.
      *
-     * @param xml
-     * @param eh
-     * @return
+     * @param xml <code>Element</code>
+     * @param eh <code>ErrorHandler</code>
+     * @return <code>Element</code>
      * @throws Exception
      */
 	public static Element validateInfo(Element xml, ErrorHandler eh) throws Exception
@@ -1231,9 +1206,9 @@ public final class Xml
     /**
      * Validates an xml document with respect to an xml schema described by .xsd file path.
      *
-     * @param schemaPath
-     * @param xml
-     * @return
+     * @param schemaPath <code>Path</code>
+     * @param xml <code>Element</code>
+     * @return <code>Element</code>
      * @throws Exception
      */
 	public static Element validateInfo(Path schemaPath, Element xml) throws Exception
@@ -1252,10 +1227,10 @@ public final class Xml
     /**
      * Validates an xml document with respect to an xml schema described by .xsd file path using supplied error handler.
      *
-     * @param schemaPath
-     * @param xml
-     * @param eh
-     * @return
+     * @param schemaPath <code>Path</code>
+     * @param xml <code>Element</code>
+     * @param eh <code>ErrorHandler</code>
+     * @return <code>Element</code>
      * @throws Exception
      */
 	public static Element validateInfo(Path schemaPath, Element xml, ErrorHandler eh)
@@ -1273,9 +1248,9 @@ public final class Xml
     /**
      * Called by validation methods that supply an xml schema described by .xsd file path.
      *
-     * @param schemaPath
-     * @param xml
-     * @param eh
+     * @param schemaPath <code>Path</code>
+     * @param xml <code>Element</code>
+     * @param eh <code>ErrorHandler</code>
      * @throws Exception
      */
 	private static void validateGuts(Path schemaPath, Element xml, ErrorHandler eh) throws Exception {
@@ -1294,9 +1269,9 @@ public final class Xml
 
     /**
      * Called by all validation methods to do the real guts of the validation job.
-     * @param schema
-     * @param xml
-     * @param eh
+     * @param schema <code>Schema</code>
+     * @param xml <code>Element</code>
+     * @param eh <code>ErrorHandler</code>
      * @throws Exception
      */
 	private static void validateRealGuts(Schema schema, Element xml, ErrorHandler eh) throws Exception {
