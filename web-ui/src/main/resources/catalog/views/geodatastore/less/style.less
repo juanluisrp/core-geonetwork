@@ -100,13 +100,13 @@ header {
 }
 section {
   width: 50%;
-  overflow: scroll;
+  overflow: hidden;
   float: left;
   padding: 25px;
 }
 aside {
   width: 50%;
-  overflow: scroll;
+  overflow: hidden;
 }
 aside #metadata {
   overflow: scroll;
@@ -160,6 +160,11 @@ a:hover {
   padding-left: 0px;
   margin-left: -2px;
 }
+#selectable li.modify {
+	background-color: transparent !important;
+	border:1px solid #000;
+}
+
 #selectable li .progress { 
   margin-bottom: 0px;
   background-color: white;
@@ -182,7 +187,6 @@ a:hover {
   border-top: 10px solid transparent;
   border-bottom: 10px solid transparent; 
   border-right:10px solid #E26F02; 
-  visibility: hidden;
 }
 .delete {
   visibility: hidden;
@@ -291,4 +295,25 @@ li#dropzone .fa-4x {
   margin-left: 15px;
   color: lightgrey;
 }
-  
+
+li#dropzone.in {
+  min-height: 160px;
+  font-size: larger;
+  border-color: #E26F02;
+}
+li#dropzone.hover {
+  background-color: #f6d4b2;
+  border-color: #E26F02;
+}
+li#dropzone.in .fa-4x {
+  color: #154273;
+}
+
+li#dropzone.fade {
+  -webkit-transition: all 0.3s ease-out;
+  -moz-transition: all 0.3s ease-out;
+  -ms-transition: all 0.3s ease-out;
+  -o-transition: all 0.3s ease-out;
+  transition: all 0.3s ease-out;
+  opacity: 1;
+}

@@ -1,4 +1,5 @@
 // GN Styles
+@import (less) "../../../lib/jquery.ext/jquery.fileupload-ui.css";
 @import "../../../lib/style/font-awesome/less/font-awesome.less";
 @import "../../../style/gn_bootstrap.less";
 @fa-font-path: '../catalog/lib/style/font-awesome/fonts';
@@ -21,6 +22,10 @@
 .progress.active .progress-bar,
 .progress-bar.active {
   .animation(progress-bar-stripes 2s linear infinite);
+}
+
+.file-icon {
+  vertical-align: 12%;
 }
 
 @import "gn_view_geodatastore.less";

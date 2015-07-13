@@ -15,13 +15,17 @@
               });
 
         }).error(function() {
-          $rootScope.authenticated = false;
-          callback && callback();
+          $scope.authenticated = false;
+          $scope.loadCatalogInfo().then(function(){
+              callback && callback();
+          });
         });
+
+
 
       }
 
-      authenticate();
+      $scope.loadCatalogInfo();
       $scope.credentials = {};
       $scope.login = function() {
         authenticate($scope.credentials, function() {
