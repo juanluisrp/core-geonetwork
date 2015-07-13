@@ -76,8 +76,8 @@
                            </div>
                        </li>
 
-					   <li data-ng-repeat="md in searchResults.records" ng-click="setMD(md)">					   
-                            <div class="arrow-left"></div>
+					   <li data-ng-repeat="md in searchResults.records" ng-click="setMD(md)" ng-class="setBG(md)" >					   
+                            <div class="arrow-left" ng-show="md==mdSelected"></div>
                             <div class="title">
                                 <div class="floatright">
                                     <a class="delete" href="#" data-toggle="tooltip" data-placement="top" title="verwijderen"><i class="fa fa-trash-o fa-lg"></i></a>
@@ -116,7 +116,7 @@
                             </li>
                         </ul>
                     </nav>
-                    <span style="margin-top:6px; display: inline-block;">{{searchResults.records.length}} datasets</span>
+                    <span style="margin-top:6px; display: inline-block;">{{total}} datasets</span>
                 </div>
             </section>
             <aside>

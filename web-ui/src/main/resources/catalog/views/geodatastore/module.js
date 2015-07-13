@@ -44,7 +44,7 @@
              gnUtilityService, gnSearchSettings, gnViewerSettings,Metadata,gnSearchManagerService) {
     $scope.loadCatalogInfo();
     $scope.searchResults = { records: [] };
-
+	$scope.total = 0;
 
 	  $scope.updateResults = function(page,any,order){
 	    if (!any) any="";
@@ -66,8 +66,8 @@
 			searchResults.records.push(new Metadata(data.metadata[i]));
 		  }
 		  
-		  $scope.searchResults = searchResults;
-
+		    $scope.searchResults = searchResults;
+			$scope.total = data.count;
 		  });
 	  }
 	  
@@ -115,10 +115,14 @@
 	  } else {
 	   return "fa-file-code-o";
 	  }
-	  
-	  
 	  }
 
+	  $scope.setBG = function (md){
+		if ($scope.hasSelected&&md['geonet:info'].uuid==$scope.mdSelected['geonet:info'].uuid){
+			return 'modify';
+		}
+	  }
+	  
 	  //grab the filename from metadata, for now take the first link, later check which link is the correct link, sometimes filename is empty then use file desc
 	  $scope.getFileName = function (md){
 		if (md.link.length==0){
