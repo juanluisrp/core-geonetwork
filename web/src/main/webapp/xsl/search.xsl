@@ -22,8 +22,8 @@
             </xsl:attribute>
 
 			<head>
+				<meta http-equiv="X-UA-Compatible" content="IE=11,chrome=1"></meta>
 				<meta http-equiv="Content-type" content="text/html;charset=UTF-8"></meta>
-				<meta http-equiv="X-UA-Compatible" content="IE=9,chrome=1"></meta>
 				<title><xsl:value-of select="$siteName" /></title>
 				<meta name="description" content="" ></meta>
                 <meta name="viewport" content="width=device-width"></meta>
