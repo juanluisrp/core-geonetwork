@@ -1,26 +1,16 @@
 package nl.kadaster.pdok.bussiness;
 
-import com.google.common.collect.Multimap;
-import org.fao.geonet.constants.Geonet;
-import org.fao.geonet.kernel.AddElemValue;
-import org.fao.geonet.kernel.DataManager;
-import org.fao.geonet.kernel.EditLib;
 import org.fao.geonet.kernel.SchemaManager;
-import org.fao.geonet.kernel.schema.MetadataSchema;
 import org.fao.geonet.schema.iso19139.ISO19139SchemaPlugin;
 import org.fao.geonet.utils.Xml;
 import org.jdom.Element;
-import org.jdom.JDOMException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 
-import javax.xml.transform.Source;
-import javax.xml.transform.stream.StreamSource;
-import java.io.*;
+import java.io.InputStream;
 import java.nio.file.Path;
-import java.util.Collection;
 import java.util.Map;
 
 /**
