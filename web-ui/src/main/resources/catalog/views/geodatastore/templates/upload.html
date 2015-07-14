@@ -62,7 +62,7 @@
                                        <i class="fa fa-times fa-lg"></i>
                                    </a>
                                </div>
-                               <i class="file-icon fa fa-lg fa-fw"  data-ng-class="getFileIcon(file)"></i>
+                               <i class="file-icon fa fa-lg fa-fw"  data-ng-class="GdsUploadFactory.getFileIcon(file)"></i>
                                <span class="name">{{file.name}}</span>
                                <span class="size">({{file.size | formatFileSize}})</span>
                                <div data-ng-show="file.error" class="message alert-danger"><i class="fa fa-exclamation-triangle fa-fw" style="font-size:1em; margin-right: 4px"></i>Upload fout. Klik hier voor meer informatie ({{file.error}}).</div>
@@ -71,29 +71,46 @@
                                 data-file-upload-progress="file.$progress()" style="width: 100%">
                                <div class="progress-bar progress-bar-striped progress-bar-success"
                                     data-ng-style="{width: num + '%'}">
-
                                </div>
                            </div>
                        </li>
+                       <!-- Files uploaded since page reload -->
+                       <li data-ng-repeat="file in GdsUploadFactory.list" data-ng-click="setMD(file)" data-ng-class="setBgNewFile(file)">
+                           <div class="arrow-left" data-ng-show="file == mdSelected"></div>
+                           <div class="title">
+                               <div class="floatright">
+                                   <a class="delete" href="#" data-toggle="tooltip" data-placement="top" title="verwijderen"><i class="fa fa-trash-o fa-lg"></i></a>
+                               </div>
+                               <i class="fa fa-lg fa-fw" data-ng-class="GdsUploadFactory.getFileIcon(file)" style="vertical-align: 12%"></i>
+                               <span>{{getFileNameForNewFiles(file)}}</span>
+                           </div>
+                           <div class="message alert-info">
+                               <i class="fa fa-pencil fa-fw" style="font-size:1em; margin-right: 4px"></i>Voltooi de dataset informatie om te kunnen publiceren.
+                           </div>
 
-					   <li data-ng-repeat="md in searchResults.records" ng-click="setMD(md)" ng-class="setBG(md)" >					   
-                            <div class="arrow-left" ng-show="md==mdSelected"></div>
+                       </li>
+
+
+					   <li data-ng-repeat="md in searchResults.records" data-ng-click="setMD(md)" data-ng-class="setBG(md)" >
+                            <div class="arrow-left" data-ng-show="md==mdSelected"></div>
                             <div class="title">
                                 <div class="floatright">
                                     <a class="delete" href="#" data-toggle="tooltip" data-placement="top" title="verwijderen"><i class="fa fa-trash-o fa-lg"></i></a>
                                 </div>
-                                <i class="fa {{getFileType(md)}} fa-lg fa-fw" style="vertical-align: 12%"></i>
+                                <i class="fa fa-lg fa-fw" data-ng-class="getFileType(md)" style="vertical-align: 12%"></i>
                                 <span>{{getFileName(md)}}</span>
                             </div>
-                            <div class="message alert-success" ng-show="getStatus(md)=='publish'">
+                            <div class="message alert-success" data-ng-show="getStatus(md)=='publish'">
                                 <button type="button" class="btn btn-default btn-sm floatright"><i class="fa fa-share fa-fw"></i>Publiceren</button>
-                                <i class="fa fa-check fa-fw" style="font-size:1em; margin-right: 4px"></i>Data is klaar om te worden gedeeld</div>
-							<div class="message alert-info" ng-show="getStatus(md)=='metadataMissing'">
-								<i class="fa fa-pencil fa-fw" style="font-size:1em; margin-right: 4px"></i>Voltooi de dataset informatie om te kunnen publiceren.</div>
-							<div class="message alert-danger" ng-show="getStatus(md)=='error'">
-								<i class="fa fa-exclamation-triangle fa-fw" style="font-size:1em; margin-right: 4px"></i>Upload fout. Klik hier voor meer informatie.</div>
+                                <i class="fa fa-check fa-fw" style="font-size:1em; margin-right: 4px"></i>Data is klaar om te worden gedeeld.
+                            </div>
+							<div class="message alert-info" data-ng-show="getStatus(md)=='metadataMissing'">
+								<i class="fa fa-pencil fa-fw" style="font-size:1em; margin-right: 4px"></i>Voltooi de dataset informatie om te kunnen publiceren.
+                            </div>
+							<div class="message alert-danger" data-ng-show="getStatus(md)=='error'">
+								<i class="fa fa-exclamation-triangle fa-fw" style="font-size:1em; margin-right: 4px"></i>Upload fout. Klik hier voor meer informatie.
+                            </div>
 						</li>
-						
                     </ol>
                 </form>
                 <div>
@@ -120,7 +137,7 @@
                 </div>
             </section>
             <aside>
-                <div id="metadata" ng-show="hasSelected">
+                <div id="metadata" class="fade" ng-show="hasSelected" data-ng-class="{'in': hasSelected }">
                     <form>
                         <div class="form-group">
                             <label for="tt">Titel</label>
