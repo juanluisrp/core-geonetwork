@@ -204,7 +204,7 @@
           <gco:CharacterString><xsl:value-of select="$geographicIdentifier"/></gco:CharacterString>
         </gmd:code>
         <gmd:codeSpace>
-          <gco:CharacterString>http://gazeteer.pdok.nl</gco:CharacterString>
+          <gco:CharacterString>PDOK</gco:CharacterString>
         </gmd:codeSpace>
       </gmd:RS_Identifier>
     </xsl:copy>
