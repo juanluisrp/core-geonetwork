@@ -17,7 +17,6 @@ public class MetadataParametersBean {
     private String useLimitation;
     private String license;
     private String resolution;
-
     private String identifier;
     private String url;
     private String extent;
