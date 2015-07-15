@@ -5,7 +5,7 @@
   <groupId>org.geonetwork-opensource</groupId>
   <artifactId>geonetwork</artifactId>
   <packaging>pom</packaging>
-  <version>3.0.18-SNAPSHOT</version>
+  <version>3.0.18</version>
   <name>GeoNetwork opensource</name>
   <description>GeoNetwork opensource is a standards based, Free and
     Open Source catalog application to manage spatially referenced
@@ -25,7 +25,7 @@
     <developerConnection>
     scm:git:git@github.so.kadaster.nl:NGR/core-geonetwork.git
     </developerConnection>
-    <tag>core-geonetwork-parent-pom-3.0.1.0-SNAPSHOT</tag>
+    <tag>geonetwork-3.0.18</tag>
   </scm>
   <inceptionYear>2003</inceptionYear>
   <issueManagement>
