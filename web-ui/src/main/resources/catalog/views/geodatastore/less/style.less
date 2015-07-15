@@ -279,37 +279,38 @@ footer ul li.first, .verytop ul li.first {
   width: calc(100% - 30px);
   position: absolute;
 }
-li#dropzone {
+#dropzone {
   border-radius: 10px;
   border: 3px dashed lightgrey;
   min-height: 80px;
   background-color: white;
   padding: 10px 20px;
-}
-li#dropzone p {
-  margin: 10px 10px;
-  text-align: right;
-  width: 152px;
-}
-li#dropzone .fa-4x {
-  margin-left: 15px;
-  color: lightgrey;
-}
 
-li#dropzone.in {
-  min-height: 160px;
-  font-size: larger;
-  border-color: #E26F02;
-}
-li#dropzone.hover {
-  background-color: #f6d4b2;
-  border-color: #E26F02;
-}
-li#dropzone.in .fa-4x {
-  color: #154273;
-}
+  p {
+    margin: 10px 10px;
+    text-align: right;
+    width: 152px;
+  }
 
-li#dropzone.fade {
+  .fa-4x {
+    margin-left: 15px;
+    color: lightgrey;
+  }
+
+  .in {
+    min-height: 160px;
+    font-size: larger;
+    border-color: #E26F02;
+  }
+  .hover {
+    background-color: #f6d4b2;
+    border-color: #E26F02;
+  }
+  .in .fa-4x {
+    color: #154273;
+  }
+}
+.fade {
   -webkit-transition: all 0.3s ease-out;
   -moz-transition: all 0.3s ease-out;
   -ms-transition: all 0.3s ease-out;
@@ -317,3 +318,15 @@ li#dropzone.fade {
   transition: all 0.3s ease-out;
   opacity: 1;
 }
+
+.padding-top-10em {
+  padding-top: 10em;
+}
+
+@padding-left-empty-box: 12.5%;
+.padding-25 {
+  padding-left: @padding-left-empty-box;
+  padding-right: @padding-left-empty-box;
+}
+
+
