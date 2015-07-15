@@ -135,19 +135,19 @@ public class GeodatastoreApi {
                         docType, category, creationDate.toString(), creationDate.toString(), updateFixedInfo, indexImmediate);
 
 
-                String fname = file.getOriginalFilename();
+                String fileName = file.getOriginalFilename();
                 String fsize = Long.toString(file.getSize());
                 String access = "private";
                 String overwrite = "no";
 
                 IResourceUploadHandler uploadHook = (IResourceUploadHandler) context.getApplicationContext().getBean("resourceUploadHandler");
-                uploadHook.onUpload(file.getInputStream(), context, access, overwrite, Integer.parseInt(createdId), fname, Double.parseDouble(fsize));
+                uploadHook.onUpload(file.getInputStream(), context, access, overwrite, Integer.parseInt(createdId), fileName, Double.parseDouble(fsize));
 
 
-                context.info("UPLOADED:" + fname + "," + createdId + "," + context.getIpAddress() + "," + username);
+                context.info("UPLOADED:" + fileName + "," + createdId + "," + context.getIpAddress() + "," + username);
 
                 ServletPathFinder pathFinder = new ServletPathFinder(servletContext);
-                String downloadUrl = getSiteURL(pathFinder) + "/id/dataset/" + uuid.toString();
+                String downloadUrl = getSiteURL(pathFinder) + "/id/dataset/" + uuid.toString()+ "/" + fileName;
                 Map<String, String[]> allParams = Maps.newHashMap(request.getParameterMap());
                 // Set parameter and process metadata to reference the uploaded file
                 allParams.put("url", new String[]{downloadUrl});

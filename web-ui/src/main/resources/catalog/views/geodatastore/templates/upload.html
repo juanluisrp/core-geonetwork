@@ -136,8 +136,8 @@
                     <span style="margin-top:6px; display: inline-block;">{{total}} datasets</span>
                 </div>
             </section>
-            <aside>
-                <div id="metadata" class="fade" ng-show="hasSelected" data-ng-class="{'in': hasSelected }">
+            <aside data-ng-switch data-on="hasSelected">
+                <div id="metadata" class="fade" data-ng-switch-when="true" data-ng-class="{'in': hasSelected }">
                     <form>
                         <div class="form-group">
                             <label for="tt">Titel</label>
@@ -220,6 +220,11 @@
                             </div>
                         </div>
                     </form>
+                </div>
+                <div data-ng-switch-default class="padding-25 padding-top-10em">
+                    <p class="h2 text-center">Vul de informatie van uw bestand te delen.</p>
+                    <p class="h3 text-center">Selecteer een bestand van links te bewerken.</p>
+                    <p class="text-center" aria-label="Left arrow"><i class="fa fa-arrow-left fa-4x"></i></i></p>
                 </div>
             </aside>
             <div style="clear:both"></div>

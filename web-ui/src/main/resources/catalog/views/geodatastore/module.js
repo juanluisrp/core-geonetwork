@@ -53,6 +53,9 @@
 			alert("Click!");
 		}
 
+		$scope.$watch('user', function() {
+			$scope.updateResults(1);
+		})
 
 	  $scope.updateResults = function(page,any,order){
 	    if (!any) any="";
@@ -63,16 +66,16 @@
 				_content_type:'json',
 				fast: 'index',
 				type: 'dataset',
-				_owner:$scope.user.id,
+				_owner: $scope.user.id,
 				from: (page-1)*5+1,
 				any: any,
 				sortBy:order,
 				to: page*5
 		}).then(function(data) {
-		  var searchResults = { records: []};
-		  for (var i = 0; i < data.metadata.length; i++) {
-			searchResults.records.push(new Metadata(data.metadata[i]));
-		  }
+				var searchResults = { records: []};
+				for (var i = 0; i < data.metadata.length; i++) {
+					searchResults.records.push(new Metadata(data.metadata[i]));
+		  	}
 		  
 		    $scope.searchResults = searchResults;
 			$scope.total = data.count;
