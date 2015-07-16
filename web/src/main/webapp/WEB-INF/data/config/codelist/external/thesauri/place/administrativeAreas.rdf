@@ -31932,4 +31932,904 @@
 			</gml:Envelope>
 		</gml:BoundedBy>
 	</skos:Concept>
+	<skos:Concept rdf:about="http://gazeteer_pdok_nl#OVERIG_WK001099_waterarea">
+		<skos:inScheme rdf:resource="http://geodatastore.pdok.nl/registry/location"/>
+		<skos:prefLabel xml:lang="nl">OVERIG WK001099</skos:prefLabel>
+		<gml:BoundedBy>
+			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
+				<gml:lowerCorner>6.8742 53.25661</gml:lowerCorner>
+				<gml:upperCorner>7.13486 53.45943</gml:upperCorner>
+			</gml:Envelope>
+		</gml:BoundedBy>
+	</skos:Concept>
+	<skos:Concept rdf:about="http://gazeteer_pdok_nl#OVERIG_WK003499_waterarea">
+		<skos:inScheme rdf:resource="http://geodatastore.pdok.nl/registry/location"/>
+		<skos:prefLabel xml:lang="nl">OVERIG WK003499</skos:prefLabel>
+		<gml:BoundedBy>
+			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
+				<gml:lowerCorner>5.06043 52.30239</gml:lowerCorner>
+				<gml:upperCorner>5.31717 52.58368</gml:upperCorner>
+			</gml:Envelope>
+		</gml:BoundedBy>
+	</skos:Concept>
+	<skos:Concept rdf:about="http://gazeteer_pdok_nl#OVERIG_WK005099_waterarea">
+		<skos:inScheme rdf:resource="http://geodatastore.pdok.nl/registry/location"/>
+		<skos:prefLabel xml:lang="nl">OVERIG WK005099</skos:prefLabel>
+		<gml:BoundedBy>
+			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
+				<gml:lowerCorner>5.31518 52.24953</gml:lowerCorner>
+				<gml:upperCorner>5.62074 52.37057</gml:upperCorner>
+			</gml:Envelope>
+		</gml:BoundedBy>
+	</skos:Concept>
+	<skos:Concept rdf:about="http://gazeteer_pdok_nl#OVERIG_WK005699_waterarea">
+		<skos:inScheme rdf:resource="http://geodatastore.pdok.nl/registry/location"/>
+		<skos:prefLabel xml:lang="nl">OVERIG WK005699</skos:prefLabel>
+		<gml:BoundedBy>
+			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
+				<gml:lowerCorner>6.2869 53.33487</gml:lowerCorner>
+				<gml:upperCorner>6.29372 53.34138</gml:upperCorner>
+			</gml:Envelope>
+		</gml:BoundedBy>
+	</skos:Concept>
+	<skos:Concept rdf:about="http://gazeteer_pdok_nl#OVERIG_WK005899_waterarea">
+		<skos:inScheme rdf:resource="http://geodatastore.pdok.nl/registry/location"/>
+		<skos:prefLabel xml:lang="nl">OVERIG WK005899</skos:prefLabel>
+		<gml:BoundedBy>
+			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
+				<gml:lowerCorner>5.82313 53.31688</gml:lowerCorner>
+				<gml:upperCorner>6.19402 53.49258</gml:upperCorner>
+			</gml:Envelope>
+		</gml:BoundedBy>
+	</skos:Concept>
+	<skos:Concept rdf:about="http://gazeteer_pdok_nl#OVERIG_WK006099_waterarea">
+		<skos:inScheme rdf:resource="http://geodatastore.pdok.nl/registry/location"/>
+		<skos:prefLabel xml:lang="nl">OVERIG WK006099</skos:prefLabel>
+		<gml:BoundedBy>
+			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
+				<gml:lowerCorner>5.55286 53.31874</gml:lowerCorner>
+				<gml:upperCorner>6.00493 53.49395</gml:upperCorner>
+			</gml:Envelope>
+		</gml:BoundedBy>
+	</skos:Concept>
+	<skos:Concept rdf:about="http://gazeteer_pdok_nl#OVERIG_WK006399_waterarea">
+		<skos:inScheme rdf:resource="http://geodatastore.pdok.nl/registry/location"/>
+		<skos:prefLabel xml:lang="nl">OVERIG WK006399</skos:prefLabel>
+		<gml:BoundedBy>
+			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
+				<gml:lowerCorner>5.53709 53.26592</gml:lowerCorner>
+				<gml:upperCorner>5.71891 53.36796</gml:upperCorner>
+			</gml:Envelope>
+		</gml:BoundedBy>
+	</skos:Concept>
+	<skos:Concept rdf:about="http://gazeteer_pdok_nl#OVERIG_WK007099_waterarea">
+		<skos:inScheme rdf:resource="http://geodatastore.pdok.nl/registry/location"/>
+		<skos:prefLabel xml:lang="nl">OVERIG WK007099</skos:prefLabel>
+		<gml:BoundedBy>
+			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
+				<gml:lowerCorner>5.43212 53.20962</gml:lowerCorner>
+				<gml:upperCorner>5.53804 53.26944</gml:upperCorner>
+			</gml:Envelope>
+		</gml:BoundedBy>
+	</skos:Concept>
+	<skos:Concept rdf:about="http://gazeteer_pdok_nl#OVERIG_WK007299_waterarea">
+		<skos:inScheme rdf:resource="http://geodatastore.pdok.nl/registry/location"/>
+		<skos:prefLabel xml:lang="nl">OVERIG WK007299</skos:prefLabel>
+		<gml:BoundedBy>
+			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
+				<gml:lowerCorner>5.09578 53.001</gml:lowerCorner>
+				<gml:upperCorner>5.43898 53.25133</gml:upperCorner>
+			</gml:Envelope>
+		</gml:BoundedBy>
+	</skos:Concept>
+	<skos:Concept rdf:about="http://gazeteer_pdok_nl#OVERIG_WK007999_waterarea">
+		<skos:inScheme rdf:resource="http://geodatastore.pdok.nl/registry/location"/>
+		<skos:prefLabel xml:lang="nl">OVERIG WK007999</skos:prefLabel>
+		<gml:BoundedBy>
+			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
+				<gml:lowerCorner>6.15923 53.31682</gml:lowerCorner>
+				<gml:upperCorner>6.28698 53.36753</gml:upperCorner>
+			</gml:Envelope>
+		</gml:BoundedBy>
+	</skos:Concept>
+	<skos:Concept rdf:about="http://gazeteer_pdok_nl#OVERIG_WK008899_waterarea">
+		<skos:inScheme rdf:resource="http://geodatastore.pdok.nl/registry/location"/>
+		<skos:prefLabel xml:lang="nl">OVERIG WK008899</skos:prefLabel>
+		<gml:BoundedBy>
+			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
+				<gml:lowerCorner>6.05012 53.41329</gml:lowerCorner>
+				<gml:upperCorner>6.39703 53.53971</gml:upperCorner>
+			</gml:Envelope>
+		</gml:BoundedBy>
+	</skos:Concept>
+	<skos:Concept rdf:about="http://gazeteer_pdok_nl#OVERIG_WK009399_waterarea">
+		<skos:inScheme rdf:resource="http://geodatastore.pdok.nl/registry/location"/>
+		<skos:prefLabel xml:lang="nl">OVERIG WK009399</skos:prefLabel>
+		<gml:BoundedBy>
+			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
+				<gml:lowerCorner>5.08707 53.21561</gml:lowerCorner>
+				<gml:upperCorner>5.61283 53.47158</gml:upperCorner>
+			</gml:Envelope>
+		</gml:BoundedBy>
+	</skos:Concept>
+	<skos:Concept rdf:about="http://gazeteer_pdok_nl#OVERIG_WK009699_waterarea">
+		<skos:inScheme rdf:resource="http://geodatastore.pdok.nl/registry/location"/>
+		<skos:prefLabel xml:lang="nl">OVERIG WK009699</skos:prefLabel>
+		<gml:BoundedBy>
+			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
+				<gml:lowerCorner>4.81838 53.08711</gml:lowerCorner>
+				<gml:upperCorner>5.16322 53.32307</gml:upperCorner>
+			</gml:Envelope>
+		</gml:BoundedBy>
+	</skos:Concept>
+	<skos:Concept rdf:about="http://gazeteer_pdok_nl#OVERIG_WK016699_waterarea">
+		<skos:inScheme rdf:resource="http://geodatastore.pdok.nl/registry/location"/>
+		<skos:prefLabel xml:lang="nl">OVERIG WK016699</skos:prefLabel>
+		<gml:BoundedBy>
+			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
+				<gml:lowerCorner>5.77775 52.51817</gml:lowerCorner>
+				<gml:upperCorner>5.9864 52.6283</gml:upperCorner>
+			</gml:Envelope>
+		</gml:BoundedBy>
+	</skos:Concept>
+	<skos:Concept rdf:about="http://gazeteer_pdok_nl#OVERIG_WK017199_waterarea">
+		<skos:inScheme rdf:resource="http://geodatastore.pdok.nl/registry/location"/>
+		<skos:prefLabel xml:lang="nl">OVERIG WK017199</skos:prefLabel>
+		<gml:BoundedBy>
+			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
+				<gml:lowerCorner>5.37726 52.60733</gml:lowerCorner>
+				<gml:upperCorner>6.0173 52.83815</gml:upperCorner>
+			</gml:Envelope>
+		</gml:BoundedBy>
+	</skos:Concept>
+	<skos:Concept rdf:about="http://gazeteer_pdok_nl#OVERIG_WK018499_waterarea">
+		<skos:inScheme rdf:resource="http://geodatastore.pdok.nl/registry/location"/>
+		<skos:prefLabel xml:lang="nl">OVERIG WK018499</skos:prefLabel>
+		<gml:BoundedBy>
+			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
+				<gml:lowerCorner>5.36115 52.64922</gml:lowerCorner>
+				<gml:upperCorner>5.61591 52.76481</gml:upperCorner>
+			</gml:Envelope>
+		</gml:BoundedBy>
+	</skos:Concept>
+	<skos:Concept rdf:about="http://gazeteer_pdok_nl#OVERIG_WK023099_waterarea">
+		<skos:inScheme rdf:resource="http://geodatastore.pdok.nl/registry/location"/>
+		<skos:prefLabel xml:lang="nl">OVERIG WK023099</skos:prefLabel>
+		<gml:BoundedBy>
+			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
+				<gml:lowerCorner>5.75629 52.40687</gml:lowerCorner>
+				<gml:upperCorner>5.84236 52.4734</gml:upperCorner>
+			</gml:Envelope>
+		</gml:BoundedBy>
+	</skos:Concept>
+	<skos:Concept rdf:about="http://gazeteer_pdok_nl#OVERIG_WK023399_waterarea">
+		<skos:inScheme rdf:resource="http://geodatastore.pdok.nl/registry/location"/>
+		<skos:prefLabel xml:lang="nl">OVERIG WK023399</skos:prefLabel>
+		<gml:BoundedBy>
+			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
+				<gml:lowerCorner>5.54517 52.29181</gml:lowerCorner>
+				<gml:upperCorner>5.57575 52.33239</gml:upperCorner>
+			</gml:Envelope>
+		</gml:BoundedBy>
+	</skos:Concept>
+	<skos:Concept rdf:about="http://gazeteer_pdok_nl#OVERIG_WK024399_waterarea">
+		<skos:inScheme rdf:resource="http://geodatastore.pdok.nl/registry/location"/>
+		<skos:prefLabel xml:lang="nl">OVERIG WK024399</skos:prefLabel>
+		<gml:BoundedBy>
+			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
+				<gml:lowerCorner>5.56586 52.3266</gml:lowerCorner>
+				<gml:upperCorner>5.6779 52.37869</gml:upperCorner>
+			</gml:Envelope>
+		</gml:BoundedBy>
+	</skos:Concept>
+	<skos:Concept rdf:about="http://gazeteer_pdok_nl#OVERIG_WK026799_waterarea">
+		<skos:inScheme rdf:resource="http://geodatastore.pdok.nl/registry/location"/>
+		<skos:prefLabel xml:lang="nl">OVERIG WK026799</skos:prefLabel>
+		<gml:BoundedBy>
+			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
+				<gml:lowerCorner>5.4035 52.24543</gml:lowerCorner>
+				<gml:upperCorner>5.47862 52.26392</gml:upperCorner>
+			</gml:Envelope>
+		</gml:BoundedBy>
+	</skos:Concept>
+	<skos:Concept rdf:about="http://gazeteer_pdok_nl#OVERIG_WK026999_waterarea">
+		<skos:inScheme rdf:resource="http://geodatastore.pdok.nl/registry/location"/>
+		<skos:prefLabel xml:lang="nl">OVERIG WK026999</skos:prefLabel>
+		<gml:BoundedBy>
+			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
+				<gml:lowerCorner>5.84026 52.47055</gml:lowerCorner>
+				<gml:upperCorner>5.86846 52.51866</gml:upperCorner>
+			</gml:Envelope>
+		</gml:BoundedBy>
+	</skos:Concept>
+	<skos:Concept rdf:about="http://gazeteer_pdok_nl#OVERIG_WK027399_waterarea">
+		<skos:inScheme rdf:resource="http://geodatastore.pdok.nl/registry/location"/>
+		<skos:prefLabel xml:lang="nl">OVERIG WK027399</skos:prefLabel>
+		<gml:BoundedBy>
+			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
+				<gml:lowerCorner>5.47685 52.25782</gml:lowerCorner>
+				<gml:upperCorner>5.54808 52.2933</gml:upperCorner>
+			</gml:Envelope>
+		</gml:BoundedBy>
+	</skos:Concept>
+	<skos:Concept rdf:about="http://gazeteer_pdok_nl#OVERIG_WK030299_waterarea">
+		<skos:inScheme rdf:resource="http://geodatastore.pdok.nl/registry/location"/>
+		<skos:prefLabel xml:lang="nl">OVERIG WK030299</skos:prefLabel>
+		<gml:BoundedBy>
+			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
+				<gml:lowerCorner>5.67918 52.37823</gml:lowerCorner>
+				<gml:upperCorner>5.75701 52.40743</gml:upperCorner>
+			</gml:Envelope>
+		</gml:BoundedBy>
+	</skos:Concept>
+	<skos:Concept rdf:about="http://gazeteer_pdok_nl#OVERIG_WK030399_waterarea">
+		<skos:inScheme rdf:resource="http://geodatastore.pdok.nl/registry/location"/>
+		<skos:prefLabel xml:lang="nl">OVERIG WK030399</skos:prefLabel>
+		<gml:BoundedBy>
+			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
+				<gml:lowerCorner>5.51129 52.36413</gml:lowerCorner>
+				<gml:upperCorner>5.8645 52.66356</gml:upperCorner>
+			</gml:Envelope>
+		</gml:BoundedBy>
+	</skos:Concept>
+	<skos:Concept rdf:about="http://gazeteer_pdok_nl#OVERIG_WK031399_waterarea">
+		<skos:inScheme rdf:resource="http://geodatastore.pdok.nl/registry/location"/>
+		<skos:prefLabel xml:lang="nl">OVERIG WK031399</skos:prefLabel>
+		<gml:BoundedBy>
+			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
+				<gml:lowerCorner>5.33124 52.24675</gml:lowerCorner>
+				<gml:upperCorner>5.40464 52.28773</gml:upperCorner>
+			</gml:Envelope>
+		</gml:BoundedBy>
+	</skos:Concept>
+	<skos:Concept rdf:about="http://gazeteer_pdok_nl#OVERIG_WK031799_waterarea">
+		<skos:inScheme rdf:resource="http://geodatastore.pdok.nl/registry/location"/>
+		<skos:prefLabel xml:lang="nl">OVERIG WK031799</skos:prefLabel>
+		<gml:BoundedBy>
+			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
+				<gml:lowerCorner>5.30647 52.27225</gml:lowerCorner>
+				<gml:upperCorner>5.33956 52.29022</gml:upperCorner>
+			</gml:Envelope>
+		</gml:BoundedBy>
+	</skos:Concept>
+	<skos:Concept rdf:about="http://gazeteer_pdok_nl#OVERIG_WK036399_waterarea">
+		<skos:inScheme rdf:resource="http://geodatastore.pdok.nl/registry/location"/>
+		<skos:prefLabel xml:lang="nl">OVERIG WK036399</skos:prefLabel>
+		<gml:BoundedBy>
+			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
+				<gml:lowerCorner>4.95778 52.34763</gml:lowerCorner>
+				<gml:upperCorner>5.07916 52.41656</gml:upperCorner>
+			</gml:Envelope>
+		</gml:BoundedBy>
+	</skos:Concept>
+	<skos:Concept rdf:about="http://gazeteer_pdok_nl#OVERIG_WK037399_waterarea">
+		<skos:inScheme rdf:resource="http://geodatastore.pdok.nl/registry/location"/>
+		<skos:prefLabel xml:lang="nl">OVERIG WK037399</skos:prefLabel>
+		<gml:BoundedBy>
+			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
+				<gml:lowerCorner>4.59407 52.57375</gml:lowerCorner>
+				<gml:upperCorner>4.64875 52.75833</gml:upperCorner>
+			</gml:Envelope>
+		</gml:BoundedBy>
+	</skos:Concept>
+	<skos:Concept rdf:about="http://gazeteer_pdok_nl#OVERIG_WK037599_waterarea">
+		<skos:inScheme rdf:resource="http://geodatastore.pdok.nl/registry/location"/>
+		<skos:prefLabel xml:lang="nl">OVERIG WK037599</skos:prefLabel>
+		<gml:BoundedBy>
+			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
+				<gml:lowerCorner>4.56631 52.48908</gml:lowerCorner>
+				<gml:upperCorner>4.58727 52.50204</gml:upperCorner>
+			</gml:Envelope>
+		</gml:BoundedBy>
+	</skos:Concept>
+	<skos:Concept rdf:about="http://gazeteer_pdok_nl#OVERIG_WK037699_waterarea">
+		<skos:inScheme rdf:resource="http://geodatastore.pdok.nl/registry/location"/>
+		<skos:prefLabel xml:lang="nl">OVERIG WK037699</skos:prefLabel>
+		<gml:BoundedBy>
+			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
+				<gml:lowerCorner>5.28781 52.27759</gml:lowerCorner>
+				<gml:upperCorner>5.33546 52.30763</gml:upperCorner>
+			</gml:Envelope>
+		</gml:BoundedBy>
+	</skos:Concept>
+	<skos:Concept rdf:about="http://gazeteer_pdok_nl#OVERIG_WK037799_waterarea">
+		<skos:inScheme rdf:resource="http://geodatastore.pdok.nl/registry/location"/>
+		<skos:prefLabel xml:lang="nl">OVERIG WK037799</skos:prefLabel>
+		<gml:BoundedBy>
+			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
+				<gml:lowerCorner>4.52605 52.40128</gml:lowerCorner>
+				<gml:upperCorner>4.56083 52.4393</gml:upperCorner>
+			</gml:Envelope>
+		</gml:BoundedBy>
+	</skos:Concept>
+	<skos:Concept rdf:about="http://gazeteer_pdok_nl#OVERIG_WK038399_waterarea">
+		<skos:inScheme rdf:resource="http://geodatastore.pdok.nl/registry/location"/>
+		<skos:prefLabel xml:lang="nl">OVERIG WK038399</skos:prefLabel>
+		<gml:BoundedBy>
+			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
+				<gml:lowerCorner>4.58332 52.53107</gml:lowerCorner>
+				<gml:upperCorner>4.60992 52.57548</gml:upperCorner>
+			</gml:Envelope>
+		</gml:BoundedBy>
+	</skos:Concept>
+	<skos:Concept rdf:about="http://gazeteer_pdok_nl#OVERIG_WK038499_waterarea">
+		<skos:inScheme rdf:resource="http://geodatastore.pdok.nl/registry/location"/>
+		<skos:prefLabel xml:lang="nl">OVERIG WK038499</skos:prefLabel>
+		<gml:BoundedBy>
+			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
+				<gml:lowerCorner>5.01529 52.33748</gml:lowerCorner>
+				<gml:upperCorner>5.03997 52.35458</gml:upperCorner>
+			</gml:Envelope>
+		</gml:BoundedBy>
+	</skos:Concept>
+	<skos:Concept rdf:about="http://gazeteer_pdok_nl#OVERIG_WK038599_waterarea">
+		<skos:inScheme rdf:resource="http://geodatastore.pdok.nl/registry/location"/>
+		<skos:prefLabel xml:lang="nl">OVERIG WK038599</skos:prefLabel>
+		<gml:BoundedBy>
+			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
+				<gml:lowerCorner>5.05948 52.48561</gml:lowerCorner>
+				<gml:upperCorner>5.11299 52.5444</gml:upperCorner>
+			</gml:Envelope>
+		</gml:BoundedBy>
+	</skos:Concept>
+	<skos:Concept rdf:about="http://gazeteer_pdok_nl#OVERIG_WK038899_waterarea">
+		<skos:inScheme rdf:resource="http://geodatastore.pdok.nl/registry/location"/>
+		<skos:prefLabel xml:lang="nl">OVERIG WK038899</skos:prefLabel>
+		<gml:BoundedBy>
+			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
+				<gml:lowerCorner>5.21134 52.67573</gml:lowerCorner>
+				<gml:upperCorner>5.37726 52.84063</gml:upperCorner>
+			</gml:Envelope>
+		</gml:BoundedBy>
+	</skos:Concept>
+	<skos:Concept rdf:about="http://gazeteer_pdok_nl#OVERIG_WK039699_waterarea">
+		<skos:inScheme rdf:resource="http://geodatastore.pdok.nl/registry/location"/>
+		<skos:prefLabel xml:lang="nl">OVERIG WK039699</skos:prefLabel>
+		<gml:BoundedBy>
+			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
+				<gml:lowerCorner>4.57149 52.49903</gml:lowerCorner>
+				<gml:upperCorner>4.59885 52.53389</gml:upperCorner>
+			</gml:Envelope>
+		</gml:BoundedBy>
+	</skos:Concept>
+	<skos:Concept rdf:about="http://gazeteer_pdok_nl#OVERIG_WK040099_waterarea">
+		<skos:inScheme rdf:resource="http://geodatastore.pdok.nl/registry/location"/>
+		<skos:prefLabel xml:lang="nl">OVERIG WK040099</skos:prefLabel>
+		<gml:BoundedBy>
+			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
+				<gml:lowerCorner>4.62945 52.88359</gml:lowerCorner>
+				<gml:upperCorner>4.92584 53.02198</gml:upperCorner>
+			</gml:Envelope>
+		</gml:BoundedBy>
+	</skos:Concept>
+	<skos:Concept rdf:about="http://gazeteer_pdok_nl#OVERIG_WK040599_waterarea">
+		<skos:inScheme rdf:resource="http://geodatastore.pdok.nl/registry/location"/>
+		<skos:prefLabel xml:lang="nl">OVERIG WK040599</skos:prefLabel>
+		<gml:BoundedBy>
+			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
+				<gml:lowerCorner>5.0189 52.57894</gml:lowerCorner>
+				<gml:upperCorner>5.13531 52.64377</gml:upperCorner>
+			</gml:Envelope>
+		</gml:BoundedBy>
+	</skos:Concept>
+	<skos:Concept rdf:about="http://gazeteer_pdok_nl#OVERIG_WK040699_waterarea">
+		<skos:inScheme rdf:resource="http://geodatastore.pdok.nl/registry/location"/>
+		<skos:prefLabel xml:lang="nl">OVERIG WK040699</skos:prefLabel>
+		<gml:BoundedBy>
+			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
+				<gml:lowerCorner>5.22459 52.2976</gml:lowerCorner>
+				<gml:upperCorner>5.30546 52.32576</gml:upperCorner>
+			</gml:Envelope>
+		</gml:BoundedBy>
+	</skos:Concept>
+	<skos:Concept rdf:about="http://gazeteer_pdok_nl#OVERIG_WK042099_waterarea">
+		<skos:inScheme rdf:resource="http://geodatastore.pdok.nl/registry/location"/>
+		<skos:prefLabel xml:lang="nl">OVERIG WK042099</skos:prefLabel>
+		<gml:BoundedBy>
+			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
+				<gml:lowerCorner>5.10303 52.73704</gml:lowerCorner>
+				<gml:upperCorner>5.28118 52.9161</gml:upperCorner>
+			</gml:Envelope>
+		</gml:BoundedBy>
+	</skos:Concept>
+	<skos:Concept rdf:about="http://gazeteer_pdok_nl#OVERIG_WK042499_waterarea">
+		<skos:inScheme rdf:resource="http://geodatastore.pdok.nl/registry/location"/>
+		<skos:prefLabel xml:lang="nl">OVERIG WK042499</skos:prefLabel>
+		<gml:BoundedBy>
+			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
+				<gml:lowerCorner>5.02759 52.3254</gml:lowerCorner>
+				<gml:upperCorner>5.13461 52.38865</gml:upperCorner>
+			</gml:Envelope>
+		</gml:BoundedBy>
+	</skos:Concept>
+	<skos:Concept rdf:about="http://gazeteer_pdok_nl#OVERIG_WK042599_waterarea">
+		<skos:inScheme rdf:resource="http://geodatastore.pdok.nl/registry/location"/>
+		<skos:prefLabel xml:lang="nl">OVERIG WK042599</skos:prefLabel>
+		<gml:BoundedBy>
+			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
+				<gml:lowerCorner>5.12937 52.30395</gml:lowerCorner>
+				<gml:upperCorner>5.22849 52.32871</gml:upperCorner>
+			</gml:Envelope>
+		</gml:BoundedBy>
+	</skos:Concept>
+	<skos:Concept rdf:about="http://gazeteer_pdok_nl#OVERIG_WK044199_waterarea">
+		<skos:inScheme rdf:resource="http://geodatastore.pdok.nl/registry/location"/>
+		<skos:prefLabel xml:lang="nl">OVERIG WK044199</skos:prefLabel>
+		<gml:BoundedBy>
+			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
+				<gml:lowerCorner>4.63448 52.75633</gml:lowerCorner>
+				<gml:upperCorner>4.70937 52.88447</gml:upperCorner>
+			</gml:Envelope>
+		</gml:BoundedBy>
+	</skos:Concept>
+	<skos:Concept rdf:about="http://gazeteer_pdok_nl#OVERIG_WK044899_waterarea">
+		<skos:inScheme rdf:resource="http://geodatastore.pdok.nl/registry/location"/>
+		<skos:prefLabel xml:lang="nl">OVERIG WK044899</skos:prefLabel>
+		<gml:BoundedBy>
+			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
+				<gml:lowerCorner>4.613 52.94107</gml:lowerCorner>
+				<gml:upperCorner>5.14428 53.21427</gml:upperCorner>
+			</gml:Envelope>
+		</gml:BoundedBy>
+	</skos:Concept>
+	<skos:Concept rdf:about="http://gazeteer_pdok_nl#OVERIG_WK045399_waterarea">
+		<skos:inScheme rdf:resource="http://geodatastore.pdok.nl/registry/location"/>
+		<skos:prefLabel xml:lang="nl">OVERIG WK045399</skos:prefLabel>
+		<gml:BoundedBy>
+			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
+				<gml:lowerCorner>4.51755 52.43795</gml:lowerCorner>
+				<gml:upperCorner>4.60914 52.49274</gml:upperCorner>
+			</gml:Envelope>
+		</gml:BoundedBy>
+	</skos:Concept>
+	<skos:Concept rdf:about="http://gazeteer_pdok_nl#OVERIG_WK047399_waterarea">
+		<skos:inScheme rdf:resource="http://geodatastore.pdok.nl/registry/location"/>
+		<skos:prefLabel xml:lang="nl">OVERIG WK047399</skos:prefLabel>
+		<gml:BoundedBy>
+			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
+				<gml:lowerCorner>4.47765 52.32823</gml:lowerCorner>
+				<gml:upperCorner>4.54177 52.40517</gml:upperCorner>
+			</gml:Envelope>
+		</gml:BoundedBy>
+	</skos:Concept>
+	<skos:Concept rdf:about="http://gazeteer_pdok_nl#OVERIG_WK047899_waterarea">
+		<skos:inScheme rdf:resource="http://geodatastore.pdok.nl/registry/location"/>
+		<skos:prefLabel xml:lang="nl">OVERIG WK047899</skos:prefLabel>
+		<gml:BoundedBy>
+			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
+				<gml:lowerCorner>5.01913 52.5262</gml:lowerCorner>
+				<gml:upperCorner>5.08007 52.61261</gml:upperCorner>
+			</gml:Envelope>
+		</gml:BoundedBy>
+	</skos:Concept>
+	<skos:Concept rdf:about="http://gazeteer_pdok_nl#OVERIG_WK049899_waterarea">
+		<skos:inScheme rdf:resource="http://geodatastore.pdok.nl/registry/location"/>
+		<skos:prefLabel xml:lang="nl">OVERIG WK049899</skos:prefLabel>
+		<gml:BoundedBy>
+			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
+				<gml:lowerCorner>5.09486 52.60394</gml:lowerCorner>
+				<gml:upperCorner>5.26227 52.68551</gml:upperCorner>
+			</gml:Envelope>
+		</gml:BoundedBy>
+	</skos:Concept>
+	<skos:Concept rdf:about="http://gazeteer_pdok_nl#OVERIG_WK050599_waterarea">
+		<skos:inScheme rdf:resource="http://geodatastore.pdok.nl/registry/location"/>
+		<skos:prefLabel xml:lang="nl">OVERIG WK050599</skos:prefLabel>
+		<gml:BoundedBy>
+			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
+				<gml:lowerCorner>4.6204 51.71412</gml:lowerCorner>
+				<gml:upperCorner>4.64385 51.72559</gml:upperCorner>
+			</gml:Envelope>
+		</gml:BoundedBy>
+	</skos:Concept>
+	<skos:Concept rdf:about="http://gazeteer_pdok_nl#OVERIG_WK051899_waterarea">
+		<skos:inScheme rdf:resource="http://geodatastore.pdok.nl/registry/location"/>
+		<skos:prefLabel xml:lang="nl">OVERIG WK051899</skos:prefLabel>
+		<gml:BoundedBy>
+			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
+				<gml:lowerCorner>4.185 52.05414</gml:lowerCorner>
+				<gml:upperCorner>4.30352 52.13504</gml:upperCorner>
+			</gml:Envelope>
+		</gml:BoundedBy>
+	</skos:Concept>
+	<skos:Concept rdf:about="http://gazeteer_pdok_nl#OVERIG_WK053099_waterarea">
+		<skos:inScheme rdf:resource="http://geodatastore.pdok.nl/registry/location"/>
+		<skos:prefLabel xml:lang="nl">OVERIG WK053099</skos:prefLabel>
+		<gml:BoundedBy>
+			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
+				<gml:lowerCorner>4.03983 51.80502</gml:lowerCorner>
+				<gml:upperCorner>4.15898 51.84543</gml:upperCorner>
+			</gml:Envelope>
+		</gml:BoundedBy>
+	</skos:Concept>
+	<skos:Concept rdf:about="http://gazeteer_pdok_nl#OVERIG_WK053299_waterarea">
+		<skos:inScheme rdf:resource="http://geodatastore.pdok.nl/registry/location"/>
+		<skos:prefLabel xml:lang="nl">OVERIG WK053299</skos:prefLabel>
+		<gml:BoundedBy>
+			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
+				<gml:lowerCorner>5.24648 52.67683</gml:lowerCorner>
+				<gml:upperCorner>5.26896 52.68736</gml:upperCorner>
+			</gml:Envelope>
+		</gml:BoundedBy>
+	</skos:Concept>
+	<skos:Concept rdf:about="http://gazeteer_pdok_nl#OVERIG_WK053799_waterarea">
+		<skos:inScheme rdf:resource="http://geodatastore.pdok.nl/registry/location"/>
+		<skos:prefLabel xml:lang="nl">OVERIG WK053799</skos:prefLabel>
+		<gml:BoundedBy>
+			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
+				<gml:lowerCorner>4.36 52.1868</gml:lowerCorner>
+				<gml:upperCorner>4.40599 52.22524</gml:upperCorner>
+			</gml:Envelope>
+		</gml:BoundedBy>
+	</skos:Concept>
+	<skos:Concept rdf:about="http://gazeteer_pdok_nl#OVERIG_WK056899_waterarea">
+		<skos:inScheme rdf:resource="http://geodatastore.pdok.nl/registry/location"/>
+		<skos:prefLabel xml:lang="nl">OVERIG WK056899</skos:prefLabel>
+		<gml:BoundedBy>
+			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
+				<gml:lowerCorner>4.15028 51.78277</gml:lowerCorner>
+				<gml:upperCorner>4.24663 51.82114</gml:upperCorner>
+			</gml:Envelope>
+		</gml:BoundedBy>
+	</skos:Concept>
+	<skos:Concept rdf:about="http://gazeteer_pdok_nl#OVERIG_WK057599_waterarea">
+		<skos:inScheme rdf:resource="http://geodatastore.pdok.nl/registry/location"/>
+		<skos:prefLabel xml:lang="nl">OVERIG WK057599</skos:prefLabel>
+		<gml:BoundedBy>
+			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
+				<gml:lowerCorner>4.39098 52.21952</gml:lowerCorner>
+				<gml:upperCorner>4.49386 52.33251</gml:upperCorner>
+			</gml:Envelope>
+		</gml:BoundedBy>
+	</skos:Concept>
+	<skos:Concept rdf:about="http://gazeteer_pdok_nl#OVERIG_WK058899_waterarea">
+		<skos:inScheme rdf:resource="http://geodatastore.pdok.nl/registry/location"/>
+		<skos:prefLabel xml:lang="nl">OVERIG WK058899</skos:prefLabel>
+		<gml:BoundedBy>
+			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
+				<gml:lowerCorner>4.21325 51.70958</gml:lowerCorner>
+				<gml:upperCorner>4.38463 51.78791</gml:upperCorner>
+			</gml:Envelope>
+		</gml:BoundedBy>
+	</skos:Concept>
+	<skos:Concept rdf:about="http://gazeteer_pdok_nl#OVERIG_WK061199_waterarea">
+		<skos:inScheme rdf:resource="http://geodatastore.pdok.nl/registry/location"/>
+		<skos:prefLabel xml:lang="nl">OVERIG WK061199</skos:prefLabel>
+		<gml:BoundedBy>
+			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
+				<gml:lowerCorner>4.3727 51.69247</gml:lowerCorner>
+				<gml:upperCorner>4.53502 51.73059</gml:upperCorner>
+			</gml:Envelope>
+		</gml:BoundedBy>
+	</skos:Concept>
+	<skos:Concept rdf:about="http://gazeteer_pdok_nl#OVERIG_WK061499_waterarea">
+		<skos:inScheme rdf:resource="http://geodatastore.pdok.nl/registry/location"/>
+		<skos:prefLabel xml:lang="nl">OVERIG WK061499</skos:prefLabel>
+		<gml:BoundedBy>
+			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
+				<gml:lowerCorner>3.95558 51.84211</gml:lowerCorner>
+				<gml:upperCorner>4.06808 51.92388</gml:upperCorner>
+			</gml:Envelope>
+		</gml:BoundedBy>
+	</skos:Concept>
+	<skos:Concept rdf:about="http://gazeteer_pdok_nl#OVERIG_WK061799_waterarea">
+		<skos:inScheme rdf:resource="http://geodatastore.pdok.nl/registry/location"/>
+		<skos:prefLabel xml:lang="nl">OVERIG WK061799</skos:prefLabel>
+		<gml:BoundedBy>
+			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
+				<gml:lowerCorner>4.53497 51.69397</gml:lowerCorner>
+				<gml:upperCorner>4.6236 51.72353</gml:upperCorner>
+			</gml:Envelope>
+		</gml:BoundedBy>
+	</skos:Concept>
+	<skos:Concept rdf:about="http://gazeteer_pdok_nl#OVERIG_WK062999_waterarea">
+		<skos:inScheme rdf:resource="http://geodatastore.pdok.nl/registry/location"/>
+		<skos:prefLabel xml:lang="nl">OVERIG WK062999</skos:prefLabel>
+		<gml:BoundedBy>
+			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
+				<gml:lowerCorner>4.29006 52.12787</gml:lowerCorner>
+				<gml:upperCorner>4.37459 52.19268</gml:upperCorner>
+			</gml:Envelope>
+		</gml:BoundedBy>
+	</skos:Concept>
+	<skos:Concept rdf:about="http://gazeteer_pdok_nl#OVERIG_WK065499_waterarea">
+		<skos:inScheme rdf:resource="http://geodatastore.pdok.nl/registry/location"/>
+		<skos:prefLabel xml:lang="nl">OVERIG WK065499</skos:prefLabel>
+		<gml:BoundedBy>
+			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
+				<gml:lowerCorner>3.70149 51.35575</gml:lowerCorner>
+				<gml:upperCorner>3.96321 51.47695</gml:upperCorner>
+			</gml:Envelope>
+		</gml:BoundedBy>
+	</skos:Concept>
+	<skos:Concept rdf:about="http://gazeteer_pdok_nl#OVERIG_WK066499_waterarea">
+		<skos:inScheme rdf:resource="http://geodatastore.pdok.nl/registry/location"/>
+		<skos:prefLabel xml:lang="nl">OVERIG WK066499</skos:prefLabel>
+		<gml:BoundedBy>
+			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
+				<gml:lowerCorner>3.71361 51.52429</gml:lowerCorner>
+				<gml:upperCorner>3.9714 51.55342</gml:upperCorner>
+			</gml:Envelope>
+		</gml:BoundedBy>
+	</skos:Concept>
+	<skos:Concept rdf:about="http://gazeteer_pdok_nl#OVERIG_WK067799_waterarea">
+		<skos:inScheme rdf:resource="http://geodatastore.pdok.nl/registry/location"/>
+		<skos:prefLabel xml:lang="nl">OVERIG WK067799</skos:prefLabel>
+		<gml:BoundedBy>
+			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
+				<gml:lowerCorner>3.92436 51.32885</gml:lowerCorner>
+				<gml:upperCorner>4.23681 51.42201</gml:upperCorner>
+			</gml:Envelope>
+		</gml:BoundedBy>
+	</skos:Concept>
+	<skos:Concept rdf:about="http://gazeteer_pdok_nl#OVERIG_WK067899_waterarea">
+		<skos:inScheme rdf:resource="http://geodatastore.pdok.nl/registry/location"/>
+		<skos:prefLabel xml:lang="nl">OVERIG WK067899</skos:prefLabel>
+		<gml:BoundedBy>
+			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
+				<gml:lowerCorner>3.93332 51.44701</gml:lowerCorner>
+				<gml:upperCorner>4.01361 51.55148</gml:upperCorner>
+			</gml:Envelope>
+		</gml:BoundedBy>
+	</skos:Concept>
+	<skos:Concept rdf:about="http://gazeteer_pdok_nl#OVERIG_WK068799_waterarea">
+		<skos:inScheme rdf:resource="http://geodatastore.pdok.nl/registry/location"/>
+		<skos:prefLabel xml:lang="nl">OVERIG WK068799</skos:prefLabel>
+		<gml:BoundedBy>
+			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
+				<gml:lowerCorner>3.6802 51.50881</gml:lowerCorner>
+				<gml:upperCorner>3.72915 51.53518</gml:upperCorner>
+			</gml:Envelope>
+		</gml:BoundedBy>
+	</skos:Concept>
+	<skos:Concept rdf:about="http://gazeteer_pdok_nl#OVERIG_WK070399_waterarea">
+		<skos:inScheme rdf:resource="http://geodatastore.pdok.nl/registry/location"/>
+		<skos:prefLabel xml:lang="nl">OVERIG WK070399</skos:prefLabel>
+		<gml:BoundedBy>
+			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
+				<gml:lowerCorner>3.93535 51.34976</gml:lowerCorner>
+				<gml:upperCorner>4.24453 51.53824</gml:upperCorner>
+			</gml:Envelope>
+		</gml:BoundedBy>
+	</skos:Concept>
+	<skos:Concept rdf:about="http://gazeteer_pdok_nl#OVERIG_WK071599_waterarea">
+		<skos:inScheme rdf:resource="http://geodatastore.pdok.nl/registry/location"/>
+		<skos:prefLabel xml:lang="nl">OVERIG WK071599</skos:prefLabel>
+		<gml:BoundedBy>
+			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
+				<gml:lowerCorner>3.69147 51.32955</gml:lowerCorner>
+				<gml:upperCorner>3.94178 51.39762</gml:upperCorner>
+			</gml:Envelope>
+		</gml:BoundedBy>
+	</skos:Concept>
+	<skos:Concept rdf:about="http://gazeteer_pdok_nl#OVERIG_WK071699_waterarea">
+		<skos:inScheme rdf:resource="http://geodatastore.pdok.nl/registry/location"/>
+		<skos:prefLabel xml:lang="nl">OVERIG WK071699</skos:prefLabel>
+		<gml:BoundedBy>
+			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
+				<gml:lowerCorner>3.92476 51.47956</gml:lowerCorner>
+				<gml:upperCorner>4.24279 51.66076</gml:upperCorner>
+			</gml:Envelope>
+		</gml:BoundedBy>
+	</skos:Concept>
+	<skos:Concept rdf:about="http://gazeteer_pdok_nl#OVERIG_WK071799_waterarea">
+		<skos:inScheme rdf:resource="http://geodatastore.pdok.nl/registry/location"/>
+		<skos:prefLabel xml:lang="nl">OVERIG WK071799</skos:prefLabel>
+		<gml:BoundedBy>
+			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
+				<gml:lowerCorner>3.43206 51.46225</gml:lowerCorner>
+				<gml:upperCorner>3.74889 51.65036</gml:upperCorner>
+			</gml:Envelope>
+		</gml:BoundedBy>
+	</skos:Concept>
+	<skos:Concept rdf:about="http://gazeteer_pdok_nl#OVERIG_WK071899_waterarea">
+		<skos:inScheme rdf:resource="http://geodatastore.pdok.nl/registry/location"/>
+		<skos:prefLabel xml:lang="nl">OVERIG WK071899</skos:prefLabel>
+		<gml:BoundedBy>
+			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
+				<gml:lowerCorner>3.30794 51.37288</gml:lowerCorner>
+				<gml:upperCorner>3.73803 51.61641</gml:upperCorner>
+			</gml:Envelope>
+		</gml:BoundedBy>
+	</skos:Concept>
+	<skos:Concept rdf:about="http://gazeteer_pdok_nl#OVERIG_WK085199_waterarea">
+		<skos:inScheme rdf:resource="http://geodatastore.pdok.nl/registry/location"/>
+		<skos:prefLabel xml:lang="nl">OVERIG WK085199</skos:prefLabel>
+		<gml:BoundedBy>
+			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
+				<gml:lowerCorner>4.23732 51.625</gml:lowerCorner>
+				<gml:upperCorner>4.3764 51.66298</gml:upperCorner>
+			</gml:Envelope>
+		</gml:BoundedBy>
+	</skos:Concept>
+	<skos:Concept rdf:about="http://gazeteer_pdok_nl#OVERIG_WK085299_waterarea">
+		<skos:inScheme rdf:resource="http://geodatastore.pdok.nl/registry/location"/>
+		<skos:prefLabel xml:lang="nl">OVERIG WK085299</skos:prefLabel>
+		<gml:BoundedBy>
+			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
+				<gml:lowerCorner>5.03306 52.38865</gml:lowerCorner>
+				<gml:upperCorner>5.18549 52.49789</gml:upperCorner>
+			</gml:Envelope>
+		</gml:BoundedBy>
+	</skos:Concept>
+	<skos:Concept rdf:about="http://gazeteer_pdok_nl#OVERIG_WK099599_waterarea">
+		<skos:inScheme rdf:resource="http://geodatastore.pdok.nl/registry/location"/>
+		<skos:prefLabel xml:lang="nl">OVERIG WK099599</skos:prefLabel>
+		<gml:BoundedBy>
+			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
+				<gml:lowerCorner>5.07462 52.43543</gml:lowerCorner>
+				<gml:upperCorner>5.57289 52.69284</gml:upperCorner>
+			</gml:Envelope>
+		</gml:BoundedBy>
+	</skos:Concept>
+	<skos:Concept rdf:about="http://gazeteer_pdok_nl#OVERIG_WK159899_waterarea">
+		<skos:inScheme rdf:resource="http://geodatastore.pdok.nl/registry/location"/>
+		<skos:prefLabel xml:lang="nl">OVERIG WK159899</skos:prefLabel>
+		<gml:BoundedBy>
+			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
+				<gml:lowerCorner>5.01565 52.61245</gml:lowerCorner>
+				<gml:upperCorner>5.02703 52.63001</gml:upperCorner>
+			</gml:Envelope>
+		</gml:BoundedBy>
+	</skos:Concept>
+	<skos:Concept rdf:about="http://gazeteer_pdok_nl#OVERIG_WK165199_waterarea">
+		<skos:inScheme rdf:resource="http://geodatastore.pdok.nl/registry/location"/>
+		<skos:prefLabel xml:lang="nl">OVERIG WK165199</skos:prefLabel>
+		<gml:BoundedBy>
+			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
+				<gml:lowerCorner>6.35043 53.40783</gml:lowerCorner>
+				<gml:upperCorner>6.91179 53.57642</gml:upperCorner>
+			</gml:Envelope>
+		</gml:BoundedBy>
+	</skos:Concept>
+	<skos:Concept rdf:about="http://gazeteer_pdok_nl#OVERIG_WK166399_waterarea">
+		<skos:inScheme rdf:resource="http://geodatastore.pdok.nl/registry/location"/>
+		<skos:prefLabel xml:lang="nl">OVERIG WK166399</skos:prefLabel>
+		<gml:BoundedBy>
+			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
+				<gml:lowerCorner>6.16743 53.33711</gml:lowerCorner>
+				<gml:upperCorner>6.54625 53.44627</gml:upperCorner>
+			</gml:Envelope>
+		</gml:BoundedBy>
+	</skos:Concept>
+	<skos:Concept rdf:about="http://gazeteer_pdok_nl#OVERIG_WK167699_waterarea">
+		<skos:inScheme rdf:resource="http://geodatastore.pdok.nl/registry/location"/>
+		<skos:prefLabel xml:lang="nl">OVERIG WK167699</skos:prefLabel>
+		<gml:BoundedBy>
+			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
+				<gml:lowerCorner>3.61134 51.59367</gml:lowerCorner>
+				<gml:upperCorner>4.2027 51.78152</gml:upperCorner>
+			</gml:Envelope>
+		</gml:BoundedBy>
+	</skos:Concept>
+	<skos:Concept rdf:about="http://gazeteer_pdok_nl#OVERIG_WK169599_waterarea">
+		<skos:inScheme rdf:resource="http://geodatastore.pdok.nl/registry/location"/>
+		<skos:prefLabel xml:lang="nl">OVERIG WK169599</skos:prefLabel>
+		<gml:BoundedBy>
+			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
+				<gml:lowerCorner>3.63016 51.52235</gml:lowerCorner>
+				<gml:upperCorner>3.96096 51.60786</gml:upperCorner>
+			</gml:Envelope>
+		</gml:BoundedBy>
+	</skos:Concept>
+	<skos:Concept rdf:about="http://gazeteer_pdok_nl#OVERIG_WK170899_waterarea">
+		<skos:inScheme rdf:resource="http://geodatastore.pdok.nl/registry/location"/>
+		<skos:prefLabel xml:lang="nl">OVERIG WK170899</skos:prefLabel>
+		<gml:BoundedBy>
+			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
+				<gml:lowerCorner>5.98409 52.64137</gml:lowerCorner>
+				<gml:upperCorner>6.0237 52.65804</gml:upperCorner>
+			</gml:Envelope>
+		</gml:BoundedBy>
+	</skos:Concept>
+	<skos:Concept rdf:about="http://gazeteer_pdok_nl#OVERIG_WK170999_waterarea">
+		<skos:inScheme rdf:resource="http://geodatastore.pdok.nl/registry/location"/>
+		<skos:prefLabel xml:lang="nl">OVERIG WK170999</skos:prefLabel>
+		<gml:BoundedBy>
+			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
+				<gml:lowerCorner>4.36182 51.65193</gml:lowerCorner>
+				<gml:upperCorner>4.64741 51.71883</gml:upperCorner>
+			</gml:Envelope>
+		</gml:BoundedBy>
+	</skos:Concept>
+	<skos:Concept rdf:about="http://gazeteer_pdok_nl#OVERIG_WK171499_waterarea">
+		<skos:inScheme rdf:resource="http://geodatastore.pdok.nl/registry/location"/>
+		<skos:prefLabel xml:lang="nl">OVERIG WK171499</skos:prefLabel>
+		<gml:BoundedBy>
+			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
+				<gml:lowerCorner>3.36306 51.36199</gml:lowerCorner>
+				<gml:upperCorner>3.69305 51.40907</gml:upperCorner>
+			</gml:Envelope>
+		</gml:BoundedBy>
+	</skos:Concept>
+	<skos:Concept rdf:about="http://gazeteer_pdok_nl#OVERIG_WK172299_waterarea">
+		<skos:inScheme rdf:resource="http://geodatastore.pdok.nl/registry/location"/>
+		<skos:prefLabel xml:lang="nl">OVERIG WK172299</skos:prefLabel>
+		<gml:BoundedBy>
+			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
+				<gml:lowerCorner>5.70268 53.33486</gml:lowerCorner>
+				<gml:upperCorner>5.8528 53.39491</gml:upperCorner>
+			</gml:Envelope>
+		</gml:BoundedBy>
+	</skos:Concept>
+	<skos:Concept rdf:about="http://gazeteer_pdok_nl#OVERIG_WK178399_waterarea">
+		<skos:inScheme rdf:resource="http://geodatastore.pdok.nl/registry/location"/>
+		<skos:prefLabel xml:lang="nl">OVERIG WK178399</skos:prefLabel>
+		<gml:BoundedBy>
+			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
+				<gml:lowerCorner>4.11016 52.00057</gml:lowerCorner>
+				<gml:upperCorner>4.19742 52.06145</gml:upperCorner>
+			</gml:Envelope>
+		</gml:BoundedBy>
+	</skos:Concept>
+	<skos:Concept rdf:about="http://gazeteer_pdok_nl#OVERIG_WK189599_waterarea">
+		<skos:inScheme rdf:resource="http://geodatastore.pdok.nl/registry/location"/>
+		<skos:prefLabel xml:lang="nl">OVERIG WK189599</skos:prefLabel>
+		<gml:BoundedBy>
+			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
+				<gml:lowerCorner>7.09138 53.23171</gml:lowerCorner>
+				<gml:upperCorner>7.21001 53.33321</gml:upperCorner>
+			</gml:Envelope>
+		</gml:BoundedBy>
+	</skos:Concept>
+	<skos:Concept rdf:about="http://gazeteer_pdok_nl#OVERIG_WK189699_waterarea">
+		<skos:inScheme rdf:resource="http://geodatastore.pdok.nl/registry/location"/>
+		<skos:prefLabel xml:lang="nl">OVERIG WK189699</skos:prefLabel>
+		<gml:BoundedBy>
+			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
+				<gml:lowerCorner>5.98102 52.62493</gml:lowerCorner>
+				<gml:upperCorner>6.02225 52.64329</gml:upperCorner>
+			</gml:Envelope>
+		</gml:BoundedBy>
+	</skos:Concept>
+	<skos:Concept rdf:about="http://gazeteer_pdok_nl#OVERIG_WK190099_waterarea">
+		<skos:inScheme rdf:resource="http://geodatastore.pdok.nl/registry/location"/>
+		<skos:prefLabel xml:lang="nl">OVERIG WK190099</skos:prefLabel>
+		<gml:BoundedBy>
+			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
+				<gml:lowerCorner>5.16425 52.79596</gml:lowerCorner>
+				<gml:upperCorner>5.44134 53.15272</gml:upperCorner>
+			</gml:Envelope>
+		</gml:BoundedBy>
+	</skos:Concept>
+	<skos:Concept rdf:about="http://gazeteer_pdok_nl#OVERIG_WK191199_waterarea">
+		<skos:inScheme rdf:resource="http://geodatastore.pdok.nl/registry/location"/>
+		<skos:prefLabel xml:lang="nl">OVERIG WK191199</skos:prefLabel>
+		<gml:BoundedBy>
+			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
+				<gml:lowerCorner>4.80884 52.77445</gml:lowerCorner>
+				<gml:upperCorner>5.21506 53.04429</gml:upperCorner>
+			</gml:Envelope>
+		</gml:BoundedBy>
+	</skos:Concept>
+	<skos:Concept rdf:about="http://gazeteer_pdok_nl#OVERIG_WK192199_waterarea">
+		<skos:inScheme rdf:resource="http://geodatastore.pdok.nl/registry/location"/>
+		<skos:prefLabel xml:lang="nl">OVERIG WK192199</skos:prefLabel>
+		<gml:BoundedBy>
+			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
+				<gml:lowerCorner>5.33784 52.76481</gml:lowerCorner>
+				<gml:upperCorner>5.71663 52.86262</gml:upperCorner>
+			</gml:Envelope>
+		</gml:BoundedBy>
+	</skos:Concept>
+	<skos:Concept rdf:about="http://gazeteer_pdok_nl#OVERIG_WK192499_waterarea">
+		<skos:inScheme rdf:resource="http://geodatastore.pdok.nl/registry/location"/>
+		<skos:prefLabel xml:lang="nl">OVERIG WK192499</skos:prefLabel>
+		<gml:BoundedBy>
+			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
+				<gml:lowerCorner>3.77368 51.64378</gml:lowerCorner>
+				<gml:upperCorner>4.42355 51.8586</gml:upperCorner>
+			</gml:Envelope>
+		</gml:BoundedBy>
+	</skos:Concept>
+	<skos:Concept rdf:about="http://gazeteer_pdok_nl#OVERIG_WK999999_waterarea">
+		<skos:inScheme rdf:resource="http://geodatastore.pdok.nl/registry/location"/>
+		<skos:prefLabel xml:lang="nl">OVERIG WK999999</skos:prefLabel>
+		<gml:BoundedBy>
+			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
+				<gml:lowerCorner>4.83574 51.40511</gml:lowerCorner>
+				<gml:upperCorner>4.95276 51.45563</gml:upperCorner>
+			</gml:Envelope>
+		</gml:BoundedBy>
+	</skos:Concept>
 </rdf:RDF>
