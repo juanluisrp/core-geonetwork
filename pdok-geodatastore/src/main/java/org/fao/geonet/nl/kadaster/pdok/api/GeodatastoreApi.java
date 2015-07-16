@@ -2,6 +2,8 @@ package org.fao.geonet.nl.kadaster.pdok.api;
 
 import com.google.common.base.Joiner;
 import com.google.common.collect.Maps;
+import jeeves.constants.Jeeves;
+import jeeves.server.ServiceConfig;
 import jeeves.server.UserSession;
 import jeeves.server.context.ServiceContext;
 import jeeves.server.dispatchers.ServiceManager;
@@ -12,13 +14,18 @@ import nl.kadaster.pdok.bussiness.MetadataUtil;
 import org.apache.commons.lang.StringUtils;
 import org.fao.geonet.ApplicationContextHolder;
 import org.fao.geonet.constants.Geonet;
+import org.fao.geonet.constants.Params;
 import org.fao.geonet.domain.*;
 import org.fao.geonet.exceptions.BadParameterEx;
 import org.fao.geonet.exceptions.ServiceNotAllowedEx;
 import org.fao.geonet.exceptions.UnAuthorizedException;
 import org.fao.geonet.kernel.DataManager;
+import org.fao.geonet.kernel.search.MetaSearcher;
+import org.fao.geonet.kernel.search.SearchManager;
+import org.fao.geonet.kernel.search.SearcherType;
 import org.fao.geonet.kernel.setting.SettingManager;
 import org.fao.geonet.repository.GroupRepository;
+import org.fao.geonet.repository.StatusValueRepository;
 import org.fao.geonet.repository.UserGroupRepository;
 import org.fao.geonet.repository.UserRepository;
 import org.fao.geonet.schema.iso19139.ISO19139SchemaPlugin;
@@ -26,6 +33,7 @@ import org.fao.geonet.services.metadata.XslProcessing;
 import org.fao.geonet.services.metadata.XslProcessingReport;
 import org.fao.geonet.services.resources.handlers.IResourceUploadHandler;
 import org.fao.geonet.services.schema.Info;
+import org.fao.geonet.services.util.SearchDefaults;
 import org.fao.geonet.utils.Xml;
 import org.jdom.Element;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,7 +62,7 @@ import static org.fao.geonet.repository.specification.UserGroupSpecs.hasUserId;
 @Controller
 @ReadWriteController
 @RequestMapping("/{lang}/geodatastore")
-public class GeodatastoreApi {
+public class GeodatastoreApi  {
     private static final String QUERY_SERVICE= "q";
     private static final String ISO_19139 = "iso19139";
     public static final String TITLE_KEY = "title";
@@ -64,6 +72,8 @@ public class GeodatastoreApi {
     public static final String USER_LIMITATION_KEY = "userLimitation";
     public static final String FORMAT_KEY = "format";
 
+    private ServiceConfig serviceConfig = new ServiceConfig();
+
     @Autowired
     private MetadataUtil metadataUtil;
     @Autowired
@@ -71,6 +81,8 @@ public class GeodatastoreApi {
     @Autowired
     private DataManager metadataManager;
 
+    @Autowired
+    private StatusValueRepository statusValueRepository;
     @Autowired
     private UserGroupRepository userGroupRepository;
     @Autowired private UserRepository userRepository;
@@ -80,6 +92,8 @@ public class GeodatastoreApi {
     private XslProcessing xslProcessing;
     @Autowired
     ServletContext servletContext;
+    @Autowired
+    private SearchManager searchManager;
 
 
 
@@ -90,10 +104,10 @@ public class GeodatastoreApi {
 
 
     @RequestMapping(value = "/api/dataset", method = RequestMethod.POST)
-    public @ResponseBody ResponseEntity<Object> uploadDataset(@RequestParam("files[]") MultipartFile file,
+    public @ResponseBody ResponseEntity<Object> uploadDataset(@RequestParam("dataset") MultipartFile dataset,
                                                               @PathVariable("lang") String lang, HttpServletRequest request,
                                                               Model model) throws Exception {
-        if (!file.isEmpty()) {
+        if (!dataset.isEmpty()) {
             MetadataParametersBean response = new MetadataParametersBean();
             HttpStatus status = HttpStatus.OK;
 
@@ -122,7 +136,7 @@ public class GeodatastoreApi {
                 ISODate creationDate = new ISODate();
                 Map<String, Object> templateParameters = prepareTemplateParameters(organisation, organisationEmail,
                         new ArrayList<String>(), new ArrayList<String>(), "Nederland", "2", "5", "50", "54",
-                        file.getContentType(), "http://example.com/geonetwork/id/dataset/" + uuid.toString(), file.getOriginalFilename(),
+                        dataset.getContentType(), "http://example.com/geonetwork/id/dataset/" + uuid.toString(), dataset.getOriginalFilename(),
                         uuid.toString(), creationDate);
 
                 Element metadata = metadataUtil.fillXmlTemplate(templateParameters);
@@ -135,13 +149,17 @@ public class GeodatastoreApi {
                         docType, category, creationDate.toString(), creationDate.toString(), updateFixedInfo, indexImmediate);
 
 
-                String fileName = file.getOriginalFilename();
-                String fsize = Long.toString(file.getSize());
+
+                metadataManager.setStatus(context, Integer.parseInt(createdId), Integer.parseInt(Params.Status.DRAFT), creationDate,
+                        "Initial creation");
+
+                String fileName = dataset.getOriginalFilename();
+                String fsize = Long.toString(dataset.getSize());
                 String access = "private";
                 String overwrite = "no";
 
                 IResourceUploadHandler uploadHook = (IResourceUploadHandler) context.getApplicationContext().getBean("resourceUploadHandler");
-                uploadHook.onUpload(file.getInputStream(), context, access, overwrite, Integer.parseInt(createdId), fileName, Double.parseDouble(fsize));
+                uploadHook.onUpload(dataset.getInputStream(), context, access, overwrite, Integer.parseInt(createdId), fileName, Double.parseDouble(fsize));
 
 
                 context.info("UPLOADED:" + fileName + "," + createdId + "," + context.getIpAddress() + "," + username);
@@ -151,7 +169,7 @@ public class GeodatastoreApi {
                 Map<String, String[]> allParams = Maps.newHashMap(request.getParameterMap());
                 // Set parameter and process metadata to reference the uploaded file
                 allParams.put("url", new String[]{downloadUrl});
-                allParams.put("name", new String[]{file.getOriginalFilename()});
+                allParams.put("name", new String[]{dataset.getOriginalFilename()});
                 allParams.put("desc", new String[]{"Geodatastore uploaded file"});
                 allParams.put("protocol", new String[]{"download"});
 
@@ -313,7 +331,77 @@ public class GeodatastoreApi {
         }
     }
 
-   /**
+    /**
+     * Search user datasets.
+     * @return
+     */
+    @RequestMapping(value = "/api/datasets", produces = MediaType.APPLICATION_JSON_VALUE)
+    public @ResponseBody ResponseEntity<String> uploadDataset(
+            @PathVariable("lang") String lang,
+            @RequestParam(value = "q", defaultValue = "") String q,
+            @RequestParam(value = "sortBy", defaultValue="modifiedDate") String sortBy,
+            @RequestParam(value = "sortOrder", defaultValue = "desc") String sortOrder,
+            @RequestParam(value = "from", defaultValue = "1") Integer from,
+            @RequestParam(value = "pageSize", defaultValue = "20") Integer pageSize,
+            @RequestParam(value = "status", defaultValue = "published") String status,
+            HttpServletRequest request) {
+
+        try {
+            String statusParam = Params.Status.APPROVED;
+            if ("draft".equals(status)) {
+                statusParam = Params.Status.DRAFT;
+            }
+
+            ServiceContext context = serviceManager.createServiceContext("geodatastore.api", lang, request);
+            UserSession session = context.getUserSession();
+            Element parametersAsXml = buildSearchXmlParameters(context, q, sortBy, sortOrder, from, pageSize, statusParam);
+            MetaSearcher searcher = searchManager.newSearcher(SearcherType.LUCENE, Geonet.File.SEARCH_LUCENE);
+            // FIXME Why save search parameters in session?
+            session.setProperty(Geonet.Session.SEARCH_REQUEST, parametersAsXml.clone());
+            searcher.search(context, parametersAsXml, serviceConfig);
+            Element results = searcher.present(context, parametersAsXml, serviceConfig);
+
+            return new ResponseEntity<>(Xml.getJSON(results),  HttpStatus.OK);
+
+
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+        return new ResponseEntity<String>("{}",  HttpStatus.OK);
+    }
+
+    /**
+     * Builds an Element that can be used by the searcher with the paramters passed to the method.
+     * It also add the default values for missing parameters.
+     *
+     * @param context Service context
+     * @param q query string.
+     * @param sortBy field name to order by.
+     * @param sortOrder "asc" or "desc" order.
+     * @param from first element to return.
+     * @param pageSize elements per page.
+     * @param status draft or published.
+     * @return the query for the searcher.
+     */
+    private Element buildSearchXmlParameters(ServiceContext context, String q, String sortBy, String sortOrder, Integer from, Integer pageSize, String status) {
+        Element queryParameters = new Element(Jeeves.Elem.REQUEST);
+        queryParameters.addContent(new Element(Geonet.IndexFieldNames.ANY).setText(q));
+        queryParameters.addContent(new Element(Geonet.SearchResult.SORT_BY).setText(sortBy));
+        queryParameters.addContent(new Element(Geonet.SearchResult.SORT_ORDER).setText(sortOrder));
+        queryParameters.addContent(new Element(Geonet.SearchResult.HITS_PER_PAGE).setText(Integer.toString(pageSize)));
+        queryParameters.addContent(new Element(Geonet.IndexFieldNames.STATUS).setText(status));
+        queryParameters.addContent(new Element("from").setText(Integer.toString(from)));
+        queryParameters.addContent(new Element("to").setText(Integer.toString(from + pageSize)));
+        queryParameters.addContent(new Element(Geonet.IndexFieldNames.CAT).setText("geodatastore"));
+
+        return SearchDefaults.getDefaultSearch(context, queryParameters);
+    }
+
+    /**
      * Return complete site URL including language
      * eg. http://localhost:8080/geonetwork/srv/eng
      *
