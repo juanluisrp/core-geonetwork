@@ -326,13 +326,13 @@
 
 
     <!-- Geodatastore Rewrites -->
-    <rule>
+<!--    <rule>
         <note>
             Geodatastore search query
         </note>
         <from>^/geodatastore/api/datasets</from>
         <to type="forward" last="true">/srv/dut/q@json</to>
-    </rule>
+    </rule>-->
     <rule>
         <note>
             Geodatastore delete metadata
