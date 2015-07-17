@@ -338,10 +338,17 @@
             Geodatastore delete metadata
         </note>
         <condition type="method">DELETE</condition>
-        <from>/srv/dut/geodatastore/api/dataset/(.+)</from>
+        <from>^/geodatastore/api/dataset/(.+)</from>
         <to type="forward">/srv/dut/md.delete?_content_type=json&amp;id=$1</to>
     </rule>
 
+    <rule>
+        <note>
+            Geodatastore
+        </note>
+        <from>^/geodatastore/api/datasets(.*)$</from>
+        <to type="forward" last="true">/srv/dut/geodatastore/api/datasets</to>
+    </rule>
     <rule>
         <note>
             Geodatastore
