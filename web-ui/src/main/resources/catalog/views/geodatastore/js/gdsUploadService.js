@@ -4,7 +4,7 @@
 (function() {
   goog.provide('geodatastore_upload_service');
 
-  var module = angular.module('geodatastore_upload_service',  []);
+  var module = angular.module('geodatastore_upload_service', []);
 
   module.factory('GdsUploadFactory', [function(){
     var uploadedFiles = {};
@@ -46,4 +46,33 @@
 
     return uploadedFiles;
   }]);
+
+  module.factory('gdsSearchManagerService', [
+      '$q',
+      '$http',
+      function($q, $http) {
+        var url = "../../geodatastore/api/datasets";
+
+
+        var search = function(params, errorFn) {
+          var parameters = params || {};
+          var defer = $q.defer();
+          $http.get(url, {
+            params: parameters
+          }).success(function(data, status) {
+            defer.resolve(data);
+          }).error(function(data, status) {
+            defer.reject(errorFn);
+          });
+          return defer.promise;
+        };
+
+
+
+
+        return {
+          search: search
+        };
+      }
+  ]);
 })();

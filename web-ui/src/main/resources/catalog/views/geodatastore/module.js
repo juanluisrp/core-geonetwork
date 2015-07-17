@@ -33,17 +33,18 @@
     }]);	   
 
   module.controller('geoDataStoreMainController', [
-    '$scope',
+		'$scope',
     '$http',
     '$translate',
+		'$log',
     'gnUtilityService',
     'gnSearchSettings',
     'gnViewerSettings',	
     'Metadata',
-		'gnSearchManagerService',
+		'gdsSearchManagerService',
 		'GdsUploadFactory',
-	function($scope, $http, $translate,
-             gnUtilityService, gnSearchSettings, gnViewerSettings,Metadata,gnSearchManagerService, GdsUploadFactory) {
+	function($scope, $http, $translate, $log,
+             gnUtilityService, gnSearchSettings, gnViewerSettings,Metadata, gdsSearchManagerService, GdsUploadFactory) {
 		$scope.loadCatalogInfo();
     $scope.searchResults = { records: [] };
 		$scope.total = 0;
@@ -57,30 +58,22 @@
 			$scope.updateResults(1);
 		})
 
-	  $scope.updateResults = function(page,any,order){
-	    if (!any) any="";
-		if (!order) order="changeDate";
-		
-		  gnSearchManagerService.gnSearch({
-				_isTemplate: 'n',
-				_content_type:'json',
-				fast: 'index',
-				type: 'dataset',
-				_owner: $scope.user.id,
-				from: (page-1)*5+1,
-				any: any,
-				sortBy:order,
-				to: page*5
-		}).then(function(data) {
-				var searchResults = { records: []};
-				for (var i = 0; i < data.metadata.length; i++) {
-					searchResults.records.push(new Metadata(data.metadata[i]));
-		  	}
-		  
-		    $scope.searchResults = searchResults;
-			$scope.total = data.count;
-		  });
-	  }
+	  $scope.updateResults = function(page ,any, order){
+			if (!order) {
+				order="changeDate";
+			}
+			gdsSearchManagerService.search({
+				from: (page - 1)* 5 + 1,
+				sortBy: order,
+				pageSize: 5,
+				status: 'draft'
+			}).then(function(data) {
+				$scope.searchResults = data;
+				$scope.total = data.count;
+			}, function(error) {
+					$log.error("Error in search: " + error);
+			});
+		};
 	  
 	  //get the status of a dataset, a dataset can be published if all fields are completed
 	  $scope.getStatus = function(md){
