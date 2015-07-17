@@ -301,5 +301,6 @@ Op http://www.kadaster.nl/web/artikel/download/Beschrijving-velden-RDinfo-PDOK-1
 	</gmd:dataQualityInfo>
 </gmd:MD_Metadata>
     """
+    And the user has logged in.
     When the data is uploaded through the API.
     Then the dataset is published.
