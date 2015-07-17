@@ -99,12 +99,64 @@
       <version>3.0.19-SNAPSHOT</version>
     </dependency>
     <!-- Test -->
-    <dependency>
-      <groupId>info.cukes</groupId>
-      <scope>test</scope>
-      <artifactId>cucumber-groovy</artifactId>
-      <version>1.2.2</version>
-    </dependency>
+      <dependency>
+          <groupId>org.geonetwork-opensource</groupId>
+          <artifactId>core</artifactId>
+          <version>3.0.19-SNAPSHOT</version>
+          <classifier>tests</classifier>
+          <scope>test</scope>
+      </dependency>
+      <dependency>
+          <groupId>org.geonetwork-opensource</groupId>
+          <artifactId>services</artifactId>
+          <version>3.0.19-SNAPSHOT</version>
+          <classifier>tests</classifier>
+          <scope>test</scope>
+      </dependency>
+      <dependency>
+          <groupId>org.springframework</groupId>
+          <artifactId>spring-test</artifactId>
+      </dependency>
+      <dependency>
+          <groupId>info.cukes</groupId>
+          <artifactId>cucumber-java</artifactId>
+      </dependency>
+      <dependency>
+          <groupId>info.cukes</groupId>
+          <artifactId>cucumber-junit</artifactId>
+      </dependency>
+      <dependency>
+          <groupId>info.cukes</groupId>
+          <artifactId>cucumber-spring</artifactId>
+      </dependency>
+      <dependency>
+          <groupId>org.hamcrest</groupId>
+          <artifactId>hamcrest-all</artifactId>
+      </dependency>
+      <dependency>
+          <groupId>org.codehaus.groovy</groupId>
+          <artifactId>groovy-all</artifactId>
+      </dependency>
+      <dependency>
+          <groupId>org.mockito</groupId>
+          <artifactId>mockito-all</artifactId>
+      </dependency>
+      <dependency>
+          <groupId>org.dbunit</groupId>
+          <artifactId>dbunit</artifactId>
+      </dependency>
+      <dependency>
+          <groupId>org.geonetwork-opensource</groupId>
+          <artifactId>core</artifactId>
+          <version>3.1.0-SNAPSHOT</version>
+          <scope>test</scope>
+      </dependency>
+      <dependency>
+          <groupId>org.geonetwork-opensource</groupId>
+          <artifactId>core</artifactId>
+          <version>3.0.19-SNAPSHOT</version>
+          <scope>test</scope>
+      </dependency>
   </dependencies>
 
   <build>

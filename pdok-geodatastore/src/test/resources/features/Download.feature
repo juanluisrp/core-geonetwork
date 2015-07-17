@@ -1,9 +1,21 @@
 # language: en
-Feature: Upload dataset with thumbnail using API
-  As a user I want to upload metadata, thumbnail and dataset in one call.
+Feature: Download dataset(s)
+  The download action is handled by an API, so it is disconnected from the actual location of the file
 
-  Scenario: Upload dataset, icon and metadata.
-    Given a file stream containing the bytes from "NW_PDOK_2015_04_13.zip", an icon stream containing the "rdinfo-stations.png" and the following metadata.
+  Scenario: Download published dataset valid uuid
+    Given a file named "NW_PDOK_2015_04_13.zip" has been uploaded in the geodatastore.
+    And the file has been given an identifier "60bb2696-2090-4649-9695-19f4e9a0a52e"
+    When a browser performs a Http GET to "/id/dataset/60bb2696-2090-4649-9695-19f4e9a0a52e"
+    Then The server streams the data directly.
+
+  Scenario: Download published thumbnail
+    Given a thumbnail named "rdinfo-stations.png" has been uploaded as a thumbnail
+    And The thumbnail has been attached to an identifier "60bb2696-2090-4649-9695-19f4e9a0a52e"
+    When a browser performs a Http GET to "/id/thumbnail/60bb2696-2090-4649-9695-19f4e9a0a52e" streams the thumbnail back.
+    Then The server streams the data directly.
+
+  Scenario: Download published  doc
+    Given The following metadatarecord has been attached to identifier "60bb2696-2090-4649-9695-19f4e9a0a52e"
     """
 <?xml version="1.0" encoding="UTF-8"?>
 <gmd:MD_Metadata xmlns:gml="http://www.opengis.net/gml" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:gmd="http://www.isotc211.org/2005/gmd" xmlns:gts="http://www.isotc211.org/2005/gts" xmlns:gco="http://www.isotc211.org/2005/gco" xmlns:xlink="http://www.w3.org/1999/xlink" xsi:schemaLocation="http://www.isotc211.org/2005/gmd http://schemas.opengis.net/iso/19139/20060504/gmd/gmd.xsd">
@@ -301,6 +313,6 @@ Op http://www.kadaster.nl/web/artikel/download/Beschrijving-velden-RDinfo-PDOK-1
 	</gmd:dataQualityInfo>
 </gmd:MD_Metadata>
     """
-    And the user has logged in.
-    When the data is uploaded through the API.
-    Then the dataset is published.
+    And The metadata has been published
+    When a browser performs a Http GET to "/id/doc/60bb2696-2090-4649-9695-19f4e9a0a52e" streams the thumbnail back.
+    Then The server streams the metadata directly.
