@@ -31,8 +31,8 @@
                     <div class="log floatright"><a href="../../j_spring_security_logout" title="Afmelden"><i class="fa fa-power-off"></i>Uitloggen</a></div>
                 </div>
                 <ul class="nav nav-tabs">
-                    <li role="presentation" class="first active"><a href="index.html">Mijn publiceerbare datasets <span class="badge">44</span></a></li>
-                    <li role="presentation"><a href="overview.html">Mijn gepubliceerde datasets <span class="badge">4</span></a></li>
+                    <li role="presentation" ng-class="getTab('upload','active')" class="first"><a href ng-click="setTab('upload')" >Mijn publiceerbare datasets <span class="badge">44</span></a></li>
+                    <li role="presentation" ng-class="getTab('published','active')" ><a href ng-click="setTab('published')">Mijn gepubliceerde datasets <span class="badge">4</span></a></li>
                 </ul>
             </nav>
             <section>
@@ -40,7 +40,7 @@
                         data-ng-class="{'fileupload-processing': processing() || loadingFiles}" data-ng-controller="GdsFileUploadController">
                    <ol id="selectable">
                        <!-- Select file button  and dropzone -->
-                        <li id="dropzone" class="fade" data-gds-drop-zone>
+                        <li id="dropzone" class="fade" data-gds-drop-zone  data-ng-show="tab=='upload'">
                             <div class="floatright">
                                 <i class="fa fa-cloud-upload fa-4x floatright"></i>
                             </div>
@@ -93,6 +93,7 @@
 
 					   <li data-ng-repeat="md in searchResults.records" data-ng-click="setMD(md)" data-ng-class="setBG(md)" >
                             <div class="arrow-left" data-ng-show="md==mdSelected"></div>
+							<span ng-show="tab=='upload'">
                             <div class="title">
                                 <div class="floatright">
                                     <a class="delete" href="#" data-toggle="tooltip" data-placement="top" title="verwijderen"><i class="fa fa-trash-o fa-lg"></i></a>
@@ -110,6 +111,12 @@
 							<div class="message alert-danger" data-ng-show="getStatus(md)=='error'">
 								<i class="fa fa-exclamation-triangle fa-fw" style="font-size:1em; margin-right: 4px"></i>Upload fout. Klik hier voor meer informatie.
                             </div>
+							</span>
+							<span  ng-show="tab=='published'">
+								<i class="fa fa-lg fa-fw" data-ng-class="getFileType(md)" style="vertical-align: 12%"></i>
+								<b>{{md.defaultTitle}}</b><br/>
+								<p>{{md.abstract | words:18 }}</p>
+							</span>
 						</li>
                     </ol>
                 </form>
@@ -215,15 +222,16 @@
                         <div class="form-group" style="border-top: solid 1px; padding-top: 15px;">
                             <div class="floatright">
                                 <button type="button" id="upload" class="btn btn-default btn-sm "><i class="fa fa-trash-o fa-fw"></i>Verwijderen</button>
-                                <button disabled="disabled" type="button" id="upload" class="btn btn-default btn-sm "><i class="fa fa-share fa-fw"></i>Publiceren</button>
+                                <button disabled="disabled" type="button" id="upload" class="btn btn-default btn-sm" ng-show="tab=='upload'"><i class="fa fa-share fa-fw"></i>Publiceren</button>
                                 <button type="button" id="upload" class="btn btn-default btn-sm"><i class="fa fa-floppy-o fa-fw"></i>Opslaan</button>
                             </div>
                         </div>
                     </form>
                 </div>
                 <div data-ng-switch-default class="padding-25 padding-top-10em">
-                    <p class="h2 text-center">Vul de informatie van uw bestand te delen.</p>
-                    <p class="h3 text-center">Selecteer een bestand van links te bewerken.</p>
+                    <p class="h2 text-center" ng-show="tab=='upload'">Vul informatie over een dataset in alvorens deze te delen.</p>
+					<p class="h2 text-center" ng-show="tab=='published'">U kunt de informatie over een dataset wijzigen, ook nadat deze gepubliceerd is.</p>
+                    <p class="h3 text-center">Selecteer een bestand uit de linker kolom om deze te bewerken.</p>
                     <p class="text-center" aria-label="Left arrow"><i class="fa fa-arrow-left fa-4x"></i></i></p>
                 </div>
             </aside>

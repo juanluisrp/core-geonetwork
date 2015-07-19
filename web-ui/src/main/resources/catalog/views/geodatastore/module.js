@@ -176,6 +176,16 @@
 			return newFile.title;
 		};
 
+		$scope.tab = "upload";
+		$scope.getTab = function (key,val){
+			if ($scope.tab == key) return val; else return "";
+		}
+		
+		$scope.setTab = function(val){
+			//if form modified&&not saved, warn to loose changes?
+			$scope.tab=val;
+		}
+		
 	  //grab the filename from metadata, for now take the first link, later check which link is the correct link, sometimes filename is empty then use file desc
 	  $scope.getFileName = function (md) {
 			if (md.link.length == 0) {
