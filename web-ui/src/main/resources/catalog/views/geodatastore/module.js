@@ -184,6 +184,8 @@
 		$scope.setTab = function(val){
 			//if form modified&&not saved, warn to loose changes?
 			$scope.tab=val;
+			$scope.hasSelected = false;
+			$scope.mdSelected = null;
 		}
 		
 	  //grab the filename from metadata, for now take the first link, later check which link is the correct link, sometimes filename is empty then use file desc
