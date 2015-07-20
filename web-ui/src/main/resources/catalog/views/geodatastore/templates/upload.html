@@ -31,8 +31,8 @@
                     <div class="log floatright"><a href="../../j_spring_security_logout" title="Afmelden"><i class="fa fa-power-off"></i>Uitloggen</a></div>
                 </div>
                 <ul class="nav nav-tabs">
-                    <li role="presentation" class="first active"><a href="index.html">Mijn publiceerbare datasets <span class="badge">44</span></a></li>
-                    <li role="presentation"><a href="overview.html">Mijn gepubliceerde datasets <span class="badge">4</span></a></li>
+                    <li role="presentation" ng-class="getTab('upload','active')" class="first"><a href ng-click="setTab('upload')" >Mijn publiceerbare datasets <span class="badge">44</span></a></li>
+                    <li role="presentation" ng-class="getTab('published','active')" ><a href ng-click="setTab('published')">Mijn gepubliceerde datasets <span class="badge">4</span></a></li>
                 </ul>
             </nav>
             <section>
@@ -40,11 +40,11 @@
                         data-ng-class="{'fileupload-processing': processing() || loadingFiles}" data-ng-controller="GdsFileUploadController">
                    <ol id="selectable">
                        <!-- Select file button  and dropzone -->
-                        <li id="dropzone" class="fade" data-gds-drop-zone>
+                        <li id="dropzone" class="fade" data-gds-drop-zone  data-ng-show="tab=='upload'">
                             <div class="floatright">
                                 <i class="fa fa-cloud-upload fa-4x floatright"></i>
                             </div>
-                            <div>Sleep de bestanden hierop of<br/>
+                            <div>Sleep de bestanden hier op of<br/>
                                 <span class="btn btn-default btn-sm fileinput-button" data-ng-class="{disabled: disabled}">
                                     <i class="fa fa-folder-open-o fa-fw"></i>
                                     <span>selecteer bestanden</span>
@@ -87,29 +87,12 @@
                            <div class="message alert-info">
                                <i class="fa fa-pencil fa-fw" style="font-size:1em; margin-right: 4px"></i>Voltooi de dataset informatie om te kunnen publiceren.
                            </div>
-
                        </li>
-
 
 					   <li data-ng-repeat="md in searchResults.metadata" data-ng-click="setMD(md)" data-ng-class="setBG(md)" >
                             <div class="arrow-left" data-ng-show="md==mdSelected"></div>
-                            <div class="title">
-                                <div class="floatright">
-                                    <a class="delete" href="#" data-toggle="tooltip" data-placement="top" title="verwijderen"><i class="fa fa-trash-o fa-lg"></i></a>
-                                </div>
-                                <i class="fa fa-lg fa-fw" data-ng-class="getFileType(md)" style="vertical-align: 12%"></i>
-                                <span>{{getFileName(md)}}</span>
-                            </div>
-                            <div class="message alert-success" data-ng-show="getStatus(md)=='publish'">
-                                <button type="button" class="btn btn-default btn-sm floatright"><i class="fa fa-share fa-fw"></i>Publiceren</button>
-                                <i class="fa fa-check fa-fw" style="font-size:1em; margin-right: 4px"></i>Data is klaar om te worden gedeeld.
-                            </div>
-							<div class="message alert-info" data-ng-show="getStatus(md)=='metadataMissing'">
-								<i class="fa fa-pencil fa-fw" style="font-size:1em; margin-right: 4px"></i>Voltooi de dataset informatie om te kunnen publiceren.
-                            </div>
-							<div class="message alert-danger" data-ng-show="getStatus(md)=='error'">
-								<i class="fa fa-exclamation-triangle fa-fw" style="font-size:1em; margin-right: 4px"></i>Upload fout. Klik hier voor meer informatie.
-                            </div>
+							<div data-ng-include="'../../catalog/views/geodatastore/templates/cardPublished.html'"  ng-show="tab=='published'"></div>
+							<div data-ng-include="'../../catalog/views/geodatastore/templates/cardUpload.html'" ng-show="tab=='upload'"></div>
 						</li>
                     </ol>
                 </form>
@@ -138,92 +121,12 @@
             </section>
             <aside data-ng-switch data-on="hasSelected">
                 <div id="metadata" class="fade" data-ng-switch-when="true" data-ng-class="{'in': hasSelected }">
-                    <form>
-                        <div class="form-group">
-                            <label for="tt">Titel</label>
-                            <input class="form-control" id="tt" tabindex="1" ng-model="mdSelected.defaultTitle">
-                        </div>
-                        <div class="form-group">
-                            <label for="os">Omschrijving</label>
-                            <textarea rows="5" class="form-control" id="os" ng-model="mdSelected.abstract" tabindex=2></textarea>
-                        </div>
-                        <div class="form-group">
-                            <label for="ow">Onderwerp</label>
-                            <select class="form-control" id="ow" tabindex=3  ng-model="mdSelected.topicCat[0]" >
-                                <option>Selecteer</option>
-                                <option value="imageryBaseMapsEarthCover">Luchtfoto / Dekking van de Aarde</option>
-                                <option value="inlandWaters">Binnenwateren</option>
-                                <option value="biota">Biota (flora, fauna, habitat)</option>
-                                <option value="economy">Economie</option>
-                                <option value="geoscientificInformation">Geo-wetenschappelijke informatie</option>
-                                <option value="health">Gezondheid</option>
-                                <option value="boundaries">Grenzen</option>
-                                <option value="intelligenceMilitary">Inlichtingen / Defensie</option>
-                                <option value="climatologyMeteorologyAtmosphere">Klimatologie / Meteorologie</option>
-                                <option value="farming">Landbouw</option>
-                                <option value="location">Locatie</option>
-                                <option value="society">Maatschappij</option>
-                                <option value="environment">Milieu</option>
-                                <option value="oceans">Oceanen</option>
-                                <option value="planningCadastre">Planning / Kadaster</option>
-                                <option value="structure">Structuur</option>
-                                <option value="utilitiesCommunication">Nuts diensten / Communicatie</option>
-                                <option value="elevation">Hoogte</option>
-                                <option value="transportation">Vervoer</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="tw">Trefwoorden</label>
-                            <input class="form-control" id="tw" placeholder="komma gescheiden lijst" tabindex=4 >
-                        </div>
-                        <div class="form-group">
-                            <label for="bh">Beschrijving herkomst</label>
-                            <input class="form-control" id="bh" tabindex=5  ng-model="mdSelected.lineage">
-                        </div>
-                        <div class="form-group">
-                            <label for="lk">Lokatie</label>
-                            <input class="form-control" id="lk" tabindex=5 ng-model="mdSelected.location">
-                        </div>
-                        <div class="form-group">
-                            <label for="odl">Open Data Licentie</label>
-                            <select class="form-control" id="odl" tabindex=7  ng-model="mdSelected.legalConstraints[1]">
-                                <option value="PublicDomain">Public Domain</option>
-                                <option value="CC0">CC0 (Creative Commons)</option>
-                                <option value="CC-BY">CC-BY (Creative Commons Naamsvermelding)</option>
-                            </select>
-                        </div>
-                        <div class="form-group"  ng-model="mdSelected.usageConstraints">
-                            <label for="gb">Gebruiksbeperkingen</label>
-                            <input class="form-control" id="gb" tabindex=5 value="">
-                        </div>
-                        <div class="form-group">
-                            <label for="tps">Toepassingsschaal</label>
-                            <select class="form-control" id="tps" tabindex=9  ng-model="mdSelected.resolution[0]">
-                                <option value="1000000">Landelijk</option>
-                                <option value="100000">Provinciaal</option>
-                                <option value="25000">Gemeentelijk</option>
-                                <option value="10000">Wijkniveau</option>
-                                <option value="2500">Straatniveau</option>
-                                <option value="500">Huis</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="exampleInputFile">Afbeelding</label>
-							<!-- todo: show a preview of the uploaded image -->
-                            <div><button type="button" id="upload" class="btn btn-default btn-sm floatright"><i class="fa fa-cloud-upload fa-fw"></i></button><input class="form-control" type="file" id="exampleInputFile" style="width:85%"  ng-model="mdSelected.image[0]"></div>
-                        </div>
-                        <div class="form-group" style="border-top: solid 1px; padding-top: 15px;">
-                            <div class="floatright">
-                                <button type="button" id="upload" class="btn btn-default btn-sm "><i class="fa fa-trash-o fa-fw"></i>Verwijderen</button>
-                                <button disabled="disabled" type="button" id="upload" class="btn btn-default btn-sm "><i class="fa fa-share fa-fw"></i>Publiceren</button>
-                                <button type="button" id="upload" class="btn btn-default btn-sm"><i class="fa fa-floppy-o fa-fw"></i>Opslaan</button>
-                            </div>
-                        </div>
-                    </form>
+					<div data-ng-include="'../../catalog/views/geodatastore/templates/form.html'"></div>
                 </div>
                 <div data-ng-switch-default class="padding-25 padding-top-10em">
-                    <p class="h2 text-center">Vul de informatie van uw bestand te delen.</p>
-                    <p class="h3 text-center">Selecteer een bestand van links te bewerken.</p>
+                    <p class="h2 text-center" ng-show="tab=='upload'">Vul informatie over een dataset in alvorens deze te delen.</p>
+					<p class="h2 text-center" ng-show="tab=='published'">U kunt de informatie over een dataset wijzigen, ook nadat deze gepubliceerd is.</p>
+                    <p class="h3 text-center">Selecteer een bestand uit de linker kolom om deze te bewerken.</p>
                     <p class="text-center" aria-label="Left arrow"><i class="fa fa-arrow-left fa-4x"></i></i></p>
                 </div>
             </aside>
