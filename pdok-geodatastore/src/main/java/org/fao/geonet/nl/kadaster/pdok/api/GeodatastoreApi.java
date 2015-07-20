@@ -11,6 +11,7 @@ import jeeves.server.sources.http.ServletPathFinder;
 import jeeves.services.ReadWriteController;
 import nl.kadaster.pdok.bussiness.MetadataParametersBean;
 import nl.kadaster.pdok.bussiness.MetadataUtil;
+import nl.kadaster.pdok.bussiness.SearchResponse;
 import org.apache.commons.lang.StringUtils;
 import org.fao.geonet.ApplicationContextHolder;
 import org.fao.geonet.constants.Geonet;
@@ -81,8 +82,6 @@ public class GeodatastoreApi  {
     @Autowired
     private DataManager metadataManager;
 
-    @Autowired
-    private StatusValueRepository statusValueRepository;
     @Autowired
     private UserGroupRepository userGroupRepository;
     @Autowired private UserRepository userRepository;
@@ -336,7 +335,7 @@ public class GeodatastoreApi  {
      * @return
      */
     @RequestMapping(value = "/api/datasets", produces = MediaType.APPLICATION_JSON_VALUE)
-    public @ResponseBody ResponseEntity<String> uploadDataset(
+    public @ResponseBody ResponseEntity<Object> uploadDataset(
             @PathVariable("lang") String lang,
             @RequestParam(value = "q", defaultValue = "") String q,
             @RequestParam(value = "sortBy", defaultValue="modifiedDate") String sortBy,
@@ -361,7 +360,11 @@ public class GeodatastoreApi  {
             searcher.search(context, parametersAsXml, serviceConfig);
             Element results = searcher.present(context, parametersAsXml, serviceConfig);
 
-            return new ResponseEntity<>(Xml.getJSON(results),  HttpStatus.OK);
+            SearchResponse searchResponse = new SearchResponse();
+            searchResponse.initFromXml(results);
+
+
+            return new ResponseEntity<>((Object) searchResponse,  HttpStatus.OK);
 
 
 
@@ -371,7 +374,7 @@ public class GeodatastoreApi  {
         }
 
 
-        return new ResponseEntity<String>("{}",  HttpStatus.OK);
+        return new ResponseEntity<>((Object) "{}",  HttpStatus.OK);
     }
 
     /**
@@ -393,10 +396,11 @@ public class GeodatastoreApi  {
         queryParameters.addContent(new Element(Geonet.SearchResult.SORT_BY).setText(sortBy));
         queryParameters.addContent(new Element(Geonet.SearchResult.SORT_ORDER).setText(sortOrder));
         queryParameters.addContent(new Element(Geonet.SearchResult.HITS_PER_PAGE).setText(Integer.toString(pageSize)));
-        queryParameters.addContent(new Element(Geonet.IndexFieldNames.STATUS).setText(status));
         queryParameters.addContent(new Element("from").setText(Integer.toString(from)));
-        queryParameters.addContent(new Element("to").setText(Integer.toString(from + pageSize)));
+        queryParameters.addContent(new Element("to").setText(Integer.toString(from + pageSize - 1)));
         queryParameters.addContent(new Element(Geonet.IndexFieldNames.CAT).setText("geodatastore"));
+        queryParameters.addContent(new Element(Geonet.IndexFieldNames.STATUS).setText(status));
+        queryParameters.addContent(new Element(Geonet.SearchResult.FAST).setText("index"));
 
         return SearchDefaults.getDefaultSearch(context, queryParameters);
     }
