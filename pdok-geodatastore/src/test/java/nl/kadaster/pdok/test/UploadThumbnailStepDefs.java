@@ -1,4 +1,4 @@
-package org.fao.geonet.pdok.geodatastore;
+package nl.kadaster.pdok.test;
 import cucumber.api.PendingException;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
@@ -8,7 +8,7 @@ import jeeves.server.context.ServiceContext;
 import org.fao.geonet.repository.MetadataRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
-//import org.fao.geonet.AbstractCoreIntegrationTest;
+import org.fao.geonet.AbstractCoreIntegrationTest;
 
 import java.io.InputStream;
 
@@ -17,7 +17,7 @@ import java.io.InputStream;
  * Date: 17-7-2015
  * Time: 10:58
  */
-public class UploadThumbnailStepDefs /*extends  AbstractCoreIntegrationTest*/ {
+public class UploadThumbnailStepDefs extends  AbstractCoreIntegrationTest {
     @Autowired
     MetadataRepository _metadataRepo;
     static InputStream dataset;
@@ -51,8 +51,8 @@ public class UploadThumbnailStepDefs /*extends  AbstractCoreIntegrationTest*/ {
 
     @And("^there is a usersession.$")
     public void there_is_a_usersession() throws Throwable {
-        //final ServiceContext context = createServiceContext();
-        //loginAsAdmin(context);
+        final ServiceContext context = createServiceContext();
+        loginAsAdmin(context);
 
     }
 }
