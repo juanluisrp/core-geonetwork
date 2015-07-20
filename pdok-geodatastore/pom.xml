@@ -92,11 +92,6 @@
       <artifactId>services</artifactId>
       <version>3.0.19-SNAPSHOT</version>
     </dependency>
-    <dependency>
-        <groupId>org.geonetwork-opensource</groupId>
-        <artifactId>domain</artifactId>
-        <version>3.0.19-SNAPSHOT</version>
-    </dependency>
     <!-- Test -->
       <dependency>
           <groupId>org.springframework</groupId>
