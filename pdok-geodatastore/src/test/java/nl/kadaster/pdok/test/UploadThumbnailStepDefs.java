@@ -5,10 +5,9 @@ import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import jeeves.server.context.ServiceContext;
-import org.fao.geonet.repository.MetadataRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import org.fao.geonet.AbstractCoreIntegrationTest;
+import org.junit.Test;
 
 import java.io.InputStream;
 
@@ -18,8 +17,7 @@ import java.io.InputStream;
  * Time: 10:58
  */
 public class UploadThumbnailStepDefs extends  AbstractCoreIntegrationTest {
-    @Autowired
-    MetadataRepository _metadataRepo;
+
     static InputStream dataset;
     static InputStream icon;
     static String doc;
@@ -51,7 +49,7 @@ public class UploadThumbnailStepDefs extends  AbstractCoreIntegrationTest {
 
     @And("^there is a usersession.$")
     public void there_is_a_usersession() throws Throwable {
-        final ServiceContext context = createServiceContext();
+        ServiceContext context = createServiceContext();
         loginAsAdmin(context);
 
     }

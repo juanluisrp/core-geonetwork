@@ -128,6 +128,10 @@
           <artifactId>cucumber-junit</artifactId>
       </dependency>
       <dependency>
+          <groupId>info.cukes</groupId>
+          <artifactId>cucumber-spring</artifactId>
+      </dependency>
+      <dependency>
           <groupId>org.codehaus.groovy</groupId>
           <artifactId>groovy-all</artifactId>
       </dependency>
