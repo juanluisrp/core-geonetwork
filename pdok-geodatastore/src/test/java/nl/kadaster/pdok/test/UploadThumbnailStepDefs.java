@@ -27,6 +27,8 @@ public class UploadThumbnailStepDefs extends  AbstractCoreIntegrationTest {
         dataset = ClassLoader.getSystemResourceAsStream(arg1);
         icon = ClassLoader.getSystemResourceAsStream(arg2);
         doc = arg3;
+        setApplicationContextInApplicationHolder();
+        setup();
     }
 
     @When("^the data is uploaded through the API\\.$")
@@ -49,6 +51,7 @@ public class UploadThumbnailStepDefs extends  AbstractCoreIntegrationTest {
 
     @And("^there is a usersession.$")
     public void there_is_a_usersession() throws Throwable {
+
         ServiceContext context = createServiceContext();
         loginAsAdmin(context);
 
