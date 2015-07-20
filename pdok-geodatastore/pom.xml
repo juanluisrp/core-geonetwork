@@ -139,7 +139,12 @@
           <groupId>org.mockito</groupId>
           <artifactId>mockito-all</artifactId>
       </dependency>
-
+      <dependency>
+          <groupId>commons-httpclient</groupId>
+          <artifactId>commons-httpclient</artifactId>
+          <version>3.0.1</version>
+          <scope>test</scope>
+      </dependency>
   </dependencies>
 
   <build>

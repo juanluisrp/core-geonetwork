@@ -11,7 +11,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @CucumberOptions(tags = {"~@not_implemented", "~@ignore"},
-        format = "pretty",
+        //format = "pretty",
         features="classpath:features/")
 public class RunTests {
 }

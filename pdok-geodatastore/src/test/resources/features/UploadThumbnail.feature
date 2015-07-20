@@ -302,6 +302,6 @@ Op http://www.kadaster.nl/web/artikel/download/Beschrijving-velden-RDinfo-PDOK-1
 </gmd:MD_Metadata>
     """
 	And there is a usersession.
-    And the metadata is valid.
+    And the metadata is validated against the "http://validatie-dataspecificaties.geostandaarden.nl/genericvalidator/standaard/ISO_19115_v13_2014" validation.
     When the data is uploaded through the API.
     Then the dataset is published.
