@@ -49,7 +49,7 @@
     $scope.searchResults = { records: [] };
 		$scope.totalNotPublished = 0;
 		$scope.GdsUploadFactory = GdsUploadFactory;
-
+		
 		$scope.test = function() {
 			alert("Click!");
 		}
@@ -66,7 +66,7 @@
 				from: (page - 1)* 5 + 1,
 				sortBy: order,
 				pageSize: 5,
-				status: 'draft'
+				status: ($scope.tab=="upload")?'draft':'published'
 			}).then(function(data) {
 				$scope.searchResults = data;
 				$scope.totalNotPublished = data.count;
@@ -152,6 +152,7 @@
 			$scope.tab=val;
 			$scope.hasSelected = false;
 			$scope.mdSelected = null;
+			$scope.updateResults(1);
 		}
 		
 	  //grab the filename from metadata, for now take the first link, later check which link is the correct link, sometimes filename is empty then use file desc
