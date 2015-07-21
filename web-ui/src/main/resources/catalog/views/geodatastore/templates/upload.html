@@ -31,27 +31,27 @@
                     <div class="log floatright"><a href="../../j_spring_security_logout" title="Afmelden"><i class="fa fa-power-off"></i>Uitloggen</a></div>
                 </div>
                 <ul class="nav nav-tabs">
-                    <li role="presentation" ng-class="getTab('upload','active')" class="first"><a href ng-click="setTab('upload')" >Mijn publiceerbare datasets <span class="badge">{{totalNotPublished + GdsUploadFactory.list.length}}</span></a></li>
-                    <li role="presentation" ng-class="getTab('published','active')" ><a href ng-click="setTab('published')">Mijn gepubliceerde datasets <span class="badge">4</span></a></li>
+                    <li role="presentation" data-ng-class="{active: tab == 'upload'}" class="first"><a href data-ng-click="setTab('upload')" >Mijn publiceerbare datasets <span class="badge">{{totalNotPublished + GdsUploadFactory.list.length}}</span></a></li>
+                    <li role="presentation" data-ng-class="{active: tab == 'published'}" ><a href data-ng-click="setTab('published')">Mijn gepubliceerde datasets <span class="badge">{{totalPublished}}</span></a></li>
                 </ul>
             </nav>
             <section>
                 <form action="../../geodatastore/api/dataset" method="POST" enctype="multipart/form-data" data-file-upload="datasetUploadOptions"
                         data-ng-class="{'fileupload-processing': processing() || loadingFiles}" data-ng-controller="GdsFileUploadController">
-                   <ol id="selectable">
-                       <!-- Select file button  and dropzone -->
-                        <li id="dropzone" class="fade" data-gds-drop-zone  data-ng-show="tab=='upload'">
-                            <div class="floatright">
-                                <i class="fa fa-cloud-upload fa-4x floatright"></i>
-                            </div>
-                            <div>Sleep de bestanden hier op of<br/>
+                    <!-- Select file button  and dropzone -->
+                    <div id="dropzone" class="fade" data-gds-drop-zone data-ng-show="tab=='upload'">
+                        <div class="floatright">
+                            <i class="fa fa-cloud-upload fa-4x floatright"></i>
+                        </div>
+                        <div>Sleep de bestanden hier op of<br/>
                                 <span class="btn btn-default btn-sm fileinput-button" data-ng-class="{disabled: disabled}">
                                     <i class="fa fa-folder-open-o fa-fw"></i>
                                     <span>selecteer bestanden</span>
                                     <input type="file" name="dataset" multiple data-ng-disabled="disabled">
                                 </span>
-                            </div>
-                        </li>
+                        </div>
+                    </div>
+                    <ol id="selectable">
                        <!-- List of files in queue -->
                        <li data-ng-repeat="file in queue" data-ng-class="{'processing': file.$processing()}">
                            <div class="title">
@@ -61,7 +61,7 @@
                                        <i class="fa fa-times fa-lg"></i>
                                    </a>
                                </div>
-                               <i class="file-icon fa fa-lg fa-fw"  data-ng-class="GdsUploadFactory.getFileIcon(file)"></i>
+                               <i class="file-icon fa fa-lg fa-fw"  data-ng-class="GdsUploadFactory.getFileIcon(file.type)"></i>
                                <span class="name">{{file.name}}</span>
                                <span class="size">({{file.size | formatFileSize}})</span>
                                <div data-ng-show="file.error" class="message alert-danger"><i class="fa fa-exclamation-triangle fa-fw" style="font-size:1em; margin-right: 4px"></i>Upload fout. Klik hier voor meer informatie ({{file.error}}).</div>
@@ -88,10 +88,11 @@
                            </div>
                        </li>
 
+                       <!--  Files recovered from search service -->
 					   <li data-ng-repeat="md in searchResults.metadata" data-ng-click="setMD(md)" data-ng-class="setBackground(md)" >
-                            <div class="arrow-left" data-ng-show="md==mdSelected"></div>
-							<div data-ng-include="'../../catalog/views/geodatastore/templates/cardPublished.html'"  ng-show="tab=='published'"></div>
-							<div data-ng-include="'../../catalog/views/geodatastore/templates/cardUpload.html'" ng-show="tab=='upload'"></div>
+                            <div class="arrow-left" data-ng-show="md.identifier == mdSelected.identifer"></div>
+							<div data-ng-include="'../../catalog/views/geodatastore/templates/cardPublished.html'"  data-ng-show="tab == 'published'"></div>
+							<div data-ng-include="'../../catalog/views/geodatastore/templates/cardUpload.html'" data-ng-show="tab == 'upload'"></div>
 						</li>
                     </ol>
                 </form>

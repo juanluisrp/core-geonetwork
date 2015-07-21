@@ -134,8 +134,8 @@ public class SearchResponse {
                     String southBoundLatitude = geoBoxComponents[1];
                     String eastBoundLongitude = geoBoxComponents[2];
                     String northBoundLatitude = geoBoxComponents[3];
-                    // Wkt = POLYGON(x1 y1, x1 y2, x2 y2, x2 y1, x1 y1)
-                    String wkt = String.format("POLYGON(%s %s, %s %s, %s %s, %s %s, %s %s)",
+                    // Wkt = POLYGON((x1 y1, x1 y2, x2 y2, x2 y1, x1 y1))
+                    String wkt = String.format("POLYGON((%s %s, %s %s, %s %s, %s %s, %s %s))",
                             westBoundLongitude, southBoundLatitude, // (x1 y1)
                             westBoundLongitude, northBoundLatitude, // (x1 y2)
                             eastBoundLongitude, northBoundLatitude, // (x2 y2)

@@ -5,15 +5,15 @@ template for metadata form
 <form>
 	<div class="form-group">
 		<label for="tt">Titel</label>
-		<input class="form-control" id="tt" tabindex="1" ng-model="mdSelected.defaultTitle">
+		<input class="form-control" id="tt" tabindex="1" data-ng-model="mdSelected.title">
 	</div>
 	<div class="form-group">
 		<label for="os">Omschrijving</label>
-		<textarea rows="5" class="form-control" id="os" ng-model="mdSelected.abstract" tabindex=2></textarea>
+		<textarea rows="5" class="form-control" id="os" data-ng-model="mdSelected.summary" tabindex=2></textarea>
 	</div>
 	<div class="form-group">
 		<label for="ow">Onderwerp</label>
-		<select class="form-control" id="ow" tabindex=3  ng-model="mdSelected.topicCat[0]" >
+		<select class="form-control" id="ow" tabindex=3  data-ng-model="mdSelected.topicCategory" >
 			<option>Selecteer</option>
 			<option value="imageryBaseMapsEarthCover">Luchtfoto / Dekking van de Aarde</option>
 			<option value="inlandWaters">Binnenwateren</option>
