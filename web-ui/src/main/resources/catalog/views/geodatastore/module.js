@@ -47,7 +47,7 @@
              gnUtilityService, gnSearchSettings, gnViewerSettings,Metadata, gdsSearchManagerService, GdsUploadFactory) {
 		$scope.loadCatalogInfo();
     $scope.searchResults = { records: [] };
-		$scope.total = 0;
+		$scope.totalNotPublished = 0;
 		$scope.GdsUploadFactory = GdsUploadFactory;
 
 		$scope.test = function() {
@@ -69,7 +69,7 @@
 				status: 'draft'
 			}).then(function(data) {
 				$scope.searchResults = data;
-				$scope.total = data.count;
+				$scope.totalNotPublished = data.count;
 			}, function(error) {
 					$log.error("Error in search: " + error);
 			});
@@ -104,51 +104,26 @@
 	  
 		//grab the filetype either from format or from file extension
 		$scope.getFileType = function (md) {
-			var ftype="";
+			var ftype = "";
 			if (!md.fileType) {
-				fprops = md.link[0].split('|');
-				if (fprops.length > 3 && fprops[3] != '') {
-					type = fprops[3]
+				var fprops = md.url.split('/');
+				if (fprops.length > 3 && fprops[fprops.length - 1] != '') {
+					var type = fprops[fprops.length - 1].split(".");
+					if (type.length >= 2) {
+						ftype = type[1];
+					}
 				} else {
-					ftype = fprops[0].split(".")[1];
+					ftype = "";
 				}
 			} else {
 				ftype = md.fileType;
-				return GdsUploadFactory.getFileIcon(ftype);
 			}
-
-			if (["zip","rar","application/zip"].indexOf(ftype) > 0) {
-				return "fa-file-archive-o";
-			} else if (["xls","xlsx","ods"].indexOf(ftype) > 0) {
-				return "fa-file-excel-o";
-			} else if (["doc","docx","rtf"].indexOf(ftype) > 0) {
-				return "fa-file-word-o";
-			} else if (["ppt","pptx"].indexOf(ftype) > 0) {
-				return "fa-file-powerpoint-o";
-			} else if (["csv"].indexOf(ftype) > 0) {
-				return "pdok-i-csv";
-			} else {
-			 	return "fa-file-code-o";
-			}
-		};
-
-		$scope.setBgNewFile = function(file) {
-			var selectedIdentifier = null;
-			if ($scope.hasSelected) {
-				if ($scope.mdSelected.identifier) {
-					selectedIdentifier = $scope.mdSelected.identifier;
-				} else if ($scope.mdSelected['geonet:info'] && $scope.mdSelected['geonet:info'].uuid) {
-					selectedIdentifier = $scope.mdSelected['geonet:info'].uuid;
-				}
-			}
-			if (file.identifier  == selectedIdentifier) {
-				return 'modify';
-			} else {
-				return null;
-			}
+			return GdsUploadFactory.getFileIcon(ftype);
 
 		};
-	  $scope.setBG = function (md) {
+
+
+	  $scope.setBackground = function (md) {
 			var mdIdentifier = md.identifier || md['geonet:info'].uuid;
 			var selectedIdentifier = null;
 			if ($scope.hasSelected) {
@@ -165,9 +140,7 @@
 			}
 	  }
 
-		$scope.getFileNameForNewFiles = function(newFile) {
-			return newFile.title;
-		};
+
 
 		$scope.tab = "upload";
 		$scope.getTab = function (key,val){
@@ -183,16 +156,14 @@
 		
 	  //grab the filename from metadata, for now take the first link, later check which link is the correct link, sometimes filename is empty then use file desc
 	  $scope.getFileName = function (md) {
-			if (md.link.length == 0) {
-				return md.defaultTitle
+			if (!md.url || md.url.length  == 0) {
+				return md.title
 			} else {
-				fprops = md.link[0].split('|');
-				if (fprops[0]!='') {
-					return fprops[0]
-				} else if (fprops[1]!='') {
-					return fprops[1]
-				}	else {
-					return fprops[2];
+				var fprops = md.url.split('/');
+				if (fprops.length > 3 && fprops[fprops.length - 1] != '') {
+					return fprops[fprops.length - 1];
+				} else {
+					return md.title;
 				}
 			}
 	  }

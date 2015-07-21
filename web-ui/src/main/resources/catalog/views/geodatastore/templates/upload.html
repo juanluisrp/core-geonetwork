@@ -31,7 +31,7 @@
                     <div class="log floatright"><a href="../../j_spring_security_logout" title="Afmelden"><i class="fa fa-power-off"></i>Uitloggen</a></div>
                 </div>
                 <ul class="nav nav-tabs">
-                    <li role="presentation" ng-class="getTab('upload','active')" class="first"><a href ng-click="setTab('upload')" >Mijn publiceerbare datasets <span class="badge">44</span></a></li>
+                    <li role="presentation" ng-class="getTab('upload','active')" class="first"><a href ng-click="setTab('upload')" >Mijn publiceerbare datasets <span class="badge">{{totalNotPublished + GdsUploadFactory.list.length}}</span></a></li>
                     <li role="presentation" ng-class="getTab('published','active')" ><a href ng-click="setTab('published')">Mijn gepubliceerde datasets <span class="badge">4</span></a></li>
                 </ul>
             </nav>
@@ -54,7 +54,6 @@
                         </li>
                        <!-- List of files in queue -->
                        <li data-ng-repeat="file in queue" data-ng-class="{'processing': file.$processing()}">
-                           <div class="arrow-left"></div>
                            <div class="title">
                                <div class="floatright" >
                                    <a class="delete" href="#" data-toggle="tooltip" data-placement="top"
@@ -75,21 +74,21 @@
                            </div>
                        </li>
                        <!-- Files uploaded since page reload -->
-                       <li data-ng-repeat="file in GdsUploadFactory.list" data-ng-click="setMD(file)" data-ng-class="setBgNewFile(file)">
+                       <li data-ng-repeat="file in GdsUploadFactory.list" data-ng-click="setMD(file)" data-ng-class="setBackground(file)">
                            <div class="arrow-left" data-ng-show="file == mdSelected"></div>
                            <div class="title">
                                <div class="floatright">
                                    <a class="delete" href="#" data-toggle="tooltip" data-placement="top" title="verwijderen"><i class="fa fa-trash-o fa-lg"></i></a>
                                </div>
                                <i class="fa fa-lg fa-fw" data-ng-class="GdsUploadFactory.getFileIcon(file)" style="vertical-align: 12%"></i>
-                               <span>{{getFileNameForNewFiles(file)}}</span>
+                               <span>{{getFileName(file)}}</span>
                            </div>
                            <div class="message alert-info">
                                <i class="fa fa-pencil fa-fw" style="font-size:1em; margin-right: 4px"></i>Voltooi de dataset informatie om te kunnen publiceren.
                            </div>
                        </li>
 
-					   <li data-ng-repeat="md in searchResults.metadata" data-ng-click="setMD(md)" data-ng-class="setBG(md)" >
+					   <li data-ng-repeat="md in searchResults.metadata" data-ng-click="setMD(md)" data-ng-class="setBackground(md)" >
                             <div class="arrow-left" data-ng-show="md==mdSelected"></div>
 							<div data-ng-include="'../../catalog/views/geodatastore/templates/cardPublished.html'"  ng-show="tab=='published'"></div>
 							<div data-ng-include="'../../catalog/views/geodatastore/templates/cardUpload.html'" ng-show="tab=='upload'"></div>
@@ -116,7 +115,7 @@
                             </li>
                         </ul>
                     </nav>
-                    <span style="margin-top:6px; display: inline-block;">{{total}} datasets</span>
+                    <span style="margin-top:6px; display: inline-block;">{{totalNotPublished}} datasets</span>
                 </div>
             </section>
             <aside data-ng-switch data-on="hasSelected">
@@ -130,7 +129,7 @@
                     <p class="text-center" aria-label="Left arrow"><i class="fa fa-arrow-left fa-4x"></i></i></p>
                 </div>
             </aside>
-            <div style="clear:both"></div>
+            <div class="clearfix"></div>
         </div>
         <footer data-ng-include="'../../catalog/views/geodatastore/templates/footer.html'">
 
