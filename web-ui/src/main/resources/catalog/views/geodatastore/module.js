@@ -88,13 +88,12 @@
 				status: ($scope.tab == "upload") ? 'draft' : 'published'
 			}).then(function(data) {
 				$scope.searchResults = data;
-			if ($scope.tab == 'upload') {
-				$scope.totalNotPublished = data.count;
-			} else if ($scope.tab == 'published') {
-				$scope.totalPublished = data.count;			   
-			} 
-		    $scope.pages = new Array(Math.ceil(data.count/$scope.perPage)); 
-			console.log($scope.pages);
+				if ($scope.tab == 'upload') {
+					$scope.totalNotPublished = data.count;
+				} else if ($scope.tab == 'published') {
+					$scope.totalPublished = data.count;			   
+				} 
+				$scope.pages = new Array(Math.ceil(data.count/$scope.perPage)); 
 			}, function(error) {
 					$log.error("Error in search: " + error);
 			});

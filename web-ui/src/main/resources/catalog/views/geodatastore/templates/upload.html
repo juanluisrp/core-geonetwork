@@ -99,7 +99,7 @@
                 </form>
                 <div>
                     <nav class="floatright">
-                        <ul class="pagination">
+                        <ul class="pagination" ng-show="pages.length>1">
                             <li ng-class="{'disabled':page==1}">
                                 <a href="#" aria-label="Previous" data-ng-click="updateResults(page-1)">
                                     <span aria-hidden="true">&laquo;</span>
@@ -115,7 +115,10 @@
                             </li>
                         </ul>
                     </nav>
-                    <span style="margin-top:6px; display: inline-block;">{{totalNotPublished}} datasets</span>
+                    <span style="margin-top:6px; display: inline-block;">
+					<span ng-show="tab=='upload'">{{totalNotPublished}}</span>
+					<span ng-show="tab=='published'">{{totalPublished}}</span>
+					datasets</span>
                 </div>
             </section>
             <aside data-ng-switch data-on="hasSelected">
