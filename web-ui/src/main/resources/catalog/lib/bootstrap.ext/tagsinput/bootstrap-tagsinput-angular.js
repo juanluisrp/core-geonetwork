@@ -33,7 +33,9 @@ angular.module('bootstrap-tagsinput', [])
           },
           itemValue: getItemProperty(scope, attrs.itemvalue),
           itemText : getItemProperty(scope, attrs.itemtext),
-          tagClass : angular.isFunction(scope.$parent[attrs.tagclass]) ? scope.$parent[attrs.tagclass] : function(item) { return attrs.tagclass; }
+          tagClass : angular.isFunction(scope.$parent[attrs.tagclass]) ? scope.$parent[attrs.tagclass] : function(item) { return attrs.tagclass; },
+          confirmKeys: [13,188]
+
         });
 
         for (var i = 0; i < scope.model.length; i++) {
@@ -41,14 +43,20 @@ angular.module('bootstrap-tagsinput', [])
         }
 
         select.on('itemAdded', function(event) {
-          if (scope.model.indexOf(event.item) === -1)
-            scope.model.push(event.item);
+          if (scope.model.indexOf(event.item) === -1) {
+            scope.$apply(function() {
+              scope.model.push(event.item);
+            });
+          }
         });
 
         select.on('itemRemoved', function(event) {
           var idx = scope.model.indexOf(event.item);
-          if (idx !== -1)
-            scope.model.splice(idx, 1);
+          if (idx !== -1) {
+            scope.$apply(function() {
+              scope.model.splice(idx, 1);
+            });
+          }
         });
 
         // create a shallow copy of model's current state, needed to determine
