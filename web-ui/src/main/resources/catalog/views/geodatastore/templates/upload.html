@@ -5,12 +5,12 @@
         <nav class="verytop">
             <div class="floatright">
                 <ul>
-                    <li><a href="#">Contact</a></li>
-                    <li class="last"><a href="#">Help</a></li>
+                    <li><a href="https://www.pdok.nl/nl/over-pdok/contact-met-pdok" target="_blank">Contact</a></li>
+                    <li class="last"><a href="../../catalog/views/geodatastore/PDOKGeodatastoreInstructie.pdf" target="_blank">Help</a></li>
                 </ul>
             </div>
             <ul>
-                <li class="first"><a href="#"><i class="fa fa-print"></i>Print</a></li>
+                <li class="first"><a href="javascript:return void(document.print())"><i class="fa fa-print"></i>Print</a></li>
             </ul>
 
         </nav>
@@ -53,8 +53,9 @@
                     </div>
                     <ol id="selectable">
                        <!-- List of files in queue -->
-                       <li data-ng-repeat="file in queue" data-ng-class="{'processing': file.$processing()}">
-                           <div class="title">
+                       <li data-ng-repeat="file in queue" data-ng-click="setMD(file)" data-ng-class="{'processing': file.$processing()}">
+                           <div class="arrow-left" data-ng-show="file == mdSelected"></div>
+						   <div class="title">
                                <div class="floatright" >
                                    <a class="delete" href="#" data-toggle="tooltip" data-placement="top"
                                       title="onderbreken" data-ng-click="file.$cancel()" data-ng-hide="!file.$cancel">
@@ -121,7 +122,13 @@
             </section>
             <aside data-ng-switch data-on="hasSelected">
                 <div id="metadata" class="fade" data-ng-switch-when="true" data-ng-class="{'in': hasSelected }">
-					<div data-ng-include="'../../catalog/views/geodatastore/templates/form.html'"></div>
+					<div data-ng-include="'../../catalog/views/geodatastore/templates/form.html'" ng-hide="mdSelected.error"></div>
+					<div ng-show="mdSelected.error!=''">
+						<br/><br/><br/><br/>
+						<h2><i class="fa fa-exclamation-triangle fa-fw"></i> Er is iets mis gegaan bij het uploaden van uw bestand, probeer het later nog een keer.<h2>
+						<p>{{mdSelected.error}}</p>
+						<br/><br/><br/><br/>
+					</div>
                 </div>
                 <div data-ng-switch-default class="padding-25 padding-top-10em">
                     <p class="h2 text-center" ng-show="tab=='upload'">Vul informatie over een dataset in alvorens deze te delen.</p>

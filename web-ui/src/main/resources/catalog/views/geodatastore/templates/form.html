@@ -5,15 +5,15 @@ template for metadata form
 <form>
 	<div class="form-group">
 		<label for="tt">Titel</label>
-		<input class="form-control" id="tt" tabindex="1" data-ng-model="mdSelected.title">
+		<input class="form-control" id="tt" tabindex="1" data-ng-model="mdSelected.title" placeholder="{{'placeholderTitleField'|translate}}" />
 	</div>
 	<div class="form-group">
 		<label for="os">Omschrijving</label>
-		<textarea rows="5" class="form-control" id="os" data-ng-model="mdSelected.summary" tabindex=2></textarea>
+		<textarea rows="5" class="form-control" id="os" data-ng-model="mdSelected.summary" tabindex="2"  placeholder="{{'placeholderAbstractField'|translate}}"></textarea>
 	</div>
 	<div class="form-group">
 		<label for="ow">Onderwerp</label>
-		<select class="form-control" id="ow" tabindex=3  data-ng-model="mdSelected.topicCategory" >
+		<select class="form-control" id="ow" tabindex=3  data-ng-model="mdSelected.topicCategory" placeholder="kies een onderwerp">
 			<option>Selecteer</option>
 			<option value="imageryBaseMapsEarthCover">Luchtfoto / Dekking van de Aarde</option>
 			<option value="inlandWaters">Binnenwateren</option>
@@ -38,15 +38,15 @@ template for metadata form
 	</div>
 	<div class="form-group">
 		<label for="tw">Trefwoorden</label>
-		<input class="form-control" id="tw" placeholder="komma gescheiden lijst" tabindex=4 >
+		<input class="form-control" id="tw" placeholder="komma gescheiden lijst" tabindex="4"  placeholder="{{'placeholderKeywordsField'|translate}}" />
 	</div>
 	<div class="form-group">
 		<label for="bh">Beschrijving herkomst</label>
-		<textarea rows="4" class="form-control" id="bh" ng-model="mdSelected.lineage" tabindex="5"></textarea>
+		<textarea rows="4" class="form-control" id="bh" ng-model="mdSelected.lineage" tabindex="5"  placeholder="{{'placeholderLineageField'|translate}}"></textarea>
 	</div>
 	<div class="form-group">
 		<label for="lk">Lokatie</label>
-		<input class="form-control" id="lk" tabindex=6 ng-model="mdSelected.location">
+		<input class="form-control" id="lk" tabindex=6 ng-model="mdSelected.location" placeholder="{{'placeholderLocationField'|translate}}">
 	</div>
 	<div class="form-group">
 		<label for="odl">Open Data Licentie</label>
@@ -58,7 +58,7 @@ template for metadata form
 	</div>
 	<div class="form-group"  ng-model="mdSelected.usageConstraints">
 		<label for="gb">Gebruiksbeperkingen</label>
-		<textarea rows="4" class="form-control" id="gb" ng-model="mdSelected.resourceConstraints[0]" tabindex="8"></textarea>
+		<textarea rows="4" class="form-control" id="gb" ng-model="mdSelected.resourceConstraints[0]" tabindex="8"  placeholder="{{'placeholderUselimitationField'|translate}}"></textarea>
 	</div>
 	<div class="form-group">
 		<label for="tps">Toepassingsschaal</label>
