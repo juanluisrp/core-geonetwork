@@ -109,6 +109,7 @@ public class UploadThumbnailStepDefs extends  AbstractCoreIntegrationTest {
         Element response = new Element("response");
         PostMethod httpPost = new PostMethod(validationUri);
         httpPost.setRequestEntity(new StringRequestEntity(doc));
+        httpPost.setParameter("Content-Type","text/xml");
         HttpClient client = new HttpClient();
         setupProxy(client, context);
 
