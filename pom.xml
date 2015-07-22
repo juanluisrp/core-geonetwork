@@ -5,17 +5,27 @@
   <groupId>org.geonetwork-opensource</groupId>
   <artifactId>geonetwork</artifactId>
   <packaging>pom</packaging>
-  <version>3.0.1-SNAPSHOT</version>
+  <version>3.0.19-SNAPSHOT</version>
   <name>GeoNetwork opensource</name>
   <description>GeoNetwork opensource is a standards based, Free and
     Open Source catalog application to manage spatially referenced
     resources through the web.</description>
   <url>http://geonetwork-opensource.org</url>
-  <scm>
+  <!--scm>
     <connection>
       scm:git:https://github.com/geonetwork/core-geonetwork
     </connection>
     <url>https://github.com/geonetwork/core-geonetwork</url>
+  </scm-->
+  <scm>
+    <url>http://github.so.kadaster.nl/NGR/core-geonetwork</url>
+    <connection>
+    scm:git:http://github.so.kadaster.nl/NGR/core-geonetwork.git
+    </connection>
+    <developerConnection>
+    scm:git:git@github.so.kadaster.nl:NGR/core-geonetwork.git
+    </developerConnection>
+    <tag>core-geonetwork-parent-pom-3.0.1.0-SNAPSHOT</tag>
   </scm>
   <inceptionYear>2003</inceptionYear>
   <issueManagement>
@@ -63,15 +73,15 @@
   <!-- TODO developer part-->
   <developers>
     <developer>
-      <name/>
-      <id/>
-      <organization/>
-      <organizationUrl/>
-      <email/>
+      <name />
+      <id />
+      <organization />
+      <organizationUrl />
+      <email />
       <roles>
-        <role/>
+        <role />
       </roles>
-      <timezone/>
+      <timezone />
     </developer>
   </developers>
 
@@ -97,30 +107,45 @@
               <artifactId>jslint-maven-plugin</artifactId>
               <version>1.0.1</version>
           </plugin>
-		<plugin>
-			<groupId>org.bsc.maven</groupId>
-			<artifactId>maven-processor-plugin</artifactId>
+        <plugin>
+            <groupId>org.bsc.maven</groupId>
+            <artifactId>maven-processor-plugin</artifactId>
           <version>2.2.3</version>
-		</plugin>
+        </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-resources-plugin</artifactId>
-          <version>2.6</version>
+          <version>2.7</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-clean-plugin</artifactId>
-          <version>2.5</version>
+          <version>2.6.1</version>
+        </plugin>
+		<plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-javadoc-plugin</artifactId>
+          <version>2.10.3</version>
+        </plugin>
+		<plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-deploy-plugin</artifactId>
+          <version>2.8.2</version>
+        </plugin>
+		<plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-source-plugin</artifactId>
+          <version>2.4</version>
         </plugin>
         <plugin>
           <groupId>net.alchim31.maven</groupId>
           <artifactId>yuicompressor-maven-plugin</artifactId>
-          <version>0.9</version>
+          <version>1.5.1</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-war-plugin</artifactId>
-          <version>2.3</version>
+          <version>2.6</version>
         </plugin>
         <plugin>
           <groupId>org.codehaus.mojo</groupId>
@@ -130,7 +155,7 @@
           <plugin>
               <groupId>org.apache.maven.plugins</groupId>
               <artifactId>maven-release-plugin</artifactId>
-              <version>2.0</version>
+              <version>2.5.1</version>
           </plugin>
           <plugin>
               <groupId>org.mortbay.jetty</groupId>
@@ -195,7 +220,7 @@
           <groupId>org.codehaus.groovy.maven</groupId>
           <artifactId>gmaven-plugin</artifactId>
           <version>1.0</version>
-          <executions>
+          <!--executions>
               <execution>
                   <id>Check memory settings</id>
                   <goals>
@@ -233,19 +258,10 @@
                           }
 
                           log.info("\n\tMax Heap Memory: "+mx+" MB\n\tMax PermGen Size: "+permgen+" MB")
-                          if (permgen < 0 || mx < 0) {
-                              def mavenOpts = "MAVEN_OPTS=\"${MAX_PREFIX}512M ${PERMGEN_PREFIX}256M\""
-                              def errorMsg = "\n\nIn order for the build to complete both the $MAX_PREFIX parameter and the "+
-                                      "$PERMGEN_PREFIX must be set.  The e2e tests require this because the start Geonetwork and run " +
-                                      "tests against it which takes a lot of memory.\n\nCmd/Powershell:"+
-                                      "\n\n\t \$Env:${mavenOpts}\n\nBash/SH:\n\n\texport ${mavenOpts}"
-                              log.error(errorMsg);
-                              throw new AssertionError(errorMsg);
-                          }
-                          ]]></source>
+                          if (permgen < 0 || mx < 0) { def mavenOpts = "MAVEN_OPTS=\"${MAX_PREFIX}512M ${PERMGEN_PREFIX}256M\"" def errorMsg = "\n\nIn order for the build to complete both the $MAX_PREFIX parameter and the "+ "$PERMGEN_PREFIX must be set. The e2e tests require this because the start Geonetwork and run " + "tests against it which takes a lot of memory.\n\nCmd/Powershell:"+ "\n\n\t \$Env:${mavenOpts}\n\nBash/SH:\n\n\texport ${mavenOpts}" log.error(errorMsg); throw new AssertionError(errorMsg); } ]]></source>
                   </configuration>
               </execution>
-          </executions>
+          </executions-->
       </plugin>
       <!--     Compilation.                                        -->
       <plugin>
@@ -329,7 +345,7 @@
         <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-surefire-plugin</artifactId>
-            <version>2.18</version>
+            <version>2.18.1</version>
             <configuration>
                 <argLine>-Dfile.encoding=UTF-8  -Xmx512M -XX:MaxPermSize=128M</argLine>
                 <rerunFailingTestsCount>5</rerunFailingTestsCount>
@@ -355,6 +371,29 @@
                     <phase>process-resources</phase>
                     <goals>
                         <goal>generate</goal>
+                    </goals>
+                </execution>
+            </executions>
+        </plugin>
+        <!-- This section is to get git submodules working with the maven release plugin -->
+        <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>exec-maven-plugin</artifactId>
+            <inherited>false</inherited> <!-- only execute these in the parent -->
+            <executions>
+                <execution>
+                    <id>git submodule update</id>
+                    <phase>initialize</phase>
+                    <configuration>
+                        <executable>git</executable>
+                        <arguments>
+                            <argument>submodule</argument>
+                            <argument>update</argument>
+                            <argument>--init</argument>
+                        </arguments>
+                    </configuration>
+                    <goals>
+                        <goal>exec</goal>
                     </goals>
                 </execution>
             </executions>
@@ -570,8 +609,8 @@
         <artifactId>xercesImpl</artifactId>
         <version>2.11.0</version>
       </dependency>
-			<!-- Patched XML Resolver 1.2 from apache xml-commons - fixes problems
-			     with windows URLs -->
+            <!-- Patched XML Resolver 1.2 from apache xml-commons - fixes problems
+                 with windows URLs -->
       <dependency>
         <groupId>xml-resolver</groupId>
         <artifactId>xml-resolver-patched</artifactId>
@@ -618,18 +657,18 @@
         <version>1.3</version> <!-- TODO check version -->
       </dependency>
       <!-- May be required to register connection unwrappers with
-			     geotools
+                 geotools
       <dependency>
         <groupId>org.springframework</groupId>
         <artifactId>spring-jdbc</artifactId>
         <version>2.5.3</version>
       </dependency>
-			-->
-			<dependency>
-				<groupId>org.eclipse.core</groupId>
-				<artifactId>org.eclipse.core.runtime</artifactId>
-				<version>3.7.0</version>
-			</dependency>
+            -->
+            <dependency>
+                <groupId>org.eclipse.core</groupId>
+                <artifactId>org.eclipse.core.runtime</artifactId>
+                <version>3.7.0</version>
+            </dependency>
 
       <!-- Z39.50, SRU  stuff (ie: Spring, CQL, ...)  -->
       <dependency>
@@ -880,7 +919,7 @@
         <artifactId>ojdbc</artifactId>
         <version>14</version>
       </dependency>
-			-->
+            -->
       <dependency>
         <groupId>org.codehaus.izpack</groupId>
         <artifactId>izpack-standalone-compiler</artifactId>
@@ -924,12 +963,12 @@
         <groupId>org.springframework.security</groupId>
         <artifactId>spring-security-core</artifactId>
         <version>${spring.security.version}</version>
-		<exclusions>
-		  <exclusion>
-		    <groupId>org.springframework</groupId>
-		    <artifactId>spring-expression</artifactId>
-		  </exclusion>
-		</exclusions>
+        <exclusions>
+          <exclusion>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-expression</artifactId>
+          </exclusion>
+        </exclusions>
        </dependency>
        <dependency>
          <groupId>org.springframework</groupId>
@@ -961,23 +1000,23 @@
         <artifactId>spring-security-web</artifactId>
         <version>${spring.security.version}</version>
       </dependency>
-	  <dependency>
-		<groupId>org.springframework</groupId>
-		<artifactId>spring-test</artifactId>
-		<version>${spring.version}</version>
-		<scope>test</scope>
-	  </dependency>
-	  <dependency>
-		<groupId>org.springframework</groupId>
-		<artifactId>spring-aspects</artifactId>
-		<version>${spring.version}</version>
-	  </dependency>
+      <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-test</artifactId>
+        <version>${spring.version}</version>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-aspects</artifactId>
+        <version>${spring.version}</version>
+      </dependency>
 
-	  <!-- Persistence dependencies -->
+      <!-- Persistence dependencies -->
     <dependency>
-	  <groupId>org.hibernate</groupId>
-	  <artifactId>hibernate-entitymanager</artifactId>
-	  <version>4.3.6.Final</version>
+      <groupId>org.hibernate</groupId>
+      <artifactId>hibernate-entitymanager</artifactId>
+      <version>4.3.6.Final</version>
     </dependency>
         <dependency>
             <groupId>org.hibernate</groupId>
@@ -987,10 +1026,10 @@
     <dependency>
       <groupId>org.springframework.data</groupId>
       <artifactId>spring-data-jpa</artifactId>
-	  <version>1.4.1.RELEASE</version>
+      <version>1.4.1.RELEASE</version>
     </dependency>
 
-	<dependency>
+    <dependency>
         <groupId>com.google.code.findbugs</groupId>
         <artifactId>jsr305</artifactId>
         <version>2.0.1</version>
@@ -1166,9 +1205,9 @@
         <!--module>web-client</module-->
         <module>web</module>
         <module>e2e-tests</module>
-        <!--module>geoserver</module-->		
-	<module>pdok-geodatastore</module>
-        <!--	<module>pdok-geodatastore-dar</module>-->
+        <!--module>geoserver</module-->     
+        <module>pdok-geodatastore</module>
+        <module>pdok-geodatastore-dar</module>
       </modules>
     </profile>
     <!-- Python and Latex are required to build the documentation. -->
@@ -1185,14 +1224,22 @@
       </modules>
     </profile>
   </profiles>
-
   <distributionManagement>
+    <repository>
+      <id>releases-repo</id>
+      <name>Nexus Releases Repo</name>
+      <url>
+      http://mvnrepository.so.kadaster.nl:8081/nexus/content/repositories/releases/
+      </url>
+    </repository>
+  </distributionManagement>
+  <!--distributionManagement>
     <snapshotRepository>
       <id>scp-repository.geonetwork-opensource.org</id>
       <name>GeoNetwork opensource repositories</name>
       <url>scpexe://TO DEFINED</url>
     </snapshotRepository>
-  </distributionManagement>
+  </distributionManagement-->
 
   <properties>
     <jetty.version>8.1.9.v20130131</jetty.version>

@@ -1,17 +1,14 @@
 <?xml version="1.0"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
-                      http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   	<parent>
 		<groupId>org.geonetwork-opensource</groupId>
 		<artifactId>geonetwork</artifactId>
-		<version>3.0.1-SNAPSHOT</version>
+		<version>3.0.19-SNAPSHOT</version>
 	</parent>
   <groupId>nl.kadaster.pdok</groupId>
   <artifactId>pdok-geodatastore</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
+  <version>3.0.19-SNAPSHOT</version>
   <packaging>jar</packaging>
   <properties>
     <spring.version>3.2.5.RELEASE</spring.version>
@@ -94,12 +91,19 @@
     <dependency>
       <groupId>org.geonetwork-opensource</groupId>
       <artifactId>core</artifactId>
-      <version>3.0.1-SNAPSHOT</version>
+      <version>3.0.19-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>org.geonetwork-opensource</groupId>
       <artifactId>services</artifactId>
-      <version>3.0.1-SNAPSHOT</version>
+      <version>3.0.19-SNAPSHOT</version>
+    </dependency>
+    <!-- Test -->
+    <dependency>
+      <groupId>info.cukes</groupId>
+      <scope>test</scope>
+      <artifactId>cucumber-groovy</artifactId>
+      <version>1.2.2</version>
     </dependency>
   </dependencies>
 

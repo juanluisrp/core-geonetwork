@@ -1,20 +1,18 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
     <groupId>org.geonetwork-opensource</groupId>
     <artifactId>geonetwork</artifactId>
-    <version>3.0.1-SNAPSHOT</version>
+    <version>3.0.19-SNAPSHOT</version>
   </parent>
 
   <groupId>org.geonetwork-opensource</groupId>
   <artifactId>web-ui</artifactId>
   <packaging>jar</packaging>
   <name>GeoNetwork user interface module</name>
-  <description/>
+  <description />
 
   <licenses>
     <license>
@@ -59,7 +57,7 @@
   </build>
   <properties>
     <geonetwork.build.dir>${project.build.directory}/${project.build.finalName}</geonetwork.build.dir>
-    <closure.compile.level/>
+    <closure.compile.level />
   </properties>
     <profiles>
         <profile>
@@ -138,7 +136,7 @@
                             </execution>
                         </executions>
                         <configuration>
-                            <preloadSources></preloadSources>
+                            <preloadSources />
                             <jsSrcDir>${project.basedir}/src/main/resources/catalog/js</jsSrcDir>
                             <jsTestSrcDir>${project.basedir}/src/test/jasmine</jsTestSrcDir>
                             <browserVersion>INTERNET_EXPLORER_9</browserVersion>
