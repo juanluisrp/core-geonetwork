@@ -85,12 +85,12 @@
     <dependency>
       <groupId>org.geonetwork-opensource</groupId>
       <artifactId>core</artifactId>
-      <version>3.0.20-SNAPSHOT</version>
+      <version>${project.version}</version>
     </dependency>
     <dependency>
       <groupId>org.geonetwork-opensource</groupId>
       <artifactId>services</artifactId>
-      <version>3.0.20-SNAPSHOT</version>
+      <version>${project.version}</version>
     </dependency>
     <!-- Test -->
       <dependency>
@@ -101,21 +101,21 @@
       <dependency>
           <groupId>org.geonetwork-opensource</groupId>
           <artifactId>core</artifactId>
-          <version>3.0.19-SNAPSHOT</version>
+          <version>${project.version}</version>
           <classifier>tests</classifier>
           <scope>test</scope>
       </dependency>
       <dependency>
           <groupId>org.geonetwork-opensource</groupId>
           <artifactId>domain</artifactId>
-          <version>3.0.19-SNAPSHOT</version>
+          <version>${project.version}</version>
           <classifier>tests</classifier>
           <scope>test</scope>
       </dependency>
       <dependency>
           <groupId>org.geonetwork-opensource</groupId>
           <artifactId>services</artifactId>
-          <version>3.0.19-SNAPSHOT</version>
+          <version>${project.version}</version>
           <classifier>tests</classifier>
           <scope>test</scope>
       </dependency>
