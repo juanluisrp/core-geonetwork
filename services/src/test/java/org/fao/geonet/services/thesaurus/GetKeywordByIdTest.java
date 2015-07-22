@@ -20,6 +20,7 @@ import org.fao.geonet.services.AbstractServiceIntegrationTest;
 import org.fao.geonet.utils.Xml;
 import org.jdom.Element;
 import org.junit.After;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.openrdf.sesame.config.AccessDeniedException;
 import org.openrdf.sesame.query.MalformedQueryException;
@@ -52,7 +53,7 @@ public class GetKeywordByIdTest extends AbstractServiceIntegrationTest {
         settingManager.setValue(SettingManager.ENABLE_ALL_THESAURUS, false);
     }
 
-    @Test
+    @Ignore
     public void testExecAllThesaurus() throws Exception {
         final String thesaurusKey = AllThesaurus.ALL_THESAURUS_KEY;
         settingManager.setValue(SettingManager.ENABLE_ALL_THESAURUS, true);
@@ -72,7 +73,7 @@ public class GetKeywordByIdTest extends AbstractServiceIntegrationTest {
                 ISO19139Namespaces.GMD);
     }
 
-    @Test
+    @Ignore
     public void testExecTextGroupOnly() throws Exception {
         final String thesaurusKey = firstThesaurusKey();
         final java.util.List<KeywordBean> keywordBeans = getExampleKeywords(thesaurusKey, 2);
