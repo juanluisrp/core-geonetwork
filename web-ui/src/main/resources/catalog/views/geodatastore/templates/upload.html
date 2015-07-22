@@ -125,7 +125,8 @@
 					<div ng-show="mdSelected.error!=''">
 						<br/><br/><br/><br/>
 						<h2><i class="fa fa-exclamation-triangle fa-fw"></i> Er is iets mis gegaan bij het uploaden van uw bestand, probeer het later nog een keer.</h2>
-						<p>{{mdSelected.error}}</p>
+						
+						<p>{{'error-'+mdSelected.error|translate}}</p>
 						<br/><br/><br/><br/>
 					</div>
 					<div data-ng-include="'../../catalog/views/geodatastore/templates/form.html'" ng-hide="mdSelected.error||mdSelected.$processing()"></div>

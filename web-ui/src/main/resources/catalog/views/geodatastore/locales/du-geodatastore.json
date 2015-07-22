@@ -8,5 +8,10 @@
   "placeholderKeywordsField":"meerdere door een komma gescheiden trefwoorden",
   "placeholderLineageField":"informatie over de geschiedenis, de bewerkingen en de kwaliteit van de dataset, of van de gebruikte bronbestanden",
   "placeholderLocationField":"schaal waarop de dataset gebruikt kan worden",
-  "placeholderUselimitationField":"informatie over de toepassingen waarvoor de data niet geschikt is, of anders de tekst 'geen beperkingen'"  
+  "placeholderUselimitationField":"informatie over de toepassingen waarvoor de data niet geschikt is, of anders de tekst 'geen beperkingen'",
+  "error-forbidden":"Uw account heeft onvoldoende rechten om een bestand te uploaden, neem contact op met de helpdesk",
+  "error-noemail":"De organisatie gegevens van de organisatie waar u toe behoort zijn niet beschikbaar, neem contact op met de helpdesk",
+  "error-timeout":"De server is tijdelijk niet beschikbaar, probeer het op een later moment nog eens",
+  "error-nosession":"Uw verbinding met de server is verbroken, ververs de webpagina aub"
+  
 }
