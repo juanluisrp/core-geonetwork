@@ -19,7 +19,7 @@
        *
        */
       var successfulUpload = function(e, data) {
-        console.log(data);
+        //console.log(data);
         if (!data.result.error) {
           GdsUploadFactory.add(data.result);
           $scope.clear(data.files);

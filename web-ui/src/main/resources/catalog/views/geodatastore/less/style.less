@@ -162,7 +162,7 @@ a:hover {
 }
 #selectable li.modify {
 	background-color: transparent !important;
-	border:1px solid #000;
+	border:1px solid #E26F02;
 }
 
 #selectable li .progress { 
@@ -279,12 +279,14 @@ footer ul li.first, .verytop ul li.first {
   width: calc(100% - 30px);
   position: absolute;
 }
+
 #dropzone {
   border-radius: 10px;
   border: 3px dashed lightgrey;
   min-height: 80px;
   background-color: white;
   padding: 10px 20px;
+  margin-bottom: 20px;
 
   p {
     margin: 10px 10px;
@@ -297,29 +299,30 @@ footer ul li.first, .verytop ul li.first {
     color: lightgrey;
   }
 
-  .in {
+  &.in {
     min-height: 160px;
     font-size: larger;
     border-color: #E26F02;
   }
-  .hover {
+  &.hover {
     background-color: #f6d4b2;
     border-color: #E26F02;
   }
-  .in .fa-4x {
+  &.in .fa-4x {
     color: #154273;
   }
-}
-.fade {
-  -webkit-transition: all 0.3s ease-out;
-  -moz-transition: all 0.3s ease-out;
-  -ms-transition: all 0.3s ease-out;
-  -o-transition: all 0.3s ease-out;
-  transition: all 0.3s ease-out;
-  opacity: 1;
+  &.fade {
+    -webkit-transition: all 0.3s ease-out;
+    -moz-transition: all 0.3s ease-out;
+    -ms-transition: all 0.3s ease-out;
+    -o-transition: all 0.3s ease-out;
+    transition: all 0.3s ease-out;
+    opacity: 1;
+  }
+
 }
 
-.padding-top-10em {
+#dropzone.padding-top-10em {
   padding-top: 10em;
 }
 

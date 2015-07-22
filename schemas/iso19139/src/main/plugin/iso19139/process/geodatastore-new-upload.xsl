@@ -32,6 +32,7 @@
   <xsl:param name="format"/>
   <xsl:param name="downloadUri"/>
   <xsl:param name="fileName"/>
+  <xsl:param name="license"/>
 
   <xsl:template match="/">
     <xsl:apply-templates/>
@@ -159,6 +160,34 @@
   <xsl:template match="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:resourceConstraints/gmd:MD_Constraints/gmd:useLimitation">
     <xsl:copy>
       <gco:CharacterString><xsl:value-of select="$userLimitation"></xsl:value-of></gco:CharacterString>
+    </xsl:copy>
+  </xsl:template>
+
+  <xsl:template match="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:resourceConstraints[gmd:MD_LegalConstraints]">
+    <xsl:copy>
+      <gmd:MD_LegalConstraints>
+        <gmd:useLimitation>
+          <gco:CharacterString>Geen gebruiksbeperking</gco:CharacterString>
+        </gmd:useLimitation>
+        <gmd:accessConstraints>
+          <gmd:MD_RestrictionCode codeList="http://www.isotc211.org/2005/resources/codeList.xml#MD_RestrictionCode"
+                                  codeListValue="otherRestrictions"/>
+        </gmd:accessConstraints>
+        <gmd:otherConstraints>
+          <gco:CharacterString>Geen beperkingen</gco:CharacterString>
+        </gmd:otherConstraints>
+        <gmd:otherConstraints>
+          <gco:CharacterString><xsl:value-of select="$license"/></gco:CharacterString>
+        </gmd:otherConstraints>
+        <xsl:if test="contains($license, 'by')">
+          <gmd:otherConstraints>
+            <gco:CharacterString> Naamsvermelding verplicht, <xsl:value-of select="$organisationName"/></gco:CharacterString>
+          </gmd:otherConstraints>
+        </xsl:if>
+      </gmd:MD_LegalConstraints>
+
+
+
     </xsl:copy>
   </xsl:template>
 
