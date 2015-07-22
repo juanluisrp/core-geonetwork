@@ -1,0 +1,95 @@
+<!--
+template for metadata form
+-->
+
+<form>
+	<div class="form-group">
+		<label for="tt">Titel</label>
+		<input class="form-control" id="tt" tabindex="1" data-ng-model="mdSelected.title" placeholder="{{'placeholderTitleField'|translate}}" />
+	</div>
+	<div class="form-group">
+		<label for="os">Omschrijving</label>
+		<textarea rows="5" class="form-control" id="os" data-ng-model="mdSelected.summary" tabindex="2"  placeholder="{{'placeholderAbstractField'|translate}}"></textarea>
+	</div>
+	<div class="form-group">
+		<label for="ow">Onderwerp</label>
+		<select class="form-control" id="ow" tabindex=3  data-ng-model="mdSelected.topicCategory">
+			<option>Selecteer</option>
+			<option value="imageryBaseMapsEarthCover">Luchtfoto / Dekking van de Aarde</option>
+			<option value="inlandWaters">Binnenwateren</option>
+			<option value="biota">Biota (flora, fauna, habitat)</option>
+			<option value="economy">Economie</option>
+			<option value="geoscientificInformation">Geo-wetenschappelijke informatie</option>
+			<option value="health">Gezondheid</option>
+			<option value="boundaries">Grenzen</option>
+			<option value="intelligenceMilitary">Inlichtingen / Defensie</option>
+			<option value="climatologyMeteorologyAtmosphere">Klimatologie / Meteorologie</option>
+			<option value="farming">Landbouw</option>
+			<option value="location">Locatie</option>
+			<option value="society">Maatschappij</option>
+			<option value="environment">Milieu</option>
+			<option value="oceans">Oceanen</option>
+			<option value="planningCadastre">Planning / Kadaster</option>
+			<option value="structure">Structuur</option>
+			<option value="utilitiesCommunication">Nuts diensten / Communicatie</option>
+			<option value="elevation">Hoogte</option>
+			<option value="transportation">Vervoer</option>
+		</select>
+	</div>
+	<div class="form-group">
+		<label for="tw">Trefwoorden</label>
+		<input class="form-control" id="tw" placeholder="komma gescheiden lijst" tabindex="4"  placeholder="{{'placeholderKeywordsField'|translate}}" />
+	</div>
+	<div class="form-group">
+		<label for="bh">Beschrijving herkomst</label>
+		<textarea rows="4" class="form-control" id="bh" ng-model="mdSelected.lineage" tabindex="5"  placeholder="{{'placeholderLineageField'|translate}}"></textarea>
+	</div>
+	<div class="form-group">
+		<label for="lk">Lokatie</label>
+		<input class="form-control" id="lk" tabindex=6 ng-model="mdSelected.location" placeholder="{{'placeholderLocationField'|translate}}">
+	</div>
+	<div class="form-group">
+		<label for="odl">Open Data Licentie</label>
+		<select class="form-control" id="odl" tabindex=7  ng-model="mdSelected.legalConstraints[1]">
+			<option value="PublicDomain">Public Domain</option>
+			<option value="CC0">CC0 (Creative Commons)</option>
+			<option value="CC-BY">CC-BY (Creative Commons Naamsvermelding)</option>
+		</select>
+	</div>
+	<div class="form-group"  ng-model="mdSelected.usageConstraints">
+		<label for="gb">Gebruiksbeperkingen</label>
+		<textarea rows="4" class="form-control" id="gb" ng-model="mdSelected.resourceConstraints[0]" tabindex="8"  placeholder="{{'placeholderUselimitationField'|translate}}"></textarea>
+	</div>
+	<div class="form-group">
+		<label for="tps">Toepassingsschaal</label>
+		<select class="form-control" id="tps" tabindex=9  ng-model="mdSelected.resolution[0]">
+			<option value="1000000">Landelijk</option>
+			<option value="100000">Provinciaal</option>
+			<option value="25000">Gemeentelijk</option>
+			<option value="10000">Wijkniveau</option>
+			<option value="2500">Straatniveau</option>
+			<option value="500">Huis</option>
+		</select>
+	</div>
+	<div class="form-group">
+		<label for="exampleInputFile">Afbeelding</label>
+		<div class="row">
+			<div class="col-xs-4" ng-show="mdSelected.image[0]"><!-- todo: show a preview of the uploaded image -->
+				<img src="{{mdSelected.image[0] | split:'|':1}}" class="thumbnail" style="max-width:150px">
+			</div>
+			<div class="col-xs-8">
+				<button type="button" id="upload" class="btn btn-default btn-sm floatright">
+					<i class="fa fa-cloud-upload fa-fw"></i>
+				</button>
+				<input class="form-control" type="file" id="exampleInputFile" style="width:85%"  ng-model="mdSelected.image[0]">
+			</div>
+		</div>
+	</div>
+	<div class="form-group" style="border-top: solid 1px; padding-top: 15px;">
+		<div class="floatright">
+			<button type="button" id="upload" class="btn btn-default btn-sm "><i class="fa fa-trash-o fa-fw"></i>Verwijderen</button>
+			<button disabled="disabled" type="button" id="upload" class="btn btn-default btn-sm" ng-show="tab=='upload'"><i class="fa fa-share fa-fw"></i>Publiceren</button>
+			<button type="button" id="upload" class="btn btn-default btn-sm"><i class="fa fa-floppy-o fa-fw"></i>Opslaan</button>
+		</div>
+	</div>
+</form>

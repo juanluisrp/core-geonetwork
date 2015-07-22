@@ -26,7 +26,6 @@ import org.fao.geonet.kernel.search.SearchManager;
 import org.fao.geonet.kernel.search.SearcherType;
 import org.fao.geonet.kernel.setting.SettingManager;
 import org.fao.geonet.repository.GroupRepository;
-import org.fao.geonet.repository.StatusValueRepository;
 import org.fao.geonet.repository.UserGroupRepository;
 import org.fao.geonet.repository.UserRepository;
 import org.fao.geonet.schema.iso19139.ISO19139SchemaPlugin;
@@ -72,6 +71,7 @@ public class GeodatastoreApi  {
     public static final String ABSTRACT_KEY = "abstract";
     public static final String USER_LIMITATION_KEY = "userLimitation";
     public static final String FORMAT_KEY = "format";
+    private static final String LICENSE_KEY = "license";
 
     private ServiceConfig serviceConfig = new ServiceConfig();
 
@@ -136,7 +136,7 @@ public class GeodatastoreApi  {
                 Map<String, Object> templateParameters = prepareTemplateParameters(organisation, organisationEmail,
                         new ArrayList<String>(), new ArrayList<String>(), "Nederland", "2", "5", "50", "54",
                         dataset.getContentType(), "http://example.com/geonetwork/id/dataset/" + uuid.toString(), dataset.getOriginalFilename(),
-                        uuid.toString(), creationDate);
+                        uuid.toString(), creationDate, "http://creativecommons.org/licenses/by/4.0/", "");
 
                 Element metadata = metadataUtil.fillXmlTemplate(templateParameters);
 
@@ -195,10 +195,10 @@ public class GeodatastoreApi  {
                 //response.setExtent();
                 response.setSummary((String) templateParameters.get(ABSTRACT_KEY));
                 response.setLineage((String) templateParameters.get(LINEAGE_KEY));
-                //response.setLicense();
+                response.setLicense((String) templateParameters.get(LICENSE_KEY));
                 //response.setLocation();
                 response.setResolution((String) templateParameters.get(RESOLUTION_KEY));
-                //response.setStatus();
+                response.setStatus("draft");
                 response.setTitle((String) templateParameters.get(TITLE_KEY));
                 response.setUrl(downloadUrl);
                 response.setUseLimitation((String) templateParameters.get(USER_LIMITATION_KEY));
@@ -233,7 +233,7 @@ public class GeodatastoreApi  {
     private Map<String, Object> prepareTemplateParameters(String organisation, String organisationEmail, List<String> keywords,
                                                           List<String> topics, String geograpicIdentifier, String bboxWestLongitude,
                                                           String bboxEastLongitude, String bboxSouthLatitude, String bboxNorthLatitude,
-                                                          String format, String downloadUri, String fileName, String uuid, ISODate creationDate) {
+                                                          String format, String downloadUri, String fileName, String uuid, ISODate creationDate, String license, String title) {
         Map<String, Object> parameters = Maps.newHashMap();
         parameters.put("organisationName", organisation);
         parameters.put("organisationEmail", organisationEmail);
@@ -241,15 +241,15 @@ public class GeodatastoreApi  {
 
         parameters.put("metadataModifiedDate", creationDate.toString());
         parameters.put(LINEAGE_KEY, "");
-        parameters.put(TITLE_KEY, fileName);
+        parameters.put(TITLE_KEY, title);
         parameters.put("publicationDate", creationDate.toString());
 
         parameters.put("uuid", uuid);
         parameters.put(ABSTRACT_KEY, "");
         parameters.put("thumbnailUri", "");
 
-        String keyworkdList = Joiner.on("#").join(keywords);
-        parameters.put("keywords", keyworkdList);
+        String keywordList = Joiner.on("#").join(keywords);
+        parameters.put("keywords", keywordList);
         parameters.put("keywordSeparator", "#");
         parameters.put(USER_LIMITATION_KEY, "None");
         parameters.put(RESOLUTION_KEY, "10000");
@@ -266,6 +266,7 @@ public class GeodatastoreApi  {
         parameters.put(FORMAT_KEY, format);
         parameters.put("downloadUri", downloadUri);
         parameters.put("fileName", fileName);
+        parameters.put(LICENSE_KEY,license);
 
 
         return parameters;
@@ -401,6 +402,8 @@ public class GeodatastoreApi  {
         queryParameters.addContent(new Element(Geonet.IndexFieldNames.CAT).setText("geodatastore"));
         queryParameters.addContent(new Element(Geonet.IndexFieldNames.STATUS).setText(status));
         queryParameters.addContent(new Element(Geonet.SearchResult.FAST).setText("index"));
+        queryParameters.addContent(new Element("_isTemplate").setText("n"));
+        queryParameters.addContent(new Element("type").setText("dataset"));
 
         return SearchDefaults.getDefaultSearch(context, queryParameters);
     }
