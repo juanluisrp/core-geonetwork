@@ -874,7 +874,7 @@
       <dependency>
         <groupId>junit</groupId>
         <artifactId>junit</artifactId>
-        <version>4.10</version>
+        <version>4.12</version>
           <scope>test</scope>
       </dependency>
       <dependency>
@@ -882,6 +882,24 @@
         <artifactId>mockito-all</artifactId>
         <version>1.9.5</version>
         <scope>test</scope>
+      </dependency>
+      <dependency>
+          <groupId>info.cukes</groupId>
+          <artifactId>cucumber-java</artifactId>
+          <version>${cucumber.version}</version>
+          <scope>test</scope>
+      </dependency>
+      <dependency>
+          <groupId>info.cukes</groupId>
+          <artifactId>cucumber-spring</artifactId>
+          <version>${cucumber.version}</version>
+          <scope>test</scope>
+      </dependency>
+      <dependency>
+          <groupId>info.cukes</groupId>
+          <artifactId>cucumber-junit</artifactId>
+          <version>${cucumber.version}</version>
+          <scope>test</scope>
       </dependency>
 
       <!-- should we had this as scope test?-->
@@ -1257,6 +1275,6 @@
     <print-lib.version>2.1.1</print-lib.version>
     <flying-saucer>9.0.7</flying-saucer>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-
+    <cucumber.version>1.1.5</cucumber.version>
   </properties>
 </project>

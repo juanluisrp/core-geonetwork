@@ -1,8 +1,8 @@
-# language: en
-Feature: Upload dataset with thumbnail using API
-  As a user I want to upload metadata, thumbnail and dataset in one call.
+# language: nl
+Functionaliteit: Upload dataset met een thumbnail via de API
+  Als As a user I want to upload metadata, thumbnail and dataset in one call.
 
-  Scenario: Upload dataset, icon and metadata.
+  Scenario: Upload dataset, icon and metadata with valid metadata.
     Given a file stream containing the bytes from "NW_PDOK_2015_04_13.zip", an icon stream containing the "rdinfo-stations.png" and the following metadata.
     """
 <?xml version="1.0" encoding="UTF-8"?>
@@ -15,7 +15,7 @@ Feature: Upload dataset with thumbnail using API
 	</gmd:language>
 	<gmd:characterSet>
 		<gmd:MD_CharacterSetCode codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#MD_CharacterSetCode" codeListValue="utf8"/>
-	</gmd:characterSet>data
+	</gmd:characterSet>
 	<gmd:hierarchyLevel>
 		<gmd:MD_ScopeCode codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#MD_ScopeCode" codeListValue="dataset"/>
 	</gmd:hierarchyLevel>
@@ -301,6 +301,7 @@ Op http://www.kadaster.nl/web/artikel/download/Beschrijving-velden-RDinfo-PDOK-1
 	</gmd:dataQualityInfo>
 </gmd:MD_Metadata>
     """
-    And the user has logged in.
+	And there is a usersession.
+    And the metadata is validated against the "http://validatie-dataspecificaties.geostandaarden.nl/genericvalidator/standaard/ISO_19115_v13_2014" validation.
     When the data is uploaded through the API.
     Then the dataset is published.

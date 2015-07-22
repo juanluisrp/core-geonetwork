@@ -316,4 +316,3 @@ Op http://www.kadaster.nl/web/artikel/download/Beschrijving-velden-RDinfo-PDOK-1
     And The metadata has been published
     When a browser performs a Http GET to "/id/doc/60bb2696-2090-4649-9695-19f4e9a0a52e" streams the thumbnail back.
     Then The server streams the metadata directly.
-\
