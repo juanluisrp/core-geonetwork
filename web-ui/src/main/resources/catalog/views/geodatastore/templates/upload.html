@@ -100,18 +100,16 @@
                 <div>
                     <nav class="floatright">
                         <ul class="pagination">
-                            <li class="disabled">
-                                <a href="#" aria-label="Previous">
+                            <li ng-class="{'disabled':page==1}">
+                                <a href="#" aria-label="Previous" data-ng-click="updateResults(page-1)">
                                     <span aria-hidden="true">&laquo;</span>
                                 </a>
                             </li>
-                            <li class="active" data-ng-click="updateResults(1)"><a href="#">1</a></li>
-                            <li><a href="#" data-ng-click="updateResults(2)">2</a></li>
-                            <li><a href="#" data-ng-click="updateResults(3)">3</a></li>
-                            <li class="disabled"><a href="#">...</a></li>
-                            <li><a href="#" data-ng-click="updateResults(9)">9</a></li>
-                            <li>
-                                <a href="#" aria-label="Next">
+							
+							<li ng-repeat="i in pages track by $index" ng-class="{'active': page==$index+1}"><a href="#" data-ng-click="updateResults($index+1)">{{$index+1}}</a></li>
+							
+                            <li ng-class="{'disabled':page==pages.length}">
+                                <a href="#" aria-label="Next" data-ng-click="updateResults(page+1)">
                                     <span aria-hidden="true">&raquo;</span>
                                 </a>
                             </li>
