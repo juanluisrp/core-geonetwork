@@ -131,7 +131,7 @@
 		};
 
     $scope.$watch('mdSelected.topicCategory', function(newValue, oldValue) {
-      $log.debug("topicCategory changed: " +  oldValue + "--> " + newValue);
+      //$log.debug("topicCategory changed: " +  oldValue + "--> " + newValue);
       if ($scope.mdSelected) {
         if (newValue !== null && newValue !== undefined) {
           $scope.mdSelected.topicCategories = [newValue];

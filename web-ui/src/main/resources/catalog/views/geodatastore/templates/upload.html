@@ -53,7 +53,7 @@
                     </div>
                     <ol id="selectable">
                        <!-- List of files in queue -->
-                       <li data-ng-repeat="file in queue" data-ng-click="setMD(file)" data-ng-class="{'processing': file.$processing()}">
+                       <li data-ng-repeat="file in queue" data-ng-class="{'processing': file.$processing()}">
                            <div class="arrow-left" data-ng-show="file == mdSelected"></div>
 						   <div class="title">
                                <div class="floatright" >
@@ -65,7 +65,7 @@
                                <i class="file-icon fa fa-lg fa-fw"  data-ng-class="GdsUploadFactory.getFileIcon(file.type)"></i>
                                <span class="name">{{file.name}}</span>
                                <span class="size">({{file.size | formatFileSize}})</span>
-                               <div data-ng-show="file.error" class="message alert-danger"><i class="fa fa-exclamation-triangle fa-fw" style="font-size:1em; margin-right: 4px"></i>Upload fout. Klik hier voor meer informatie ({{file.error}}).</div>
+                               <div data-ng-show="file.error" data-ng-click="setMD(file)" class="message alert-danger"><i class="fa fa-exclamation-triangle fa-fw" style="font-size:1em; margin-right: 4px"></i>Upload fout. Klik hier voor meer informatie ({{file.error}}).</div>
                            </div>
                            <div class="progress progress-bar-striped progress-bar-inqueue active fade" data-ng-class="{'pending': 'in'}[file.$state()]"
                                 data-file-upload-progress="file.$progress()" style="width: 100%">
@@ -122,13 +122,13 @@
             </section>
             <aside data-ng-switch data-on="hasSelected">
                 <div id="metadata" class="fade" data-ng-switch-when="true" data-ng-class="{'in': hasSelected }">
-					<div data-ng-include="'../../catalog/views/geodatastore/templates/form.html'" ng-hide="mdSelected.error"></div>
 					<div ng-show="mdSelected.error!=''">
 						<br/><br/><br/><br/>
-						<h2><i class="fa fa-exclamation-triangle fa-fw"></i> Er is iets mis gegaan bij het uploaden van uw bestand, probeer het later nog een keer.<h2>
+						<h2><i class="fa fa-exclamation-triangle fa-fw"></i> Er is iets mis gegaan bij het uploaden van uw bestand, probeer het later nog een keer.</h2>
 						<p>{{mdSelected.error}}</p>
 						<br/><br/><br/><br/>
 					</div>
+					<div data-ng-include="'../../catalog/views/geodatastore/templates/form.html'" ng-hide="mdSelected.error||mdSelected.$processing()"></div>
                 </div>
                 <div data-ng-switch-default class="padding-25 padding-top-10em">
                     <p class="h2 text-center" ng-show="tab=='upload'">Vul informatie over een dataset in alvorens deze te delen.</p>
