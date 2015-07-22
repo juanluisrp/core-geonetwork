@@ -26,12 +26,17 @@
         }
       };
 
+      var failedUpload = function(e, data) {
+
+      }
+
       $scope.datasetUploadOptions = {
         url: '../../geodatastore/api/dataset',
         dropZone: $('#dropzone'),
         sequentialUploads: true,
         autoUpload: true,
-        done: successfulUpload
+        done: successfulUpload,
+        fail: failedUpload
       };
 
   }]);

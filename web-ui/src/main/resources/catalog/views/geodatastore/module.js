@@ -15,7 +15,7 @@
 
   var module = angular.module('gn_search_geodatastore',
       ['geodatastore_fileupload', 'gn_search', 'geodatastore_login', 'gn_login_controller', 'ngRoute', 'gn_search_geodatastore_config',
-       'gn_search_geodatastore_directive', 'gn_mdactions_directive', 'geodatastore_upload_service']);
+       'gn_search_geodatastore_directive', 'gn_mdactions_directive', 'geodatastore_upload_service', 'bootstrap-tagsinput']);
 
   // Define the translation files to load
   module.constant('$LOCALES', ['geodatastore']);
@@ -85,6 +85,7 @@
 				pageSize: 5,
 				status: ($scope.tab == "upload") ? 'draft' : 'published'
 			}).then(function(data) {
+				GdsUploadFactory.clearList();
 				$scope.searchResults = data;
         if ($scope.tab == 'upload') {
 			  	$scope.totalNotPublished = data.count;
@@ -113,7 +114,7 @@
 
 		$scope.setMD = function(md) {
 			console.log(md);
-			$scope.mdSelected = angular.copy(md);
+			$scope.mdSelected = angular.copy(md, $scope.mdSelected);
 			$scope.hasSelected = true;
       if (md.topicCategories && md.topicCategories.length > 0) {
         $scope.mdSelected.topicCategory = $filter('orderBy')($scope.mdSelected.topicCategories)[0];
