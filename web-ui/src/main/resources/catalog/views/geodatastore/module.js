@@ -17,7 +17,7 @@
   var module = angular.module('gn_search_geodatastore',
       ['geodatastore_fileupload', 'gn_search', 'geodatastore_login', 'gn_login_controller', 'ngRoute', 'gn_search_geodatastore_config',
        'gn_search_geodatastore_directive', 'gn_mdactions_directive', 'geodatastore_upload_service', 'bootstrap-tagsinput',
-				'geodatastore_edit_metadata_controller']);
+	   'geodatastore_edit_metadata_controller']);
 
   // Define the translation files to load
   module.constant('$LOCALES', ['geodatastore']);
@@ -70,30 +70,33 @@
     $scope.totalPublished = 0;
 		$scope.GdsUploadFactory = GdsUploadFactory;
     $scope.tab = "upload";
-
+    $scope.perPage = 8;
+	$scope.page = 1;
 
 		$scope.$watch('user', function() {
 			$scope.updateResults(1);
 		})
 
 	  $scope.updateResults = function(page ,any, order){
+			$scope.page = page;
 			if (!order) {
 				order="changeDate";
 			}
 			gdsSearchManagerService.search({
-				from: (page - 1)* 5 + 1,
+				from: (page - 1)* $scope.perPage + 1,
 				sortBy: order,
-        sortOrder: 'desc',
-				pageSize: 5,
+				sortOrder: 'desc',
+				pageSize: $scope.perPage,
 				status: ($scope.tab == "upload") ? 'draft' : 'published'
 			}).then(function(data) {
-				GdsUploadFactory.clearList();
+			    GdsUploadFactory.clearList();
 				$scope.searchResults = data;
-        if ($scope.tab == 'upload') {
-			  	$scope.totalNotPublished = data.count;
-        } else if ($scope.tab == 'published') {
-          $scope.totalPublished = data.count;
-        }
+				if ($scope.tab == 'upload') {
+					$scope.totalNotPublished = data.count;
+				} else if ($scope.tab == 'published') {
+					$scope.totalPublished = data.count;			   
+				} 
+				$scope.pages = new Array(Math.ceil(data.count/$scope.perPage)); 
 			}, function(error) {
 					$log.error("Error in search: " + error);
 			});
@@ -108,15 +111,15 @@
 			}
 	  }
 	  
+	  $scope.pages = [];
 	  $scope.updateResults(1);
-	  
 	  $scope.mdSelected;
 	  $scope.hasSelected = false;
 	  $scope.formModified = false;
 
 		$scope.setMD = function(md) {
 			console.log(md);
-			$scope.mdSelected = angular.copy(md, $scope.mdSelected);
+			$scope.mdSelected = angular.copy(md);
 			$scope.hasSelected = true;
       if (md.topicCategories && md.topicCategories.length > 0) {
         $scope.mdSelected.topicCategory = $filter('orderBy')($scope.mdSelected.topicCategories)[0];
