@@ -91,7 +91,7 @@
 
                        <!--  Files recovered from search service -->
 					   <li data-ng-repeat="md in searchResults.metadata" data-ng-click="setMD(md)" data-ng-class="setBackground(md)" >
-                            <div class="arrow-left" data-ng-show="md.identifier == mdSelected.identifer"></div>
+                            <div class="arrow-left" data-ng-show="md.identifier == mdSelected.identifier"></div>
 							<div data-ng-include="'../../catalog/views/geodatastore/templates/cardPublished.html'"  data-ng-show="tab == 'published'"></div>
 							<div data-ng-include="'../../catalog/views/geodatastore/templates/cardUpload.html'" data-ng-show="tab == 'upload'"></div>
 						</li>

@@ -1225,7 +1225,9 @@
         <module>e2e-tests</module>
         <!--module>geoserver</module-->     
         <module>pdok-geodatastore</module>
+<!--
         <module>pdok-geodatastore-dar</module>
+-->
       </modules>
     </profile>
     <!-- Python and Latex are required to build the documentation. -->
