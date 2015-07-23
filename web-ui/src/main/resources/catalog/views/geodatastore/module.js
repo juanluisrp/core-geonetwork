@@ -201,6 +201,9 @@
 		
 	  //grab the filename from metadata, for now take the first link, later check which link is the correct link, sometimes filename is empty then use file desc
 	  $scope.getFileName = function (md) {
+			if (md instanceof File) {
+				return md.name;
+			}
 			if (!md.url || md.url.length  == 0) {
 				return md.title
 			} else {

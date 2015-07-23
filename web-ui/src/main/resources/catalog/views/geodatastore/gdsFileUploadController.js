@@ -29,17 +29,20 @@
       };
 
       var failedUpload = function(e, data) {
-	    var err = data.files[0];
-		err.error=true;
-		err.identifier="error-"+Math.random();
-		if (data.errorThrown) err.status=data.errorThrown;
-		if (data.response()&&data.response().jqXHR.responseJSON.messages) 
-			err.message=data.response().jqXHR.responseJSON.messages[0];
-		else 
-			err.message="An error occured";
-		GdsUploadFactory.add(err);
-		$scope.clear(data.files);
-      }
+        var err = data.files[0];
+        err.error = true;
+		    err.identifier = "error-"+Math.random();
+		    if (data.errorThrown) {
+          err.status=data.errorThrown;
+        }
+        if (data.response() && data.response().jqXHR.responseJSON.messages) {
+          err.message=data.response().jqXHR.responseJSON.messages[0];
+        }	else {
+          err.message = "An error occured";
+        }
+		    GdsUploadFactory.add(err);
+        $scope.clear(data.files);
+      };
 
       $scope.datasetUploadOptions = {
         url: '../../geodatastore/api/dataset',

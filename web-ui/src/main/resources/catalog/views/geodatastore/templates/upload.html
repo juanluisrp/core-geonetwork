@@ -63,8 +63,8 @@
                                    </a>
                                </div>
                                <i class="file-icon fa fa-lg fa-fw" data-ng-class="GdsUploadFactory.getFileIcon(file.type)"></i>
-                               <span class="name">{{file.name||name}}</span>
-                               <span class="size">({{file.size||size | formatFileSize}})</span>
+                               <span class="name">{{file.name}}</span>
+                               <span class="size">({{file.size | formatFileSize}})</span>
                                <div data-ng-show="file.error"  class="message alert-danger"><i class="fa fa-exclamation-triangle fa-fw" style="font-size:1em; margin-right: 4px"></i>Upload fout. Klik hier voor meer informatie ({{file.error}}).</div>
                            </div>
                            <div class="progress progress-bar-striped progress-bar-inqueue active fade" data-ng-class="{'pending': 'in'}[file.$state()]"
@@ -82,7 +82,7 @@
                                    <a class="delete" href="#" data-toggle="tooltip" data-placement="top" title="verwijderen"><i class="fa fa-trash-o fa-lg"></i></a>
                                </div>
                                <i class="fa fa-lg fa-fw" data-ng-class="GdsUploadFactory.getFileIcon(file)" style="vertical-align: 12%"></i>
-                               <span>{{getFileName(file)||file.name}}</span>
+                               <span>{{getFileName(file)}}</span>
                            </div>
 						   <div data-ng-show="file.error"  class="message alert-danger"><i class="fa fa-exclamation-triangle fa-fw" style="font-size:1em; margin-right: 4px"></i>Upload fout. Klik hier voor meer informatie.</div>
                            <div class="message alert-info" data-ng-hide="file.error">
