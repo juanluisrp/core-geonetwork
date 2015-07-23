@@ -53,7 +53,7 @@
                     </div>
                     <ol id="selectable">
                        <!-- List of files in queue -->
-                       <li data-ng-repeat="file in queue" data-ng-class="{'processing': file.$processing()}">
+                       <li data-ng-repeat="file in queue" data-ng-class="{'processing': file.$processing()}" data-ng-click="setMD(file)">
                            <div class="arrow-left" data-ng-show="file.identifier==mdSelected.identifier"></div>
 						   <div class="title">
                                <div class="floatright" >
@@ -62,10 +62,10 @@
                                        <i class="fa fa-times fa-lg"></i>
                                    </a>
                                </div>
-                               <i class="file-icon fa fa-lg fa-fw"  data-ng-class="GdsUploadFactory.getFileIcon(file.type)"></i>
-                               <span class="name">{{file.name}}</span>
-                               <span class="size">({{file.size | formatFileSize}})</span>
-                               <div data-ng-show="file.error" data-ng-click="setMD(file)" class="message alert-danger"><i class="fa fa-exclamation-triangle fa-fw" style="font-size:1em; margin-right: 4px"></i>Upload fout. Klik hier voor meer informatie ({{file.error}}).</div>
+                               <i class="file-icon fa fa-lg fa-fw" data-ng-class="GdsUploadFactory.getFileIcon(file.type)"></i>
+                               <span class="name">{{file.name||name}}</span>
+                               <span class="size">({{file.size||size | formatFileSize}})</span>
+                               <div data-ng-show="file.error"  class="message alert-danger"><i class="fa fa-exclamation-triangle fa-fw" style="font-size:1em; margin-right: 4px"></i>Upload fout. Klik hier voor meer informatie ({{file.error}}).</div>
                            </div>
                            <div class="progress progress-bar-striped progress-bar-inqueue active fade" data-ng-class="{'pending': 'in'}[file.$state()]"
                                 data-file-upload-progress="file.$progress()" style="width: 100%">
@@ -82,9 +82,10 @@
                                    <a class="delete" href="#" data-toggle="tooltip" data-placement="top" title="verwijderen"><i class="fa fa-trash-o fa-lg"></i></a>
                                </div>
                                <i class="fa fa-lg fa-fw" data-ng-class="GdsUploadFactory.getFileIcon(file)" style="vertical-align: 12%"></i>
-                               <span>{{getFileName(file)}}</span>
+                               <span>{{getFileName(file)||file.name}}</span>
                            </div>
-                           <div class="message alert-info">
+						   <div data-ng-show="file.error"  class="message alert-danger"><i class="fa fa-exclamation-triangle fa-fw" style="font-size:1em; margin-right: 4px"></i>Upload fout. Klik hier voor meer informatie.</div>
+                           <div class="message alert-info" data-ng-hide="file.error">
                                <i class="fa fa-pencil fa-fw" style="font-size:1em; margin-right: 4px"></i>Voltooi de dataset informatie om te kunnen publiceren.
                            </div>
                        </li>
@@ -127,7 +128,7 @@
 						<br/><br/><br/><br/>
 						<h2><i class="fa fa-exclamation-triangle fa-fw"></i> Er is iets mis gegaan bij het uploaden van uw bestand, probeer het later nog een keer.</h2>
 						
-						<p>{{'error-'+mdSelected.error|translate}}</p>
+						<p>{{mdSelected.message|translate}}</p>
 						<br/><br/><br/><br/>
 					</div>
 					<div data-ng-include="'../../catalog/views/geodatastore/templates/form.html'" ng-hide="mdSelected.error||mdSelected.$processing()"></div>
