@@ -118,7 +118,6 @@
 	  $scope.formModified = false;
 
 		$scope.setMD = function(md) {
-			console.log(md);
 			$scope.mdSelected = angular.copy(md);
 			$scope.hasSelected = true;
       if (md.topicCategories && md.topicCategories.length > 0) {
