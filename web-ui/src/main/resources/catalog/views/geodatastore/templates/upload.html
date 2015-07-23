@@ -54,7 +54,7 @@
                     <ol id="selectable">
                        <!-- List of files in queue -->
                        <li data-ng-repeat="file in queue" data-ng-class="{'processing': file.$processing()}">
-                           <div class="arrow-left" data-ng-show="file == mdSelected"></div>
+                           <div class="arrow-left" data-ng-show="file.identifier == mdSelected.identifier"></div>
 						   <div class="title">
                                <div class="floatright" >
                                    <a class="delete" href="#" data-toggle="tooltip" data-placement="top"
@@ -76,7 +76,7 @@
                        </li>
                        <!-- Files uploaded since page reload -->
                        <li data-ng-repeat="file in GdsUploadFactory.list" data-ng-click="setMD(file)" data-ng-class="setBackground(file)">
-                           <div class="arrow-left" data-ng-show="file == mdSelected"></div>
+                           <div class="arrow-left" data-ng-show="file.identifier == mdSelected.identifier"></div>
                            <div class="title">
                                <div class="floatright">
                                    <a class="delete" href="#" data-toggle="tooltip" data-placement="top" title="verwijderen"><i class="fa fa-trash-o fa-lg"></i></a>
