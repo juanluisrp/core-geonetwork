@@ -134,9 +134,18 @@
 					<div data-ng-include="'../../catalog/views/geodatastore/templates/form.html'" ng-hide="mdSelected.error||mdSelected.$processing()"></div>
                 </div>
                 <div data-ng-switch-default class="padding-25 padding-top-10em">
-                    <p class="h2 text-center" ng-show="tab=='upload'">Vul informatie over een dataset in alvorens deze te delen.</p>
-					<p class="h2 text-center" ng-show="tab=='published'">U kunt de informatie over een dataset wijzigen, ook nadat deze gepubliceerd is.</p>
-                    <p class="h3 text-center">Selecteer een bestand uit de linker kolom om deze te bewerken.</p>
+					
+						<p class="h2 text-center" ng-show="tab=='upload' && totalNotPublished>0">
+							Vul informatie over een dataset in alvorens deze te delen.<br/>
+							<small>Selecteer een bestand uit de linker kolom om deze te bewerken.</small></p>
+						<p class="h2 text-center" ng-show="tab=='published' && totalPublished>0">
+							U kunt de informatie over een dataset wijzigen, ook nadat deze gepubliceerd is.<br/>
+							<small>Selecteer een bestand uit de linker kolom om deze te bewerken.</small></p>
+						<p class="h2 text-center" ng-show="tab=='upload' && totalNotPublished==0">
+							Upload een dataset door deze op het vlak links te slepen of "selecteer bestanden" te klikken</p>
+						<p class="h2 text-center" ng-show="tab=='published' && totalPublished==0">
+							Eerder gepubliceerde datasets worden hier getoond</p>
+						
                     <p class="text-center" aria-label="Left arrow"><i class="fa fa-arrow-left fa-4x"></i></i></p>
                 </div>
             </aside>
