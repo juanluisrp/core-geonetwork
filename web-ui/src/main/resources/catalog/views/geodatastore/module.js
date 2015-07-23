@@ -12,10 +12,12 @@
   goog.require('geodatastore_login');
   goog.require('geodatastore_fileupload');
 	goog.require('geodatastore_upload_service');
+	goog.require('geodatastore_edit_metadata_controller');
 
   var module = angular.module('gn_search_geodatastore',
       ['geodatastore_fileupload', 'gn_search', 'geodatastore_login', 'gn_login_controller', 'ngRoute', 'gn_search_geodatastore_config',
-       'gn_search_geodatastore_directive', 'gn_mdactions_directive', 'geodatastore_upload_service', 'bootstrap-tagsinput']);
+       'gn_search_geodatastore_directive', 'gn_mdactions_directive', 'geodatastore_upload_service', 'bootstrap-tagsinput',
+				'geodatastore_edit_metadata_controller']);
 
   // Define the translation files to load
   module.constant('$LOCALES', ['geodatastore']);
@@ -179,20 +181,20 @@
 			} else {
 				return null;
 			}
-	  }
+	  };
 
-
-
-
-		
+		/**
+		 * Set the active tab.
+		 * @param val current tab.
+		 */
 		$scope.setTab = function(val){
-			//if form modified&&not saved, warn to loose changes?
-			$scope.tab=val;
+			//if form modified && not saved, warn to loose changes?
+			$scope.tab = val;
 			$scope.hasSelected = false;
 			$scope.mdSelected = null;
 			GdsUploadFactory.clearList();
 			$scope.updateResults(1);
-		}
+		};
 		
 	  //grab the filename from metadata, for now take the first link, later check which link is the correct link, sometimes filename is empty then use file desc
 	  $scope.getFileName = function (md) {
@@ -206,9 +208,17 @@
 					return md.title;
 				}
 			}
-	  }
+	  };
+
+		$scope.saveMetadata = function() {
+			GdsUploadFactory.saveMetadata($scope.mdSelected).then(
+					function(){},
+					function(error) {});
+		}
 	  
   }]);
+
+
   
   module.controller("geoDataStoreController", ['$scope', function ($scope) {
 

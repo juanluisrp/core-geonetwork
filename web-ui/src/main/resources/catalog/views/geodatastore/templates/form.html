@@ -2,7 +2,8 @@
 template for metadata form
 -->
 
-<form>
+<form id="metadataForm" method="POST" enctype="multipart/form-data" data-file-upload="datasetEditOptions"
+	  data-ng-controller="GdsEditMetadataController">
 	<div class="form-group">
 		<label for="tt">{{'title'|translate}}</label>
 		<input class="form-control" id="tt" tabindex="1" data-ng-model="mdSelected.title" placeholder="{{'placeholderTitleField'|translate}}" />
@@ -12,8 +13,8 @@ template for metadata form
 		<textarea rows="5" class="form-control" id="os" data-ng-model="mdSelected.summary" tabindex="2"  placeholder="{{'placeholderAbstractField'|translate}}"></textarea>
 	</div>
 	<div class="form-group">
-		<label for="ow">{{'topic'|translate}}</label>
-		<select class="form-control" id="ow" tabindex=3  data-ng-model="mdSelected.topicCategory">
+		<label for="topic">{{'topic'|translate}}</label>
+		<select class="form-control" id="topic" tabindex=3  data-ng-model="mdSelected.topicCategory">
 			<option>Selecteer</option>
 			<option value="imageryBaseMapsEarthCover">Luchtfoto / Dekking van de Aarde</option>
 			<option value="inlandWaters">Binnenwateren</option>
@@ -42,28 +43,28 @@ template for metadata form
 			   data-ng-model="mdSelected.keywords"></bootstrap-tagsinput>
 	</div>
 	<div class="form-group">
-		<label for="bh">{{'lineage'|translate}}</label>
-		<textarea rows="4" class="form-control" id="bh" ng-model="mdSelected.lineage" tabindex="5"  placeholder="{{'placeholderLineageField'|translate}}"></textarea>
+		<label for="lineage">{{'lineage'|translate}}</label>
+		<textarea rows="4" class="form-control" id="lineage" data-ng-model="mdSelected.lineage" tabindex="5"  placeholder="{{'placeholderLineageField'|translate}}"></textarea>
 	</div>
 	<div class="form-group">
-		<label for="lk">{{'location'|translate}}</label>
-		<input class="form-control" id="lk" tabindex=6 ng-model="mdSelected.location" placeholder="{{'placeholderLocationField'|translate}}">
+		<label for="location">{{'location'|translate}}</label>
+		<input class="form-control" id="location" tabindex=6 data-ng-model="mdSelected.location" placeholder="{{'placeholderLocationField'|translate}}">
 	</div>
 	<div class="form-group">
-		<label for="odl">{{'license'|translate}}</label>
-		<select class="form-control" id="odl" tabindex=7  ng-model="mdSelected.legalConstraints[1]">
+		<label for="license">{{'license'|translate}}</label>
+		<select class="form-control" id="license" tabindex=7  data-ng-model="mdSelected.license">
 			<option value="PublicDomain">Public Domain</option>
 			<option value="CC0">CC0 (Creative Commons)</option>
 			<option value="CC-BY">CC-BY (Creative Commons Naamsvermelding)</option>
 		</select>
 	</div>
-	<div class="form-group"  ng-model="mdSelected.usageConstraints">
-		<label for="gb">{{'useLimitation'|translate}}</label>
-		<textarea rows="4" class="form-control" id="gb" ng-model="mdSelected.resourceConstraints[0]" tabindex="8"  placeholder="{{'placeholderUselimitationField'|translate}}"></textarea>
+	<div class="form-group">
+		<label for="useLimitation">{{'useLimitation'|translate}}</label>
+		<textarea rows="4" class="form-control" id="useLimitation" data-ng-model="mdSelected.useLimitation" tabindex="8"  placeholder="{{'placeholderUselimitationField'|translate}}"></textarea>
 	</div>
 	<div class="form-group">
-		<label for="tps">{{'scale'|translate}}</label>
-		<select class="form-control" id="tps" tabindex=9  ng-model="mdSelected.resolution[0]">
+		<label for="resolution">{{'scale'|translate}}</label>
+		<select class="form-control" id="resolution" tabindex=9  data-ng-model="mdSelected.resolution">
 			<option value="1000000">Landelijk</option>
 			<option value="100000">Provinciaal</option>
 			<option value="25000">Gemeentelijk</option>
@@ -73,24 +74,42 @@ template for metadata form
 		</select>
 	</div>
 	<div class="form-group">
-		<label for="exampleInputFile">{{'thumbnail'|translate}}</label>
-		<div class="row">
-			<div class="col-xs-4" ng-show="mdSelected.image[0]"><!-- todo: show a preview of the uploaded image -->
-				<img src="{{mdSelected.image[0] | split:'|':1}}" class="thumbnail" style="max-width:150px">
-			</div>
-			<div class="col-xs-8">
-				<button type="button" id="upload" class="btn btn-default btn-sm floatright">
-					<i class="fa fa-cloud-upload fa-fw"></i>
-				</button>
-				<input class="form-control" type="file" id="exampleInputFile" style="width:85%"  ng-model="mdSelected.image[0]">
-			</div>
+		<label for="thumbnailUploadButton">{{'thumbnail'|translate}}</label>
+		<div class="row" id="thumbnailDropZone">
+            <div>
+                <span class="btn btn-default btn-sm fileinput-button" data-ng-class="{disabled: disabled}">
+                    <i class="fa fa-folder-open-o fa-fw"></i>
+                    <span>Selecteer een bestand</span>
+                    <input type="file" id="thumbnailUploadButton" name="thumbnail" data-ng-disabled="disabled">
+                </span>
+            </div>
 		</div>
+        <ul>
+            <li data-ng-repeat="file in queue" data-ng-class="{'processing': file.$processing()}">
+                <div data-ng-switch data-on="!!file.thumbnailUrl">
+                    <div class="preview" data-ng-switch-when="true">
+                        <a data-ng-href="{{file.url}}" title="{{file.name}}" download="{{file.name}}" data-gallery><img data-ng-src="{{file.thumbnailUrl}}" alt=""></a>
+                    </div>
+                    <div class="preview" data-ng-switch-default data-file-upload-preview="file"></div>
+                </div>
+                <div>
+                    <p class="name" data-ng-switch data-on="!!file.url">
+                        <span data-ng-switch-when="true" data-ng-switch data-on="!!file.thumbnailUrl">
+                            <a data-ng-switch-when="true" data-ng-href="{{file.url}}" title="{{file.name}}" download="{{file.name}}" data-gallery>{{file.name}}</a>
+                            <a data-ng-switch-default data-ng-href="{{file.url}}" title="{{file.name}}" download="{{file.name}}">{{file.name}}</a>
+                        </span>
+                        <span data-ng-switch-default>{{file.name}}</span>
+                    </p>
+                    <strong data-ng-show="file.error" class="error text-danger">{{file.error}}</strong>
+                </div>
+            </li>
+        </ul>
 	</div>
-	<div class="form-group" style="border-top: solid 1px; padding-top: 15px;">
+	<div class="form-group metadataFormButtons">
 		<div class="floatright">
-			<button type="button" id="upload" class="btn btn-default btn-sm "><i class="fa fa-trash-o fa-fw"></i>{{'remove'|translate}}</button>
-			<button disabled="disabled" type="button" id="upload" class="btn btn-default btn-sm" ng-show="tab=='upload'"><i class="fa fa-share fa-fw"></i>{{'publish'|translate}}</button>
-			<button type="button" id="upload" class="btn btn-default btn-sm"><i class="fa fa-floppy-o fa-fw"></i>{{'save'|translate}}</button>
+			<button type="button" id="removeFormButton" class="btn btn-default btn-sm "><i class="fa fa-trash-o fa-fw"></i>{{'remove'|translate}}</button>
+			<button disabled="disabled" type="button" id="publishFormButton" class="btn btn-default btn-sm" ng-show="tab=='upload'"><i class="fa fa-share fa-fw"></i>{{'publish'|translate}}</button>
+			<button type="button" id="saveFormButton" class="btn btn-default btn-sm" data-ng-click="submit()"><i class="fa fa-floppy-o fa-fw"></i>{{'save'|translate}}</button>
 		</div>
 	</div>
 </form>

@@ -13,6 +13,7 @@ import nl.kadaster.pdok.bussiness.MetadataParametersBean;
 import nl.kadaster.pdok.bussiness.MetadataUtil;
 import nl.kadaster.pdok.bussiness.SearchResponse;
 import org.apache.commons.lang.StringUtils;
+import org.apache.http.HttpRequest;
 import org.fao.geonet.ApplicationContextHolder;
 import org.fao.geonet.constants.Geonet;
 import org.fao.geonet.constants.Params;
@@ -45,6 +46,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.ServletRequestDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -273,13 +275,16 @@ public class GeodatastoreApi  {
     }
 
     /**
-     *
+     * Update an existing metadata record.
      * @param identifier
      * @param model
      * @return
      */
-    @RequestMapping(value = "/api/dataset/{identifier}", method = RequestMethod.PUT)
-    public @ResponseBody MetadataResponseBean updateDataset(@PathVariable("identifier") String identifier, Model model) {
+    @RequestMapping(value = "/api/dataset/{identifier}", method = RequestMethod.POST)
+    public @ResponseBody MetadataResponseBean updateDataset(
+            @PathVariable("identifier") String identifier,
+            @RequestParam("thumbnail") MultipartFile thumbnail, @RequestParam("metadata") MetadataResponseBean metadata,
+            @RequestParam(value = "publish", defaultValue = "true", required = false) Boolean publish, Model model) {
         MetadataResponseBean response = new MetadataResponseBean();
         response.setIdentifier(identifier);
         return response;
@@ -424,6 +429,10 @@ public class GeodatastoreApi  {
     }
 
 
+    @InitBinder
+    protected void initBinder(HttpServletRequest request,
+                              ServletRequestDataBinder binder) throws Exception {
 
+    }
 
 }
