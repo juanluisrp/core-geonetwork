@@ -26,6 +26,7 @@ import org.fao.geonet.kernel.search.MetaSearcher;
 import org.fao.geonet.kernel.search.SearchManager;
 import org.fao.geonet.kernel.search.SearcherType;
 import org.fao.geonet.kernel.setting.SettingManager;
+import org.fao.geonet.nl.kadaster.pdok.api.converter.StringToMetadataParameterBeanConverter;
 import org.fao.geonet.repository.GroupRepository;
 import org.fao.geonet.repository.UserGroupRepository;
 import org.fao.geonet.repository.UserRepository;
@@ -95,6 +96,8 @@ public class GeodatastoreApi  {
     ServletContext servletContext;
     @Autowired
     private SearchManager searchManager;
+    @Autowired
+    private StringToMetadataParameterBeanConverter metadataConverter;
 
 
 
@@ -283,8 +286,9 @@ public class GeodatastoreApi  {
     @RequestMapping(value = "/api/dataset/{identifier}", method = RequestMethod.POST)
     public @ResponseBody MetadataResponseBean updateDataset(
             @PathVariable("identifier") String identifier,
-            @RequestParam("thumbnail") MultipartFile thumbnail, @RequestParam("metadata") MetadataResponseBean metadata,
+            @RequestParam("thumbnail") MultipartFile thumbnail, @RequestParam("metadata") String metadata,
             @RequestParam(value = "publish", defaultValue = "true", required = false) Boolean publish, Model model) {
+        MetadataParametersBean metadataParameterr = metadataConverter.convert(metadata);
         MetadataResponseBean response = new MetadataResponseBean();
         response.setIdentifier(identifier);
         return response;
@@ -427,12 +431,4 @@ public class GeodatastoreApi  {
 
         return protocol + "://" + host + (port.equals("80") ? "" : ":" + port) + baseURL;
     }
-
-
-    @InitBinder
-    protected void initBinder(HttpServletRequest request,
-                              ServletRequestDataBinder binder) throws Exception {
-
     }
-
-}
