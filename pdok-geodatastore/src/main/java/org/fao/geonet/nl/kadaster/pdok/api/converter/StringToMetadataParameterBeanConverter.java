@@ -24,10 +24,11 @@ public class StringToMetadataParameterBeanConverter implements Converter<String,
         try {
             mpb = mapper.readValue(source, MetadataParametersBean.class);
         } catch (JsonMappingException e) {
-            e.printStackTrace();
+            throw new IllegalArgumentException(e);
         } catch (JsonParseException e) {
-            e.printStackTrace();
+            throw new IllegalArgumentException(e);
         } catch (IOException e) {
+            // This should't occurs with a String source
             e.printStackTrace();
         }
 

@@ -9,30 +9,31 @@
                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                 exclude-result-prefixes="xs"
                 version="2.0">
-  <xsl:param name="organisationName" />
-  <xsl:param name="organisationEmail"/>
-  <xsl:param name="metadataModifiedDate"/>
-  <xsl:param name="lineage"/>
-  <xsl:param name="title"/>
-  <xsl:param name="publicationDate"/>
-  <xsl:param name="uuid"/>
-  <xsl:param name="abstract"/>
-  <xsl:param name="thumbnailUri"/>
-  <xsl:param name="keywords"/>
-  <xsl:param name="keywordSeparator"/>
-  <xsl:param name="userLimitation"/>
-  <xsl:param name="resolution"/>
-  <xsl:param name="topics"/>
-  <xsl:param name="topicSeparator"/>
-  <xsl:param name="geographicIdentifier"/>
-  <xsl:param name="bboxWestLongitude"/>
-  <xsl:param name="bboxEastLongitude"/>
-  <xsl:param name="bboxSouthLatitude"/>
-  <xsl:param name="bboxNorthLatitude"/>
-  <xsl:param name="format"/>
-  <xsl:param name="downloadUri"/>
-  <xsl:param name="fileName"/>
-  <xsl:param name="license"/>
+  <xsl:variable name="defaultConstant" select="'XXXX_nullValue_XXXX'"/>
+  <xsl:param name="organisationName" select="$defaultConstant"/>
+  <xsl:param name="organisationEmail" select="$defaultConstant"/>
+  <xsl:param name="metadataModifiedDate" select="$defaultConstant"/>
+  <xsl:param name="lineage" select="$defaultConstant"/>
+  <xsl:param name="title" select="$defaultConstant"/>
+  <xsl:param name="publicationDate" select="$defaultConstant"/>
+  <xsl:param name="uuid" select="$defaultConstant"/>
+  <xsl:param name="abstract" select="$defaultConstant"/>
+  <xsl:param name="thumbnailUri" select="$defaultConstant"/>
+  <xsl:param name="keywords" select="$defaultConstant"/>
+  <xsl:param name="keywordSeparator" select="$defaultConstant"/>
+  <xsl:param name="userLimitation" select="$defaultConstant"/>
+  <xsl:param name="resolution" select="$defaultConstant"/>
+  <xsl:param name="topics" select="$defaultConstant"/>
+  <xsl:param name="topicSeparator" select="$defaultConstant"/>
+  <xsl:param name="geographicIdentifier" select="$defaultConstant"/>
+  <xsl:param name="bboxWestLongitude" select="$defaultConstant"/>
+  <xsl:param name="bboxEastLongitude" select="$defaultConstant"/>
+  <xsl:param name="bboxSouthLatitude" select="$defaultConstant"/>
+  <xsl:param name="bboxNorthLatitude" select="$defaultConstant"/>
+  <xsl:param name="format" select="$defaultConstant"/>
+  <xsl:param name="downloadUri" select="$defaultConstant"/>
+  <xsl:param name="fileName" select="$defaultConstant"/>
+  <xsl:param name="license" select="$defaultConstant"/>
 
   <xsl:template match="/">
     <xsl:apply-templates/>
