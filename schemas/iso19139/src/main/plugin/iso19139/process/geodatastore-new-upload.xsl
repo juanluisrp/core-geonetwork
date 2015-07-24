@@ -21,7 +21,7 @@
   <xsl:param name="thumbnailUri" select="$defaultConstant"/>
   <xsl:param name="keywords" select="$defaultConstant"/>
   <xsl:param name="keywordSeparator" select="$defaultConstant"/>
-  <xsl:param name="userLimitation" select="$defaultConstant"/>
+  <xsl:param name="useLimitation" select="$defaultConstant"/>
   <xsl:param name="resolution" select="$defaultConstant"/>
   <xsl:param name="topics" select="$defaultConstant"/>
   <xsl:param name="topicSeparator" select="$defaultConstant"/>
@@ -46,25 +46,78 @@
     </xsl:copy>
   </xsl:template>
 
+  <xsl:template name="defaultCharacterStringTemplate">
+    <xsl:param name="fieldValue" />
+    <xsl:param name="defaultValue" />
+
+    <xsl:choose>
+      <xsl:when test="$fieldValue != $defaultValue">
+        <gco:CharacterString><xsl:value-of select="$fieldValue" /></gco:CharacterString>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:apply-templates select="gco:CharacterString"/>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+
+  <xsl:template name="defaultDecimalTemplate">
+    <xsl:param name="fieldValue" />
+    <xsl:param name="defaultValue" />
+
+    <xsl:choose>
+      <xsl:when test="$fieldValue != $defaultValue">
+        <gco:Decimal><xsl:value-of select="$fieldValue" /></gco:Decimal>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:apply-templates select="gco:Decimal"/>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+
+  <xsl:template name="defaultDateTimeTemplate">
+    <xsl:param name="fieldValue" />
+    <xsl:param name="defaultValue" />
+
+    <xsl:choose>
+      <xsl:when test="$fieldValue != $defaultValue">
+        <gco:DateTime><xsl:value-of select="$fieldValue" /></gco:DateTime>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:apply-templates select="gco:DateTime"/>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+
   <!-- UUID -->
   <xsl:template match="/gmd:MD_Metadata/gmd:fileIdentifier">
     <xsl:copy>
-      <gco:CharacterString><xsl:value-of select="$uuid" /></gco:CharacterString>
+      <xsl:call-template name="defaultCharacterStringTemplate">
+        <xsl:with-param name="fieldValue" select="$uuid"/>
+        <xsl:with-param name="defaultValue" select="$defaultConstant"></xsl:with-param>
+      </xsl:call-template>
     </xsl:copy>
   </xsl:template>
+
   <!-- Organisation name -->
   <xsl:template match="/gmd:MD_Metadata/gmd:contact/gmd:CI_ResponsibleParty/gmd:organisationName">
     <xsl:copy>
-      <gco:CharacterString><xsl:value-of select="$organisationName"/></gco:CharacterString>
+      <xsl:call-template name="defaultCharacterStringTemplate">
+        <xsl:with-param name="fieldValue" select="$organisationName"/>
+        <xsl:with-param name="defaultValue" select="$defaultConstant"></xsl:with-param>
+      </xsl:call-template>
     </xsl:copy>
   </xsl:template>
 
   <!-- Organisation email -->
   <xsl:template match="/gmd:MD_Metadata/gmd:contact/gmd:CI_ResponsibleParty/gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:electronicMailAddress">
     <xsl:copy>
-      <gco:CharacterString><xsl:value-of select="$organisationEmail" /></gco:CharacterString>
+      <xsl:call-template name="defaultCharacterStringTemplate">
+        <xsl:with-param name="fieldValue" select="$organisationEmail"/>
+        <xsl:with-param name="defaultValue" select="$defaultConstant"></xsl:with-param>
+      </xsl:call-template>
     </xsl:copy>
   </xsl:template>
+
   <!-- Metadata modified date -->
   <!-- // FIXME is this neccesary or is fixed by up updade-fixed-info.xsl? -->
   <!--
@@ -72,33 +125,50 @@
      <gco:Date><xsl:value-of select="$metadataModifiedDate"></xsl:value-of></gco:Date>
   </xsl:template>
   -->
+
   <!-- Title -->
   <xsl:template match="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:citation/gmd:CI_Citation/gmd:title">
     <xsl:copy>
-      <gco:CharacterString><xsl:value-of select="$title" /></gco:CharacterString>
+      <xsl:call-template name="defaultCharacterStringTemplate">
+        <xsl:with-param name="fieldValue" select="$title"/>
+        <xsl:with-param name="defaultValue" select="$defaultConstant"></xsl:with-param>
+      </xsl:call-template>
     </xsl:copy>
   </xsl:template>
 
   <!-- Alternate title -->
   <xsl:template match="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:citation/gmd:CI_Citation/gmd:alternateTitle">
     <xsl:copy>
-      <gco:CharacterString><xsl:value-of select="$title" /></gco:CharacterString>
+      <xsl:call-template name="defaultCharacterStringTemplate">
+        <xsl:with-param name="fieldValue" select="$title"/>
+        <xsl:with-param name="defaultValue" select="$defaultConstant"></xsl:with-param>
+      </xsl:call-template>
     </xsl:copy>
   </xsl:template>
 
   <!-- Publication date -->
   <xsl:template match="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:citation/gmd:CI_Citation/gmd:date/gmd:CI_Date/gmd:date[../gmd:dateType/gmd:CI_DateTypeCode[@codeListValue='publication']]">
     <xsl:copy>
-      <!-- Datum waarop de dataset is gepubliceerd -->
-      <gco:DateTime><xsl:value-of select="$publicationDate"></xsl:value-of></gco:DateTime>
+      <xsl:comment>
+        Datum waarop de dataset is gepubliceerd
+      </xsl:comment>
+      <xsl:call-template name="defaultDateTimeTemplate">
+        <xsl:with-param name="fieldValue" select="$publicationDate" />
+        <xsl:with-param name="defaultValue" select="$defaultConstant"/>
+      </xsl:call-template>
     </xsl:copy>
   </xsl:template>
 
   <!-- Creation date -->
   <xsl:template match="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:citation/gmd:CI_Citation/gmd:date/gmd:CI_Date/gmd:date[../gmd:dateType/gmd:CI_DateTypeCode[@codeListValue='creation']]">
     <xsl:copy>
-      <!-- Datum waarop de dataset is gepubliceerd -->
-      <gco:DateTime><xsl:value-of select="$publicationDate"></xsl:value-of></gco:DateTime>
+      <xsl:comment>
+        Datum waarop de dataset is gepubliceerd
+      </xsl:comment>
+      <xsl:call-template name="defaultDateTimeTemplate">
+        <xsl:with-param name="fieldValue" select="$publicationDate" />
+        <xsl:with-param name="defaultValue" select="$defaultConstant"/>
+      </xsl:call-template>
     </xsl:copy>
   </xsl:template>
 
@@ -106,43 +176,61 @@
   <!-- identifier -->
   <xsl:template match="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:citation/gmd:CI_Citation/gmd:identifier/gmd:MD_Identifier/gmd:code">
     <xsl:copy>
-      <gco:CharacterString>http://geodatastore.pdok.nl/id/dataset/<xsl:value-of select="$uuid"/></gco:CharacterString>
+      <xsl:call-template name="defaultCharacterStringTemplate">
+        <xsl:with-param name="fieldValue" select="concat('http://geodatastore.pdok.nl/id/dataset/', $uuid)"/>
+        <xsl:with-param name="defaultValue" select="concat('http://geodatastore.pdok.nl/id/dataset/', $defaultConstant)"></xsl:with-param>
+      </xsl:call-template>
     </xsl:copy>
   </xsl:template>
 
   <!-- Abstract -->
   <xsl:template match="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:abstract">
     <xsl:copy>
-      <gco:CharacterString><xsl:value-of select="$abstract" /></gco:CharacterString>
+      <xsl:call-template name="defaultCharacterStringTemplate">
+        <xsl:with-param name="fieldValue" select="$abstract"/>
+        <xsl:with-param name="defaultValue" select="$defaultConstant"></xsl:with-param>
+      </xsl:call-template>
     </xsl:copy>
   </xsl:template>
 
   <!-- Organisation name Identification Info -->
   <xsl:template match="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:pointOfContact/gmd:CI_ResponsibleParty/gmd:organisationName">
     <xsl:copy>
-      <gco:CharacterString><xsl:value-of select="$organisationName" /></gco:CharacterString>
+      <xsl:call-template name="defaultCharacterStringTemplate">
+        <xsl:with-param name="fieldValue" select="$organisationName"/>
+        <xsl:with-param name="defaultValue" select="$defaultConstant"></xsl:with-param>
+      </xsl:call-template>
     </xsl:copy>
   </xsl:template>
 
   <!-- Organisation email Identification Info -->
   <xsl:template match="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:pointOfContact/gmd:CI_ResponsibleParty/gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:electronicMailAddress">
     <xsl:copy>
-      <gco:CharacterString><xsl:value-of select="$organisationEmail" /></gco:CharacterString>
+      <xsl:call-template name="defaultCharacterStringTemplate">
+        <xsl:with-param name="fieldValue" select="$organisationEmail"/>
+        <xsl:with-param name="defaultValue" select="$defaultConstant"></xsl:with-param>
+      </xsl:call-template>
     </xsl:copy>
   </xsl:template>
 
   <!-- Thumbnail URI -->
-  <xsl:template match="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:graphicOverview/gmd:MD_BrowseGraphic/gmd:fileName">
-    <xsl:copy>
-      <gco:CharacterString><xsl:value-of select="$thumbnailUri"/></gco:CharacterString>
-    </xsl:copy>
-  </xsl:template>
+  <!--  <xsl:template match="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:graphicOverview/gmd:MD_BrowseGraphic/gmd:fileName">
+      <xsl:copy>
+        <xsl:call-template name="defaultCharacterStringTemplate">
+            <xsl:with-param name="fieldValue" select="$thumbnailUri"/>
+            <xsl:with-param name="defaultValue" select="$defaultConstant"></xsl:with-param>
+        </xsl:call-template>
+      </xsl:copy>
+    </xsl:template>-->
 
   <!-- Descriptive keywords -->
   <xsl:template match="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:descriptiveKeywords/gmd:MD_Keywords">
     <xsl:copy>
       <xsl:variable name="keywordList" select="tokenize($keywords, $keywordSeparator)"/>
       <xsl:choose>
+        <xsl:when test="$keywords = $defaultConstant">
+          <xsl:apply-templates select="@*|node()"/>
+        </xsl:when>
         <xsl:when test="count($keywordList) = 0">
           <gmd:keyword></gmd:keyword>
         </xsl:when>
@@ -160,7 +248,10 @@
   <!-- User limitation -->
   <xsl:template match="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:resourceConstraints/gmd:MD_Constraints/gmd:useLimitation">
     <xsl:copy>
-      <gco:CharacterString><xsl:value-of select="$userLimitation"></xsl:value-of></gco:CharacterString>
+      <xsl:call-template name="defaultCharacterStringTemplate">
+        <xsl:with-param name="fieldValue" select="$useLimitation"/>
+        <xsl:with-param name="defaultValue" select="$defaultConstant"></xsl:with-param>
+      </xsl:call-template>
     </xsl:copy>
   </xsl:template>
 
@@ -178,17 +269,30 @@
           <gco:CharacterString>Geen beperkingen</gco:CharacterString>
         </gmd:otherConstraints>
         <gmd:otherConstraints>
-          <gco:CharacterString><xsl:value-of select="$license"/></gco:CharacterString>
+          <xsl:call-template name="defaultCharacterStringTemplate">
+            <xsl:with-param name="fieldValue" select="$license"/>
+            <xsl:with-param name="defaultValue" select="$defaultConstant"></xsl:with-param>
+          </xsl:call-template>
         </gmd:otherConstraints>
-        <xsl:if test="contains($license, 'by')">
-          <gmd:otherConstraints>
-            <gco:CharacterString> Naamsvermelding verplicht, <xsl:value-of select="$organisationName"/></gco:CharacterString>
-          </gmd:otherConstraints>
-        </xsl:if>
+        <xsl:choose>
+          <xsl:when test="$license != $defaultConstant and contains($license, 'by')">
+            <gmd:otherConstraints>
+              <xsl:call-template name="defaultCharacterStringTemplate">
+                <xsl:with-param name="fieldValue" select="concat('Naamsvermelding verplicht,', $organisationName)"/>
+                <xsl:with-param name="defaultValue" select="concat('Naamsvermelding verplicht,', $defaultConstant)" />
+              </xsl:call-template>
+            </gmd:otherConstraints>
+          </xsl:when>
+          <xsl:when test="$license = $defaultConstant and contains(gmd:otherConstraints/gco:CharacterString/text(), 'by')">
+            <gmd:otherConstraints>
+              <xsl:call-template name="defaultCharacterStringTemplate">
+                <xsl:with-param name="fieldValue" select="concat('Naamsvermelding verplicht,', $organisationName)"/>
+                <xsl:with-param name="defaultValue" select="concat('Naamsvermelding verplicht,', $defaultConstant)" />
+              </xsl:call-template>
+            </gmd:otherConstraints>
+          </xsl:when>
+        </xsl:choose>
       </gmd:MD_LegalConstraints>
-
-
-
     </xsl:copy>
   </xsl:template>
 
@@ -199,7 +303,10 @@
         <gmd:equivalentScale>
           <gmd:MD_RepresentativeFraction>
             <gmd:denominator>
-              <gco:Integer><xsl:value-of select="$resolution"/></gco:Integer>
+              <xsl:call-template name="defaultDecimalTemplate">
+                <xsl:with-param name="fieldValue" select="$resolution" />
+                <xsl:with-param name="defaultValue" select="$defaultConstant" />
+              </xsl:call-template>
             </gmd:denominator>
           </gmd:MD_RepresentativeFraction>
         </gmd:equivalentScale>
@@ -210,7 +317,13 @@
   <!-- Topic categories -->
   <xsl:template match="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:topicCategory">
     <xsl:variable name="topicList" select="tokenize($topics, $topicSeparator)"/>
+
     <xsl:choose>
+      <xsl:when test="$topics = $defaultConstant">
+        <xsl:copy>
+          <xsl:apply-templates select="@*|node()"/>
+        </xsl:copy>
+      </xsl:when>
       <xsl:when test="count($topicList) = 0">
         <!-- do not add any topic category -->
       </xsl:when>
@@ -231,7 +344,10 @@
       <gmd:RS_Identifier>
         <xsl:attribute name="uuid" select="$identifierUri" />
         <gmd:code>
-          <gco:CharacterString><xsl:value-of select="$geographicIdentifier"/></gco:CharacterString>
+          <xsl:call-template name="defaultCharacterStringTemplate">
+            <xsl:with-param name="fieldValue" select="$geographicIdentifier"/>
+            <xsl:with-param name="defaultValue" select="$defaultConstant" />
+          </xsl:call-template>
         </gmd:code>
         <gmd:codeSpace>
           <gco:CharacterString>PDOK</gco:CharacterString>
@@ -244,16 +360,28 @@
   <xsl:template match="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:extent/gmd:EX_Extent/gmd:geographicElement/gmd:EX_GeographicBoundingBox">
     <xsl:copy>
       <gmd:westBoundLongitude>
-        <gco:Decimal><xsl:value-of select="$bboxWestLongitude"/></gco:Decimal>
+        <xsl:call-template name="defaultDecimalTemplate">
+          <xsl:with-param name="fieldValue" select="$bboxWestLongitude" />
+          <xsl:with-param name="defaultValue" select="$defaultConstant" />
+        </xsl:call-template>
       </gmd:westBoundLongitude>
       <gmd:eastBoundLongitude>
-        <gco:Decimal><xsl:value-of select="$bboxEastLongitude"/></gco:Decimal>
+        <xsl:call-template name="defaultDecimalTemplate">
+          <xsl:with-param name="fieldValue" select="$bboxEastLongitude" />
+          <xsl:with-param name="defaultValue" select="$defaultConstant" />
+        </xsl:call-template>
       </gmd:eastBoundLongitude>
       <gmd:southBoundLatitude>
-        <gco:Decimal><xsl:value-of select="$bboxSouthLatitude"/></gco:Decimal>
+        <xsl:call-template name="defaultDecimalTemplate">
+          <xsl:with-param name="fieldValue" select="$bboxSouthLatitude" />
+          <xsl:with-param name="defaultValue" select="$defaultConstant" />
+        </xsl:call-template>
       </gmd:southBoundLatitude>
       <gmd:northBoundLatitude>
-        <gco:Decimal><xsl:value-of select="$bboxNorthLatitude"/></gco:Decimal>
+        <xsl:call-template name="defaultDecimalTemplate">
+          <xsl:with-param name="fieldValue" select="$bboxNorthLatitude" />
+          <xsl:with-param name="defaultValue" select="$defaultConstant" />
+        </xsl:call-template>
       </gmd:northBoundLatitude>
     </xsl:copy>
   </xsl:template>
@@ -265,7 +393,10 @@
         <xsl:comment>
           Voor geharmoniseerde INSPIRE data naar het applicatie schema verwijzen, juiste benaming zie hoofdstuk 9.x in de dataspecificaties
         </xsl:comment>
-        <gco:CharacterString><xsl:value-of select="$format"/></gco:CharacterString>
+        <xsl:call-template name="defaultCharacterStringTemplate">
+          <xsl:with-param name="fieldValue" select="$format"/>
+          <xsl:with-param name="defaultValue" select="$defaultConstant"></xsl:with-param>
+        </xsl:call-template>
       </gmd:name>
       <gmd:version>
         <gco:CharacterString/>
@@ -276,37 +407,46 @@
   <!-- Distributor organisation -->
   <xsl:template match="/gmd:MD_Metadata/gmd:distributionInfo/gmd:MD_Distribution/gmd:distributor/gmd:MD_Distributor/gmd:distributorContact/gmd:CI_ResponsibleParty/gmd:organisationName">
     <xsl:copy>
-      <gco:CharacterString><xsl:value-of select="$organisationName" /></gco:CharacterString>
+      <xsl:call-template name="defaultCharacterStringTemplate">
+        <xsl:with-param name="fieldValue" select="$organisationName"/>
+        <xsl:with-param name="defaultValue" select="$defaultConstant"></xsl:with-param>
+      </xsl:call-template>
     </xsl:copy>
   </xsl:template>
 
   <!-- Distributor email -->
   <xsl:template match="/gmd:MD_Metadata/gmd:distributionInfo/gmd:MD_Distribution/gmd:distributor/gmd:MD_Distributor/gmd:distributorContact/gmd:CI_ResponsibleParty/gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:electronicMailAddress">
     <xsl:copy>
-      <gco:CharacterString><xsl:value-of select="$organisationEmail" /></gco:CharacterString>
+      <xsl:call-template name="defaultCharacterStringTemplate">
+        <xsl:with-param name="fieldValue" select="$organisationEmail"/>
+        <xsl:with-param name="defaultValue" select="$defaultConstant"></xsl:with-param>
+      </xsl:call-template>
     </xsl:copy>
   </xsl:template>
 
   <!-- CI_OnlineResource -->
-<!--  <xsl:template match="/gmd:MD_Metadata/gmd:distributionInfo/gmd:MD_Distribution/gmd:transferOptions/gmd:MD_DigitalTransferOptions/gmd:onLine/gmd:CI_OnlineResource">
-    <xsl:copy>
-      <gmd:linkage>
-        <gmd:URL><xsl:value-of select="$downloadUri"></xsl:value-of></gmd:URL>
-      </gmd:linkage>
-      <gmd:protocol>
-        <gco:CharacterString>download</gco:CharacterString>
-      </gmd:protocol>
-      <gmd:name>
-        <gco:CharacterString><xsl:value-of select="$fileName" /></gco:CharacterString>
-      </gmd:name>
-    </xsl:copy>
-  </xsl:template>-->
+  <!--  <xsl:template match="/gmd:MD_Metadata/gmd:distributionInfo/gmd:MD_Distribution/gmd:transferOptions/gmd:MD_DigitalTransferOptions/gmd:onLine/gmd:CI_OnlineResource">
+      <xsl:copy>
+        <gmd:linkage>
+          <gmd:URL><xsl:value-of select="$downloadUri"></xsl:value-of></gmd:URL>
+        </gmd:linkage>
+        <gmd:protocol>
+          <gco:CharacterString>download</gco:CharacterString>
+        </gmd:protocol>
+        <gmd:name>
+          <gco:CharacterString><xsl:value-of select="$fileName" /></gco:CharacterString>
+        </gmd:name>
+      </xsl:copy>
+    </xsl:template>-->
 
 
   <!-- lineage -->
   <xsl:template match="/gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:lineage/gmd:LI_Lineage/gmd:statement">
     <xsl:copy>
-      <gco:CharacterString><xsl:value-of select="$lineage" /></gco:CharacterString>
+      <xsl:call-template name="defaultCharacterStringTemplate">
+        <xsl:with-param name="fieldValue" select="$lineage"/>
+        <xsl:with-param name="defaultValue" select="$defaultConstant"></xsl:with-param>
+      </xsl:call-template>
     </xsl:copy>
   </xsl:template>
 
