@@ -62,20 +62,42 @@
       };
 
       uploadedFiles.saveMetadata = function(md) {
+        var defer = $q.defer();
         if (md && md.identifier ) {
+          var request = new FormData();
           var url = "../../geodatastore/api/dataset/" + md.identifier;
-          var defer = $q.defer();
-          var parameters = {
-            metadata: angular.toJson(md)
-          };
-          $http.post(url, {
-            data: parameters
+
+          request.append("metadata", angular.toJson(md));
+          $http.post(url, request, {
+            transformRequest: angular.identity,
+            headers: {'Content-Type': undefined}
+          }).success(function (data) {
+            if (data.error) {
+              defer.reject(data);
+            } else {
+              defer.resolve(data);
+            }
+          }).error(function(error) {
+            defer.reject(error);
           });
         } else {
           $log.debug("GdsUploadService.saveMetadata -> No metadata or metadata without identifier");
         }
-
+        return defer.promise;
       };
+
+      uploadedFiles.replace = function(mdList, md) {
+        var id = md.identifier;
+        for (var i = 0; i < mdList.length; i++) {
+          var mdInArray = mdList[i];
+          if (mdInArray && mdInArray.identifier == id) {
+            var copy = angular.copy(md);
+            delete copy.saved;
+            mdList[i] = copy;
+          }
+        }
+      };
+
 
       return uploadedFiles;
   }]);
