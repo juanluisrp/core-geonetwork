@@ -5,12 +5,13 @@ template for metadata form
 <form id="metadataForm" method="POST" enctype="multipart/form-data" data-file-upload="datasetEditOptions"
 	  data-ng-controller="GdsEditMetadataController">
 	<div class="form-group">
-		<label for="tt">{{'title'|translate}}</label>
-		<input class="form-control" id="tt" tabindex="1" data-ng-model="mdSelected.title" placeholder="{{'placeholderTitleField'|translate}}" />
+		<label for="titleField">{{'title'|translate}}</label>
+		<input class="form-control" id="titleField" tabindex="1" data-ng-model="mdSelected.title" placeholder="{{'placeholderTitleField'|translate}}" />
 	</div>
 	<div class="form-group">
-		<label for="os">{{'abstract'|translate}}</label>
-		<textarea rows="5" class="form-control" id="os" data-ng-model="mdSelected.summary" tabindex="2"  placeholder="{{'placeholderAbstractField'|translate}}"></textarea>
+		<label for="abstractField">{{'abstract'|translate}}</label>
+		<textarea rows="5" class="form-control" id="abstractField" data-ng-model="mdSelected.summary" tabindex="2"
+				  placeholder="{{'placeholderAbstractField'|translate}}"></textarea>
 	</div>
 	<div class="form-group">
 		<label for="topic">{{'topic'|translate}}</label>
@@ -111,7 +112,7 @@ template for metadata form
 		<div class="floatright">
 			<button type="button" id="removeFormButton" class="btn btn-default btn-sm "><i class="fa fa-trash-o fa-fw"></i>{{'remove'|translate}}</button>
 			<button disabled="disabled" type="button" id="publishFormButton" class="btn btn-default btn-sm" ng-show="tab=='upload'"><i class="fa fa-share fa-fw"></i>{{'publish'|translate}}</button>
-			<button type="button" id="saveFormButton" class="btn btn-default btn-sm" data-ng-click="submit()"><i class="fa fa-floppy-o fa-fw"></i>{{'save'|translate}}</button>
+			<button type="button" id="saveFormButton" class="btn btn-default btn-sm" data-ng-click="processSubmit()"><i class="fa fa-floppy-o fa-fw"></i>{{'save'|translate}}</button>
 		</div>
 	</div>
 </form>

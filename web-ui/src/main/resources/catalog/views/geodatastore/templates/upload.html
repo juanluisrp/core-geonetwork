@@ -131,7 +131,14 @@
 						<p>{{mdSelected.message|translate}}</p>
 						<br/><br/><br/><br/>
 					</div>
-					<div data-ng-include="'../../catalog/views/geodatastore/templates/form.html'" ng-hide="mdSelected.error||mdSelected.$processing()"></div>
+                    <div ng-show="mdSelected.saved">
+                        <br/><br/><br/><br/>
+                        <h2><i class="fa fa-check fa-fw"></i> Data succesfully updated.</h2>
+
+                        <p>{{mdSelected.message|translate}}</p>
+                        <br/><br/><br/><br/>
+                    </div>
+					<div data-ng-include="'../../catalog/views/geodatastore/templates/form.html'" ng-hide="mdSelected.error || mdSelected.saved || mdSelected.$processing()"></div>
                 </div>
                 <div data-ng-switch-default class="padding-25 padding-top-10em">
 					
