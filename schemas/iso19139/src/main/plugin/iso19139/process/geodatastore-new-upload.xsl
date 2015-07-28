@@ -40,7 +40,7 @@
   </xsl:template>
 
   <!-- Do a copy of every nodes and attributes -->
-  <xsl:template match="@*|node()">
+  <xsl:template match="@*|node()" name="identity">
     <xsl:copy>
       <xsl:apply-templates select="@*|node()"/>
     </xsl:copy>
@@ -315,7 +315,30 @@
   </xsl:template>
 
   <!-- Topic categories -->
-  <xsl:template match="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:topicCategory">
+  <xsl:template match="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:characterSet">
+    <xsl:call-template name="identity" />
+    <xsl:if test="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification[not(gmd:topicCategory)]">
+      <xsl:variable name="topicList" select="tokenize($topics, $topicSeparator)"/>
+      <xsl:choose>
+        <xsl:when test="$topics = $defaultConstant">
+          <gmd:topicCategory/>
+        </xsl:when>
+        <xsl:when test="count($topicList) = 0">
+          <gmd:topicCategory/>
+          <!-- do not add any topic category -->
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:for-each select="$topicList">
+            <gmd:topicCategory>
+              <gmd:MD_TopicCategoryCode><xsl:value-of select="." /></gmd:MD_TopicCategoryCode>
+            </gmd:topicCategory>
+          </xsl:for-each>
+        </xsl:otherwise>
+      </xsl:choose>
+    </xsl:if>
+  </xsl:template>
+
+  <xsl:template name="topicListTemplate" match="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:topicCategory">
     <xsl:variable name="topicList" select="tokenize($topics, $topicSeparator)"/>
 
     <xsl:choose>
@@ -325,6 +348,7 @@
         </xsl:copy>
       </xsl:when>
       <xsl:when test="count($topicList) = 0">
+        <gmd:topicCategory/>
         <!-- do not add any topic category -->
       </xsl:when>
       <xsl:otherwise>

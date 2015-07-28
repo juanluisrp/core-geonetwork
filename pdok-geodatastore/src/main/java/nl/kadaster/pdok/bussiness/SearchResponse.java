@@ -79,76 +79,7 @@ public class SearchResponse {
             List<Element> metadataList = element.getChildren(Geonet.Elem.METADATA);
             metadata = Lists.newArrayListWithCapacity(metadataList.size());
             for (Element metadataEl : metadataList) {
-                MetadataParametersBean md = new MetadataParametersBean();
-                md.setTitle(metadataEl.getChildText("defaultTitle"));
-                md.setSummary(metadataEl.getChildText("abstract"));
-                md.setKeywords(getStringListOf(metadataEl, "keyword"));
-                md.setTopicCategories(getStringListOf(metadataEl, Geonet.SearchResult.TOPIC_CAT));
-                md.setLocation(metadataEl.getChildText("geoDescCode"));
-                md.setLineage(metadataEl.getChildText("lineage"));
-                md.setUseLimitation(metadataEl.getChildText("resourceConstraints"));
-                // FIXME license, where is this stored?
-                //md.setLicense();
-                String mdStatus = metadataEl.getChildText("mdStatus");
-                if (mdStatus != null) {
-                    switch (mdStatus) {
-                        case Params.Status.DRAFT:
-                            mdStatus = "draft";
-                            break;
-                        case Params.Status.APPROVED:
-                            mdStatus = "published";
-                            break;
-                        case Params.Status.REJECTED:
-                            mdStatus = "rejected";
-                            break;
-                        case Params.Status.RETIRED:
-                            mdStatus = "retired";
-                            break;
-                        case Params.Status.SUBMITTED:
-                            mdStatus = "submitted";
-                            break;
-                        case Params.Status.UNKNOWN:
-                            mdStatus = "unknown";
-                            break;
-                        default:
-                    }
-                }
-                md.setStatus(mdStatus);
-
-                md.setResolution(metadataEl.getChildText("denominator"));
-
-                String link = metadataEl.getChildText("link");
-                if (link != null) {
-                    // link has this format
-                    // $title|$desc|$linkage|$protocol|$mimetype|$tPosition
-                    String[] linkComponents = link.split("\\|");
-                    if (linkComponents.length == 6 && "download".equals(linkComponents[3])) {
-                        md.setUrl(linkComponents[2]);
-                    }
-                }
-
-                String geoBox = metadataEl.getChildText("geoBox");
-                if (geoBox != null && geoBox.split("\\|").length == 4) {
-                    String[] geoBoxComponents = geoBox.split("\\|");
-                    String westBoundLongitude = geoBoxComponents[0];
-                    String southBoundLatitude = geoBoxComponents[1];
-                    String eastBoundLongitude = geoBoxComponents[2];
-                    String northBoundLatitude = geoBoxComponents[3];
-                    // Wkt = POLYGON((x1 y1, x1 y2, x2 y2, x2 y1, x1 y1))
-                    String wkt = String.format("POLYGON((%s %s, %s %s, %s %s, %s %s, %s %s))",
-                            westBoundLongitude, southBoundLatitude, // (x1 y1)
-                            westBoundLongitude, northBoundLatitude, // (x1 y2)
-                            eastBoundLongitude, northBoundLatitude, // (x2 y2)
-                            eastBoundLongitude, southBoundLatitude, // (x2 y1)
-                            westBoundLongitude, southBoundLatitude  // (x1, y1)
-                    );
-                    md.setExtent(wkt);
-                }
-
-                Element geonetInfo = metadataEl.getChild("info", Geonet.Namespaces.GEONET);
-                if (geonetInfo != null) {
-                    md.setIdentifier(geonetInfo.getChildText("uuid"));
-                }
+                MetadataParametersBean md = getMetadataParametersBeanFromElement(metadataEl);
 
                 metadata.add(md);
             }
@@ -156,7 +87,81 @@ public class SearchResponse {
         return this;
     }
 
-    private List<String> getStringListOf(Element metadataEl, String childName) {
+    public static MetadataParametersBean getMetadataParametersBeanFromElement(Element metadataEl) {
+        MetadataParametersBean md = new MetadataParametersBean();
+        md.setTitle(metadataEl.getChildText("defaultTitle"));
+        md.setSummary(metadataEl.getChildText("abstract"));
+        md.setKeywords(getStringListOf(metadataEl, "keyword"));
+        md.setTopicCategories(getStringListOf(metadataEl, Geonet.SearchResult.TOPIC_CAT));
+        md.setLocation(metadataEl.getChildText("geoDescCode"));
+        md.setLineage(metadataEl.getChildText("lineage"));
+        md.setUseLimitation(metadataEl.getChildText("resourceConstraints"));
+        // FIXME license, where is this stored?
+        //md.setLicense();
+        String mdStatus = metadataEl.getChildText("mdStatus");
+        if (mdStatus != null) {
+            switch (mdStatus) {
+                case Params.Status.DRAFT:
+                    mdStatus = "draft";
+                    break;
+                case Params.Status.APPROVED:
+                    mdStatus = "published";
+                    break;
+                case Params.Status.REJECTED:
+                    mdStatus = "rejected";
+                    break;
+                case Params.Status.RETIRED:
+                    mdStatus = "retired";
+                    break;
+                case Params.Status.SUBMITTED:
+                    mdStatus = "submitted";
+                    break;
+                case Params.Status.UNKNOWN:
+                    mdStatus = "unknown";
+                    break;
+                default:
+            }
+        }
+        md.setStatus(mdStatus);
+
+        md.setResolution(metadataEl.getChildText("denominator"));
+
+        String link = metadataEl.getChildText("link");
+        if (link != null) {
+            // link has this format
+            // $title|$desc|$linkage|$protocol|$mimetype|$tPosition
+            String[] linkComponents = link.split("\\|");
+            if (linkComponents.length == 6 && "download".equals(linkComponents[3])) {
+                md.setUrl(linkComponents[2]);
+            }
+        }
+
+        String geoBox = metadataEl.getChildText("geoBox");
+        if (geoBox != null && geoBox.split("\\|").length == 4) {
+            String[] geoBoxComponents = geoBox.split("\\|");
+            String westBoundLongitude = geoBoxComponents[0];
+            String southBoundLatitude = geoBoxComponents[1];
+            String eastBoundLongitude = geoBoxComponents[2];
+            String northBoundLatitude = geoBoxComponents[3];
+            // Wkt = POLYGON((x1 y1, x1 y2, x2 y2, x2 y1, x1 y1))
+            String wkt = String.format("POLYGON((%s %s, %s %s, %s %s, %s %s, %s %s))",
+                    westBoundLongitude, southBoundLatitude, // (x1 y1)
+                    westBoundLongitude, northBoundLatitude, // (x1 y2)
+                    eastBoundLongitude, northBoundLatitude, // (x2 y2)
+                    eastBoundLongitude, southBoundLatitude, // (x2 y1)
+                    westBoundLongitude, southBoundLatitude  // (x1, y1)
+            );
+            md.setExtent(wkt);
+        }
+
+        Element geonetInfo = metadataEl.getChild("info", Geonet.Namespaces.GEONET);
+        if (geonetInfo != null) {
+            md.setIdentifier(geonetInfo.getChildText("uuid"));
+        }
+        return md;
+    }
+
+    private static List<String> getStringListOf(Element metadataEl, String childName) {
         List<Element> children =  metadataEl.getChildren(childName);
         List<String> result = Lists.newArrayListWithCapacity(children.size());
         for (Element child : children) {

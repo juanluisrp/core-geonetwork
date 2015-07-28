@@ -15,6 +15,7 @@ import nl.kadaster.pdok.bussiness.MetadataUtil;
 import nl.kadaster.pdok.bussiness.SearchResponse;
 import org.apache.commons.lang.StringUtils;
 import org.fao.geonet.ApplicationContextHolder;
+import org.fao.geonet.GeonetContext;
 import org.fao.geonet.constants.Geonet;
 import org.fao.geonet.constants.Params;
 import org.fao.geonet.domain.*;
@@ -23,6 +24,7 @@ import org.fao.geonet.exceptions.MetadataNotFoundEx;
 import org.fao.geonet.exceptions.ServiceNotAllowedEx;
 import org.fao.geonet.exceptions.UnAuthorizedException;
 import org.fao.geonet.kernel.DataManager;
+import org.fao.geonet.kernel.search.LuceneSearcher;
 import org.fao.geonet.kernel.search.MetaSearcher;
 import org.fao.geonet.kernel.search.SearchManager;
 import org.fao.geonet.kernel.search.SearcherType;
@@ -55,6 +57,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.annotation.Nonnull;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
+import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
@@ -304,11 +307,12 @@ public class GeodatastoreApi  {
      * @return
      */
     @RequestMapping(value = "/api/dataset/{identifier}", method = RequestMethod.POST)
-    public @ResponseBody MetadataResponseBean updateDataset(@PathVariable("lang") String lang,
-            @PathVariable("identifier") String identifier,
-            @RequestParam(value = "thumbnail", required = false) MultipartFile thumbnail, @RequestParam("metadata") String metadata,
-            @RequestParam(value = "publish", defaultValue = "true", required = false) Boolean publish, Model model,
-                                                            HttpServletRequest request) {
+    public @ResponseBody
+    ResponseEntity<Object> updateDataset(@PathVariable("lang") String lang,
+                                         @PathVariable("identifier") String identifier,
+                                         @RequestParam(value = "thumbnail", required = false) MultipartFile thumbnail, @RequestParam("metadata") String metadata,
+                                         @RequestParam(value = "publish", defaultValue = "true", required = false) Boolean publish, Model model,
+                                         HttpServletRequest request) {
         try {
             ServiceContext context = serviceManager.createServiceContext("geodatastore.api.dataset", lang, request);
             UserSession session = context.getUserSession();
@@ -350,12 +354,15 @@ public class GeodatastoreApi  {
 
             boolean updateFixedInfo = true, indexImmediate = false, validate= false, updateTimespamp = true;
             Metadata updatedMetadata = metadataManager.updateMetadata(context, metadataId, newMetadata, validate,
-                    updateFixedInfo, indexImmediate, lang, changeDate.toString(),  updateTimespamp);
+                    updateFixedInfo, indexImmediate, lang, changeDate.toString(), updateTimespamp);
 
             if (thumbnail != null && !thumbnail.isEmpty()) {
                 //--- create destination directory
                 Path metadataPublicDatadir = Lib.resource.getDir(context, Params.Access.PUBLIC, metadataId);
                 Files.createDirectories(metadataPublicDatadir);
+
+                removeOldThumbnail(context ,metadataId, "normal", false);
+
                 //--- move uploaded file to destination directory
                 Files.copy(thumbnail.getInputStream(), metadataPublicDatadir.resolve(thumbnail.getOriginalFilename()), StandardCopyOption.REPLACE_EXISTING);
                 boolean small = false, indexAfterChange = false;
@@ -364,16 +371,40 @@ public class GeodatastoreApi  {
 
 
             metadataManager.indexMetadata(metadataId, true);
-        } catch (JsonParseException jpe) {
-            throw new BadParameterEx("metadata", metadata);
+            LuceneSearcher searcher = (LuceneSearcher) searchManager.newSearcher(SearcherType.LUCENE, Geonet.File.SEARCH_LUCENE);
+            Element queryParameters = new Element(Jeeves.Elem.REQUEST);
+            queryParameters.addContent(new Element(Geonet.SearchResult.FAST).setText("index"));
+            queryParameters.addContent(new Element(Geonet.IndexFieldNames.UUID).setText(identifier));
+            queryParameters = SearchDefaults.getDefaultSearch(context, queryParameters);
+            searcher.search(context, queryParameters, serviceConfig);
+            Element results = searcher.present(context, queryParameters, serviceConfig);
+            SearchResponse searchResponse = new SearchResponse();
+            searchResponse.initFromXml(results);
+            MetadataParametersBean result  = new MetadataParametersBean();
+            if (searchResponse.getCount() > 0 && searchResponse.getMetadata().size() > 0) {
+                result = searchResponse.getMetadata().get(0);
+            }
+
+            return new ResponseEntity<Object>(result, HttpStatus.OK);
+
+        } catch (IllegalArgumentException iae) {
+            MetadataParametersBean response = new MetadataParametersBean();
+            response.setIdentifier(identifier);
+            response.setError(true);
+            response.addMessage("update.bad.metadata.json.parameter");
+
+            return new ResponseEntity<Object>(response, HttpStatus.BAD_REQUEST);
         } catch (Exception e) {
-            e.printStackTrace();
+            MetadataParametersBean response = new MetadataParametersBean();
+            response.setIdentifier(identifier);
+            response.setError(true);
+            response.addMessage("update.server.error");
+
+            return new ResponseEntity<Object>(response, HttpStatus.INTERNAL_SERVER_ERROR);
         } finally {
 
         }
-        MetadataResponseBean response = new MetadataResponseBean();
-        response.setIdentifier(identifier);
-        return response;
+
     }
 
     private Map<String, Object> prepareTemplateParameters(MetadataParametersBean metadataParameter, String organisation, String organisationEmail, String changeDate) {
@@ -397,7 +428,7 @@ public class GeodatastoreApi  {
         }
         if (metadataParameter.getTopicCategories() != null && metadataParameter.getTopicCategories().size() > 0) {
             String topicSeparator = "#";
-            String topicList = Joiner.on(topicSeparator).join(metadataParameter.getKeywords());
+            String topicList = Joiner.on(topicSeparator).join(metadataParameter.getTopicCategories());
             parametersMap.put(TOPIC_SEPARATOR_KEY, topicSeparator);
             parametersMap.put(TOPICS_KEY, topicList);
         }
@@ -557,4 +588,33 @@ public class GeodatastoreApi  {
 
         return protocol + "://" + host + (port.equals("80") ? "" : ":" + port) + baseURL;
     }
+
+    private void removeOldThumbnail(ServiceContext context, String id, String type, boolean indexAfterChange) throws Exception {
+
+        Element result = metadataManager.getThumbnails(context, id);
+
+        if (result == null)
+            throw new IllegalArgumentException("Metadata not found --> " + id);
+
+        result = result.getChild(type);
+
+        //--- if there is no thumbnail, we return
+
+        if (result == null)
+            return;
+
+        //-----------------------------------------------------------------------
+        //--- remove thumbnail
+
+        metadataManager.unsetThumbnail(context, id, type.equals("small"), indexAfterChange);
+
+        // FIXME physically remove the thumbnail file from the filesystem.
+
+        //--- remove file
+
+        /*String file = Lib.resource.getDir(context, Params.Access.PUBLIC, id) + getFileName(result.getText());
+        if (!new File(file).delete()) {
+            context.error("Error while deleting thumbnail : "+file);
+        }*/
     }
+}

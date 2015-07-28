@@ -28,8 +28,7 @@ public class StringToMetadataParameterBeanConverter implements Converter<String,
         } catch (JsonParseException e) {
             throw new IllegalArgumentException(e);
         } catch (IOException e) {
-            // This should't occurs with a String source
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
 
         return mpb;
