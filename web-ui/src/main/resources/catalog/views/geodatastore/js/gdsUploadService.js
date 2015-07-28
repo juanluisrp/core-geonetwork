@@ -24,8 +24,15 @@
       };
 
       uploadedFiles.getFileIcon = function(file) {
-        var type = file ? (file.type || file.fileType || file) : 'unknown';
-        var iconClass = "fa-file-o"
+        var type = 'unknown';
+        if (file instanceof File) {
+          type = file.type
+        } else if (file instanceof String) {
+          type = file;
+        } else if (file && file.fileType) {
+          type = file.fileType;
+        }
+        var iconClass = "fa-file-o";
         type = type.toLowerCase();
         if (type.contains("pdf")) {
           iconClass = "fa-file-pdf-o";

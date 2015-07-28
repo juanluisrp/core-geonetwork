@@ -1,5 +1,6 @@
 package nl.kadaster.pdok.bussiness;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.google.common.collect.Lists;
 
 import java.util.List;
@@ -7,6 +8,7 @@ import java.util.List;
 /**
  * Created by JuanLuis on 13/07/2015.
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class MetadataParametersBean {
     private String title;
     private String summary;

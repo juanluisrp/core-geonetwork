@@ -29,12 +29,15 @@ public class MetadataUtil {
          Resource resource = new ClassPathResource(TEMPLATE_FILE);
          InputStream resourceInputStream = resource.getInputStream();
          Element template = Xml.loadStream(resourceInputStream);
-         Path etlMergeStylesheet = schemaManager.getSchemaDir(ISO19139SchemaPlugin.IDENTIFIER).resolve("process/")
-                 .resolve(NEW_FILE_STYLESHEET_FILE);
-         Element result = Xml.transform(template, etlMergeStylesheet, parameters);
-
-         return result;
-
+         return updateMetadataContents(parameters, template);
      }
+
+    public Element updateMetadataContents(Map<String, Object> parameters, Element oldMetadata) throws Exception {
+        Path xsltTransform = schemaManager.getSchemaDir(ISO19139SchemaPlugin.IDENTIFIER).resolve("process/")
+                .resolve(NEW_FILE_STYLESHEET_FILE);
+        Element result = Xml.transform(oldMetadata, xsltTransform, parameters);
+
+        return result;
+    }
 
 }

@@ -1,5 +1,6 @@
 package org.fao.geonet.nl.kadaster.pdok.api;
 
+import com.fasterxml.jackson.core.JsonParseException;
 import com.google.common.base.Joiner;
 import com.google.common.collect.Maps;
 import jeeves.constants.Jeeves;
@@ -13,19 +14,23 @@ import nl.kadaster.pdok.bussiness.MetadataParametersBean;
 import nl.kadaster.pdok.bussiness.MetadataUtil;
 import nl.kadaster.pdok.bussiness.SearchResponse;
 import org.apache.commons.lang.StringUtils;
-import org.apache.http.HttpRequest;
 import org.fao.geonet.ApplicationContextHolder;
+import org.fao.geonet.GeonetContext;
 import org.fao.geonet.constants.Geonet;
 import org.fao.geonet.constants.Params;
 import org.fao.geonet.domain.*;
 import org.fao.geonet.exceptions.BadParameterEx;
+import org.fao.geonet.exceptions.MetadataNotFoundEx;
 import org.fao.geonet.exceptions.ServiceNotAllowedEx;
 import org.fao.geonet.exceptions.UnAuthorizedException;
 import org.fao.geonet.kernel.DataManager;
+import org.fao.geonet.kernel.search.LuceneSearcher;
 import org.fao.geonet.kernel.search.MetaSearcher;
 import org.fao.geonet.kernel.search.SearchManager;
 import org.fao.geonet.kernel.search.SearcherType;
 import org.fao.geonet.kernel.setting.SettingManager;
+import org.fao.geonet.lib.Lib;
+import org.fao.geonet.nl.kadaster.pdok.api.converter.StringToMetadataParameterBeanConverter;
 import org.fao.geonet.repository.GroupRepository;
 import org.fao.geonet.repository.UserGroupRepository;
 import org.fao.geonet.repository.UserRepository;
@@ -46,13 +51,16 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.ServletRequestDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Nonnull;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 import java.util.*;
 
 import static org.fao.geonet.repository.specification.UserGroupSpecs.hasProfile;
@@ -71,9 +79,26 @@ public class GeodatastoreApi  {
     public static final String LINEAGE_KEY = "lineage";
     public static final String RESOLUTION_KEY = "resolution";
     public static final String ABSTRACT_KEY = "abstract";
-    public static final String USER_LIMITATION_KEY = "userLimitation";
+    public static final String USE_LIMITATION_KEY = "useLimitation";
     public static final String FORMAT_KEY = "format";
     private static final String LICENSE_KEY = "license";
+    public static final String UUID_KEY_ = "uuid";
+    public static final String PUBLICATION_DATE_KEY = "publicationDate";
+    public static final String METADATA_MODIFIED_DATE_KEY = "metadataModifiedDate";
+    public static final String ORGANISATION_EMAIL_KEY = "organisationEmail";
+    public static final String ORGANISATION_NAME_KEY = "organisationName";
+    public static final String KEYWORDS_KEY = "keywords";
+    public static final String KEYWORD_SEPARATOR_KEY = "keywordSeparator";
+    public static final String TOPICS_KEY = "topics";
+    public static final String TOPIC_SEPARATOR_KEY = "topicSeparator";
+    public static final String GEOGRAPHIC_IDENTIFIER_KEY = "geographicIdentifier";
+    public static final String BBOX_WEST_LONGITUDE_KEY = "bboxWestLongitude";
+    public static final String BBOX_EAST_LONGITUDE_KEY = "bboxEastLongitude";
+    public static final String BBOX_SOUTH_LATITUDE_KEY = "bboxSouthLatitude";
+    public static final String BBOX_NORTH_LATITUDE_KEY = "bboxNorthLatitude";
+    public static final String FILE_NAME_KEY = "fileName";
+    public static final String DOWNLOAD_URI_KEY = "downloadUri";
+    public static final String THUMBNAIL_URI_KEY = "thumbnailUri";
 
     private ServiceConfig serviceConfig = new ServiceConfig();
 
@@ -95,6 +120,8 @@ public class GeodatastoreApi  {
     ServletContext servletContext;
     @Autowired
     private SearchManager searchManager;
+    @Autowired
+    private StringToMetadataParameterBeanConverter metadataConverter;
 
 
 
@@ -203,7 +230,7 @@ public class GeodatastoreApi  {
                 response.setStatus("draft");
                 response.setTitle((String) templateParameters.get(TITLE_KEY));
                 response.setUrl(downloadUrl);
-                response.setUseLimitation((String) templateParameters.get(USER_LIMITATION_KEY));
+                response.setUseLimitation((String) templateParameters.get(USE_LIMITATION_KEY));
                 response.setFileType((String) templateParameters.get(FORMAT_KEY));
             } catch (UnAuthorizedException e) {
                 response.setError(true);
@@ -237,37 +264,36 @@ public class GeodatastoreApi  {
                                                           String bboxEastLongitude, String bboxSouthLatitude, String bboxNorthLatitude,
                                                           String format, String downloadUri, String fileName, String uuid, ISODate creationDate, String license, String title) {
         Map<String, Object> parameters = Maps.newHashMap();
-        parameters.put("organisationName", organisation);
-        parameters.put("organisationEmail", organisationEmail);
+        parameters.put(ORGANISATION_NAME_KEY, organisation);
+        parameters.put(ORGANISATION_EMAIL_KEY, organisationEmail);
 
-
-        parameters.put("metadataModifiedDate", creationDate.toString());
+        parameters.put(METADATA_MODIFIED_DATE_KEY, creationDate.toString());
         parameters.put(LINEAGE_KEY, "");
         parameters.put(TITLE_KEY, title);
-        parameters.put("publicationDate", creationDate.toString());
+        parameters.put(PUBLICATION_DATE_KEY, creationDate.toString());
 
-        parameters.put("uuid", uuid);
+        parameters.put(UUID_KEY_, uuid);
         parameters.put(ABSTRACT_KEY, "");
-        parameters.put("thumbnailUri", "");
+        parameters.put(THUMBNAIL_URI_KEY, "");
 
         String keywordList = Joiner.on("#").join(keywords);
-        parameters.put("keywords", keywordList);
-        parameters.put("keywordSeparator", "#");
-        parameters.put(USER_LIMITATION_KEY, "None");
+        parameters.put(KEYWORDS_KEY, keywordList);
+        parameters.put(KEYWORD_SEPARATOR_KEY, "#");
+        parameters.put(USE_LIMITATION_KEY, "None");
         parameters.put(RESOLUTION_KEY, "10000");
 
         String topicList = Joiner.on("#").join(topics);
-        parameters.put("topics", topicList);
-        parameters.put("topicSeparator", "#");
-        parameters.put("geographicIdentifier", geograpicIdentifier);
-        parameters.put("bboxWestLongitude", bboxWestLongitude);
-        parameters.put("bboxEastLongitude", bboxEastLongitude);
-        parameters.put("bboxSouthLatitude", bboxSouthLatitude);
-        parameters.put("bboxNorthLatitude", bboxNorthLatitude);
+        parameters.put(TOPICS_KEY, topicList);
+        parameters.put(TOPIC_SEPARATOR_KEY, "#");
+        parameters.put(GEOGRAPHIC_IDENTIFIER_KEY, geograpicIdentifier); // location
+        parameters.put(BBOX_WEST_LONGITUDE_KEY, bboxWestLongitude);
+        parameters.put(BBOX_EAST_LONGITUDE_KEY, bboxEastLongitude);
+        parameters.put(BBOX_SOUTH_LATITUDE_KEY, bboxSouthLatitude);
+        parameters.put(BBOX_NORTH_LATITUDE_KEY, bboxNorthLatitude);
 
         parameters.put(FORMAT_KEY, format);
-        parameters.put("downloadUri", downloadUri);
-        parameters.put("fileName", fileName);
+        parameters.put(DOWNLOAD_URI_KEY, downloadUri);
+        parameters.put(FILE_NAME_KEY, fileName);
         parameters.put(LICENSE_KEY,license);
 
 
@@ -281,13 +307,148 @@ public class GeodatastoreApi  {
      * @return
      */
     @RequestMapping(value = "/api/dataset/{identifier}", method = RequestMethod.POST)
-    public @ResponseBody MetadataResponseBean updateDataset(
-            @PathVariable("identifier") String identifier,
-            @RequestParam("thumbnail") MultipartFile thumbnail, @RequestParam("metadata") MetadataResponseBean metadata,
-            @RequestParam(value = "publish", defaultValue = "true", required = false) Boolean publish, Model model) {
-        MetadataResponseBean response = new MetadataResponseBean();
-        response.setIdentifier(identifier);
-        return response;
+    public @ResponseBody
+    ResponseEntity<Object> updateDataset(@PathVariable("lang") String lang,
+                                         @PathVariable("identifier") String identifier,
+                                         @RequestParam(value = "thumbnail", required = false) MultipartFile thumbnail, @RequestParam("metadata") String metadata,
+                                         @RequestParam(value = "publish", defaultValue = "true", required = false) Boolean publish, Model model,
+                                         HttpServletRequest request) {
+        try {
+            ServiceContext context = serviceManager.createServiceContext("geodatastore.api.dataset", lang, request);
+            UserSession session = context.getUserSession();
+            final String username = session.getUsername();
+            assert username != null;
+            String organisation = session.getOrganisation();
+            User user = userRepository.findOneByUsername(username);
+            List<Integer> groupsIds = userGroupRepository.findGroupIds(Specifications.where(
+                    hasProfile(Profile.Editor)).and(hasUserId(user.getId())));
+            Group group = null;
+            if (groupsIds.size() != 0) {
+                Collections.sort(groupsIds);
+                group = groupRepository.findOne(groupsIds.get(0));
+            } else {
+                throw new UnAuthorizedException("No Editor group found for user " + username, groupsIds);
+            }
+
+            if (StringUtils.isBlank(group.getEmail())) {
+                throw new ServiceNotAllowedEx("The group " + group.getName() + " must have an email set");
+            }
+            String organisationEmail = group.getEmail();
+
+
+            MetadataParametersBean metadataParameter = metadataConverter.convert(metadata);
+            Map<String, Object> templateParameters = new HashMap<>();
+            ISODate changeDate = new ISODate();
+            if (metadataParameter != null ) {
+                templateParameters = prepareTemplateParameters(metadataParameter, organisation, organisationEmail, changeDate.toString());
+            }
+
+
+
+            String metadataId = metadataManager.getMetadataId(identifier);
+            if (StringUtils.isBlank(metadataId)) {
+                throw new MetadataNotFoundEx(identifier);
+            }
+            Element oldMetadata = metadataManager.getMetadataNoInfo(context, metadataId);
+            Element newMetadata = metadataUtil.updateMetadataContents(templateParameters, oldMetadata);
+
+            boolean updateFixedInfo = true, indexImmediate = false, validate= false, updateTimespamp = true;
+            Metadata updatedMetadata = metadataManager.updateMetadata(context, metadataId, newMetadata, validate,
+                    updateFixedInfo, indexImmediate, lang, changeDate.toString(), updateTimespamp);
+
+            if (thumbnail != null && !thumbnail.isEmpty()) {
+                //--- create destination directory
+                Path metadataPublicDatadir = Lib.resource.getDir(context, Params.Access.PUBLIC, metadataId);
+                Files.createDirectories(metadataPublicDatadir);
+
+                removeOldThumbnail(context ,metadataId, "normal", false);
+
+                //--- move uploaded file to destination directory
+                Files.copy(thumbnail.getInputStream(), metadataPublicDatadir.resolve(thumbnail.getOriginalFilename()), StandardCopyOption.REPLACE_EXISTING);
+                boolean small = false, indexAfterChange = false;
+                metadataManager.setThumbnail(context, metadataId, small, thumbnail.getOriginalFilename(), indexAfterChange);
+            }
+
+
+            metadataManager.indexMetadata(metadataId, true);
+            LuceneSearcher searcher = (LuceneSearcher) searchManager.newSearcher(SearcherType.LUCENE, Geonet.File.SEARCH_LUCENE);
+            Element queryParameters = new Element(Jeeves.Elem.REQUEST);
+            queryParameters.addContent(new Element(Geonet.SearchResult.FAST).setText("index"));
+            queryParameters.addContent(new Element(Geonet.IndexFieldNames.UUID).setText(identifier));
+            queryParameters = SearchDefaults.getDefaultSearch(context, queryParameters);
+            searcher.search(context, queryParameters, serviceConfig);
+            Element results = searcher.present(context, queryParameters, serviceConfig);
+            SearchResponse searchResponse = new SearchResponse();
+            searchResponse.initFromXml(results);
+            MetadataParametersBean result  = new MetadataParametersBean();
+            if (searchResponse.getCount() > 0 && searchResponse.getMetadata().size() > 0) {
+                result = searchResponse.getMetadata().get(0);
+            }
+
+            return new ResponseEntity<Object>(result, HttpStatus.OK);
+
+        } catch (IllegalArgumentException iae) {
+            MetadataParametersBean response = new MetadataParametersBean();
+            response.setIdentifier(identifier);
+            response.setError(true);
+            response.addMessage("update.bad.metadata.json.parameter");
+
+            return new ResponseEntity<Object>(response, HttpStatus.BAD_REQUEST);
+        } catch (Exception e) {
+            MetadataParametersBean response = new MetadataParametersBean();
+            response.setIdentifier(identifier);
+            response.setError(true);
+            response.addMessage("update.server.error");
+
+            return new ResponseEntity<Object>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+        } finally {
+
+        }
+
+    }
+
+    private Map<String, Object> prepareTemplateParameters(MetadataParametersBean metadataParameter, String organisation, String organisationEmail, String changeDate) {
+        Map<String, Object> parametersMap = new HashMap<>();
+        parametersMap.put(ORGANISATION_NAME_KEY, organisation);
+        parametersMap.put(ORGANISATION_EMAIL_KEY, organisationEmail);
+        parametersMap.put(METADATA_MODIFIED_DATE_KEY, changeDate);
+
+
+        if (metadataParameter.getTitle() != null) {
+            parametersMap.put(TITLE_KEY, metadataParameter.getTitle());
+        }
+        if (metadataParameter.getSummary() != null) {
+            parametersMap.put(ABSTRACT_KEY, metadataParameter.getSummary());
+        }
+        if (metadataParameter.getKeywords() != null && metadataParameter.getKeywords().size() > 0) {
+            String keywordSeparator = "#";
+            String keywordList = Joiner.on(keywordSeparator).join(metadataParameter.getKeywords());
+            parametersMap.put(KEYWORD_SEPARATOR_KEY, keywordSeparator);
+            parametersMap.put(KEYWORDS_KEY, keywordList);
+        }
+        if (metadataParameter.getTopicCategories() != null && metadataParameter.getTopicCategories().size() > 0) {
+            String topicSeparator = "#";
+            String topicList = Joiner.on(topicSeparator).join(metadataParameter.getTopicCategories());
+            parametersMap.put(TOPIC_SEPARATOR_KEY, topicSeparator);
+            parametersMap.put(TOPICS_KEY, topicList);
+        }
+        if (metadataParameter.getLocation() != null) {
+            parametersMap.put(GEOGRAPHIC_IDENTIFIER_KEY, metadataParameter.getLocation());
+        }
+        if (metadataParameter.getLineage() != null) {
+            parametersMap.put(LINEAGE_KEY, metadataParameter.getLineage());
+        }
+        if (metadataParameter.getUseLimitation() != null) {
+            parametersMap.put(USE_LIMITATION_KEY, metadataParameter.getUseLimitation());
+        }
+        if (metadataParameter.getLicense() != null) {
+            parametersMap.put(LICENSE_KEY, metadataParameter.getLicense());
+        }
+        if (metadataParameter.getResolution() != null) {
+            parametersMap.put(RESOLUTION_KEY, metadataParameter.getResolution());
+        }
+
+        return parametersMap;
     }
 
     @RequestMapping(value = "/api/dataset/{identifier}", method = RequestMethod.DELETE)
@@ -313,7 +474,7 @@ public class GeodatastoreApi  {
         ServiceManager serviceManager = appContext.getBean(ServiceManager.class);
         HttpHeaders responseHeaders = new HttpHeaders();
 
-        final ServiceContext context = serviceManager.createServiceContext("xml.schema.info", lang, request);
+        final ServiceContext context = serviceManager.createServiceContext("geodatastore.registry", lang, request);
         Info info = new Info();
         Element parameters = new Element("request");
         Element codelist = new Element("codelist");
@@ -428,11 +589,32 @@ public class GeodatastoreApi  {
         return protocol + "://" + host + (port.equals("80") ? "" : ":" + port) + baseURL;
     }
 
+    private void removeOldThumbnail(ServiceContext context, String id, String type, boolean indexAfterChange) throws Exception {
 
-    @InitBinder
-    protected void initBinder(HttpServletRequest request,
-                              ServletRequestDataBinder binder) throws Exception {
+        Element result = metadataManager.getThumbnails(context, id);
 
+        if (result == null)
+            throw new IllegalArgumentException("Metadata not found --> " + id);
+
+        result = result.getChild(type);
+
+        //--- if there is no thumbnail, we return
+
+        if (result == null)
+            return;
+
+        //-----------------------------------------------------------------------
+        //--- remove thumbnail
+
+        metadataManager.unsetThumbnail(context, id, type.equals("small"), indexAfterChange);
+
+        // FIXME physically remove the thumbnail file from the filesystem.
+
+        //--- remove file
+
+        /*String file = Lib.resource.getDir(context, Params.Access.PUBLIC, id) + getFileName(result.getText());
+        if (!new File(file).delete()) {
+            context.error("Error while deleting thumbnail : "+file);
+        }*/
     }
-
 }
