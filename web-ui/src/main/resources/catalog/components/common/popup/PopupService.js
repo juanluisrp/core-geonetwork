@@ -93,13 +93,16 @@
             '</div>');
 
         var newScope = scope || $rootScope.$new();
+        var isNewScope = newScope !== scope;
         element = $compile(element)(newScope);
 
         $(document.body).append(element);
         element.modal();
         element.on('hidden.bs.modal', function() {
           element.remove();
-          newScope.$destroy();
+          if (isNewScope) {
+            newScope.$destroy();
+          }
         });
       };
       return {
