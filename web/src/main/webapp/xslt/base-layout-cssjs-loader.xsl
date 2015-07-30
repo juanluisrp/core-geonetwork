@@ -45,6 +45,7 @@
         <script src="{$uiResourcesPath}lib/moment+langs.min.js"></script>
 
         <script src="{$uiResourcesPath}lib/angular/angular.js"></script>
+        <script src="{$uiResourcesPath}lib/angular/angular-animate.js"></script>
         <script src="{$uiResourcesPath}lib/angular/angular-resource.js"></script>
         <script src="{$uiResourcesPath}lib/angular/angular-route.js"></script>
         <script src="{$uiResourcesPath}lib/angular/angular-sanitize.js"></script>

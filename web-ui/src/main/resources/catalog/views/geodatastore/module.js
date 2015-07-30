@@ -18,7 +18,7 @@
   var module = angular.module('gn_search_geodatastore',
       ['geodatastore_fileupload', 'gn_search', 'geodatastore_login', 'gn_login_controller', 'ngRoute', 'gn_search_geodatastore_config',
        'gn_search_geodatastore_directive', 'gn_mdactions_directive', 'geodatastore_upload_service', 'bootstrap-tagsinput',
-	   'geodatastore_edit_metadata_controller', 'gn_utility_directive', 'pascalprecht.translate', 'ui.bootstrap.modal',
+	   'geodatastore_edit_metadata_controller', 'gn_utility_directive', 'pascalprecht.translate', 'ui.bootstrap.modal', 'ngAnimate',
       'ui.bootstrap.tooltip']);
 
   // Define the translation files to load
@@ -65,10 +65,12 @@
 		'gdsSearchManagerService',
 		'GdsUploadFactory',
     '$modal',
+    '$q',
 	function($scope, $http, $translate, $log, $filter,
-             gnUtilityService, gnSearchSettings, gnViewerSettings,Metadata, gdsSearchManagerService, GdsUploadFactory, $modal) {
+           gnUtilityService, gnSearchSettings, gnViewerSettings,Metadata, gdsSearchManagerService, GdsUploadFactory,
+           $modal, $q) {
 		$scope.loadCatalogInfo();
-    $scope.searchResults = { records: [] };
+    $scope.searchResults = { records: [], metadata:[] };
 		$scope.totalNotPublished = 0;
     $scope.totalPublished = 0;
 		$scope.GdsUploadFactory = GdsUploadFactory;
@@ -251,22 +253,40 @@
 					function(error) {});
 		};
 
-    $scope.showDeleteConfirm = function(md, index, evt) {
+    $scope.showDeleteConfirm = function(md, evt) {
       if (evt) {
         evt.stopPropagation();
       }
       var modalInstance = $modal.open({
         scope: $scope,
             templateUrl: '../../catalog/views/geodatastore/templates/deleteFormModal.html',
-            controller: 'ChangeCardModalController',
+            controller: 'ConfirmDeletedModalController',
             resolve: {
-          metadata: function () {
-            return md;
+              metadata: function () {
+                return md;
+              }
+            }
+      });
+      modalInstance.result.then(
+          function(result) {
+          // User clicks on Delete button in modal
+            for(var i= $scope.searchResults.metadata.length - 1; i >= 0 ; i--) {
+              var srMd = $scope.searchResults.metadata[i];
+              if (srMd.identifier === result.identifier) {
+                $scope.searchResults.metadata.splice(i, 1);
+                $scope.totalNotPublished = $scope.totalNotPublished - 1;
+
+                if (GdsUploadFactory.getMdSelected() && (result.identifier === GdsUploadFactory.getMdSelected().identifier)) {
+                  $scope.hasSelected = false;
+                  GdsUploadFactory.setMdSelected({});
+                }
+              }
+            }
+            return result;
+          }, function(dismiss) {
+            return $q.reject(dismiss);
           }
-      }});
-      modalInstance.result.then(function(metadata, idx) {
-        return GdsUploadFactory.deleteMetadata(metadata);
-      }).then
+      );
     };
 	  
   }]);
@@ -280,6 +300,22 @@
       $modalInstance.close($scope.metadata);
     };
   }]);
+
+  module.controller('ConfirmDeletedModalController', ['$scope', '$modalInstance', 'metadata', 'GdsUploadFactory',
+      function($scope, $modalInstance, metadata, GdsUploadFactory) {
+        $scope.acceptDelete = function() {
+          $scope.deleteWorking = true;
+          return GdsUploadFactory.deleteMetadata(metadata).then(function() {
+            $scope.deleteWorking = false;
+            return $modalInstance.close(metadata);
+          }, function(error) {
+            $scope.deleteWoring = false;
+            $scope.deleteError = true;
+            $scope.deleteErrorMessages = error.messages;
+          });
+        }
+      }
+  ]);
 
 
   

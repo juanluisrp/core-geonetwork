@@ -333,14 +333,14 @@
         <from>^/geodatastore/api/datasets</from>
         <to type="forward" last="true">/srv/dut/q@json</to>
     </rule>-->
-    <rule>
+  <!--  <rule>
         <note>
             Geodatastore delete metadata
         </note>
         <condition type="method">DELETE</condition>
         <from>^/geodatastore/api/dataset/(.+)</from>
-        <to type="forward">/srv/dut/md.delete?_content_type=json&amp;id=$1</to>
-    </rule>
+        <to type="forward">/srv/dut/md.delete?_content_type=json&amp;uuid=$1</to>
+    </rule>-->
 
     <rule>
         <note>

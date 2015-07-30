@@ -130,7 +130,11 @@
               defer.resolve(data);
             }
           }).error(function(error) {
-            defer.reject(error);
+            if (error && error.error && error.error.message) {
+              defer.reject({error: true, messages: [error.error.message]});
+            } else {
+              defer.reject(error);
+            }
           });
         } else {
           defer.reject();

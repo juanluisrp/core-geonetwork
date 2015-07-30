@@ -43,9 +43,13 @@
   "tooltip.interrupt": "Onderbreken",
   "tooltip.remove": "Verwijderen",
   "error.metadata.notfound": "Metadata not found",
-  "error.metadata.delete.permission": "Check that metadata is owned by you or you have Editor permission in the metadata group",
+  "error.metadata.delete.permission": "Check that metadata is owned by you or you have Editor permission in the your organisation",
   "modal.delete.title": "Verwijder bestand",
   "modal.delete.question": "Weet u zeker dat u dit bestand wilt verwijderen?",
   "modal.delete.button.delete": "Verwijde",
-  "modal.delete.button.cancel": "Annuleren"
+  "modal.delete.button.cancel": "Annuleren",
+  "modal.delete.error.body": "There were errors while trying to delete the dataset.",
+  "modal.delete.button.accept": "Accept",
+  "dataset.delete.notfound": "Dataset not found. It could have been removed by someone else."
+
 }

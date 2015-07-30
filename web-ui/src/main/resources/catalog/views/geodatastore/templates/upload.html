@@ -53,8 +53,8 @@
                     </div>
                     <ol id="selectable">
                        <!-- List of files in queue -->
-                       <li data-ng-repeat="file in queue" data-ng-class="{'processing': file.$processing()}" data-ng-click="setMD(file)">
-                           <div class="arrow-left" data-ng-show="file.identifier == getMdSelected().identifier"></div>
+                       <li data-ng-repeat="file in queue" data-ng-class="{'processing': file.$processing()}">
+
 						   <div class="title">
                                <div class="floatright" >
                                    <a class="delete" href="#" data-tooltip="{{'tooltip.interrupt' | translate}}"
@@ -91,7 +91,7 @@
                        </li>
 
                        <!--  Files recovered from search service -->
-					   <li data-ng-repeat="md in searchResults.metadata" data-ng-click="setMD(md)" data-ng-class="setBackground(md)" >
+					   <li data-ng-repeat="md in searchResults.metadata" data-ng-click="setMD(md)" data-ng-class="setBackground(md)" class="card">
                             <div class="arrow-left" data-ng-show="md.identifier == getMdSelected().identifier"></div>
 							<div data-ng-include="'../../catalog/views/geodatastore/templates/cardPublished.html'"  data-ng-show="tab == 'published'"></div>
 							<div data-ng-include="'../../catalog/views/geodatastore/templates/cardUpload.html'" data-ng-show="tab == 'upload'"></div>
