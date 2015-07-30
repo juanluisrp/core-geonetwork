@@ -92,6 +92,9 @@
         $scope.saved = true;
         if (!data.error) {
           GdsUploadFactory.setMdSelected(data);
+          // reset form status
+          $scope.editMdForm.$setPristine();
+          $scope.editMdForm.$setUntouched();
           GdsUploadFactory.replace($scope.searchResults.metadata, data);
           gnPopup.createModal({
             title: '<strong>' + $translate('edit.success.title') + '</strong>',
