@@ -50,6 +50,11 @@
         if ($scope.mdToEdit && GdsUploadFactory.getMdSelected().identifier === $scope.mdToEdit.identifier){
           isSameMetadata = true;
         }
+        if (!GdsUploadFactory.getMdSelected()) {
+          $scope.editMdForm.$setPristine();
+          $scope.editMdForm.$setUntouched();
+          GdsUploadFactory.setDirty(false);
+        }
 
         if (!isSameMetadata) {
           $scope.mdToEdit = GdsUploadFactory.getMdSelected();

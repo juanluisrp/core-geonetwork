@@ -42,6 +42,15 @@
         uploadedFiles.list = [];
       };
 
+      uploadedFiles.removeFromList = function(file) {
+        for(var i= this.list.length - 1; i >= 0 ; i--) {
+          var srMd = this.list[i];
+          if (srMd.identifier === file.identifier) {
+            this.list.splice(i, 1);
+          }
+        }
+      };
+
       uploadedFiles.getFileIcon = function(file) {
         var type = 'unknown';
         if (file instanceof File) {

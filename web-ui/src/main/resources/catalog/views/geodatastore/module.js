@@ -128,7 +128,7 @@
       var selectedInService = GdsUploadFactory.getMdSelected();
 
       // If you are trying to change selected card and edit form is dirty, ask user what to do with changes
-      if (GdsUploadFactory.isDirty() && selectedInService && selectedInService.identifier !== md.identifier) {
+      if (GdsUploadFactory.isDirty() && selectedInService && selectedInService.identifier && selectedInService.identifier !== md.identifier) {
         $log.debug("Show confirmation modal");
         var modalInstance = $modal.open({
           scope: $scope,
@@ -270,16 +270,16 @@
       modalInstance.result.then(
           function(result) {
           // User clicks on Delete button in modal
+            GdsUploadFactory.removeFromList(result);
             for(var i= $scope.searchResults.metadata.length - 1; i >= 0 ; i--) {
               var srMd = $scope.searchResults.metadata[i];
-              if (srMd.identifier === result.identifier) {
-                $scope.searchResults.metadata.splice(i, 1);
-                $scope.totalNotPublished = $scope.totalNotPublished - 1;
-
                 if (GdsUploadFactory.getMdSelected() && (result.identifier === GdsUploadFactory.getMdSelected().identifier)) {
                   $scope.hasSelected = false;
                   GdsUploadFactory.setMdSelected({});
                 }
+              if (srMd.identifier === result.identifier) {
+                $scope.searchResults.metadata.splice(i, 1);
+                $scope.totalNotPublished = $scope.totalNotPublished - 1;
               }
             }
             return result;

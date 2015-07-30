@@ -79,7 +79,9 @@
                            <div class="arrow-left" data-ng-show="file.identifier == getMdSelected().identifier"></div>
                            <div class="title">
                                <div class="floatright">
-                                   <a class="delete" href="#" data-tooltip="{{'tooltip.remove' | translate}}" title="Verwijderen"><i class="fa fa-trash-o fa-lg"></i></a>
+                                   <a class="delete" data-tooltip="{{'tooltip.remove' | translate}}"
+                                      data-ng-click="showDeleteConfirm(file, $event)"
+                                      title="Verwijderen"><i class="fa fa-trash-o fa-lg"></i></a>
                                </div>
                                <i class="fa fa-lg fa-fw" data-ng-class="GdsUploadFactory.getFileIcon(file)" style="vertical-align: 12%"></i>
                                <span>{{getFileName(file)}}</span>
