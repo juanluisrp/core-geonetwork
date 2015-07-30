@@ -74,16 +74,16 @@
     </xsl:choose>
   </xsl:template>
 
-  <xsl:template name="defaultDateTimeTemplate">
+  <xsl:template name="defaultDateTemplate">
     <xsl:param name="fieldValue" />
     <xsl:param name="defaultValue" />
 
     <xsl:choose>
       <xsl:when test="$fieldValue != $defaultValue">
-        <gco:DateTime><xsl:value-of select="$fieldValue" /></gco:DateTime>
+        <gco:Date><xsl:value-of select="$fieldValue" /></gco:Date>
       </xsl:when>
       <xsl:otherwise>
-        <xsl:apply-templates select="gco:DateTime"/>
+        <xsl:apply-templates select="gco:Date"/>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
@@ -152,7 +152,7 @@
       <xsl:comment>
         Datum waarop de dataset is gepubliceerd
       </xsl:comment>
-      <xsl:call-template name="defaultDateTimeTemplate">
+      <xsl:call-template name="defaultDateTemplate">
         <xsl:with-param name="fieldValue" select="$publicationDate" />
         <xsl:with-param name="defaultValue" select="$defaultConstant"/>
       </xsl:call-template>
@@ -165,7 +165,7 @@
       <xsl:comment>
         Datum waarop de dataset is gepubliceerd
       </xsl:comment>
-      <xsl:call-template name="defaultDateTimeTemplate">
+      <xsl:call-template name="defaultDateTemplate">
         <xsl:with-param name="fieldValue" select="$publicationDate" />
         <xsl:with-param name="defaultValue" select="$defaultConstant"/>
       </xsl:call-template>
