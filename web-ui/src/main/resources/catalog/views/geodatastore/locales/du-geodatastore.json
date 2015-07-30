@@ -29,5 +29,17 @@
   "topic":"Onderwerp",
   "save":"Opslaan",
   "publish":"Publiceren",
-  "remove":"Verwijderen"
+  "remove":"Verwijderen",
+  "edit.success.title": "Metadata saved",
+  "edit.success.content": "Metadata has been successfully saved.",
+  "edit.error.title": "Metadata update failed",
+  "update.error.listTitle": "The following errors has been found while updating:",
+  "update.server.error": "Error while saving the metadata. Please try again.",
+  "update.bad.metadata.json.parameter": "Bad parameters in update request.",
+  "modal.unsavedchanges.title": "U heeft wijzigingen aangebracht",
+  "modal.unsavedchanges.question": "Wilt u de huidige wijzigingen opslaan?",
+  "modal.unsavedchanges.button.cancel": "Annuleren",
+  "modal.unsavedchanges.button.discard": " Wijzigingen niet opslaan",
+  "tooltip.interrupt": "Onderbreken",
+  "tooltip.remove": "Verwijderen"
 }

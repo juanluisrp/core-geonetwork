@@ -62,6 +62,7 @@
         <script src="{$uiResourcesPath}lib/angular.ext/bindHtml.js"></script>
         <script src="{$uiResourcesPath}lib/angular.ext/tabs.js"></script>
         <script src="{$uiResourcesPath}lib/angular.ext/slider.js"></script>
+        <script src="{$uiResourcesPath}lib/angular.ui/ui-bootstrap-custom-tpls-0.13.1.js"></script>
 
         <script src="{$uiResourcesPath}lib/style/bootstrap/dist/js/bootstrap.js"></script>
         <script src="{$uiResourcesPath}lib/jquery.ext/jquery-ui-slider.min.js"></script>

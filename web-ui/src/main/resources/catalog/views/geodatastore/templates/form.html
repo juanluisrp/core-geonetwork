@@ -3,19 +3,24 @@ template for metadata form
 -->
 
 <form id="metadataForm" method="POST" enctype="multipart/form-data" data-file-upload="datasetEditOptions"
-	  data-ng-controller="GdsEditMetadataController">
+	  data-ng-controller="GdsEditMetadataController" name="editMdForm">
+	<div ng-show="mdToEdit.saved">
+		<br/><br/><br/><br/>
+		<h2><i class="fa fa-check fa-fw"></i> Data succesfully updated.</h2>
+		<br/><br/><br/><br/>
+	</div>
 	<div class="form-group">
 		<label for="titleField">{{'title'|translate}}</label>
-		<input class="form-control" id="titleField" tabindex="1" data-ng-model="mdSelected.title" placeholder="{{'placeholderTitleField'|translate}}" />
+		<input class="form-control" id="titleField" tabindex="1" data-ng-model="mdToEdit.title" placeholder="{{'placeholderTitleField'|translate}}" />
 	</div>
 	<div class="form-group">
 		<label for="abstractField">{{'abstract'|translate}}</label>
-		<textarea rows="5" class="form-control" id="abstractField" data-ng-model="mdSelected.summary" tabindex="2"
+		<textarea rows="5" class="form-control" id="abstractField" data-ng-model="mdToEdit.summary" tabindex="2"
 				  placeholder="{{'placeholderAbstractField'|translate}}"></textarea>
 	</div>
 	<div class="form-group">
 		<label for="topic">{{'topic'|translate}}</label>
-		<select class="form-control" id="topic" tabindex=3 data-ng-model="mdSelected.topicCategory">
+		<select class="form-control" id="topic" tabindex=3 data-ng-model="mdToEdit.topicCategory">
 			<option value="null">{{'placeholderTopicField'|translate}}</option>
 			<option value="imageryBaseMapsEarthCover">Luchtfoto / Dekking van de Aarde</option>
 			<option value="inlandWaters">Binnenwateren</option>
@@ -41,19 +46,19 @@ template for metadata form
 	<div class="form-group">
 		<label for="tw">{{'keywords'|translate}}</label>
 		<bootstrap-tagsinput id="tw" tabindex="4" placeholder="{{'placeholderKeywordsField'|translate}}"
-			   data-ng-model="mdSelected.keywords"></bootstrap-tagsinput>
+			   data-ng-model="mdToEdit.keywords"></bootstrap-tagsinput>
 	</div>
 	<div class="form-group">
 		<label for="lineage">{{'lineage'|translate}}</label>
-		<textarea rows="4" class="form-control" id="lineage" data-ng-model="mdSelected.lineage" tabindex="5"  placeholder="{{'placeholderLineageField'|translate}}"></textarea>
+		<textarea rows="4" class="form-control" id="lineage" data-ng-model="mdToEdit.lineage" tabindex="5"  placeholder="{{'placeholderLineageField'|translate}}"></textarea>
 	</div>
 	<div class="form-group">
 		<label for="location">{{'location'|translate}}</label>
-		<input class="form-control" id="location" tabindex=6 data-ng-model="mdSelected.location" placeholder="{{'placeholderLocationField'|translate}}">
+		<input class="form-control" id="location" tabindex=6 data-ng-model="mdToEdit.location" placeholder="{{'placeholderLocationField'|translate}}">
 	</div>
 	<div class="form-group">
 		<label for="license">{{'license'|translate}}</label>
-		<select class="form-control" id="license" tabindex=7  data-ng-model="mdSelected.license">
+		<select class="form-control" id="license" tabindex=7  data-ng-model="mdToEdit.license">
 			<option value="null">{{'placeholderLicenseField'|translate}}</option>
 			<option value="PublicDomain">Public Domain</option>
 			<option value="CC0">CC0 (Creative Commons)</option>
@@ -62,11 +67,11 @@ template for metadata form
 	</div>
 	<div class="form-group">
 		<label for="useLimitation">{{'useLimitation'|translate}}</label>
-		<textarea rows="4" class="form-control" id="useLimitation" data-ng-model="mdSelected.useLimitation" tabindex="8"  placeholder="{{'placeholderUselimitationField'|translate}}"></textarea>
+		<textarea rows="4" class="form-control" id="useLimitation" data-ng-model="mdToEdit.useLimitation" tabindex="8"  placeholder="{{'placeholderUselimitationField'|translate}}"></textarea>
 	</div>
 	<div class="form-group">
 		<label for="resolution">{{'scale'|translate}}</label>
-		<select class="form-control" id="resolution" tabindex=9  data-ng-model="mdSelected.resolution">
+		<select class="form-control" id="resolution" tabindex=9  data-ng-model="mdToEdit.resolution">
 			<option value="null">{{'placeholderScaleField'|translate}}</option>
 			<option value="1000000">Landelijk</option>
 			<option value="100000">Provinciaal</option>
@@ -112,7 +117,8 @@ template for metadata form
 		<div class="floatright">
 			<button type="button" id="removeFormButton" class="btn btn-default btn-sm "><i class="fa fa-trash-o fa-fw"></i>{{'remove'|translate}}</button>
 			<button disabled="disabled" type="button" id="publishFormButton" class="btn btn-default btn-sm" ng-show="tab=='upload'"><i class="fa fa-share fa-fw"></i>{{'publish'|translate}}</button>
-			<button type="button" id="saveFormButton" class="btn btn-default btn-sm" data-ng-click="processSubmit()"><i class="fa fa-floppy-o fa-fw"></i>{{'save'|translate}}</button>
+			<button type="button" id="saveFormButton" class="btn btn-default btn-sm" data-gn-click-and-spin="processSubmit()"
+					data-ng-disabled="editMdForm.$pristine && editMdForm.$valid"><i class="fa fa-floppy-o fa-fw"></i>{{'save'|translate}}</button>
 		</div>
 	</div>
 </form>

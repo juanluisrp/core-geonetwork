@@ -9,6 +9,7 @@
   goog.require('gn_search_geodatastore_config');
   goog.require('gn_search_geodatastore_directive');
   goog.require('gn_login_controller');
+	goog.require('gn_utility_directive');
   goog.require('geodatastore_login');
   goog.require('geodatastore_fileupload');
 	goog.require('geodatastore_upload_service');
@@ -17,7 +18,8 @@
   var module = angular.module('gn_search_geodatastore',
       ['geodatastore_fileupload', 'gn_search', 'geodatastore_login', 'gn_login_controller', 'ngRoute', 'gn_search_geodatastore_config',
        'gn_search_geodatastore_directive', 'gn_mdactions_directive', 'geodatastore_upload_service', 'bootstrap-tagsinput',
-	   'geodatastore_edit_metadata_controller']);
+	   'geodatastore_edit_metadata_controller', 'gn_utility_directive', 'pascalprecht.translate', 'ui.bootstrap.modal',
+      'ui.bootstrap.tooltip']);
 
   // Define the translation files to load
   module.constant('$LOCALES', ['geodatastore']);
@@ -62,8 +64,9 @@
     'Metadata',
 		'gdsSearchManagerService',
 		'GdsUploadFactory',
+    '$modal',
 	function($scope, $http, $translate, $log, $filter,
-             gnUtilityService, gnSearchSettings, gnViewerSettings,Metadata, gdsSearchManagerService, GdsUploadFactory) {
+             gnUtilityService, gnSearchSettings, gnViewerSettings,Metadata, gdsSearchManagerService, GdsUploadFactory, $modal) {
 		$scope.loadCatalogInfo();
     $scope.searchResults = { records: [] };
 		$scope.totalNotPublished = 0;
@@ -113,30 +116,55 @@
 	  
 	  $scope.pages = [];
 	  $scope.updateResults(1);
-	  $scope.mdSelected;
+	  //$scope.mdSelected;
 	  $scope.hasSelected = false;
 	  $scope.formModified = false;
 
 		$scope.setMD = function(md) {
-			console.log(md);
-			$scope.mdSelected = angular.copy(md);
-			$scope.hasSelected = true;
-      if (md.topicCategories && md.topicCategories.length > 0) {
-        $scope.mdSelected.topicCategory = $filter('orderBy')($scope.mdSelected.topicCategories)[0];
-      } else {
-        $scope.mdSelected.topicCategory = null;
-      }
+			$log.debug(md);
 
-			/*
-			* set the form fields
-			*/
-			if (!md.keywords) {
-			 md.keywords = [];
-			}
-			$("#tw").val(md.keywords.join(','));
+      var selectedInService = GdsUploadFactory.getMdSelected();
+
+      // If you are trying to change selected card and edit form is dirty, ask user what to do with changes
+      if (GdsUploadFactory.isDirty() && selectedInService && selectedInService.identifier !== md.identifier) {
+        $log.debug("Show confirmation modal");
+        var modalInstance = $modal.open({
+          scope: $scope,
+          templateUrl: '../../catalog/views/geodatastore/templates/dirtyFormModal.html',
+          controller: 'ChangeCardModalController',
+          resolve: {
+            metadata: function () {
+              return md;
+            }
+          }
+        });
+
+        modalInstance.result.then($scope.$setMdSelected,
+            function () {
+              $log.debug("Card change cancelled");
+            }
+        );
+
+      } else {
+       $scope.$setMdSelected(md);
+      }
 		};
 
-    $scope.$watch('mdSelected.topicCategory', function(newValue, oldValue) {
+    $scope.$setMdSelected = function(md) {
+      GdsUploadFactory.setMdSelected(angular.copy(md));
+      if (md.topicCategories && md.topicCategories.length > 0) {
+        GdsUploadFactory.getMdSelected().topicCategory = $filter('orderBy')(GdsUploadFactory.getMdSelected().topicCategories)[0];
+      } else {
+        GdsUploadFactory.getMdSelected().topicCategory = null;
+      }
+      $scope.hasSelected = true;
+    };
+
+    $scope.getMdSelected = function() {
+      return GdsUploadFactory.getMdSelected();
+    };
+
+    /*$scope.$watch('mdSelected.topicCategory', function(newValue, oldValue) {
       //$log.debug("topicCategory changed: " +  oldValue + "--> " + newValue);
       if ($scope.mdSelected) {
         if (newValue !== null && newValue !== undefined) {
@@ -145,7 +173,7 @@
           $scope.mdSelected.topicCategories = [];
         }
       }
-    });
+    });*/
 
 	  
 		//grab the filetype either from format or from file extension
@@ -173,10 +201,10 @@
 			var mdIdentifier = md.identifier || md['geonet:info'].uuid;
 			var selectedIdentifier = null;
 			if ($scope.hasSelected) {
-				if ($scope.mdSelected.identifier) {
-					selectedIdentifier = $scope.mdSelected.identifier;
-				} else if ($scope.mdSelected['geonet:info'] && $scope.mdSelected['geonet:info'].uuid) {
-					selectedIdentifier = $scope.mdSelected['geonet:info'].uuid;
+				if (GdsUploadFactory.getMdSelected().identifier) {
+					selectedIdentifier = GdsUploadFactory.getMdSelected().identifier;
+				} else if (GdsUploadFactory.getMdSelected()['geonet:info'] && $scope.mdSelected['geonet:info'].uuid) {
+					selectedIdentifier = GdsUploadFactory.getMdSelected()['geonet:info'].uuid;
 				}
 			}
 			if (mdIdentifier == selectedIdentifier) {
@@ -194,8 +222,9 @@
 			//if form modified && not saved, warn to loose changes?
 			$scope.tab = val;
 			$scope.hasSelected = false;
-			$scope.mdSelected = null;
+      GdsUploadFactory.setMdSelected(null);
 			GdsUploadFactory.clearList();
+      GdsUploadFactory.setDirty(false);
 			$scope.updateResults(1);
 		};
 		
@@ -217,11 +246,21 @@
 	  };
 
 		$scope.saveMetadata = function() {
-			GdsUploadFactory.saveMetadata($scope.mdSelected).then(
+			GdsUploadFactory.saveMetadata(GdsUploadFactory.getMdSelected()).then(
 					function(){},
 					function(error) {});
 		}
 	  
+  }]);
+
+  module.controller('ChangeCardModalController', ['$scope', '$modalInstance', 'metadata',
+    function ($scope, $modalInstance, metadata) {
+
+    $scope.metadata = metadata;
+
+    $scope.changeCard = function () {
+      $modalInstance.close($scope.metadata);
+    };
   }]);
 
 

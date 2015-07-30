@@ -314,6 +314,7 @@ public class GeodatastoreApi  {
                                          @RequestParam(value = "publish", defaultValue = "true", required = false) Boolean publish, Model model,
                                          HttpServletRequest request) {
         try {
+
             ServiceContext context = serviceManager.createServiceContext("geodatastore.api.dataset", lang, request);
             UserSession session = context.getUserSession();
             final String username = session.getUsername();

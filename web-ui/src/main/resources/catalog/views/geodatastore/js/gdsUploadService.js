@@ -10,10 +10,29 @@
     '$q',
     '$http',
     '$log',
+    '$rootScope',
     function($q, $http, $log) {
       var uploadedFiles = {};
+      var selected = null;
+      var mdDirty = false;
+
+      uploadedFiles.setDirty = function(isDirty) {
+        mdDirty = isDirty;
+      };
+
+      uploadedFiles.isDirty = function() {
+        return mdDirty;
+      }
+
 
       uploadedFiles.list = [];
+      uploadedFiles.setMdSelected = function(md) {
+        selected = md;
+        $log.debug("setMdSelected called: " + angular.toJson(md));
+      };
+      uploadedFiles.getMdSelected = function() {
+        return selected;
+      }
 
       uploadedFiles.add = function(file) {
         uploadedFiles.list.unshift(file);
