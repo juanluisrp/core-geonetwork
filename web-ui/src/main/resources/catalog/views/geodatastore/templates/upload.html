@@ -126,7 +126,7 @@
                 <div id="metadata" class="fade" data-ng-switch-when="true" data-ng-class="{'in': hasSelected }">
 					<div ng-show="getMdSelected().error != ''">
 						<br/><br/><br/><br/>
-						<h2><i class="fa fa-exclamation-triangle fa-fw"></i> Er is iets mis gegaan bij het uploaden van uw bestand, probeer het later nog een keer.</h2>
+						<h3><i class="fa fa-exclamation-triangle fa-fw"></i> Er is iets mis gegaan bij het uploaden van uw bestand, probeer het later nog een keer.</h3>
 						
 						<p>{{getMdSelected().message|translate}}</p>
 						<br/><br/><br/><br/>
@@ -135,15 +135,15 @@
                 </div>
                 <div data-ng-switch-default class="padding-25 padding-top-10em">
 					
-						<p class="h2 text-center" ng-show="tab=='upload' && totalNotPublished>0">
+						<p class="h3 text-center" ng-show="tab=='upload' && totalNotPublished>0">
 							Vul informatie over een dataset in alvorens deze te delen.<br/>
 							<small>Selecteer een bestand uit de linker kolom om deze te bewerken.</small></p>
-						<p class="h2 text-center" ng-show="tab=='published' && totalPublished>0">
+						<p class="h3 text-center" ng-show="tab=='published' && totalPublished>0">
 							U kunt de informatie over een dataset wijzigen, ook nadat deze gepubliceerd is.<br/>
 							<small>Selecteer een bestand uit de linker kolom om deze te bewerken.</small></p>
-						<p class="h2 text-center" ng-show="tab=='upload' && totalNotPublished==0">
+						<p class="h3 text-center" ng-show="tab=='upload' && totalNotPublished==0">
 							Upload een dataset door deze op het vlak links te slepen of "selecteer bestanden" te klikken</p>
-						<p class="h2 text-center" ng-show="tab=='published' && totalPublished==0">
+						<p class="h3 text-center" ng-show="tab=='published' && totalPublished==0">
 							Eerder gepubliceerde datasets worden hier getoond</p>
 						
                     <p class="text-center" aria-label="Left arrow"><i class="fa fa-arrow-left fa-4x"></i></i></p>
