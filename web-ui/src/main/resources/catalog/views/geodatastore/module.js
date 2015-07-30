@@ -249,7 +249,25 @@
 			GdsUploadFactory.saveMetadata(GdsUploadFactory.getMdSelected()).then(
 					function(){},
 					function(error) {});
-		}
+		};
+
+    $scope.showDeleteConfirm = function(md, index, evt) {
+      if (evt) {
+        evt.stopPropagation();
+      }
+      var modalInstance = $modal.open({
+        scope: $scope,
+            templateUrl: '../../catalog/views/geodatastore/templates/deleteFormModal.html',
+            controller: 'ChangeCardModalController',
+            resolve: {
+          metadata: function () {
+            return md;
+          }
+      }});
+      modalInstance.result.then(function(metadata, idx) {
+        return GdsUploadFactory.deleteMetadata(metadata);
+      }).then
+    };
 	  
   }]);
 

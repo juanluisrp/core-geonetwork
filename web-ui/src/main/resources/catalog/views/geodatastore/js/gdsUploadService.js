@@ -117,6 +117,29 @@
         }
       };
 
+      uploadedFiles.deleteMetadata = function(md) {
+        var defer = $q.defer();
+        if (md && md.identifier ) {
+          var  url = "../../geodatastore/api/dataset/" + md.identifier;
+          $http.delete(url, {
+            responseType: "json"
+          }).success(function (data) {
+            if (data.error) {
+              defer.reject(data);
+            } else {
+              defer.resolve(data);
+            }
+          }).error(function(error) {
+            defer.reject(error);
+          });
+        } else {
+          defer.reject();
+        }
+
+        return defer.promise;
+
+      };
+
 
       return uploadedFiles;
   }]);

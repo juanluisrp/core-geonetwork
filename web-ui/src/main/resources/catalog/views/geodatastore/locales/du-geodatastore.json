@@ -41,5 +41,11 @@
   "modal.unsavedchanges.button.cancel": "Annuleren",
   "modal.unsavedchanges.button.discard": " Wijzigingen niet opslaan",
   "tooltip.interrupt": "Onderbreken",
-  "tooltip.remove": "Verwijderen"
+  "tooltip.remove": "Verwijderen",
+  "error.metadata.notfound": "Metadata not found",
+  "error.metadata.delete.permission": "Check that metadata is owned by you or you have Editor permission in the metadata group",
+  "modal.delete.title": "Verwijder bestand",
+  "modal.delete.question": "Weet u zeker dat u dit bestand wilt verwijderen?",
+  "modal.delete.button.delete": "Verwijde",
+  "modal.delete.button.cancel": "Annuleren"
 }
