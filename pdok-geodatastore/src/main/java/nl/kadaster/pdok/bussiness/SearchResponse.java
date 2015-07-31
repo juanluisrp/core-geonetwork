@@ -97,7 +97,11 @@ public class SearchResponse {
         md.setLineage(metadataEl.getChildText("lineage"));
         md.setUseLimitation(metadataEl.getChildText("resourceConstraints"));
         // FIXME license, where is this stored?
-        //md.setLicense();
+        List<Element> legalConstraints = metadataEl.getChildren("legalConstraints");
+        if (legalConstraints != null && legalConstraints.size() > 1) {
+            // License should be in the second position
+            md.setLicense(legalConstraints.get(1).getText());
+        }
         String mdStatus = metadataEl.getChildText("mdStatus");
         if (mdStatus != null) {
             switch (mdStatus) {
@@ -124,7 +128,15 @@ public class SearchResponse {
         }
         md.setStatus(mdStatus);
 
-        md.setResolution(metadataEl.getChildText("denominator"));
+        if (metadataEl.getChild("denominator") != null) {
+            md.setResolution(metadataEl.getChildText("denominator"));
+        } else if (metadataEl.getChild("denominators") != null) {
+            List<Element> denominatorsList = metadataEl.getChild("denominators").getChildren("denominator ");
+            if (denominatorsList.size() > 0) {
+                md.setResolution(denominatorsList.get(0).getText());
+            }
+        }
+
 
         String link = metadataEl.getChildText("link");
         if (link != null) {

@@ -109,7 +109,7 @@
 	  
 	  //get the status of a dataset, a dataset can be published if all fields are completed
 	  $scope.getStatus = function(md){
-			if (md.defaultTitle != '' && md.abstract != '' && md.lineage != '') {
+			if (md.$publishable) {
 				return 'publish';
 			}	else {
 				return 'metadataMissing';
@@ -166,16 +166,27 @@
       return GdsUploadFactory.getMdSelected();
     };
 
-    /*$scope.$watch('mdSelected.topicCategory', function(newValue, oldValue) {
-      //$log.debug("topicCategory changed: " +  oldValue + "--> " + newValue);
-      if ($scope.mdSelected) {
+    $scope.getTopicCategoryAsString = function() {
+      var selected = GdsUploadFactory.getMdSelected();
+      if (selected) {
+        return selected.topicCategory;
+      }
+      else {
+        return undefined;
+      }
+    };
+
+    $scope.$watch($scope.getTopicCategoryAsString, function(newValue, oldValue) {
+      $log.debug("topicCategory changed: " +  oldValue + "--> " + newValue);
+      var selected = GdsUploadFactory.getMdSelected();
+      if (selected) {
         if (newValue !== null && newValue !== undefined) {
-          $scope.mdSelected.topicCategories = [newValue];
+          selected.topicCategories = [newValue];
         } else {
-          $scope.mdSelected.topicCategories = [];
+          selected.topicCategories = [];
         }
       }
-    });*/
+    });
 
 	  
 		//grab the filetype either from format or from file extension
@@ -316,6 +327,19 @@
         }
       }
   ]);
+
+  module.controller('gdsCardController', ['$scope', 'GdsUploadFactory', function($scope, GdsUploadFactory) {
+    // watch md object for changes and evaluate if it is publishable. Then save this state to md.$publishable property.
+    // $publishable starts with a '$' character so it is not take in account for detecting object changes
+    $scope.$watch('md', function(newValue, oldValue) {
+      if (newValue) {
+        var isPublishable = GdsUploadFactory.isPublishable(newValue);
+        newValue.$publishable = isPublishable;
+      }
+
+    }, true);
+
+  }]);
 
 
   

@@ -210,7 +210,9 @@
           <Field name="extentDesc" string="{string(.)}" store="true" index="true"/>
         </xsl:for-each>
 
-				<xsl:for-each select="gmd:geographicElement/gmd:EX_GeographicDescription/gmd:geographicIdentifier/gmd:MD_Identifier/gmd:code/gco:CharacterString">
+
+				<xsl:for-each select="gmd:geographicElement/gmd:EX_GeographicDescription/gmd:geographicIdentifier/gmd:MD_Identifier/gmd:code/gco:CharacterString|
+				 			gmd:geographicElement/gmd:EX_GeographicDescription/gmd:geographicIdentifier/gmd:RS_Identifier/gmd:code/gco:CharacterString">
 					<Field name="geoDescCode" string="{string(.)}" store="true" index="true"/>
 				</xsl:for-each>
 				<xsl:for-each select="gmd:temporalElement/

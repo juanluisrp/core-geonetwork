@@ -51,6 +51,11 @@
         }
       };
 
+      /**
+       * Discover the file type using its extension or its fileType attribute if it is defined.
+       * @param file a metadata object or a File object.
+       * @returns {string} the CSS class name for the file type.
+       */
       uploadedFiles.getFileIcon = function(file) {
         var type = 'unknown';
         if (file instanceof File) {
@@ -89,6 +94,12 @@
         return iconClass;
       };
 
+      /**
+       * Save a metadata object to the server.
+       * @param md metadata
+       * @returns {*} a promise of the save operation. It will pass back the received data if success or the error object
+       * if there is any problem at the server.
+       */
       uploadedFiles.saveMetadata = function(md) {
         var defer = $q.defer();
         if (md && md.identifier ) {
@@ -148,10 +159,50 @@
         } else {
           defer.reject();
         }
-
         return defer.promise;
-
       };
+
+      /**
+       * Check if a metadata is publishable or not. For now it simply checks that all fields are filled.
+       * @param metadata
+       * @returns {boolean}
+       */
+      uploadedFiles.isPublishable = function(metadata) {
+        var stringProperties = ['identifier', 'license', 'lineage', 'location', 'resolution', 'summary', 'title', 'url', 'useLimitation'];
+        var arrayProperties = ['keywords', 'topicCategories'];
+        var publishable = true;
+        if (metadata) {
+          // Check scalar properties
+          for (var i = 0; i < stringProperties.length && publishable; i++) {
+            var property = stringProperties[i];
+            var propertyValue = metadata[property];
+            if (!propertyValue || propertyValue.trim()== '') {
+              publishable = false;
+            }
+          }
+
+          // Check array properties
+          for (var i = 0; i < arrayProperties.length && publishable; i++) {
+            var property = arrayProperties[i];
+            var propertyValue = metadata[property];
+            if (!propertyValue || propertyValue.length == 0) {
+              publishable = false;
+            } else {
+              for (var j = 0; j < propertyValue && publishable; j++) {
+                var arrayValue = propertyValue[j];
+                if (!arrayValue || arrayValue.trim()== '') {
+                  publishable = false;
+                }
+              }
+            }
+          }
+        } else {
+          // no metadata so it is not publishable
+          publishable = false;
+        }
+
+        return publishable;
+      }
 
 
       return uploadedFiles;

@@ -75,25 +75,30 @@
                            </div>
                        </li>
                        <!-- Files uploaded since page reload -->
-                       <li data-ng-repeat="file in GdsUploadFactory.list" data-ng-click="setMD(file)" data-ng-class="setBackground(file)">
-                           <div class="arrow-left" data-ng-show="file.identifier == getMdSelected().identifier"></div>
+                       <li data-ng-repeat="md in GdsUploadFactory.list" data-ng-click="setMD(md)" data-ng-class="setBackground(md)"
+                           data-ng-controller="gdsCardController" class="card">
+                           <div class="arrow-left" data-ng-show="md.identifier == getMdSelected().identifier"></div>
                            <div class="title">
                                <div class="floatright">
                                    <a class="delete" data-tooltip="{{'tooltip.remove' | translate}}"
-                                      data-ng-click="showDeleteConfirm(file, $event)"
+                                      data-ng-click="showDeleteConfirm(md, $event)"
                                       title="Verwijderen"><i class="fa fa-trash-o fa-lg"></i></a>
                                </div>
-                               <i class="fa fa-lg fa-fw" data-ng-class="GdsUploadFactory.getFileIcon(file)" style="vertical-align: 12%"></i>
-                               <span>{{getFileName(file)}}</span>
+                               <i class="fa fa-lg fa-fw" data-ng-class="GdsUploadFactory.getFileIcon(md)" style="vertical-align: 12%"></i>
+                               <span>{{getFileName(md)}}</span>
                            </div>
-						   <div data-ng-show="file.error"  class="message alert-danger"><i class="fa fa-exclamation-triangle fa-fw" style="font-size:1em; margin-right: 4px"></i>Upload fout. Klik hier voor meer informatie.</div>
+						   <div data-ng-show="md.error"  class="message alert-danger"><i class="fa fa-exclamation-triangle fa-fw" style="font-size:1em; margin-right: 4px"></i>Upload fout. Klik hier voor meer informatie.</div>
                            <div class="message alert-info" data-ng-hide="file.error">
                                <i class="fa fa-pencil fa-fw" style="font-size:1em; margin-right: 4px"></i>Voltooi de dataset informatie om te kunnen publiceren.
                            </div>
                        </li>
 
                        <!--  Files recovered from search service -->
-					   <li data-ng-repeat="md in searchResults.metadata" data-ng-click="setMD(md)" data-ng-class="setBackground(md)" class="card">
+					   <li data-ng-repeat="md in searchResults.metadata" data-ng-click="setMD(md)" data-ng-class="setBackground(md)"
+                           data-ng-controller="gdsCardController" class="card">
+                           <pre>
+                               {{md.$publishable}}
+                           </pre>
                             <div class="arrow-left" data-ng-show="md.identifier == getMdSelected().identifier"></div>
 							<div data-ng-include="'../../catalog/views/geodatastore/templates/cardPublished.html'"  data-ng-show="tab == 'published'"></div>
 							<div data-ng-include="'../../catalog/views/geodatastore/templates/cardUpload.html'" data-ng-show="tab == 'upload'"></div>

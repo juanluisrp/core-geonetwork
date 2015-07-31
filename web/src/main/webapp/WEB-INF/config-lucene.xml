@@ -156,8 +156,6 @@
       <field name="_groupWebsite" tagName="groupWebsite"/>
       <field name="attributeTable" tagName="attributeTable"/>
 
-      <!-- Geodatastore fields -->
-      <field name="geoDescCode" tagName="geoDescCode" />
     </dumpFields>
   </search>
 

@@ -74,6 +74,20 @@
     </xsl:choose>
   </xsl:template>
 
+  <xsl:template name="defaultIntegerTemplate">
+    <xsl:param name="fieldValue" />
+    <xsl:param name="defaultValue" />
+
+    <xsl:choose>
+      <xsl:when test="$fieldValue != $defaultValue">
+        <gco:Integer><xsl:value-of select="$fieldValue" /></gco:Integer>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:apply-templates select="gco:Integer"/>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+
   <xsl:template name="defaultDateTemplate">
     <xsl:param name="fieldValue" />
     <xsl:param name="defaultValue" />
@@ -275,19 +289,19 @@
           </xsl:call-template>
         </gmd:otherConstraints>
         <xsl:choose>
-          <xsl:when test="$license != $defaultConstant and contains($license, 'by')">
+          <xsl:when test="$license != $defaultConstant and contains(lower-case($license), 'by')">
             <gmd:otherConstraints>
               <xsl:call-template name="defaultCharacterStringTemplate">
-                <xsl:with-param name="fieldValue" select="concat('Naamsvermelding verplicht,', $organisationName)"/>
-                <xsl:with-param name="defaultValue" select="concat('Naamsvermelding verplicht,', $defaultConstant)" />
+                <xsl:with-param name="fieldValue" select="concat('Naamsvermelding verplicht, ', $organisationName)"/>
+                <xsl:with-param name="defaultValue" select="concat('Naamsvermelding verplicht, ', $defaultConstant)" />
               </xsl:call-template>
             </gmd:otherConstraints>
           </xsl:when>
-          <xsl:when test="$license = $defaultConstant and contains(gmd:otherConstraints/gco:CharacterString/text(), 'by')">
+          <xsl:when test="$license = $defaultConstant and contains(lower-case(gmd:otherConstraints/gco:CharacterString/text()), 'by')">
             <gmd:otherConstraints>
               <xsl:call-template name="defaultCharacterStringTemplate">
-                <xsl:with-param name="fieldValue" select="concat('Naamsvermelding verplicht,', $organisationName)"/>
-                <xsl:with-param name="defaultValue" select="concat('Naamsvermelding verplicht,', $defaultConstant)" />
+                <xsl:with-param name="fieldValue" select="concat('Naamsvermelding verplicht, ', $organisationName)"/>
+                <xsl:with-param name="defaultValue" select="concat('Naamsvermelding verplicht, ', $defaultConstant)" />
               </xsl:call-template>
             </gmd:otherConstraints>
           </xsl:when>
@@ -303,7 +317,7 @@
         <gmd:equivalentScale>
           <gmd:MD_RepresentativeFraction>
             <gmd:denominator>
-              <xsl:call-template name="defaultDecimalTemplate">
+              <xsl:call-template name="defaultIntegerTemplate">
                 <xsl:with-param name="fieldValue" select="$resolution" />
                 <xsl:with-param name="defaultValue" select="$defaultConstant" />
               </xsl:call-template>
