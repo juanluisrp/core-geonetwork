@@ -2,6 +2,7 @@ package nl.kadaster.pdok.bussiness;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.google.common.collect.Lists;
+import org.apache.commons.lang.StringUtils;
 
 import java.util.List;
 
@@ -190,5 +191,15 @@ public class MetadataParametersBean {
 
     public String getFileType() {
         return fileType;
+    }
+
+    public boolean isValid() {
+        return (StringUtils.isNotBlank(this.identifier) && StringUtils.isNotBlank(this.license)
+                && StringUtils.isNotBlank(this.lineage) && StringUtils.isNotBlank(this.location)
+                && StringUtils.isNotBlank(this.resolution) && StringUtils.isNotBlank(this.summary)
+                && StringUtils.isNotBlank(this.title) && StringUtils.isNotBlank(this.url)
+                && StringUtils.isNotBlank(this.useLimitation) && this.topicCategories.size() > 0 && this.keywords.size() > 0);
+
+
     }
 }

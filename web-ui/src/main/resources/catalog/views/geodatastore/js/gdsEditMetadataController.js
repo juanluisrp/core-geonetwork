@@ -35,7 +35,7 @@
   module.controller('GdsEditMetadataController', ['$scope', 'GdsUploadFactory', '$log', 'gnPopup', '$translate', '$q',
     function($scope, GdsUploadFactory, $log, gnPopup, $translate, $q) {
       $scope.GdsUploadFactory = GdsUploadFactory;
-      $scope.publish = true;
+      $scope.publish = false;
 
       $scope.mdToEdit = null;
 
@@ -82,6 +82,16 @@
           $scope.clear($scope.queue);
         }
       });
+
+      // watch md object for changes and evaluate if it is publishable. Then save this state to md.$publishable property.
+      // $publishable starts with a '$' character so it is not take in account for detecting object changes
+      $scope.$watch('mdToEdit', function(newValue, oldValue) {
+        if (newValue) {
+          var isPublishable = GdsUploadFactory.isPublishable(newValue);
+          newValue.$publishable = isPublishable;
+        }
+
+      }, true);
 
 
       /**
@@ -162,7 +172,7 @@
           value: angular.toJson($scope.mdToEdit)
         }, {
            name: 'publish',
-          value: $scope.publish
+           value: $scope.publish
           }
         ];
         return metadata;

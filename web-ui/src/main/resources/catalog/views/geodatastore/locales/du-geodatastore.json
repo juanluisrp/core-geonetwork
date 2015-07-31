@@ -43,7 +43,7 @@
   "tooltip.interrupt": "Onderbreken",
   "tooltip.remove": "Verwijderen",
   "error.metadata.notfound": "Metadata niet gevonden",
-  "error.metadata.delete.permission": "Controleer dat u de eigenaar bent van de metadata en dat u ingelogd bent als Editor binnen uw organisatie.",
+  "error.metadata.delete.permission": "Controleer dat u de eigenaar bent van de metadata en dat u ingelogd bent als Reviewer binnen uw organisatie.",
   "modal.delete.title": "Verwijder bestand",
   "modal.delete.question": "Weet u zeker dat u dit bestand wilt verwijderen?",
   "modal.delete.button.delete": "Verwijder",

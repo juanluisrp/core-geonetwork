@@ -38,6 +38,7 @@ import org.fao.geonet.repository.UserGroupRepository;
 import org.fao.geonet.repository.UserRepository;
 import org.fao.geonet.schema.iso19139.ISO19139SchemaPlugin;
 import org.fao.geonet.services.Utils;
+import org.fao.geonet.services.metadata.Publish;
 import org.fao.geonet.services.metadata.XslProcessing;
 import org.fao.geonet.services.metadata.XslProcessingReport;
 import org.fao.geonet.services.resources.handlers.IResourceUploadHandler;
@@ -129,6 +130,8 @@ public class GeodatastoreApi  {
     private MetadataRepository metadataRepository;
     @Autowired
     private GeonetworkDataDirectory geonetworkDataDirectory;
+    @Autowired
+    private Publish publishController;
 
 
 
@@ -154,13 +157,13 @@ public class GeodatastoreApi  {
                 String organisation = session.getOrganisation();
                 User user = userRepository.findOneByUsername(username);
                 List<Integer> groupsIds = userGroupRepository.findGroupIds(Specifications.where(
-                        hasProfile(Profile.Editor)).and(hasUserId(user.getId())));
+                        hasProfile(Profile.Reviewer)).and(hasUserId(user.getId())));
                 Group group = null;
                 if (groupsIds.size() != 0) {
                     Collections.sort(groupsIds);
                     group = groupRepository.findOne(groupsIds.get(0));
                 } else {
-                    throw new UnAuthorizedException("No Editor group found for user " + username, groupsIds);
+                    throw new UnAuthorizedException("No Reviewer group found for user " + username, groupsIds);
                 }
 
                 if (StringUtils.isBlank(group.getEmail())) {
@@ -317,8 +320,9 @@ public class GeodatastoreApi  {
     public @ResponseBody
     ResponseEntity<Object> updateDataset(@PathVariable("lang") String lang,
                                          @PathVariable("identifier") String identifier,
-                                         @RequestParam(value = "thumbnail", required = false) MultipartFile thumbnail, @RequestParam("metadata") String metadata,
-                                         @RequestParam(value = "publish", defaultValue = "true", required = false) Boolean publish, Model model,
+                                         @RequestParam(value = "thumbnail", required = false) MultipartFile thumbnail,
+                                         @RequestParam(value = "metadata", required = false) String metadata,
+                                         @RequestParam(value = "publish", defaultValue = "true", required = false) Boolean publish,
                                          HttpServletRequest request) {
         MetadataParametersBean response = new MetadataParametersBean();
         HttpStatus status = HttpStatus.OK;
@@ -337,14 +341,14 @@ public class GeodatastoreApi  {
             String organisation = session.getOrganisation();
             User user = userRepository.findOneByUsername(username);
             List<Integer> groupsIds = userGroupRepository.findGroupIds(Specifications.where(
-                    hasProfile(Profile.Editor)).and(hasUserId(user.getId())));
+                    hasProfile(Profile.Reviewer)).and(hasUserId(user.getId())));
 
             Group group;
             if (groupsIds.size() != 0 && accessManager.canEdit(context, metadataId)) {
                 Collections.sort(groupsIds);
                 group = groupRepository.findOne(groupsIds.get(0));
             } else {
-                throw new UnAuthorizedException("No Editor group found for user " + username, groupsIds);
+                throw new UnAuthorizedException("No Reviewer group found for user " + username, groupsIds);
             }
 
             if (StringUtils.isBlank(group.getEmail())) {
@@ -352,22 +356,22 @@ public class GeodatastoreApi  {
             }
             String organisationEmail = group.getEmail();
 
+            if (metadata != null) {
+                MetadataParametersBean metadataParameter = metadataConverter.convert(metadata);
+                Map<String, Object> templateParameters = new HashMap<>();
+                ISODate changeDate = new ISODate();
+                if (metadataParameter != null) {
+                    templateParameters = prepareTemplateParameters(metadataParameter, organisation, organisationEmail, changeDate.getDateAsString());
+                }
 
-            MetadataParametersBean metadataParameter = metadataConverter.convert(metadata);
-            Map<String, Object> templateParameters = new HashMap<>();
-            ISODate changeDate = new ISODate();
-            if (metadataParameter != null ) {
-                templateParameters = prepareTemplateParameters(metadataParameter, organisation, organisationEmail, changeDate.getDateAsString());
+
+                Element oldMetadata = metadataManager.getMetadataNoInfo(context, metadataId);
+                Element newMetadata = metadataUtil.updateMetadataContents(templateParameters, oldMetadata);
+
+                boolean updateFixedInfo = true, indexImmediate = false, validate = false, updateTimespamp = true;
+                metadataManager.updateMetadata(context, metadataId, newMetadata, validate,
+                        updateFixedInfo, indexImmediate, lang, changeDate.getDateAsString(), updateTimespamp);
             }
-
-
-
-            Element oldMetadata = metadataManager.getMetadataNoInfo(context, metadataId);
-            Element newMetadata = metadataUtil.updateMetadataContents(templateParameters, oldMetadata);
-
-            boolean updateFixedInfo = true, indexImmediate = false, validate= false, updateTimespamp = true;
-            metadataManager.updateMetadata(context, metadataId, newMetadata, validate,
-                    updateFixedInfo, indexImmediate, lang, changeDate.getDateAsString(), updateTimespamp);
 
             if (thumbnail != null && !thumbnail.isEmpty()) {
                 //--- create destination directory
@@ -383,6 +387,8 @@ public class GeodatastoreApi  {
             }
 
 
+
+
             metadataManager.indexMetadata(metadataId, true);
             LuceneSearcher searcher = (LuceneSearcher) searchManager.newSearcher(SearcherType.LUCENE, Geonet.File.SEARCH_LUCENE);
             Element queryParameters = new Element(Jeeves.Elem.REQUEST);
@@ -396,6 +402,20 @@ public class GeodatastoreApi  {
             MetadataParametersBean result  = new MetadataParametersBean();
             if (searchResponse.getCount() > 0 && searchResponse.getMetadata().size() > 0) {
                 result = searchResponse.getMetadata().get(0);
+            }
+
+            if (publish && result.isValid()) {
+                Publish.PublishReport report =  publishController.publish(lang, request, metadataId, false);
+                if (report.getPublished() > 0 || report.getUnmodified() > 0 ) {
+                    MetadataStatus mdStatus = metadataManager.setStatus(context, Integer.parseInt(metadataId), Integer.parseInt(Params.Status.APPROVED), new ISODate(),
+                            "Publish dataset");
+                    metadataManager.indexMetadata(metadataId, true);
+                    result.setStatus("published");
+                } else if (report.getDisallowed() > 0) {
+                    response = result;
+                    throw new UnAuthorizedException("You cannot publish data. You must be at least Reviewer", null);
+                }
+
             }
 
             return new ResponseEntity<Object>(result, HttpStatus.OK);
@@ -426,8 +446,6 @@ public class GeodatastoreApi  {
             response.setError(true);
             response.addMessage("update.server.error");
             status = HttpStatus.INTERNAL_SERVER_ERROR;
-        } finally {
-
         }
         return new ResponseEntity<Object>(response, status);
 

@@ -96,17 +96,20 @@
 
       /**
        * Save a metadata object to the server.
-       * @param md metadata
+       * @param md metadata.
+       * @oaran publish if server must try to publish the medatada.
        * @returns {*} a promise of the save operation. It will pass back the received data if success or the error object
        * if there is any problem at the server.
        */
-      uploadedFiles.saveMetadata = function(md) {
+      uploadedFiles.saveMetadata = function(md, publish) {
+        var mustPublish = publish || false;
         var defer = $q.defer();
         if (md && md.identifier ) {
           var request = new FormData();
           var url = "../../geodatastore/api/dataset/" + md.identifier;
 
           request.append("metadata", angular.toJson(md));
+          request.append("publish", mustPublish);
           $http.post(url, request, {
             transformRequest: angular.identity,
             headers: {'Content-Type': undefined}
