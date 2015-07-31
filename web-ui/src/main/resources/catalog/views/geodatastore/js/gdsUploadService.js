@@ -10,10 +10,29 @@
     '$q',
     '$http',
     '$log',
+    '$rootScope',
     function($q, $http, $log) {
       var uploadedFiles = {};
+      var selected = null;
+      var mdDirty = false;
+
+      uploadedFiles.setDirty = function(isDirty) {
+        mdDirty = isDirty;
+      };
+
+      uploadedFiles.isDirty = function() {
+        return mdDirty;
+      }
+
 
       uploadedFiles.list = [];
+      uploadedFiles.setMdSelected = function(md) {
+        selected = md;
+        $log.debug("setMdSelected called: " + angular.toJson(md));
+      };
+      uploadedFiles.getMdSelected = function() {
+        return selected;
+      }
 
       uploadedFiles.add = function(file) {
         uploadedFiles.list.unshift(file);
@@ -21,6 +40,15 @@
 
       uploadedFiles.clearList = function() {
         uploadedFiles.list = [];
+      };
+
+      uploadedFiles.removeFromList = function(file) {
+        for(var i= this.list.length - 1; i >= 0 ; i--) {
+          var srMd = this.list[i];
+          if (srMd.identifier === file.identifier) {
+            this.list.splice(i, 1);
+          }
+        }
       };
 
       uploadedFiles.getFileIcon = function(file) {
@@ -96,6 +124,33 @@
             mdList[i] = copy;
           }
         }
+      };
+
+      uploadedFiles.deleteMetadata = function(md) {
+        var defer = $q.defer();
+        if (md && md.identifier ) {
+          var  url = "../../geodatastore/api/dataset/" + md.identifier;
+          $http.delete(url, {
+            responseType: "json"
+          }).success(function (data) {
+            if (data.error) {
+              defer.reject(data);
+            } else {
+              defer.resolve(data);
+            }
+          }).error(function(error) {
+            if (error && error.error && error.error.message) {
+              defer.reject({error: true, messages: [error.error.message]});
+            } else {
+              defer.reject(error);
+            }
+          });
+        } else {
+          defer.reject();
+        }
+
+        return defer.promise;
+
       };
 
 

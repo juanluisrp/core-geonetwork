@@ -339,4 +339,37 @@ footer ul li.first, .verytop ul li.first {
   }
 }
 
+// card animations
+.card {
+  &.animate-enter,
+  &.animate-leave
+  {
+    -webkit-transition: 800ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+    -moz-transition: 800ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+    -ms-transition: 800ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+    -o-transition: 800ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+    transition: 800ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+    position: relative;
+    display: block;
+  }
+
+  &.animate-enter.animate-enter-active,
+  &.animate-leave {
+    opacity: 1;
+    left: 0;
+    height: 30px;
+  }
+
+  &.animate-leave.animate-leave-active,
+  &.animate-enter {
+    opacity: 0;
+    left: -50px;
+    height: 0px;
+  }
+}
+
+.login-logo {
+  color: #154273
+}
+
 

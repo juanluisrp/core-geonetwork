@@ -18,7 +18,7 @@
             <header>
                 <div class="topdrop">
                     <div class="floatright">
-                        <i class="fa fa-cloud-upload fa-5x floatright"></i><h4>Nieuwe dataset uploaden</h4>
+                        <i class="fa fa-cloud-upload fa-5x floatright"></i><h4 class="sr-only">Nieuwe dataset uploaden</h4>
                     </div>
                 </div>
                 <div class="branding">
@@ -53,11 +53,11 @@
                     </div>
                     <ol id="selectable">
                        <!-- List of files in queue -->
-                       <li data-ng-repeat="file in queue" data-ng-class="{'processing': file.$processing()}" data-ng-click="setMD(file)">
-                           <div class="arrow-left" data-ng-show="file.identifier == mdSelected.identifier"></div>
+                       <li data-ng-repeat="file in queue" data-ng-class="{'processing': file.$processing()}">
+
 						   <div class="title">
                                <div class="floatright" >
-                                   <a class="delete" href="#" data-toggle="tooltip" data-placement="top"
+                                   <a class="delete" href="#" data-tooltip="{{'tooltip.interrupt' | translate}}"
                                       title="onderbreken" data-ng-click="file.$cancel()" data-ng-hide="!file.$cancel">
                                        <i class="fa fa-times fa-lg"></i>
                                    </a>
@@ -76,10 +76,12 @@
                        </li>
                        <!-- Files uploaded since page reload -->
                        <li data-ng-repeat="file in GdsUploadFactory.list" data-ng-click="setMD(file)" data-ng-class="setBackground(file)">
-                           <div class="arrow-left" data-ng-show="file.identifier == mdSelected.identifier"></div>
+                           <div class="arrow-left" data-ng-show="file.identifier == getMdSelected().identifier"></div>
                            <div class="title">
                                <div class="floatright">
-                                   <a class="delete" href="#" data-toggle="tooltip" data-placement="top" title="verwijderen"><i class="fa fa-trash-o fa-lg"></i></a>
+                                   <a class="delete" data-tooltip="{{'tooltip.remove' | translate}}"
+                                      data-ng-click="showDeleteConfirm(file, $event)"
+                                      title="Verwijderen"><i class="fa fa-trash-o fa-lg"></i></a>
                                </div>
                                <i class="fa fa-lg fa-fw" data-ng-class="GdsUploadFactory.getFileIcon(file)" style="vertical-align: 12%"></i>
                                <span>{{getFileName(file)}}</span>
@@ -91,8 +93,8 @@
                        </li>
 
                        <!--  Files recovered from search service -->
-					   <li data-ng-repeat="md in searchResults.metadata" data-ng-click="setMD(md)" data-ng-class="setBackground(md)" >
-                            <div class="arrow-left" data-ng-show="md.identifier == mdSelected.identifier"></div>
+					   <li data-ng-repeat="md in searchResults.metadata" data-ng-click="setMD(md)" data-ng-class="setBackground(md)" class="card">
+                            <div class="arrow-left" data-ng-show="md.identifier == getMdSelected().identifier"></div>
 							<div data-ng-include="'../../catalog/views/geodatastore/templates/cardPublished.html'"  data-ng-show="tab == 'published'"></div>
 							<div data-ng-include="'../../catalog/views/geodatastore/templates/cardUpload.html'" data-ng-show="tab == 'upload'"></div>
 						</li>
@@ -124,33 +126,26 @@
             </section>
             <aside data-ng-switch data-on="hasSelected">
                 <div id="metadata" class="fade" data-ng-switch-when="true" data-ng-class="{'in': hasSelected }">
-					<div ng-show="mdSelected.error != ''">
+					<div ng-show="getMdSelected().error != ''">
 						<br/><br/><br/><br/>
-						<h2><i class="fa fa-exclamation-triangle fa-fw"></i> Er is iets mis gegaan bij het uploaden van uw bestand, probeer het later nog een keer.</h2>
+						<h3><i class="fa fa-exclamation-triangle fa-fw"></i> Er is iets mis gegaan bij het uploaden van uw bestand, probeer het later nog een keer.</h3>
 						
-						<p>{{mdSelected.message|translate}}</p>
+						<p>{{getMdSelected().message|translate}}</p>
 						<br/><br/><br/><br/>
 					</div>
-                    <div ng-show="mdSelected.saved">
-                        <br/><br/><br/><br/>
-                        <h2><i class="fa fa-check fa-fw"></i> Data succesfully updated.</h2>
-
-                        <p>{{mdSelected.message|translate}}</p>
-                        <br/><br/><br/><br/>
-                    </div>
-					<div data-ng-include="'../../catalog/views/geodatastore/templates/form.html'" ng-hide="mdSelected.error || mdSelected.saved || mdSelected.$processing()"></div>
+					<div data-ng-include="'../../catalog/views/geodatastore/templates/form.html'" ng-hide="getMdSelected().error || getMdSelected().$processing()"></div>
                 </div>
                 <div data-ng-switch-default class="padding-25 padding-top-10em">
 					
-						<p class="h2 text-center" ng-show="tab=='upload' && totalNotPublished>0">
+						<p class="h3 text-center" ng-show="tab=='upload' && totalNotPublished>0">
 							Vul informatie over een dataset in alvorens deze te delen.<br/>
 							<small>Selecteer een bestand uit de linker kolom om deze te bewerken.</small></p>
-						<p class="h2 text-center" ng-show="tab=='published' && totalPublished>0">
+						<p class="h3 text-center" ng-show="tab=='published' && totalPublished>0">
 							U kunt de informatie over een dataset wijzigen, ook nadat deze gepubliceerd is.<br/>
 							<small>Selecteer een bestand uit de linker kolom om deze te bewerken.</small></p>
-						<p class="h2 text-center" ng-show="tab=='upload' && totalNotPublished==0">
+						<p class="h3 text-center" ng-show="tab=='upload' && totalNotPublished==0">
 							Upload een dataset door deze op het vlak links te slepen of "selecteer bestanden" te klikken</p>
-						<p class="h2 text-center" ng-show="tab=='published' && totalPublished==0">
+						<p class="h3 text-center" ng-show="tab=='published' && totalPublished==0">
 							Eerder gepubliceerde datasets worden hier getoond</p>
 						
                     <p class="text-center" aria-label="Left arrow"><i class="fa fa-arrow-left fa-4x"></i></i></p>

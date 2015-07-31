@@ -186,12 +186,20 @@
       <gmd:extent>
         <gmd:EX_Extent>
           <gmd:geographicElement>
+            <gmd:EX_GeographicBoundingBox>
+              <gmd:westBoundLongitude />
+              <gmd:eastBoundLongitude />
+              <gmd:southBoundLatitude />
+              <gmd:northBoundLatitude />
+            </gmd:EX_GeographicBoundingBox>
+          </gmd:geographicElement>
+          <gmd:geographicElement>
             <gmd:EX_GeographicDescription>
               <gmd:extentTypeCode>
                 <gco:Boolean>true</gco:Boolean>
               </gmd:extentTypeCode>
               <gmd:geographicIdentifier>
-                <gmd:RS_Identifier uuid="http://gazeteer.pdok.nl/">
+                <gmd:RS_Identifier uuid="http://gazetteer.pdok.nl/">
                   <gmd:code>
                     <gco:CharacterString/>
                   </gmd:code>
@@ -201,14 +209,6 @@
                 </gmd:RS_Identifier>
               </gmd:geographicIdentifier>
             </gmd:EX_GeographicDescription>
-          </gmd:geographicElement>
-          <gmd:geographicElement>
-            <gmd:EX_GeographicBoundingBox>
-              <gmd:westBoundLongitude />
-              <gmd:eastBoundLongitude />
-              <gmd:southBoundLatitude />
-              <gmd:northBoundLatitude />
-            </gmd:EX_GeographicBoundingBox>
           </gmd:geographicElement>
         </gmd:EX_Extent>
       </gmd:extent>

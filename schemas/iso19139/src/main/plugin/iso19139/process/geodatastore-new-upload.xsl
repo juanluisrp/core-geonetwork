@@ -74,16 +74,16 @@
     </xsl:choose>
   </xsl:template>
 
-  <xsl:template name="defaultDateTimeTemplate">
+  <xsl:template name="defaultDateTemplate">
     <xsl:param name="fieldValue" />
     <xsl:param name="defaultValue" />
 
     <xsl:choose>
       <xsl:when test="$fieldValue != $defaultValue">
-        <gco:DateTime><xsl:value-of select="$fieldValue" /></gco:DateTime>
+        <gco:Date><xsl:value-of select="$fieldValue" /></gco:Date>
       </xsl:when>
       <xsl:otherwise>
-        <xsl:apply-templates select="gco:DateTime"/>
+        <xsl:apply-templates select="gco:Date"/>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
@@ -152,7 +152,7 @@
       <xsl:comment>
         Datum waarop de dataset is gepubliceerd
       </xsl:comment>
-      <xsl:call-template name="defaultDateTimeTemplate">
+      <xsl:call-template name="defaultDateTemplate">
         <xsl:with-param name="fieldValue" select="$publicationDate" />
         <xsl:with-param name="defaultValue" select="$defaultConstant"/>
       </xsl:call-template>
@@ -165,7 +165,7 @@
       <xsl:comment>
         Datum waarop de dataset is gepubliceerd
       </xsl:comment>
-      <xsl:call-template name="defaultDateTimeTemplate">
+      <xsl:call-template name="defaultDateTemplate">
         <xsl:with-param name="fieldValue" select="$publicationDate" />
         <xsl:with-param name="defaultValue" select="$defaultConstant"/>
       </xsl:call-template>
@@ -363,7 +363,7 @@
 
   <!-- Geographic Identifier -->
   <xsl:template match="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:extent/gmd:EX_Extent/gmd:geographicElement/gmd:EX_GeographicDescription/gmd:geographicIdentifier">
-    <xsl:variable name="identifierUri" select="concat('http://gazeteer.pdok.nl/', $geographicIdentifier)"/>
+    <xsl:variable name="identifierUri" select="concat('http://gazetteer.pdok.nl/', $geographicIdentifier)"/>
     <xsl:copy>
       <gmd:RS_Identifier>
         <xsl:attribute name="uuid" select="$identifierUri" />

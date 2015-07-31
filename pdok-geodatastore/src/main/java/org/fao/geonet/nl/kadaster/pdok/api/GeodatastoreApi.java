@@ -16,14 +16,15 @@ import nl.kadaster.pdok.bussiness.SearchResponse;
 import org.apache.commons.lang.StringUtils;
 import org.fao.geonet.ApplicationContextHolder;
 import org.fao.geonet.GeonetContext;
+import org.fao.geonet.Util;
 import org.fao.geonet.constants.Geonet;
 import org.fao.geonet.constants.Params;
 import org.fao.geonet.domain.*;
-import org.fao.geonet.exceptions.BadParameterEx;
-import org.fao.geonet.exceptions.MetadataNotFoundEx;
-import org.fao.geonet.exceptions.ServiceNotAllowedEx;
-import org.fao.geonet.exceptions.UnAuthorizedException;
+import org.fao.geonet.exceptions.*;
+import org.fao.geonet.kernel.AccessManager;
 import org.fao.geonet.kernel.DataManager;
+import org.fao.geonet.kernel.GeonetworkDataDirectory;
+import org.fao.geonet.kernel.mef.MEFLib;
 import org.fao.geonet.kernel.search.LuceneSearcher;
 import org.fao.geonet.kernel.search.MetaSearcher;
 import org.fao.geonet.kernel.search.SearchManager;
@@ -32,23 +33,23 @@ import org.fao.geonet.kernel.setting.SettingManager;
 import org.fao.geonet.lib.Lib;
 import org.fao.geonet.nl.kadaster.pdok.api.converter.StringToMetadataParameterBeanConverter;
 import org.fao.geonet.repository.GroupRepository;
+import org.fao.geonet.repository.MetadataRepository;
 import org.fao.geonet.repository.UserGroupRepository;
 import org.fao.geonet.repository.UserRepository;
 import org.fao.geonet.schema.iso19139.ISO19139SchemaPlugin;
+import org.fao.geonet.services.Utils;
 import org.fao.geonet.services.metadata.XslProcessing;
 import org.fao.geonet.services.metadata.XslProcessingReport;
 import org.fao.geonet.services.resources.handlers.IResourceUploadHandler;
 import org.fao.geonet.services.schema.Info;
 import org.fao.geonet.services.util.SearchDefaults;
+import org.fao.geonet.utils.IO;
 import org.fao.geonet.utils.Xml;
 import org.jdom.Element;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.data.jpa.domain.Specifications;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -122,6 +123,12 @@ public class GeodatastoreApi  {
     private SearchManager searchManager;
     @Autowired
     private StringToMetadataParameterBeanConverter metadataConverter;
+    @Autowired
+    private AccessManager accessManager;
+    @Autowired
+    private MetadataRepository metadataRepository;
+    @Autowired
+    private GeonetworkDataDirectory geonetworkDataDirectory;
 
 
 
@@ -174,7 +181,7 @@ public class GeodatastoreApi  {
                 boolean updateFixedInfo = true, indexImmediate = true;
                 String createdId = metadataManager.insertMetadata(context, ISO19139SchemaPlugin.IDENTIFIER, metadata, uuid.toString(),
                         userId, Integer.toString(group.getId()), settingManager.getSiteId(), MetadataType.METADATA.codeString,
-                        docType, category, creationDate.toString(), creationDate.toString(), updateFixedInfo, indexImmediate);
+                        docType, category, creationDate.getDateAsString(), creationDate.getDateAsString(), updateFixedInfo, indexImmediate);
 
 
 
@@ -267,10 +274,10 @@ public class GeodatastoreApi  {
         parameters.put(ORGANISATION_NAME_KEY, organisation);
         parameters.put(ORGANISATION_EMAIL_KEY, organisationEmail);
 
-        parameters.put(METADATA_MODIFIED_DATE_KEY, creationDate.toString());
+        parameters.put(METADATA_MODIFIED_DATE_KEY, creationDate.getDateAsString());
         parameters.put(LINEAGE_KEY, "");
         parameters.put(TITLE_KEY, title);
-        parameters.put(PUBLICATION_DATE_KEY, creationDate.toString());
+        parameters.put(PUBLICATION_DATE_KEY, creationDate.getDateAsString());
 
         parameters.put(UUID_KEY_, uuid);
         parameters.put(ABSTRACT_KEY, "");
@@ -313,8 +320,17 @@ public class GeodatastoreApi  {
                                          @RequestParam(value = "thumbnail", required = false) MultipartFile thumbnail, @RequestParam("metadata") String metadata,
                                          @RequestParam(value = "publish", defaultValue = "true", required = false) Boolean publish, Model model,
                                          HttpServletRequest request) {
+        MetadataParametersBean response = new MetadataParametersBean();
+        HttpStatus status = HttpStatus.OK;
+        ServiceContext context = serviceManager.createServiceContext("geodatastore.api.dataset", lang, request);
+
         try {
-            ServiceContext context = serviceManager.createServiceContext("geodatastore.api.dataset", lang, request);
+
+            String metadataId = metadataManager.getMetadataId(identifier);
+            if (StringUtils.isBlank(metadataId)) {
+                throw new MetadataNotFoundEx(identifier);
+            }
+
             UserSession session = context.getUserSession();
             final String username = session.getUsername();
             assert username != null;
@@ -322,8 +338,9 @@ public class GeodatastoreApi  {
             User user = userRepository.findOneByUsername(username);
             List<Integer> groupsIds = userGroupRepository.findGroupIds(Specifications.where(
                     hasProfile(Profile.Editor)).and(hasUserId(user.getId())));
-            Group group = null;
-            if (groupsIds.size() != 0) {
+
+            Group group;
+            if (groupsIds.size() != 0 && accessManager.canEdit(context, metadataId)) {
                 Collections.sort(groupsIds);
                 group = groupRepository.findOne(groupsIds.get(0));
             } else {
@@ -340,21 +357,17 @@ public class GeodatastoreApi  {
             Map<String, Object> templateParameters = new HashMap<>();
             ISODate changeDate = new ISODate();
             if (metadataParameter != null ) {
-                templateParameters = prepareTemplateParameters(metadataParameter, organisation, organisationEmail, changeDate.toString());
+                templateParameters = prepareTemplateParameters(metadataParameter, organisation, organisationEmail, changeDate.getDateAsString());
             }
 
 
 
-            String metadataId = metadataManager.getMetadataId(identifier);
-            if (StringUtils.isBlank(metadataId)) {
-                throw new MetadataNotFoundEx(identifier);
-            }
             Element oldMetadata = metadataManager.getMetadataNoInfo(context, metadataId);
             Element newMetadata = metadataUtil.updateMetadataContents(templateParameters, oldMetadata);
 
             boolean updateFixedInfo = true, indexImmediate = false, validate= false, updateTimespamp = true;
-            Metadata updatedMetadata = metadataManager.updateMetadata(context, metadataId, newMetadata, validate,
-                    updateFixedInfo, indexImmediate, lang, changeDate.toString(), updateTimespamp);
+            metadataManager.updateMetadata(context, metadataId, newMetadata, validate,
+                    updateFixedInfo, indexImmediate, lang, changeDate.getDateAsString(), updateTimespamp);
 
             if (thumbnail != null && !thumbnail.isEmpty()) {
                 //--- create destination directory
@@ -388,22 +401,35 @@ public class GeodatastoreApi  {
             return new ResponseEntity<Object>(result, HttpStatus.OK);
 
         } catch (IllegalArgumentException iae) {
-            MetadataParametersBean response = new MetadataParametersBean();
             response.setIdentifier(identifier);
             response.setError(true);
             response.addMessage("update.bad.metadata.json.parameter");
-
-            return new ResponseEntity<Object>(response, HttpStatus.BAD_REQUEST);
+            status = HttpStatus.BAD_REQUEST;
+        } catch (MetadataNotFoundEx mnfe) {
+            response.setIdentifier(identifier);
+            response.setError(true);
+            response.addMessage("error.metadata.notfound");
+            status = HttpStatus.NOT_FOUND;
+        } catch (UnAuthorizedException ue) {
+            response.setIdentifier(identifier);
+            response.setError(true);
+            response.addMessage("error-forbidden");
+            status = HttpStatus.FORBIDDEN;
+        } catch (ServiceNotAllowedEx sne) {
+            response.setIdentifier(identifier);
+            response.setError(true);
+            response.addMessage("error-noemail");
+            status = HttpStatus.FORBIDDEN;
         } catch (Exception e) {
-            MetadataParametersBean response = new MetadataParametersBean();
+            context.error(e);
             response.setIdentifier(identifier);
             response.setError(true);
             response.addMessage("update.server.error");
-
-            return new ResponseEntity<Object>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+            status = HttpStatus.INTERNAL_SERVER_ERROR;
         } finally {
 
         }
+        return new ResponseEntity<Object>(response, status);
 
     }
 
@@ -452,9 +478,65 @@ public class GeodatastoreApi  {
     }
 
     @RequestMapping(value = "/api/dataset/{identifier}", method = RequestMethod.DELETE)
-    public @ResponseBody MetadataResponseBean deleteDataset(@PathVariable("identifier") String identifier, Model model) {
-        MetadataResponseBean response = new MetadataResponseBean();
-        response.setIdentifier(identifier);
+    public  @ResponseBody
+    ResponseEntity<Object> deleteDataset(@PathVariable("identifier") String identifier, @PathVariable("lang") String lang,
+                                                            HttpServletRequest request) {
+        ServiceContext context = serviceManager.createServiceContext("geodatastore.api.dataset", lang, request);
+        Map<String, Object> responseMap = new HashMap<>();
+        HttpStatus status = HttpStatus.OK;
+
+        try {
+            // If send a non existing uuid, Utils.getIdentifierFromParameters returns null
+            Metadata metadata = metadataRepository.findOneByUuid(identifier);
+            if (metadata == null) {
+                throw new MetadataNotFoundEx("Metadata internal identifier or UUID not found.");
+            }
+            String id = metadataManager.getMetadataId(identifier);
+
+            // Check permissions
+            if (!accessManager.canEdit(context, id)) {
+                throw new OperationNotAllowedEx();
+            }
+
+            //-----------------------------------------------------------------------
+            //--- remove the metadata directory including the public and private directories.
+            IO.deleteFileOrDirectory(Lib.resource.getMetadataDir(geonetworkDataDirectory, id));
+
+            //-----------------------------------------------------------------------
+            //--- delete metadata and return status
+            metadataManager.deleteMetadata(context, id);
+            responseMap.put("error", false);
+            responseMap.put("messages", new ArrayList<String>());
+            responseMap.put("identifier", identifier);
+            status = HttpStatus.OK;
+
+        } catch (MetadataNotFoundEx e) {
+            responseMap.put("error", true);
+            List<String> messages = new ArrayList<>();
+            messages.add("dataset.delete.notfound");
+            responseMap.put("messages", messages);
+            responseMap.put("identifier", identifier);
+            status = HttpStatus.NOT_FOUND;
+        } catch (OperationNotAllowedEx onae) {
+            responseMap.put("error", true);
+            List<String> messages = new ArrayList<>();
+            messages.add("error.metadata.delete.permission");
+            responseMap.put("messages", messages);
+            responseMap.put("identifier", identifier);
+            status = HttpStatus.FORBIDDEN;
+        }
+
+        catch (Exception e) {
+            context.error(e);
+            responseMap.put("error", true);
+            responseMap.put("identifier", identifier);
+            List<String> messages = new ArrayList<>();
+            messages.add("update.server.error");
+            responseMap.put("messages", messages);
+            status = HttpStatus.INTERNAL_SERVER_ERROR;
+        }
+
+        ResponseEntity<Object> response = new ResponseEntity<Object>(responseMap, status);
         return response;
     }
 
