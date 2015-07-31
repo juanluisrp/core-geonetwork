@@ -199,7 +199,7 @@
                 <gco:Boolean>true</gco:Boolean>
               </gmd:extentTypeCode>
               <gmd:geographicIdentifier>
-                <gmd:RS_Identifier uuid="http://gazeteer.pdok.nl/">
+                <gmd:RS_Identifier uuid="http://gazetteer.pdok.nl/">
                   <gmd:code>
                     <gco:CharacterString/>
                   </gmd:code>

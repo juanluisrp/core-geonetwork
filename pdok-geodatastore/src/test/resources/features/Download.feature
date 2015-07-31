@@ -206,7 +206,7 @@ Op http://www.kadaster.nl/web/artikel/download/Beschrijving-velden-RDinfo-PDOK-1
 								<gco:Boolean>true</gco:Boolean>
 							</gmd:extentTypeCode>
 							<gmd:geographicIdentifier>
-								<gmd:RS_Identifier uuid="http://gazeteer_pdok_nl#Nederland_country">
+								<gmd:RS_Identifier uuid="http://gazetteer_pdok_nl#Nederland_country">
 									<gmd:code>
 										<gco:CharacterString>Nederland</gco:CharacterString>
 									</gmd:code>
