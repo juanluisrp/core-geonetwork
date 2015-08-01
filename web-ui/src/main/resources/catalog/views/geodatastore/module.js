@@ -264,6 +264,32 @@
 					function(error) {});
 		};
 
+    $scope.publishMetadata = function(md) {
+      return GdsUploadFactory.saveMetadata(md, true).then(
+          function(data) {
+            if (data && data.status === 'published') {
+              GdsUploadFactory.removeFromList(md, $scope.searchResults.metadata);
+              $scope.totalPublished = $scope.totalPublished + 1;
+              if (GdsUploadFactory.getMdSelected() && GdsUploadFactory.getMdSelected().identifier === md.identifier) {
+                GdsUploadFactory.setMdSelected({});
+                $scope.hasSelected = false;
+              }
+            }
+          }, function(error) {
+              var modalInstance = $modal.open({
+                templateUrl: '../../catalog/views/geodatastore/templates/publishFormModal.html',
+                controller: 'PublishModalController',
+                resolve: {
+                  metadata: function () {
+                    return error;
+                  }
+                }
+              });
+            modalInstance.result;
+          }
+      );
+    };
+
     $scope.showDeleteConfirm = function(md, evt) {
       if (evt) {
         evt.stopPropagation();
@@ -328,6 +354,10 @@
       }
   ]);
 
+  module.controller('PublishModalController', ['$scope', '$modalInstance', 'metadata', function($scope, $modalInstance, metadata) {
+    $scope.publishErrorMessages = metadata.messages;
+  }]);
+
   module.controller('gdsCardController', ['$scope', 'GdsUploadFactory', function($scope, GdsUploadFactory) {
     // watch md object for changes and evaluate if it is publishable. Then save this state to md.$publishable property.
     // $publishable starts with a '$' character so it is not take in account for detecting object changes
@@ -339,6 +369,13 @@
 
     }, true);
 
+    $scope.startPublish = function(evt) {
+      if (evt) {
+        evt.stopPropagation();
+      }
+
+      return $scope.publishMetadata($scope.md);
+    }
   }]);
 
 

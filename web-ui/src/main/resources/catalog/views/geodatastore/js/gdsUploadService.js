@@ -42,11 +42,12 @@
         uploadedFiles.list = [];
       };
 
-      uploadedFiles.removeFromList = function(file) {
-        for(var i= this.list.length - 1; i >= 0 ; i--) {
-          var srMd = this.list[i];
+      uploadedFiles.removeFromList = function(file, listParam) {
+        var lst = listParam || this.list;
+        for(var i= lst.length - 1; i >= 0 ; i--) {
+          var srMd = lst[i];
           if (srMd.identifier === file.identifier) {
-            this.list.splice(i, 1);
+            lst.splice(i, 1);
           }
         }
       };
@@ -128,6 +129,7 @@
         return defer.promise;
       };
 
+
       uploadedFiles.replace = function(mdList, md) {
         var id = md.identifier;
         for (var i = 0; i < mdList.length; i++) {
@@ -205,7 +207,7 @@
         }
 
         return publishable;
-      }
+      };
 
 
       return uploadedFiles;

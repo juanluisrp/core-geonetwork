@@ -50,6 +50,9 @@
   "modal.delete.button.cancel": "Annuleren",
   "modal.delete.error.body": "Tijdens het verwerken van het verwijderen van de dataset zijn er fouten opgetreden.",
   "modal.delete.button.accept": "Ok",
-  "dataset.delete.notfound": "Dataset is niet gevonden. Mogelijk is het bestand reeds verwijderd."
+  "dataset.delete.notfound": "Dataset is niet gevonden. Mogelijk is het bestand reeds verwijderd.",
+  "modal.publish.title": "Publicatie van de dataset",
+  "modal.publish.error.body": "Tijdens het verwerken van het publicatie van de dataset zijn er fouten opgetreden.",
+  "modal.publish.button.accept": "Ok"
 
 }

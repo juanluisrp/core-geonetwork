@@ -37,7 +37,7 @@
             </nav>
             <section>
                 <form action="../../geodatastore/api/dataset" method="POST" enctype="multipart/form-data" data-file-upload="datasetUploadOptions"
-                        data-ng-class="{'fileupload-processing': processing() || loadingFiles}" data-ng-controller="GdsFileUploadController">
+                        data-ng-class="{'fileupload-processing': processing() || loadingFiles}" data-ng-controller="GdsFileUploadController" data-ng-cloak>
                     <!-- Select file button  and dropzone -->
                     <div id="dropzone" class="fade" data-gds-drop-zone data-ng-show="tab=='upload'">
                         <div class="floatright">
@@ -53,7 +53,7 @@
                     </div>
                     <ol id="selectable">
                        <!-- List of files in queue -->
-                       <li data-ng-repeat="file in queue" data-ng-class="{'processing': file.$processing()}">
+                       <li data-ng-repeat="file in queue" data-ng-class="{'processing': file.$processing()}" data-ng-cloak>
 
 						   <div class="title">
                                <div class="floatright" >
@@ -76,7 +76,7 @@
                        </li>
                        <!-- Files uploaded since page reload -->
                        <li data-ng-repeat="md in GdsUploadFactory.list" data-ng-click="setMD(md)" data-ng-class="setBackground(md)"
-                           data-ng-controller="gdsCardController" class="card">
+                           data-ng-controller="gdsCardController" class="card" data-ng-cloak>
                            <div class="arrow-left" data-ng-show="md.identifier == getMdSelected().identifier"></div>
                            <div class="title">
                                <div class="floatright">
@@ -95,7 +95,7 @@
 
                        <!--  Files recovered from search service -->
 					   <li data-ng-repeat="md in searchResults.metadata" data-ng-click="setMD(md)" data-ng-class="setBackground(md)"
-                           data-ng-controller="gdsCardController" class="card">
+                           data-ng-controller="gdsCardController" class="card animated" data-ng-cloak>
                             <div class="arrow-left" data-ng-show="md.identifier == getMdSelected().identifier"></div>
 							<div data-ng-include="'../../catalog/views/geodatastore/templates/cardPublished.html'"  data-ng-show="tab == 'published'"></div>
 							<div data-ng-include="'../../catalog/views/geodatastore/templates/cardUpload.html'" data-ng-show="tab == 'upload'"></div>
@@ -103,7 +103,7 @@
                     </ol>
                 </form>
                 <div>
-                    <nav class="floatright">
+                    <nav class="floatright" data-ng-cloak>
                         <ul class="pagination" ng-show="pages.length>1">
                             <li ng-class="{'disabled':page==1}">
                                 <a href="#" aria-label="Previous" data-ng-click="updateResults(page-1)">
@@ -135,7 +135,7 @@
 						<p>{{getMdSelected().message|translate}}</p>
 						<br/><br/><br/><br/>
 					</div>
-					<div data-ng-include="'../../catalog/views/geodatastore/templates/form.html'" ng-hide="getMdSelected().error || getMdSelected().$processing()"></div>
+					<div data-ng-include="'../../catalog/views/geodatastore/templates/form.html'" ng-hide="getMdSelected().error || getMdSelected().$processing()" data-ng-cloak></div>
                 </div>
                 <div data-ng-switch-default class="padding-25 padding-top-10em">
 					

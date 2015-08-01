@@ -11,7 +11,8 @@ template for card to be used before being published
 	<span>{{getFileName(md)}}</span>
 </div>
 <div class="message alert-success" data-ng-show="md.$publishable">
-	<button type="button" class="btn btn-default btn-sm floatright" data-ng-disable="!md.$publishable"><i class="fa fa-share fa-fw"></i>Publiceren</button>
+	<button type="button" class="btn btn-default btn-sm floatright" data-gn-click-and-spin="startPublish($event)"
+            data-ng-disable="!md.$publishable"><i class="fa fa-share fa-fw"></i>Publiceren</button>
 	<i class="fa fa-check fa-fw" style="font-size:1em; margin-right: 4px"></i>Data is klaar om te worden gedeeld.
 </div>
 <div class="message alert-info" data-ng-hide="md.$publishable">

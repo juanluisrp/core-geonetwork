@@ -117,7 +117,7 @@ template for metadata form
 		<div class="floatright">
 			<button type="button" id="removeFormButton" class="btn btn-default btn-sm" data-ng-click="showDeleteConfirm(mdToEdit, $event)"><i class="fa fa-trash-o fa-fw"></i>{{'remove'|translate}}</button>
 			<button type="button" id="publishFormButton" data-ng-disabled="editMdForm.$dirty || !mdToEdit.$publishable"
-					class="btn btn-default btn-sm" ng-show="tab=='upload'"><i class="fa fa-share fa-fw"></i>{{'publish'|translate}}</button>
+					class="btn btn-default btn-sm" ng-show="tab=='upload'" data-gn-click-and-spin="publishMetadata(mdToEdit)"><i class="fa fa-share fa-fw"></i>{{'publish'|translate}}</button>
 			<button type="button" id="saveFormButton" class="btn btn-default btn-sm" data-gn-click-and-spin="processSubmit()"
 					data-ng-disabled="editMdForm.$pristine && editMdForm.$valid"><i class="fa fa-floppy-o fa-fw"></i>{{'save'|translate}}</button>
 		</div>

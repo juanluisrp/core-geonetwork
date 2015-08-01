@@ -341,8 +341,7 @@ footer ul li.first, .verytop ul li.first {
 
 // card animations
 .card {
-  &.animate-enter,
-  &.animate-leave
+/*  &.ng-leave
   {
     -webkit-transition: 800ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
     -moz-transition: 800ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
@@ -351,21 +350,81 @@ footer ul li.first, .verytop ul li.first {
     transition: 800ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
     position: relative;
     display: block;
-  }
+  }*/
 
-  &.animate-enter.animate-enter-active,
-  &.animate-leave {
-    opacity: 1;
+  &.ng-leave {
+    /*opacity: 1;
     left: 0;
-    height: 30px;
+    height: 30px;*/
+    -webkit-animation-name: slideOutLeft;
+    -moz-animation-name: slideOutLeft;
+    -o-animation-name: slideOutLeft;
+    animation-name: slideOutLeft;
   }
 
-  &.animate-leave.animate-leave-active,
-  &.animate-enter {
+/*  &.ng-leave.animate-leave-active
+  {
     opacity: 0;
     left: -50px;
     height: 0px;
+  }*/
+}
+
+@-webkit-keyframes slideOutLeft {
+  0% {
+    transform: translate3d(0, 0, 0);
   }
+
+  100% {
+    visibility: hidden;
+    transform: translate3d(-100%, 0, 0);
+  }
+}
+
+@-moz-keyframes slideOutLeft {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+
+  100% {
+    visibility: hidden;
+    transform: translate3d(-100%, 0, 0);
+  }
+}
+
+@-o-keyframes slideOutLeft {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+
+  100% {
+    visibility: hidden;
+    transform: translate3d(-100%, 0, 0);
+  }
+}
+@keyframes slideOutLeft {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+
+  100% {
+    visibility: hidden;
+    transform: translate3d(-100%, 0, 0);
+  }
+}
+
+.slideOutLeft {
+  animation-name: slideOutLeft;
+}
+
+.animated {
+  animation-duration: 1s;
+  animation-fill-mode: both;
+}
+
+.no-animated {
+  -webkit-transition: none !important;
+  transition: none !important;
 }
 
 .login-logo {
