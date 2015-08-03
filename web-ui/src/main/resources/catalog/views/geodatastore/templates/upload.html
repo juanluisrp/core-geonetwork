@@ -87,9 +87,16 @@
                                <i class="fa fa-lg fa-fw" data-ng-class="GdsUploadFactory.getFileIcon(md)" style="vertical-align: 12%"></i>
                                <span>{{getFileName(md)}}</span>
                            </div>
-						   <div data-ng-show="md.error"  class="message alert-danger"><i class="fa fa-exclamation-triangle fa-fw" style="font-size:1em; margin-right: 4px"></i>Upload fout. Klik hier voor meer informatie.</div>
-                           <div class="message alert-info" data-ng-hide="file.error">
+                           <div class="message alert-success" data-ng-show="md.$publishable">
+                               <button type="button" class="btn btn-default btn-sm floatright" data-gn-click-and-spin="startPublish($event)"
+                                       data-ng-disable="!md.$publishable"><i class="fa fa-share fa-fw"></i>Publiceren</button>
+                               <i class="fa fa-check fa-fw" style="font-size:1em; margin-right: 4px"></i>Data is klaar om te worden gedeeld.
+                           </div>
+                           <div class="message alert-info" data-ng-hide="md.$publishable">
                                <i class="fa fa-pencil fa-fw" style="font-size:1em; margin-right: 4px"></i>Voltooi de dataset informatie om te kunnen publiceren.
+                           </div>
+                           <div class="message alert-danger" data-ng-show="getStatus(md)=='error'">
+                               <i class="fa fa-exclamation-triangle fa-fw" style="font-size:1em; margin-right: 4px"></i>Upload fout. Klik hier voor meer informatie.
                            </div>
                        </li>
 

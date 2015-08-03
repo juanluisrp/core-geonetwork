@@ -44,8 +44,8 @@
       $scope.searchObj = {
         permalink: false,
         params: {
-          sortBy: 'popularity',
-		  filter: '',
+          sortBy: 'changeDate',
+		      filter: '',
           from: 1,
           to: 9
         }
@@ -80,7 +80,26 @@
 
 		$scope.$watch('user', function() {
 			$scope.updateResults(1);
-		})
+		});
+
+    $scope.$watch('tab', function(newValue, oldValue) {
+      // Retrieve the register count for the not selected tab.
+      var status;
+      if (newValue) {
+        if (newValue === "upload") {
+          status = 'published';
+        } else {
+          status = 'draft';
+        }
+        $scope.getResultsSummary(status);
+        $scope.hasSelected = false;
+        GdsUploadFactory.setMdSelected(null);
+        GdsUploadFactory.clearList();
+        GdsUploadFactory.setDirty(false);
+        $scope.updateResults(1);
+      }
+    });
+
 
 	  $scope.updateResults = function(page ,any, order){
 			$scope.page = page;
@@ -92,13 +111,13 @@
 				sortBy: order,
 				sortOrder: 'desc',
 				pageSize: $scope.perPage,
-				status: ($scope.tab == "upload") ? 'draft' : 'published'
+				status: ($scope.tab === 'upload') ? 'draft' : 'published'
 			}).then(function(data) {
 			    GdsUploadFactory.clearList();
 				$scope.searchResults = data;
-				if ($scope.tab == 'upload') {
+				if ($scope.tab === 'upload') {
 					$scope.totalNotPublished = data.count;
-				} else if ($scope.tab == 'published') {
+				} else if ($scope.tab === 'published') {
 					$scope.totalPublished = data.count;			   
 				} 
 				$scope.pages = new Array(Math.ceil(data.count/$scope.perPage)); 
@@ -106,6 +125,19 @@
 					$log.error("Error in search: " + error);
 			});
 		};
+
+    $scope.getResultsSummary = function(status) {
+      gdsSearchManagerService.search({
+        status: status,
+        summaryOnly: true
+      }).then(function(data) {
+        if (status === 'draft') {
+          $scope.totalNotPublished = data.count;
+        } else if (status === 'published') {
+          $scope.totalPublished = data.count;
+        }
+      })
+    }
 	  
 	  //get the status of a dataset, a dataset can be published if all fields are completed
 	  $scope.getStatus = function(md){
@@ -234,11 +266,6 @@
 		$scope.setTab = function(val){
 			//if form modified && not saved, warn to loose changes?
 			$scope.tab = val;
-			$scope.hasSelected = false;
-      GdsUploadFactory.setMdSelected(null);
-			GdsUploadFactory.clearList();
-      GdsUploadFactory.setDirty(false);
-			$scope.updateResults(1);
 		};
 		
 	  //grab the filename from metadata, for now take the first link, later check which link is the correct link, sometimes filename is empty then use file desc
@@ -269,6 +296,7 @@
           function(data) {
             if (data && data.status === 'published') {
               GdsUploadFactory.removeFromList(md, $scope.searchResults.metadata);
+              GdsUploadFactory.removeFromList(md);
               $scope.totalPublished = $scope.totalPublished + 1;
               if (GdsUploadFactory.getMdSelected() && GdsUploadFactory.getMdSelected().identifier === md.identifier) {
                 GdsUploadFactory.setMdSelected({});

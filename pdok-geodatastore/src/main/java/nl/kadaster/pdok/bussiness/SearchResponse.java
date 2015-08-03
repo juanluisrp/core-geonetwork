@@ -183,4 +183,14 @@ public class SearchResponse {
     }
 
 
+    public void initFromSummary(Element summary) {
+        if (summary != null && summary.getName().equals(Jeeves.Elem.RESPONSE)) {
+            Element summaryEl = summary.getChild("summary");
+            if (summaryEl != null) {
+                int count = NumberUtils.toInt(summaryEl.getAttributeValue("count"));
+                this.setCount(count);
+            }
+        }
+
+    }
 }

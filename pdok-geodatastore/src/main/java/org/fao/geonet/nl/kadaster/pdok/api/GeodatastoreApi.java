@@ -610,6 +610,7 @@ public class GeodatastoreApi  {
             @RequestParam(value = "from", defaultValue = "1") Integer from,
             @RequestParam(value = "pageSize", defaultValue = "20") Integer pageSize,
             @RequestParam(value = "status", defaultValue = "published") String status,
+            @RequestParam(value = "summaryOnly", defaultValue = "false") Boolean summaryOnly,
             HttpServletRequest request) {
 
         try {
@@ -617,22 +618,27 @@ public class GeodatastoreApi  {
             if ("draft".equals(status)) {
                 statusParam = Params.Status.DRAFT;
             }
-
-            ServiceContext context = serviceManager.createServiceContext("geodatastore.api", lang, request);
-            UserSession session = context.getUserSession();
-            Element parametersAsXml = buildSearchXmlParameters(context, q, sortBy, sortOrder, from, pageSize, statusParam);
             MetaSearcher searcher = searchManager.newSearcher(SearcherType.LUCENE, Geonet.File.SEARCH_LUCENE);
-            // FIXME Why save search parameters in session?
-            session.setProperty(Geonet.Session.SEARCH_REQUEST, parametersAsXml.clone());
-            searcher.search(context, parametersAsXml, serviceConfig);
-            Element results = searcher.present(context, parametersAsXml, serviceConfig);
+                ServiceContext context = serviceManager.createServiceContext("geodatastore.api", lang, request);
+                UserSession session = context.getUserSession();
+                Element parametersAsXml = buildSearchXmlParameters(context, q, sortBy, sortOrder, from, pageSize, statusParam);
+                // FIXME Why save search parameters in session?
+                session.setProperty(Geonet.Session.SEARCH_REQUEST, parametersAsXml.clone());
+                searcher.search(context, parametersAsXml, serviceConfig);
+            if (!summaryOnly) {
+                Element results = searcher.present(context, parametersAsXml, serviceConfig);
+                SearchResponse searchResponse = new SearchResponse();
+                searchResponse.initFromXml(results);
 
-            SearchResponse searchResponse = new SearchResponse();
-            searchResponse.initFromXml(results);
+                return new ResponseEntity<>((Object) searchResponse, HttpStatus.OK);
+            } else {
+                // summary only
+                Element summary = searcher.getSummary();
+                SearchResponse searchResponse = new SearchResponse();
+                searchResponse.initFromSummary(summary);
 
-
-            return new ResponseEntity<>((Object) searchResponse,  HttpStatus.OK);
-
+                return new ResponseEntity<>((Object) searchResponse, HttpStatus.OK);
+            }
 
 
 
@@ -657,7 +663,8 @@ public class GeodatastoreApi  {
      * @param status draft or published.
      * @return the query for the searcher.
      */
-    private Element buildSearchXmlParameters(ServiceContext context, String q, String sortBy, String sortOrder, Integer from, Integer pageSize, String status) {
+    private Element buildSearchXmlParameters(ServiceContext context, String q, String sortBy, String sortOrder, Integer from,
+                                             Integer pageSize, String status) {
         Element queryParameters = new Element(Jeeves.Elem.REQUEST);
         queryParameters.addContent(new Element(Geonet.IndexFieldNames.ANY).setText(q));
         queryParameters.addContent(new Element(Geonet.SearchResult.SORT_BY).setText(sortBy));
@@ -670,6 +677,7 @@ public class GeodatastoreApi  {
         queryParameters.addContent(new Element(Geonet.SearchResult.FAST).setText("index"));
         queryParameters.addContent(new Element("_isTemplate").setText("n"));
         queryParameters.addContent(new Element("type").setText("dataset"));
+
 
         return SearchDefaults.getDefaultSearch(context, queryParameters);
     }
