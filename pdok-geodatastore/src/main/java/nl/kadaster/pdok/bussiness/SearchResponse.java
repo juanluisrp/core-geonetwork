@@ -169,6 +169,7 @@ public class SearchResponse {
         Element geonetInfo = metadataEl.getChild("info", Geonet.Namespaces.GEONET);
         if (geonetInfo != null) {
             md.setIdentifier(geonetInfo.getChildText("uuid"));
+            md.setChangeDate(geonetInfo.getChildText("changeDate"));
         }
         return md;
     }

@@ -2,6 +2,21 @@
 template for card to be used after being published
 -->
 
-<i class="fa fa-lg fa-fw" data-ng-class="getFileType(md)" style="vertical-align: 12%"></i>
-<b>{{md.title | words:6}}</b><br/>
-<p>{{md.abstract | words:18 }}</p>
+<div class="row">
+    <div class="col-md-2 card-thumbnail">
+        <img src="https://placehold.it/75x75" />
+    </div>
+    <div class="col-md-10">
+        <div class="title">
+            <span>{{md.title}}</span>
+        </div>
+        <p>{{md.abstract | words:18 }}</p>
+        <div class="filename">
+            <i class="fa fa-lg fa-fw" data-ng-class="getFileType(md)" style="vertical-align: 12%"></i>
+            <span>{{getFileName(md)}}</span>
+            <span class="floatright">{{md.changeDate | date:'MM-dd-yyyy' }}</span>
+
+        </div>
+
+    </div>
+</div>

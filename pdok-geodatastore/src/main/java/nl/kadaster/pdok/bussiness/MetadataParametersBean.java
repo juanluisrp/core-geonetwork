@@ -29,6 +29,7 @@ public class MetadataParametersBean {
     private String status;
     private String fileType;
     private String locationUri;
+    private String changeDate;
 
     public MetadataParametersBean() {
         this.keywords = Lists.newArrayList();
@@ -211,5 +212,13 @@ public class MetadataParametersBean {
 
     public void setLocationUri(String locationUri) {
         this.locationUri = locationUri;
+    }
+
+    public String getChangeDate() {
+        return changeDate;
+    }
+
+    public void setChangeDate(String changeDate) {
+        this.changeDate = changeDate;
     }
 }
