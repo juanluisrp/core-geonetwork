@@ -3,6 +3,7 @@ package nl.kadaster.pdok.bussiness;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.google.common.collect.Lists;
 import org.apache.commons.lang.StringUtils;
+import org.codehaus.jackson.annotate.JsonIgnore;
 
 import java.util.List;
 
@@ -27,6 +28,7 @@ public class MetadataParametersBean {
     private List<String> messages;
     private String status;
     private String fileType;
+    private String locationUri;
 
     public MetadataParametersBean() {
         this.keywords = Lists.newArrayList();
@@ -201,5 +203,13 @@ public class MetadataParametersBean {
                 && StringUtils.isNotBlank(this.useLimitation) && this.topicCategories.size() > 0 && this.keywords.size() > 0);
 
 
+    }
+
+    public String getLocationUri() {
+        return locationUri;
+    }
+
+    public void setLocationUri(String locationUri) {
+        this.locationUri = locationUri;
     }
 }

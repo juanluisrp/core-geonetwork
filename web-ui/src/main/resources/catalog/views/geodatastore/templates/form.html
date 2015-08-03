@@ -54,7 +54,12 @@ template for metadata form
 	</div>
 	<div class="form-group">
 		<label for="location">{{'location'|translate}}</label>
+        <input id="location" tabindex="6" data-ng-model="mdToEdit.location" placeholder="{{'placeholderLocationField'|translate}}"
+               data-uri-model="mdToEdit.locationUri"
+               class="form-control" data-gds-keyword-picker data-thesaurus-key="external.place.administrativeAreas"/>
+<!--
 		<input class="form-control" id="location" tabindex=6 data-ng-model="mdToEdit.location" placeholder="{{'placeholderLocationField'|translate}}">
+-->
 	</div>
 	<div class="form-group">
 		<label for="license">{{'license'|translate}}</label>

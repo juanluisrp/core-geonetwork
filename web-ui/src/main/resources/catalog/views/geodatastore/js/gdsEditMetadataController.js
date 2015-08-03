@@ -4,13 +4,15 @@
   goog.require('geodatastore_upload_service');
   goog.require('gn_utility_directive');
   goog.require('gn_popup_service');
+  goog.require('gds_thesaurus_directive');
 
   var module = angular.module('geodatastore_edit_metadata_controller', [
     'blueimp.fileupload',
     'geodatastore_upload_service',
     'gn_utility_directive',
     'gn_popup_service',
-    'pascalprecht.translate'
+    'pascalprecht.translate',
+    'gds_thesaurus_directive'
 
   ]);
 

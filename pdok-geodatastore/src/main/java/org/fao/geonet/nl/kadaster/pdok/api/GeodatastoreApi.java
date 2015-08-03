@@ -289,8 +289,8 @@ public class GeodatastoreApi  {
         String keywordList = Joiner.on("#").join(keywords);
         parameters.put(KEYWORDS_KEY, keywordList);
         parameters.put(KEYWORD_SEPARATOR_KEY, "#");
-        parameters.put(USE_LIMITATION_KEY, "None");
-        parameters.put(RESOLUTION_KEY, "10000");
+        //parameters.put(USE_LIMITATION_KEY, "None");
+        //parameters.put(RESOLUTION_KEY, "10000");
 
         String topicList = Joiner.on("#").join(topics);
         parameters.put(TOPICS_KEY, topicList);
@@ -476,8 +476,15 @@ public class GeodatastoreApi  {
             parametersMap.put(TOPIC_SEPARATOR_KEY, topicSeparator);
             parametersMap.put(TOPICS_KEY, topicList);
         }
-        if (metadataParameter.getLocation() != null) {
-            parametersMap.put(GEOGRAPHIC_IDENTIFIER_KEY, metadataParameter.getLocation());
+        if (metadataParameter.getLocation() != null && StringUtils.isNotBlank(metadataParameter.getLocationUri())) {
+
+            // TODO recover coordinates from the service and pass them to the template
+            String[] splitLocationUri = StringUtils.split(metadataParameter.getLocationUri(), "#");
+            if (splitLocationUri.length > 0) {
+                String location = splitLocationUri[splitLocationUri.length - 1];
+                parametersMap.put(GEOGRAPHIC_IDENTIFIER_KEY, location);
+            }
+
         }
         if (metadataParameter.getLineage() != null) {
             parametersMap.put(LINEAGE_KEY, metadataParameter.getLineage());
