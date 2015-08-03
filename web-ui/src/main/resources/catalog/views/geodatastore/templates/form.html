@@ -9,6 +9,12 @@ template for metadata form
 		<h2><i class="fa fa-check fa-fw"></i> Data succesfully updated.</h2>
 		<br/><br/><br/><br/>
 	</div>
+    <div class="form-group" data-ng-show="tab === 'published'">
+        <label>Permalink</label>
+        <div class="clearfix"></div>
+        <a data-ng-href="mdToEdit.url">{{mdToEdit.url}}</a>
+
+    </div>
 	<div class="form-group">
 		<label for="titleField">{{'title'|translate}}</label>
 		<input class="form-control" id="titleField" tabindex="1" data-ng-model="mdToEdit.title" placeholder="{{'placeholderTitleField'|translate}}" />
