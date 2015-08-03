@@ -41,6 +41,30 @@
 
       $scope.mdToEdit = null;
 
+      $scope.licenseList = [
+        {
+          value: "PublicDomain",
+          label: "Public Domain"
+        },
+        {
+          value: "CC0",
+          label: "CC0 (Creative Commons)"
+        },
+        {
+          value: "CC-BY",
+          label: "CC-BY (Creative Commons Naamsvermelding"
+        }
+      ];
+
+      $scope.resolutionList = [
+          { value: "1000000", label:"Landelijk"},
+          { value:"100000", label: "Provinciaal"},
+          { value:"25000", label: "Gemeentelijk"},
+          { value:"10000", label: "Wijkniveau"},
+          { value:"2500", label: "Straatniveau"},
+          { value:"500", label: "Huis"}
+      ];
+
       $scope.$watch("editMdForm.$dirty", function(newValue) {
         GdsUploadFactory.setDirty(newValue);
 

@@ -63,11 +63,9 @@ template for metadata form
 	</div>
 	<div class="form-group">
 		<label for="license">{{'license'|translate}}</label>
-		<select class="form-control" id="license" tabindex=7  data-ng-model="mdToEdit.license">
-			<option value="null">{{'placeholderLicenseField'|translate}}</option>
-			<option value="PublicDomain">Public Domain</option>
-			<option value="CC0">CC0 (Creative Commons)</option>
-			<option value="CC-BY">CC-BY (Creative Commons Naamsvermelding)</option>
+		<select class="form-control" id="license" tabindex=7 data-ng-model="mdToEdit.license"
+                data-ng-options="item.value as item.label for item in licenseList">
+			<option value="">{{'placeholderLicenseField'|translate}}</option>
 		</select>
 	</div>
 	<div class="form-group">
@@ -76,14 +74,9 @@ template for metadata form
 	</div>
 	<div class="form-group">
 		<label for="resolution">{{'scale'|translate}}</label>
-		<select class="form-control" id="resolution" tabindex=9  data-ng-model="mdToEdit.resolution">
-			<option value="null">{{'placeholderScaleField'|translate}}</option>
-			<option value="1000000">Landelijk</option>
-			<option value="100000">Provinciaal</option>
-			<option value="25000">Gemeentelijk</option>
-			<option value="10000">Wijkniveau</option>
-			<option value="2500">Straatniveau</option>
-			<option value="500">Huis</option>
+		<select class="form-control" id="resolution" tabindex=9 data-ng-model="mdToEdit.resolution"
+                data-ng-options="item.value as item.label for item in resolutionList">
+			<option value="">{{'placeholderScaleField'|translate}}</option>
 		</select>
 	</div>
 	<div class="form-group">
@@ -104,6 +97,12 @@ template for metadata form
                         <a data-ng-href="{{file.url}}" title="{{file.name}}" download="{{file.name}}" data-gallery><img data-ng-src="{{file.thumbnailUrl}}" alt=""></a>
                     </div>
                     <div class="preview" data-ng-switch-default data-file-upload-preview="file"></div>
+                </div>
+                <div class="floatright" >
+                    <a data-tooltip="{{'tooltip.interrupt' | translate}}"
+                       title="onderbreken" data-ng-click="file.$cancel()">
+                        <i class="fa fa-times fa-lg"></i>
+                    </a>
                 </div>
                 <div>
                     <p class="name" data-ng-switch data-on="!!file.url">
