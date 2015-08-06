@@ -28,6 +28,7 @@ import org.fao.geonet.domain.User;
 import org.fao.geonet.repository.UserRepository;
 import org.fao.geonet.util.PasswordUtil;
 import org.fao.geonet.utils.Log;
+import org.hibernate.JDBCException;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.authentication.BadCredentialsException;
