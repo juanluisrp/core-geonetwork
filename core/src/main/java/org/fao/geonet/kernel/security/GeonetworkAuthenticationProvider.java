@@ -107,11 +107,11 @@ public class GeonetworkAuthenticationProvider extends AbstractUserDetailsAuthent
 		catch (JDBCException jdbce)
 		{
 			Log.error(Log.JEEVES, "Unexpected error while loading user", jdbce);
-			throw new AuthenticationServiceException("Unexpected error while loading user",e);
 			//Log the next exception if available:
 			Exception e = jdbce.getSQLException().getNextException();
 			if(e != null)
 				Log.error(Log.JEEVES, "Next exception:", jdbce.getSQLException().getNextException());
+			throw new AuthenticationServiceException("Unexpected error while loading user",jdbce);
 		}
 		catch (Exception e) {
 			Log.error(Log.JEEVES, "Unexpected error while loading user", e);
