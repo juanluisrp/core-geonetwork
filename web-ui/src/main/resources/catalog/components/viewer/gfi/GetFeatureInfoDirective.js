@@ -58,7 +58,8 @@
 
             for (var i = 0; i < map.getInteractions().getArray().length; i++) {
               var interaction = map.getInteractions().getArray()[i];
-              if (interaction instanceof ol.interaction.Draw &&
+              if ((interaction instanceof ol.interaction.Draw ||
+                  interaction instanceof ol.interaction.Select) &&
                   interaction.getActive()) {
                 return;
               }
@@ -91,7 +92,7 @@
                   ['longitude', 'latitude',
                     'time', 'value'].forEach(function(v) {
                     var node = doc.getElementsByTagName(v);
-                    if (node) {
+                    if (node && node.length > 0) {
                       props[v] = ol.xml.getAllTextContent(node[0], true);
                     }
                   });

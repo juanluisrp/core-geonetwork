@@ -2,9 +2,10 @@
   goog.provide('gn_cat_controller');
 
   goog.require('gn_search_manager');
+  goog.require('gn_session_service');
 
   var module = angular.module('gn_cat_controller',
-      ['gn_search_manager']);
+      ['gn_search_manager', 'gn_session_service']);
 
 
   module.constant('gnGlobalSettings', {
@@ -33,13 +34,14 @@
   module.controller('GnCatController', [
     '$scope', '$http', '$q', '$rootScope', '$translate',
     'gnSearchManagerService', 'gnConfigService', 'gnConfig',
-    'gnGlobalSettings', '$location',
+    'gnGlobalSettings', '$location', 'gnUtilityService', 'gnSessionService',
     function($scope, $http, $q, $rootScope, $translate,
-             gnSearchManagerService, gnConfigService, gnConfig,
-             gnGlobalSettings, $location) {
+            gnSearchManagerService, gnConfigService, gnConfig,
+            gnGlobalSettings, $location, gnUtilityService, gnSessionService) {
       $scope.version = '0.0.1';
       // TODO : add language
       var tokens = location.href.split('/');
+      $scope.service = tokens[6].split('?')[0];
       $scope.lang = tokens[5];
       $scope.nodeId = tokens[4];
       // TODO : get list from server side
@@ -54,7 +56,6 @@
       $scope.logoPath = '../../images/harvesting/';
       $scope.isMapViewerEnabled = gnGlobalSettings.isMapViewerEnabled;
       $scope.isDebug = window.location.search.indexOf('debug') !== -1;
-
 
       $scope.pages = {
         home: 'home',
@@ -75,8 +76,8 @@
        * An ordered list of profiles
        */
       $scope.profiles = ['RegisteredUser', 'Editor',
-        'Reviewer', 'UserAdmin',
-        'Administrator'];
+                         'Reviewer', 'UserAdmin',
+                         'Administrator'];
       $scope.info = {};
       $scope.user = {};
       $scope.authenticated = false;
@@ -129,10 +130,10 @@
               }).
               error(function(data, status, headers, config) {
                 $rootScope.$broadcast('StatusUpdated',
-                    {
-                      title: $translate('somethingWrong'),
-                      msg: $translate('msgNoCatalogInfo'),
-                      type: 'danger'});
+                   {
+                     title: $translate('somethingWrong'),
+                     msg: $translate('msgNoCatalogInfo'),
+                     type: 'danger'});
               });
         });
 
@@ -171,17 +172,17 @@
         };
         // Build is<ProfileName> and is<ProfileName>OrMore functions
         angular.forEach($scope.profiles, function(profile) {
-              userFn['is' + profile] = function() {
-                return profile === this.profile;
-              };
-              userFn['is' + profile + 'OrMore'] = function() {
-                var profileIndex = $scope.profiles.indexOf(profile),
-                    allowedProfiles = [];
-                angular.copy($scope.profiles, allowedProfiles);
-                allowedProfiles.splice(0, profileIndex);
-                return allowedProfiles.indexOf(this.profile) !== -1;
-              };
-            }
+          userFn['is' + profile] = function() {
+            return profile === this.profile;
+          };
+          userFn['is' + profile + 'OrMore'] = function() {
+            var profileIndex = $scope.profiles.indexOf(profile),
+                allowedProfiles = [];
+            angular.copy($scope.profiles, allowedProfiles);
+            allowedProfiles.splice(0, profileIndex);
+            return allowedProfiles.indexOf(this.profile) !== -1;
+          };
+        }
         );
 
 
@@ -190,7 +191,7 @@
           var url = $scope.url + 'info?_content_type=json&type=me';
           return $http.get(url).
               success(function(data, status) {
-                $scope.user = data.me;
+                angular.extend($scope.user, data.me);
                 angular.extend($scope.user, userFn);
 
                 $scope.authenticated = data.me['@authenticated'] !== 'false';
@@ -198,7 +199,7 @@
               error(function(data, status, headers, config) {
                 // TODO : translate
                 $rootScope.$broadcast('StatusUpdated',
-                    {msg: $translate('msgNoUserInfo')}
+                   {msg: $translate('msgNoUserInfo')}
                 );
               });
         });
@@ -236,11 +237,10 @@
         }
       });
 
-
+      gnSessionService.scheduleCheck($scope.user);
+      $scope.session = gnSessionService.getSession();
 
       $scope.loadCatalogInfo();
-
-
     }]);
 
 })();
