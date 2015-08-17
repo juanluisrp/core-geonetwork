@@ -68,7 +68,7 @@
         }
         var iconClass = "fa-file-o";
         type = type.toLowerCase();
-        if (type.contains("pdf")) {
+        if (type.includes("pdf")) {
           iconClass = "fa-file-pdf-o";
         } else if (type.startsWith("image/") || ["png", "gif", "jpg", "tiff", "tif", "jp2"].indexOf(file) >= 0) {
           iconClass = "fa-file-image-o";
@@ -76,20 +76,20 @@
           iconClass = "fa-file-video-o";
         } else if (type.startsWith("audio/")) {
           iconClass = "fa-file-audio-o";
-        } else if (type.contains("zip") || type == "rar" || type.contains("compressed")) {
+        } else if (type.includes("zip") || type == "rar" || type.includes("compressed")) {
           iconClass = "fa-file-archive-o"
-        } else if (type.contains("excel") || type.contains("sheet") || ["xls","xlsx","ods"].indexOf(file) >= 0 ) {
+        } else if (type.includes("excel") || type.includes("sheet") || ["xls","xlsx","ods"].indexOf(file) >= 0 ) {
           iconClass = "fa-file-excel-o";
-        } else if (type.contains("word") || type.contains("opendocument.text") || ["doc","docx","rtf"].indexOf(file) >= 0) {
+        } else if (type.includes("word") || type.includes("opendocument.text") || ["doc","docx","rtf"].indexOf(file) >= 0) {
           iconClass = "fa-file-word-o";
-        } else if (type.contains("powerpoint") || type.contains("presentation") || ["ppt","pptx"].indexOf(file) >= 0) {
+        } else if (type.includes("powerpoint") || type.includes("presentation") || ["ppt","pptx"].indexOf(file) >= 0) {
           iconClass = "fa-file-powerpoint-o";
         } else if (type === "text/plain" || type === "application/rtf") {
           iconClass = "fa-file-text-o";
         }  else if (["csv"].indexOf(file) >= 0) {
           iconClass = "pdok-i-csv";
         } else if (type === "text/css" || type === "text/html" || type === "application/rdf" || type === "application/rdf+xml"
-            || type === "text/sgml" || type.contains("xml")) {
+            || type === "text/sgml" || type.includes("xml")) {
           iconClass = "fa-file-code-o";
         }
         return iconClass;
@@ -219,7 +219,6 @@
       function($q, $http) {
         var url = "../../geodatastore/api/datasets";
 
-
         var search = function(params, errorFn) {
           var parameters = params || {};
           var defer = $q.defer();
@@ -233,12 +232,27 @@
           return defer.promise;
         };
 
-
-
-
         return {
           search: search
         };
       }
   ]);
 })();
+
+if (!String.prototype.endsWith) {
+String.prototype.endsWith = function(suffix) {
+  return this.indexOf(suffix, this.length - suffix.length) !== -1;
+};
+}
+
+if (!String.prototype.startsWith) {
+String.prototype.startsWith = function (str)
+{
+   return this.indexOf(str) == 0;
+}
+}
+if (!String.prototype.includes) {
+  String.prototype.includes = function(str) {
+    return this.indexOf(str) !== -1;
+  };
+}
