@@ -38,34 +38,32 @@
             </div>
             <div class="row">
                 <div class="col-md-6 col-md-offset-3 bottom-buffer">
-                    <form name="gnSigninForm"
-                          role="form" data-ng-if="user['@authenticated'] != 'true'" data-ng-submit="login()">
-                        <input type="hidden" name="redirectUrl" data-ng-model="redirectUrl" value="{{redirectUrl}}"/>
+                      <form name="gnSigninForm"  action="../../j_spring_security_check" method="post"
+                          role="form" data-ng-if="user['@authenticated'] != 'true'" >
+                        <input type="hidden" name="redirectUrl" value="{{redirectUrl}}"/>
                         <div class="row">
 							<div class="col-md-6">
                             <div class="form-group">
                                 <label class="control-label"
                                        for="inputUsername">Gebruikersnaam</label>
-                                <input type="text" class="form-control" id="inputUsername" name="username" autofocus=""
-                                       placeholder="{{'username' | translate}}" data-ng-model="credentials.username" required=""/>
-								</div>
+                                <input type="text" class="form-control" id="inputUsername" name="username" autofocus=""/>
+				</div>
                             </div>
 							
-							<div class="col-md-6">
+			  <div class="col-md-6">
                             <div class="form-group">
 								
                                 <label class="control-label"
                                        for="inputPassword">Wachtwoord</label>
 
-                                <input type="password" class="form-control" id="inputPassword" name="password"
-                                       data-ng-model="credentials.password" placeholder="{{'password' | translate}}" required=""/>
+                                <input type="password" class="form-control" id="inputPassword" name="password"/>
                             </div>
-							</div>
+			  </div>
                         </div>
                         <div class="row">
                             <div class="col-xs-12">
                                 <a href="http://nationaalgeoregister.nl/geonetwork/srv/dut/search#hoekaniktoevoegen" target="_blank">Account aanvragen</a>
-                                <button type="submit" class="btn btn-primary pull-right" data-ng-disabled="!gnSigninForm.$valid">
+                                <button type="submit" class="btn btn-primary pull-right">
                                     <i class="fa fa-signin"/>
                                     <span>Inloggen</span>
                                 </button>
@@ -80,6 +78,7 @@
                             </div>
                         </div>
                     </form>
+                    
                 </div>
 
 
