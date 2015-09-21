@@ -6,28 +6,27 @@ template for metadata form
 	  data-ng-controller="GdsEditMetadataController" name="editMdForm">
 	<div ng-show="mdToEdit.saved">
 		<br/><br/><br/><br/>
-		<h2><i class="fa fa-check fa-fw"></i> Data succesfully updated.</h2>
+		<h2><i class="fa fa-check fa-fw"></i> {{"Data-succesfully-updated"|translate}}</h2>
 		<br/><br/><br/><br/>
 	</div>
     <div class="form-group" data-ng-show="tab === 'published'">
-        <label>Permalink</label>
+        <label>{{"Download-link"|translate}}</label>
         <div class="clearfix"></div>
         <a data-ng-href="mdToEdit.url">{{mdToEdit.url}}</a>
-
     </div>
+
 	<div class="form-group">
-		<label for="titleField">{{'title'|translate}}</label>
-		<input class="form-control" id="titleField" tabindex="1" data-ng-model="mdToEdit.title" placeholder="{{'placeholderTitleField'|translate}}" />
+		<label for="titleField">{{'title'|translate}}</label> <span class="badge" data-tooltip="{{'placeholderTitleField'|translate}}">i</span>
+		<input class="form-control" id="titleField" tabindex="1" data-ng-model="mdToEdit.title" />
 	</div>
 	<div class="form-group">
-		<label for="abstractField">{{'abstract'|translate}}</label>
-		<textarea rows="5" class="form-control" id="abstractField" data-ng-model="mdToEdit.summary" tabindex="2"
-				  placeholder="{{'placeholderAbstractField'|translate}}"></textarea>
+		<label for="abstractField">{{'abstract'|translate}}</label> <span class="badge" data-tooltip="{{'placeholderAbstractField'|translate}}">i</span>
+		<textarea rows="5" class="form-control" id="abstractField" data-ng-model="mdToEdit.summary" tabindex="2"></textarea>
 	</div>
 	<div class="form-group">
-		<label for="topic">{{'topic'|translate}}</label>
+		<label for="topic">{{'topic'|translate}}</label> <span class="badge" data-tooltip="{{'placeholderTopicField'|translate}}">i</span>
 		<select class="form-control" id="topic" tabindex=3 data-ng-model="mdToEdit.topicCategory">
-			<option value="null">{{'placeholderTopicField'|translate}}</option>
+			<option value="null">{{'Select'|translate}}</option>
 			<option value="imageryBaseMapsEarthCover">Luchtfoto / Dekking van de Aarde</option>
 			<option value="inlandWaters">Binnenwateren</option>
 			<option value="biota">Biota (flora, fauna, habitat)</option>
@@ -55,12 +54,12 @@ template for metadata form
 			   data-ng-model="mdToEdit.keywords"></bootstrap-tagsinput>
 	</div>
 	<div class="form-group">
-		<label for="lineage">{{'lineage'|translate}}</label>
-		<textarea rows="4" class="form-control" id="lineage" data-ng-model="mdToEdit.lineage" tabindex="5"  placeholder="{{'placeholderLineageField'|translate}}"></textarea>
+		<label for="lineage">{{'lineage'|translate}}</label>  <span class="badge" data-tooltip="{{'placeholderLineageField'|translate}}">i</span>
+		<textarea rows="4" class="form-control" id="lineage" data-ng-model="mdToEdit.lineage" tabindex="5"></textarea>
 	</div>
 	<div class="form-group">
-		<label for="location">{{'location'|translate}}</label>
-        <input id="location" tabindex="6" data-ng-model="mdToEdit.location" placeholder="{{'placeholderLocationField'|translate}}"
+		<label for="location">{{'location'|translate}}</label>  <span class="badge" data-tooltip="{{'placeholderLocationField'|translate}}">i</span>
+        <input id="location" tabindex="6" data-ng-model="mdToEdit.location" 
                data-uri-model="mdToEdit.locationUri"
                class="form-control" data-gds-keyword-picker data-thesaurus-key="external.place.administrativeAreas"/>
 <!--
@@ -68,10 +67,10 @@ template for metadata form
 -->
 	</div>
 	<div class="form-group">
-		<label for="license">{{'license'|translate}}</label>
+		<label for="license">{{'license'|translate}}</label>  <span class="badge" data-tooltip="{{'placeholderLicenseField'|translate}}">i</span>
 		<select class="form-control" id="license" tabindex=7 data-ng-model="mdToEdit.license"
                 data-ng-options="item.value as item.label for item in licenseList">
-			<option value="">{{'placeholderLicenseField'|translate}}</option>
+			<option value="">{{'Select'|translate}}</option>
 		</select>
 	</div>
 	<!--<div class="form-group">
@@ -79,20 +78,20 @@ template for metadata form
 		<input type=hidden" value="Geen beperkingen" class="form-control" id="useLimitation" data-ng-model="mdToEdit.useLimitation" />
 	<!--</div>-->
 	<div class="form-group">
-		<label for="resolution">{{'scale'|translate}}</label>
+		<label for="resolution">{{'scale'|translate}}</label>  <span class="badge" data-tooltip="{{'placeholderScaleField'|translate}}">i</span>
 		<select class="form-control" id="resolution" tabindex=9 data-ng-model="mdToEdit.resolution"
                 data-ng-options="item.value as item.label for item in resolutionList">
-			<option value="">{{'placeholderScaleField'|translate}}</option>
+			<option value="">{{'Select'|translate}}</option>
 		</select>
 	</div>
 	<div class="form-group">
-		<label for="thumbnailUploadButton">{{'thumbnail'|translate}}</label>
+		<label for="thumbnailUploadButton">{{'thumbnail'|translate}}</label>  <span class="badge" data-tooltip="{{'placeholderThumbnailField'|translate}}">i</span>
 		<div id="thumbnailDropZone">
             <div>
                 <span class="btn btn-default btn-sm fileinput-button" data-ng-class="{disabled: disabled}">
                     <i class="fa fa-folder-open-o fa-fw"></i>
                     <span>Selecteer een bestand</span>
-                    <input type="file" id="thumbnailUploadButton" name="thumbnail" data-ng-disabled="disabled" placeholder="{{'placeholderThumbnailField'|translate}}">
+                    <input type="file" id="thumbnailUploadButton" name="thumbnail" data-ng-disabled="disabled" >
                 </span>
             </div>
 		</div>
