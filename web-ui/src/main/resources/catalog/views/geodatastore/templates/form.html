@@ -85,7 +85,7 @@ template for metadata form
 		</select>
 	</div>
 	<div class="form-group">
-		<label for="thumbnailUploadButton">{{'thumbnail'|translate}}</label>  <span class="badge" data-tooltip="{{'placeholderThumbnailField'|translate}}">i</span>
+		<label for="thumbnailUploadButton">{{'thumbnail'|translate}}</label> <span class="badge" data-tooltip="{{'placeholderThumbnailField'|translate}}">i</span>
 		<div id="thumbnailDropZone">
             <div>
                 <span class="btn btn-default btn-sm fileinput-button" data-ng-class="{disabled: disabled}">
@@ -104,9 +104,9 @@ template for metadata form
                     <div class="preview" data-ng-switch-default data-file-upload-preview="file"></div>
                 </div>
                 <div class="floatright" >
-                    <a data-tooltip="{{'tooltip.interrupt' | translate}}"
-                       title="onderbreken" data-ng-click="file.$cancel()">
-                        <i class="fa fa-times fa-lg"></i>
+                    <a data-tooltip="{{'tooltip.remove' | translate}}"
+                       title="{{'tooltip.remove' | translate}}" data-ng-click="file.$cancel()">
+                        <i class="fa fa-trash-o fa-lg"></i>
                     </a>
                 </div>
                 <div>
