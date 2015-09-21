@@ -1,8 +1,8 @@
 {
   "login-description-first": "PDOK Geodatastore is een dienst waar overheden op eenvoudige wijze Open Geo Data kunnen publiceren. Na publicatie is de data vindbaar via ",
-  "login-overheid-link": "data.overheid.nl",
+  "login-overheid-link": "http://data.overheid.nl",
   "login-and": "en",
-  "login-ngr-link": "nationaalgeoregister.nl",
+  "login-ngr-link": "http://nationaalgeoregister.nl",
   "placeholderTitleField":"Titel van de dataset, met uitgeschreven afkortingen",
   "placeholderAbstractField":"Beschrijving  van de inhoud van de dataset, begrijpelijk voor burgers maar ook voor vakgenoten",
   "placeholderTopicField":"Selecteer het onderwerp die de dataset het beste beschrijft",
@@ -54,6 +54,10 @@
   "dataset.delete.notfound": "Dataset is niet gevonden. Mogelijk is het bestand reeds verwijderd.",
   "modal.publish.title": "Publicatie van de dataset",
   "modal.publish.error.body": "Tijdens het verwerken van de publicatie van de dataset zijn er fouten opgetreden.",
-  "modal.publish.button.accept": "Ok"
+  "modal.publish.button.accept": "Ok",
+  "Select":"Selecteer...",
+  "signinFailure":"Er is een probleem opgetreden bij het inloggen, probeer het opnieuw",
+  "Data-succesfully-updated":"Data succesvol bijgewerkt",
+  "Download-link":"Download link"
 
 }
