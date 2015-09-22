@@ -43,8 +43,17 @@
 					<generateDeployedOnUpgrade>true</generateDeployedOnUpgrade>
 					<applicationName>pdok/${project.artifactId}</applicationName>
 					<environmentId>Environments/pdok-ont/environment/pdok-geonetwork_ont</environmentId>
-					<deployables>
-					    <deployable>
+			<deployables>
+				<deployable>
+                                        <name>DNS-geodatastore-{{application}}-{{werkomgeving}}</name>
+                                       	<type>DNS.dnsAliasSpec</type>
+                        	                <dnsAlias>
+                                                       	<list>
+                                                               	<value>{{dns.geodatastore}}</value>
+                                                        </list>
+                                                </dnsAlias>
+                                </deployable>
+				<deployable>
                             <name>singleinstance</name>
                             <type>tomcat.SingleInstanceSpec</type>
                             <activeNode>{{activenode}}</activeNode>
