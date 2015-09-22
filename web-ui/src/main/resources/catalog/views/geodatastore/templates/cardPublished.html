@@ -10,7 +10,7 @@ template for card to be used after being published
         <div class="title">
             <span>{{md.title}}</span>
         </div>
-        <p>{{md.abstract | words:18 }}</p>
+        <p>{{md.summary | words:18 }}</p>
         <div class="filename">
             <i class="fa fa-lg fa-fw" data-ng-class="getFileType(md)" style="vertical-align: 12%"></i>
             <span>{{getFileName(md)}}</span>
