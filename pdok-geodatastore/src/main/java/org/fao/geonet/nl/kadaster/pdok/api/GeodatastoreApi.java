@@ -244,11 +244,11 @@ public class GeodatastoreApi  {
                 response.setFileType((String) templateParameters.get(FORMAT_KEY));
             } catch (UnAuthorizedException e) {
                 response.setError(true);
-                response.addMessage(e.getMessage());
+                response.addMessage(e.getMessage() + " - " + e.getObject());
                 status = HttpStatus.FORBIDDEN;
             } catch (ServiceNotAllowedEx e) {
                 response.setError(true);
-                response.addMessage(e.getMessage());
+                response.addMessage(e.getMessage() + " - " + e.getObject());
                 status = HttpStatus.FORBIDDEN;
             } catch (BadParameterEx e) {
                 response.setError(true);
@@ -514,6 +514,7 @@ public class GeodatastoreApi  {
             // If send a non existing uuid, Utils.getIdentifierFromParameters returns null
             Metadata metadata = metadataRepository.findOneByUuid(identifier);
             if (metadata == null) {
+
                 throw new MetadataNotFoundEx("Metadata internal identifier or UUID not found.");
             }
             String id = metadataManager.getMetadataId(identifier);
