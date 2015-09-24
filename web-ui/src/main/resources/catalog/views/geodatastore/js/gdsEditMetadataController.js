@@ -57,12 +57,13 @@
       ];
 
       $scope.resolutionList = [
-          { value: "1000000", label:"Landelijk"},
-          { value:"100000", label: "Provinciaal"},
-          { value:"25000", label: "Gemeentelijk"},
-          { value:"10000", label: "Wijkniveau"},
-          { value:"2500", label: "Straatniveau"},
-          { value:"500", label: "Huis"}
+          { value:"1000000", label: "1:1.000.000"},
+          { value:"250000", label: "1:250.000"},
+          { value:"100000", label: "1:100.000"},
+          { value:"25000", label: "1:25.000"},
+          { value:"10000", label: "1:10.000"},
+          { value:"2500", label: "1:2.500"},
+          { value:"1000", label: "1:1.000"}
       ];
 
       $scope.$watch("editMdForm.$dirty", function(newValue) {
