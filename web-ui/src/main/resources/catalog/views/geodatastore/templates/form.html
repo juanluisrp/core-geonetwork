@@ -16,15 +16,18 @@ template for metadata form
     </div>
 
 	<div class="form-group">
-		<label for="titleField">{{'title'|translate}}</label> <span class="badge" data-tooltip="{{'placeholderTitleField'|translate}}">i</span>
+		<i class="fa fa-info-circle fa-fw floatright" style="font-size:1em; " data-tooltip="{{'placeholderTitleField'|translate}}"></i>
+		<label for="titleField">{{'title'|translate}}</label>
 		<input class="form-control" id="titleField" tabindex="1" data-ng-model="mdToEdit.title" />
 	</div>
 	<div class="form-group">
-		<label for="abstractField">{{'abstract'|translate}}</label> <span class="badge" data-tooltip="{{'placeholderAbstractField'|translate}}">i</span>
+		<i class="fa fa-info-circle fa-fw floatright" style="font-size:1em; " data-tooltip="{{'placeholderAbstractField'|translate}}"></i>
+		<label for="abstractField">{{'abstract'|translate}}</label>
 		<textarea rows="5" class="form-control" id="abstractField" data-ng-model="mdToEdit.summary" tabindex="2"></textarea>
 	</div>
 	<div class="form-group">
-		<label for="topic">{{'topic'|translate}}</label> <span class="badge" data-tooltip="{{'placeholderTopicField'|translate}}">i</span>
+		<i class="fa fa-info-circle fa-fw floatright" style="font-size:1em; " data-tooltip="{{'placeholderTopicField'|translate}}"></i>
+		<label for="topic">{{'topic'|translate}}</label>
 		<select class="form-control" id="topic" tabindex=3 data-ng-model="mdToEdit.topicCategory">
 			<option value="null">{{'Select'|translate}}</option>
 			<option value="imageryBaseMapsEarthCover">Luchtfoto / Dekking van de Aarde</option>
@@ -54,35 +57,36 @@ template for metadata form
 			   data-ng-model="mdToEdit.keywords"></bootstrap-tagsinput>
 	</div>
 	<div class="form-group">
-		<label for="lineage">{{'lineage'|translate}}</label>  <span class="badge" data-tooltip="{{'placeholderLineageField'|translate}}">i</span>
+		<i class="fa fa-info-circle fa-fw floatright" style="font-size:1em; " data-tooltip="{{'placeholderLineageField'|translate}}"></i>
+		<label for="lineage">{{'lineage'|translate}}</label>
 		<textarea rows="4" class="form-control" id="lineage" data-ng-model="mdToEdit.lineage" tabindex="5"></textarea>
 	</div>
 	<div class="form-group">
-		<label for="location">{{'location'|translate}}</label>  <span class="badge" data-tooltip="{{'placeholderLocationField'|translate}}">i</span>
+		<i class="fa fa-info-circle fa-fw floatright" style="font-size:1em; " data-tooltip="{{'placeholderLocationField'|translate}}"></i>
+		<label for="location">{{'location'|translate}}</label>
         <input id="location" tabindex="6" data-ng-model="mdToEdit.location" 
                data-uri-model="mdToEdit.locationUri"
                class="form-control" data-gds-keyword-picker data-thesaurus-key="external.place.administrativeAreas"/>
 	</div>
 	<div class="form-group">
-		<label for="license">{{'license'|translate}}</label>  <span class="badge" data-tooltip="{{'placeholderLicenseField'|translate}}">i</span>
+		<i class="fa fa-info-circle fa-fw floatright" style="font-size:1em; " data-tooltip="{{'placeholderLicenseField'|translate}}"></i>
+		<label for="license">{{'license'|translate}}</label>
 		<select class="form-control" id="license" tabindex=7 data-ng-model="mdToEdit.license"
                 data-ng-options="item.value as item.label for item in licenseList">
 			<option value="">{{'Select'|translate}}</option>
 		</select>
 	</div>
-	<!--<div class="form-group">
-		<label for="useLimitation">{{'useLimitation'|translate}}</label>-->
-		<input type=hidden" value="Geen beperkingen" style="display:none" id="useLimitation" data-ng-model="mdToEdit.useLimitation" />
-	<!--</div>-->
 	<div class="form-group">
-		<label for="resolution">{{'scale'|translate}}</label>  <span class="badge" data-tooltip="{{'placeholderScaleField'|translate}}">i</span>
+		<i class="fa fa-info-circle fa-fw floatright" style="font-size:1em; " data-tooltip="{{'placeholderScaleField'|translate}}"></i>
+		<label for="resolution">{{'scale'|translate}}</label>
 		<select class="form-control" id="resolution" tabindex=9 data-ng-model="mdToEdit.resolution"
                 data-ng-options="item.value as item.label for item in resolutionList">
 			<option value="">{{'Select'|translate}}</option>
 		</select>
 	</div>
 	<div class="form-group">
-		<label for="thumbnailUploadButton">{{'thumbnail'|translate}}</label> <span class="badge" data-tooltip="{{'placeholderThumbnailField'|translate}}">i</span>
+		<i class="fa fa-info-circle fa-fw floatright" style="font-size:1em; " data-tooltip="{{'placeholderThumbnailField'|translate}}"></i>
+		<label for="thumbnailUploadButton">{{'thumbnail'|translate}}</label>
 		<div id="thumbnailDropZone">
             <div>
                 <span class="btn btn-default btn-sm fileinput-button" data-ng-class="{disabled: disabled}">
