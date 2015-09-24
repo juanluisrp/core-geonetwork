@@ -313,7 +313,6 @@ public class GeodatastoreApi  {
     /**
      * Update an existing metadata record.
      * @param identifier
-     * @param model
      * @return
      */
     @RequestMapping(value = "/api/dataset/{identifier}", method = RequestMethod.POST)
@@ -464,13 +463,13 @@ public class GeodatastoreApi  {
         if (metadataParameter.getSummary() != null) {
             parametersMap.put(ABSTRACT_KEY, metadataParameter.getSummary());
         }
-        if (metadataParameter.getKeywords() != null && metadataParameter.getKeywords().size() > 0) {
+        if (metadataParameter.getKeywords() != null /*&& metadataParameter.getKeywords().size() > 0*/) {
             String keywordSeparator = "#";
             String keywordList = Joiner.on(keywordSeparator).join(metadataParameter.getKeywords());
             parametersMap.put(KEYWORD_SEPARATOR_KEY, keywordSeparator);
             parametersMap.put(KEYWORDS_KEY, keywordList);
         }
-        if (metadataParameter.getTopicCategories() != null && metadataParameter.getTopicCategories().size() > 0) {
+        if (metadataParameter.getTopicCategories() != null /*&& metadataParameter.getTopicCategories().size() > 0*/) {
             String topicSeparator = "#";
             String topicList = Joiner.on(topicSeparator).join(metadataParameter.getTopicCategories());
             parametersMap.put(TOPIC_SEPARATOR_KEY, topicSeparator);
