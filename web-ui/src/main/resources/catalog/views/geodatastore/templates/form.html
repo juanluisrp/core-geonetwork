@@ -62,9 +62,6 @@ template for metadata form
         <input id="location" tabindex="6" data-ng-model="mdToEdit.location" 
                data-uri-model="mdToEdit.locationUri"
                class="form-control" data-gds-keyword-picker data-thesaurus-key="external.place.administrativeAreas"/>
-<!--
-		<input class="form-control" id="location" tabindex=6 data-ng-model="mdToEdit.location" placeholder="{{'placeholderLocationField'|translate}}">
--->
 	</div>
 	<div class="form-group">
 		<label for="license">{{'license'|translate}}</label>  <span class="badge" data-tooltip="{{'placeholderLicenseField'|translate}}">i</span>
@@ -75,7 +72,7 @@ template for metadata form
 	</div>
 	<!--<div class="form-group">
 		<label for="useLimitation">{{'useLimitation'|translate}}</label>-->
-		<input type=hidden" value="Geen beperkingen" class="form-control" id="useLimitation" data-ng-model="mdToEdit.useLimitation" />
+		<input type=hidden" value="Geen beperkingen" style="display:none" id="useLimitation" data-ng-model="mdToEdit.useLimitation" />
 	<!--</div>-->
 	<div class="form-group">
 		<label for="resolution">{{'scale'|translate}}</label>  <span class="badge" data-tooltip="{{'placeholderScaleField'|translate}}">i</span>

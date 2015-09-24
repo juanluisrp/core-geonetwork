@@ -168,6 +168,33 @@
         <to type="forward">/srv/$1/metadata.formatter.$4?uuid=$3&amp;xsl=$4</to>
     </rule>
 
+    <rule> 
+        <from>^/id/dataset/(.*)/(.*)</from> 
+        <to type="forward">/srv/dut/resources.get?uuid=$1&amp;fname=$2</to> 
+    </rule> 
+    
+    <rule> 
+        <from>^/id/thumbnail/(.*)/(.*)</from> 
+        <to type="forward">/srv/dut/resources.get?uuid=$1&amp;fname=$2</to> 
+    </rule> 
+    
+    <rule> 
+        <condition name="Accept">application/rdf\+xml</condition> 
+        <from>^/doc/dataset/(.*)/(.*)</from> 
+        <to type="forward">/srv/dut/rdf.metadata.get?uuid=$1</to> 
+    </rule> 
+
+    <rule> 
+        <condition name="Accept">application/json</condition> 
+        <from>^/doc/dataset/(.*)/(.*)</from> 
+        <to type="forward">/srv/dut/xml.metadata.get?_content_type=json&amp;uuid=$1</to> 
+    </rule> 
+
+    <rule>
+        <from>^/doc/dataset/(.*)$</from>
+        <to type="forward">/srv/dut/xml.metadata.get?uuid=$1</to>
+    </rule>
+
     <rule>
       <note>
         Retrieves html format for a metadata (one node mode only).
