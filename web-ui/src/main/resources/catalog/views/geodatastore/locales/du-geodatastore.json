@@ -6,7 +6,7 @@
   "placeholderTitleField":"Titel van de dataset, met uitgeschreven afkortingen",
   "placeholderAbstractField":"Beschrijving  van de inhoud van de dataset, begrijpelijk voor burgers maar ook voor vakgenoten",
   "placeholderTopicField":"Selecteer het onderwerp die de dataset het beste beschrijft",
-  "placeholderKeywordsField":"Meerdere door een komma gescheiden trefwoorden in, die het (deel)onderwerp van de dataset voor burgers en vakgenoten beschrijven",
+  "placeholderKeywordsField":"Na het typen van een trefwoord, plaatst u een komma of druk op Enter om het vast te leggen.",
   "placeholderLineageField":"De informatie over de geschiedenis, de bewerkingen en de kwaliteit van de dataset, of van de gebruikte bronbestanden",
   "placeholderLicenseField":"Selecteer een passende licentie voor de dataset",
   "placeholderLocationField": "Selecteer het gebied waar de dataset betrekking op heeft",
