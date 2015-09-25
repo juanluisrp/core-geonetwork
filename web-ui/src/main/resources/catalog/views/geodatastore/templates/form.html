@@ -16,17 +16,17 @@ template for metadata form
     </div>
 
 	<div class="form-group">
-		<i class="fa fa-info-circle fa-fw floatright" style="font-size:1em; " data-tooltip="{{'placeholderTitleField'|translate}}"></i>
+		<i class="fa fa-question-circle fa-fw floatright" style="margin-top: 6px" data-tooltip="{{'placeholderTitleField'|translate}}"></i>
 		<label for="titleField">{{'title'|translate}}</label>
 		<input class="form-control" id="titleField" tabindex="1" data-ng-model="mdToEdit.title" />
 	</div>
 	<div class="form-group">
-		<i class="fa fa-info-circle fa-fw floatright" style="font-size:1em; " data-tooltip="{{'placeholderAbstractField'|translate}}"></i>
+		<i class="fa fa-question-circle fa-fw floatright" style="margin-top: 6px" data-tooltip="{{'placeholderAbstractField'|translate}}"></i>
 		<label for="abstractField">{{'abstract'|translate}}</label>
 		<textarea rows="5" class="form-control" id="abstractField" data-ng-model="mdToEdit.summary" tabindex="2"></textarea>
 	</div>
 	<div class="form-group">
-		<i class="fa fa-info-circle fa-fw floatright" style="font-size:1em; " data-tooltip="{{'placeholderTopicField'|translate}}"></i>
+		<i class="fa fa-question-circle fa-fw floatright" style="margin-top: 6px" data-tooltip="{{'placeholderTopicField'|translate}}"></i>
 		<label for="topic">{{'topic'|translate}}</label>
 		<select class="form-control" id="topic" tabindex=3 data-ng-model="mdToEdit.topicCategory">
 			<option value="null">{{'Select'|translate}}</option>
@@ -52,24 +52,25 @@ template for metadata form
 		</select>
 	</div>
 	<div class="form-group">
+		<i class="fa fa-question-circle fa-fw floatright" style="margin-top: 6px" data-tooltip="{{'placeholderKeywordsField'|translate}}"></i>
 		<label for="tw">{{'keywords'|translate}}</label>
 		<bootstrap-tagsinput id="tw" tabindex="4" placeholder="{{'placeholderKeywordsField'|translate}}"
 			   data-ng-model="mdToEdit.keywords"></bootstrap-tagsinput>
 	</div>
 	<div class="form-group">
-		<i class="fa fa-info-circle fa-fw floatright" style="font-size:1em; " data-tooltip="{{'placeholderLineageField'|translate}}"></i>
+		<i class="fa fa-question-circle fa-fw floatright" style="margin-top: 6px" data-tooltip="{{'placeholderLineageField'|translate}}"></i>
 		<label for="lineage">{{'lineage'|translate}}</label>
 		<textarea rows="4" class="form-control" id="lineage" data-ng-model="mdToEdit.lineage" tabindex="5"></textarea>
 	</div>
 	<div class="form-group">
-		<i class="fa fa-info-circle fa-fw floatright" style="font-size:1em; " data-tooltip="{{'placeholderLocationField'|translate}}"></i>
+		<i class="fa fa-question-circle fa-fw floatright" style="margin-top: 6px" data-tooltip="{{'placeholderLocationField'|translate}}"></i>
 		<label for="location">{{'location'|translate}}</label>
         <input id="location" tabindex="6" data-ng-model="mdToEdit.location" 
                data-uri-model="mdToEdit.locationUri"
                class="form-control" data-gds-keyword-picker data-thesaurus-key="external.place.administrativeAreas"/>
 	</div>
 	<div class="form-group">
-		<i class="fa fa-info-circle fa-fw floatright" style="font-size:1em; " data-tooltip="{{'placeholderLicenseField'|translate}}"></i>
+		<i class="fa fa-question-circle fa-fw floatright" style="margin-top: 6px" data-tooltip="{{'placeholderLicenseField'|translate}}"></i>
 		<label for="license">{{'license'|translate}}</label>
 		<select class="form-control" id="license" tabindex=7 data-ng-model="mdToEdit.license"
                 data-ng-options="item.value as item.label for item in licenseList">
@@ -77,22 +78,22 @@ template for metadata form
 		</select>
 	</div>
 	<div class="form-group">
-		<i class="fa fa-info-circle fa-fw floatright" style="font-size:1em; " data-tooltip="{{'placeholderScaleField'|translate}}"></i>
+		<i class="fa fa-question-circle fa-fw floatright" style="margin-top: 6px" data-tooltip="{{'placeholderScaleField'|translate}}"></i>
 		<label for="resolution">{{'scale'|translate}}</label>
-		<select class="form-control" id="resolution" tabindex=9 data-ng-model="mdToEdit.resolution"
+		<select class="form-control" id="resolution" tabindex=8 data-ng-model="mdToEdit.resolution"
                 data-ng-options="item.value as item.label for item in resolutionList">
 			<option value="">{{'Select'|translate}}</option>
 		</select>
 	</div>
 	<div class="form-group">
-		<i class="fa fa-info-circle fa-fw floatright" style="font-size:1em; " data-tooltip="{{'placeholderThumbnailField'|translate}}"></i>
+		<i class="fa fa-question-circle fa-fw floatright" style="margin-top: 6px" data-tooltip="{{'placeholderThumbnailField'|translate}}"></i>
 		<label for="thumbnailUploadButton">{{'thumbnail'|translate}}</label>
 		<div id="thumbnailDropZone">
             <div>
                 <span class="btn btn-default btn-sm fileinput-button" data-ng-class="{disabled: disabled}">
                     <i class="fa fa-folder-open-o fa-fw"></i>
                     <span>Selecteer een bestand</span>
-                    <input type="file" id="thumbnailUploadButton" name="thumbnail" data-ng-disabled="disabled" >
+                    <input type="file" id="thumbnailUploadButton" tabindex=9 name="thumbnail" data-ng-disabled="disabled" >
                 </span>
             </div>
 		</div>
@@ -125,12 +126,12 @@ template for metadata form
 	</div>
 	<div class="form-group metadataFormButtons">
 		<div class="floatright">
-			<button type="button" id="saveFormButton" class="btn btn-default btn-sm" data-gn-click-and-spin="processSubmit()"
+			<button type="button" id="saveFormButton" tabindex=11 class="btn btn-default btn-sm" data-gn-click-and-spin="processSubmit()"
 					data-ng-disabled="editMdForm.$pristine && editMdForm.$valid"><i class="fa fa-floppy-o fa-fw"></i> {{'save'|translate}}</button>
-			<button type="button" id="publishFormButton" data-ng-disabled="editMdForm.$dirty || !mdToEdit.$publishable"
+			<button type="button" id="publishFormButton" tabindex=12 data-ng-disabled="editMdForm.$dirty || !mdToEdit.$publishable"
 					class="btn btn-default btn-md" ng-show="tab=='upload'" data-gn-click-and-spin="publishMetadata(mdToEdit)"><i class="fa fa-share fa-fw"></i> {{'publish'|translate}}</button>
 		</div>
-		<button type="button" id="removeFormButton" class="btn btn-default btn-sm" data-ng-click="showDeleteConfirm(mdToEdit, $event)"><i class="fa fa-trash-o fa-fw"></i> {{'remove'|translate}}</button>
+		<button type="button" id="removeFormButton" tabindex=10 class="btn btn-default btn-sm" data-ng-click="showDeleteConfirm(mdToEdit, $event)"><i class="fa fa-trash-o fa-fw"></i> {{'remove'|translate}}</button>
 			
 	</div>
 </form>
