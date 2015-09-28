@@ -158,7 +158,7 @@
         <appender-ref ref="fileAppender" />
     </logger>
     <logger name="org.springframework.beans" additivity="false">
-        <level value="DEBUG" />
+        <level value="INFO" />
         <appender-ref ref="fileAppender" />
     </logger>
     <logger name="org.springframework.security">
@@ -208,6 +208,13 @@
     </logger>
     <logger name="org.xhtmlrenderer" additivity="false">
         <level value="TRACE" />
+        <appender-ref ref="consoleAppender" />
+        <appender-ref ref="fileAppender" />
+    </logger>
+
+    <!-- Geodatastore logging -->
+    <logger name="pdok.geodatastore.api" additivity="false">
+        <level value="DEBUG" />
         <appender-ref ref="consoleAppender" />
         <appender-ref ref="fileAppender" />
     </logger>
