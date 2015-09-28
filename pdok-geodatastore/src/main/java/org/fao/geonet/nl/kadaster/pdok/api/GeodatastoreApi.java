@@ -1,6 +1,5 @@
 package org.fao.geonet.nl.kadaster.pdok.api;
 
-import com.fasterxml.jackson.core.JsonParseException;
 import com.google.common.base.Joiner;
 import com.google.common.collect.Maps;
 import jeeves.constants.Jeeves;
@@ -15,8 +14,6 @@ import nl.kadaster.pdok.bussiness.MetadataUtil;
 import nl.kadaster.pdok.bussiness.SearchResponse;
 import org.apache.commons.lang.StringUtils;
 import org.fao.geonet.ApplicationContextHolder;
-import org.fao.geonet.GeonetContext;
-import org.fao.geonet.Util;
 import org.fao.geonet.constants.Geonet;
 import org.fao.geonet.constants.Params;
 import org.fao.geonet.domain.*;
@@ -24,7 +21,6 @@ import org.fao.geonet.exceptions.*;
 import org.fao.geonet.kernel.AccessManager;
 import org.fao.geonet.kernel.DataManager;
 import org.fao.geonet.kernel.GeonetworkDataDirectory;
-import org.fao.geonet.kernel.mef.MEFLib;
 import org.fao.geonet.kernel.search.LuceneSearcher;
 import org.fao.geonet.kernel.search.MetaSearcher;
 import org.fao.geonet.kernel.search.SearchManager;
@@ -37,7 +33,6 @@ import org.fao.geonet.repository.MetadataRepository;
 import org.fao.geonet.repository.UserGroupRepository;
 import org.fao.geonet.repository.UserRepository;
 import org.fao.geonet.schema.iso19139.ISO19139SchemaPlugin;
-import org.fao.geonet.services.Utils;
 import org.fao.geonet.services.metadata.Publish;
 import org.fao.geonet.services.metadata.XslProcessing;
 import org.fao.geonet.services.metadata.XslProcessingReport;
@@ -51,16 +46,17 @@ import org.jdom.Element;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.data.jpa.domain.Specifications;
-import org.springframework.http.*;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Nonnull;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
-import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
@@ -76,16 +72,12 @@ import static org.fao.geonet.repository.specification.UserGroupSpecs.hasUserId;
 @ReadWriteController
 @RequestMapping("/{lang}/geodatastore")
 public class GeodatastoreApi  {
-    private static final String GDS_LOG = "pdok.geodatastore.api";
-    private static final String QUERY_SERVICE= "q";
-    private static final String ISO_19139 = "iso19139";
     public static final String TITLE_KEY = "title";
     public static final String LINEAGE_KEY = "lineage";
     public static final String RESOLUTION_KEY = "resolution";
     public static final String ABSTRACT_KEY = "abstract";
     public static final String USE_LIMITATION_KEY = "useLimitation";
     public static final String FORMAT_KEY = "format";
-    private static final String LICENSE_KEY = "license";
     public static final String UUID_KEY_ = "uuid";
     public static final String PUBLICATION_DATE_KEY = "publicationDate";
     public static final String METADATA_MODIFIED_DATE_KEY = "metadataModifiedDate";
@@ -103,16 +95,19 @@ public class GeodatastoreApi  {
     public static final String FILE_NAME_KEY = "fileName";
     public static final String DOWNLOAD_URI_KEY = "downloadUri";
     public static final String THUMBNAIL_URI_KEY = "thumbnailUri";
-
+    private static final String GDS_LOG = "pdok.geodatastore.api";
+    private static final String QUERY_SERVICE= "q";
+    private static final String ISO_19139 = "iso19139";
+    private static final String LICENSE_KEY = "license";
+    @Autowired
+    ServletContext servletContext;
     private ServiceConfig serviceConfig = new ServiceConfig();
-
     @Autowired
     private MetadataUtil metadataUtil;
     @Autowired
     private ServiceManager serviceManager;
     @Autowired
     private DataManager metadataManager;
-
     @Autowired
     private UserGroupRepository userGroupRepository;
     @Autowired private UserRepository userRepository;
@@ -120,8 +115,6 @@ public class GeodatastoreApi  {
     @Autowired private SettingManager settingManager;
     @Autowired
     private XslProcessing xslProcessing;
-    @Autowired
-    ServletContext servletContext;
     @Autowired
     private SearchManager searchManager;
     @Autowired
@@ -160,13 +153,13 @@ public class GeodatastoreApi  {
                 User user = userRepository.findOneByUsername(username);
                 List<Integer> groupsIds = userGroupRepository.findGroupIds(Specifications.where(
                         hasProfile(Profile.Reviewer)).and(hasUserId(user.getId())));
-                Group group = null;
+                Group group;
                 if (groupsIds.size() != 0) {
                     Collections.sort(groupsIds);
                     group = groupRepository.findOne(groupsIds.get(0));
                 } else {
                     String message = "No Reviewer group found for user " + username + ". Groups: [" + StringUtils.join(groupsIds, ",") + "]";
-                    Log.info(GDS_LOG, "UnauthorizedExcetion - " + message);
+                    Log.info(GDS_LOG, "UnauthorizedException - " + message);
                     throw new UnAuthorizedException(message, groupsIds);
                 }
 
@@ -252,7 +245,7 @@ public class GeodatastoreApi  {
                 response.setUseLimitation((String) templateParameters.get(USE_LIMITATION_KEY));
                 response.setFileType((String) templateParameters.get(FORMAT_KEY));
             } catch (UnAuthorizedException e) {
-                Log.info(GDS_LOG, "Unathorized access", e);
+                Log.info(GDS_LOG, "Unauthorized access", e);
                 response.setError(true);
                 response.addMessage(e.getMessage() + " - " + e.getObject());
                 status = HttpStatus.FORBIDDEN;
@@ -283,7 +276,7 @@ public class GeodatastoreApi  {
     }
 
     private Map<String, Object> prepareTemplateParameters(String organisation, String organisationEmail, List<String> keywords,
-                                                          List<String> topics, String geograpicIdentifier, String bboxWestLongitude,
+                                                          List<String> topics, String geographicIdentifier, String bboxWestLongitude,
                                                           String bboxEastLongitude, String bboxSouthLatitude, String bboxNorthLatitude,
                                                           String format, String downloadUri, String fileName, String uuid, ISODate creationDate, String license, String title) {
         Map<String, Object> parameters = Maps.newHashMap();
@@ -308,7 +301,7 @@ public class GeodatastoreApi  {
         String topicList = Joiner.on("#").join(topics);
         parameters.put(TOPICS_KEY, topicList);
         parameters.put(TOPIC_SEPARATOR_KEY, "#");
-        parameters.put(GEOGRAPHIC_IDENTIFIER_KEY, geograpicIdentifier); // location
+        parameters.put(GEOGRAPHIC_IDENTIFIER_KEY, geographicIdentifier); // location
         parameters.put(BBOX_WEST_LONGITUDE_KEY, bboxWestLongitude);
         parameters.put(BBOX_EAST_LONGITUDE_KEY, bboxEastLongitude);
         parameters.put(BBOX_SOUTH_LATITUDE_KEY, bboxSouthLatitude);
@@ -536,10 +529,10 @@ public class GeodatastoreApi  {
     @RequestMapping(value = "/api/dataset/{identifier}", method = RequestMethod.DELETE)
     public  @ResponseBody
     ResponseEntity<Object> deleteDataset(@PathVariable("identifier") String identifier, @PathVariable("lang") String lang,
-                                                            HttpServletRequest request) {
+                                         HttpServletRequest request) {
         ServiceContext context = serviceManager.createServiceContext("geodatastore.api.dataset", lang, request);
         Map<String, Object> responseMap = new HashMap<>();
-        HttpStatus status = HttpStatus.OK;
+        HttpStatus status;
 
         try {
             // If send a non existing uuid, Utils.getIdentifierFromParameters returns null
@@ -600,13 +593,12 @@ public class GeodatastoreApi  {
             status = HttpStatus.INTERNAL_SERVER_ERROR;
         }
 
-        ResponseEntity<Object> response = new ResponseEntity<Object>(responseMap, status);
-        return response;
+        return new ResponseEntity<Object>(responseMap, status);
     }
 
     @RequestMapping(value="/registry")
     public List<String> getAvailableCodelists() {
-        List<String> result = new ArrayList<String>();
+        List<String> result = new ArrayList<>();
         result.add("gmd:MD_TopicCategoryCode");
         result.add("gmd:otherConstraints");
         return result;
@@ -615,7 +607,7 @@ public class GeodatastoreApi  {
 
     @RequestMapping(value = "/registry/{codeList}")
     public ResponseEntity<String> getCodelistEntries(@PathVariable("lang") String lang, @PathVariable("codeList") String codeList,
-                                             HttpServletRequest request, @RequestHeader(org.apache.http.HttpHeaders.ACCEPT) String accept) throws Exception {
+                                                     HttpServletRequest request, @RequestHeader(org.apache.http.HttpHeaders.ACCEPT) String accept) throws Exception {
         ConfigurableApplicationContext appContext = ApplicationContextHolder.get();
         ServiceManager serviceManager = appContext.getBean(ServiceManager.class);
         HttpHeaders responseHeaders = new HttpHeaders();
@@ -632,14 +624,14 @@ public class GeodatastoreApi  {
             if (accept.toLowerCase().contains(MediaType.APPLICATION_XML_VALUE)) {
                 responseHeaders.setContentType(new MediaType("application", "xml"));
 
-                return new ResponseEntity<String>(Xml.getString(responseXML), responseHeaders, HttpStatus.OK);
+                return new ResponseEntity<>(Xml.getString(responseXML), responseHeaders, HttpStatus.OK);
             } else  {
                 responseHeaders.setContentType(new MediaType("application", "json"));
-                return new ResponseEntity<String>(Xml.getJSON(responseXML), responseHeaders, HttpStatus.OK);
+                return new ResponseEntity<>(Xml.getJSON(responseXML), responseHeaders, HttpStatus.OK);
             }
         } else {
             responseHeaders.setContentType(new MediaType("application", "json"));
-            return new ResponseEntity<String>(Xml.getJSON(responseXML), responseHeaders, HttpStatus.OK);
+            return new ResponseEntity<>(Xml.getJSON(responseXML), responseHeaders, HttpStatus.OK);
         }
     }
 
@@ -665,12 +657,12 @@ public class GeodatastoreApi  {
                 statusParam = Params.Status.DRAFT;
             }
             MetaSearcher searcher = searchManager.newSearcher(SearcherType.LUCENE, Geonet.File.SEARCH_LUCENE);
-                ServiceContext context = serviceManager.createServiceContext("geodatastore.api", lang, request);
-                UserSession session = context.getUserSession();
-                Element parametersAsXml = buildSearchXmlParameters(context, q, sortBy, sortOrder, from, pageSize, statusParam);
-                // FIXME Why save search parameters in session?
-                session.setProperty(Geonet.Session.SEARCH_REQUEST, parametersAsXml.clone());
-                searcher.search(context, parametersAsXml, serviceConfig);
+            ServiceContext context = serviceManager.createServiceContext("geodatastore.api", lang, request);
+            UserSession session = context.getUserSession();
+            Element parametersAsXml = buildSearchXmlParameters(context, q, sortBy, sortOrder, from, pageSize, statusParam);
+            // FIXME Why save search parameters in session?
+            session.setProperty(Geonet.Session.SEARCH_REQUEST, parametersAsXml.clone());
+            searcher.search(context, parametersAsXml, serviceConfig);
             if (!summaryOnly) {
                 Element results = searcher.present(context, parametersAsXml, serviceConfig);
                 SearchResponse searchResponse = new SearchResponse();
@@ -697,7 +689,7 @@ public class GeodatastoreApi  {
     }
 
     /**
-     * Builds an Element that can be used by the searcher with the paramters passed to the method.
+     * Builds an Element that can be used by the searcher with the parameters passed to the method.
      * It also add the default values for missing parameters.
      *
      * @param context Service context
