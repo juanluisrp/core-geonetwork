@@ -428,7 +428,7 @@ public class GeodatastoreApi  {
                 Log.debug(GDS_LOG, "Publishing metadata " + metadataId);
                 Publish.PublishReport report =  publishController.publish(lang, request, metadataId, false);
                 if (report.getPublished() > 0 || report.getUnmodified() > 0 ) {
-                    MetadataStatus mdStatus = metadataManager.setStatus(context, Integer.parseInt(metadataId),
+                    metadataManager.setStatus(context, Integer.parseInt(metadataId),
                             Integer.parseInt(Params.Status.APPROVED), new ISODate(),
                             "Publish dataset");
                     metadataManager.indexMetadata(metadataId, true);
