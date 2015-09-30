@@ -151,22 +151,15 @@
         </gmd:MD_Keywords>
       </gmd:descriptiveKeywords>
       <gmd:resourceConstraints>
-        <gmd:MD_Constraints>
-          <gmd:useLimitation>
-            <gco:CharacterString />
-          </gmd:useLimitation>
-        </gmd:MD_Constraints>
-      </gmd:resourceConstraints>
-      <gmd:resourceConstraints>
         <gmd:MD_LegalConstraints>
           <gmd:useLimitation>
-            <gco:CharacterString>Geen gebruiksbeperking</gco:CharacterString>
+            <gco:CharacterString>Geen beperkingen</gco:CharacterString>
           </gmd:useLimitation>
           <gmd:accessConstraints>
             <gmd:MD_RestrictionCode codeList="http://www.isotc211.org/2005/resources/codeList.xml#MD_RestrictionCode" codeListValue="otherRestrictions"/>
           </gmd:accessConstraints>
           <gmd:otherConstraints>
-            <gco:CharacterString>Geen beperkingen </gco:CharacterString>
+            <gco:CharacterString>Geen beperkingen</gco:CharacterString>
           </gmd:otherConstraints>
           <gmd:otherConstraints>
             <gco:CharacterString>http://creativecommons.org/publicdomain/mark/1.0/deed.nl</gco:CharacterString>

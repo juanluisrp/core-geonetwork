@@ -173,7 +173,7 @@
        * @returns {boolean}
        */
       uploadedFiles.isPublishable = function(metadata) {
-        var stringProperties = ['identifier', 'license', 'lineage', 'location', 'resolution', 'summary', 'title', 'url', 'useLimitation'];
+        var stringProperties = ['identifier', 'license', 'lineage', 'location', 'resolution', 'summary', 'title', 'url'];
         var arrayProperties = ['keywords', 'topicCategories'];
         var publishable = true;
         if (metadata) {

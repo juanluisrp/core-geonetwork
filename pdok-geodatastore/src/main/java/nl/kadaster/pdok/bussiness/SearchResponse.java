@@ -95,7 +95,6 @@ public class SearchResponse {
         md.setTopicCategories(getStringListOf(metadataEl, Geonet.SearchResult.TOPIC_CAT));
         md.setLocation(metadataEl.getChildText("geoDescCode"));
         md.setLineage(metadataEl.getChildText("lineage"));
-        md.setUseLimitation(metadataEl.getChildText("resourceConstraints"));
         // FIXME license, where is this stored?
         List<Element> legalConstraints = metadataEl.getChildren("legalConstraints");
         if (legalConstraints != null && legalConstraints.size() > 1) {

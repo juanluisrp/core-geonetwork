@@ -15,6 +15,8 @@ xsi:schemaLocation="http://www.springframework.org/schema/beans
 
 
               <sec:intercept-url pattern="/geodatastore/api/dataset" access="hasRole('Reviewer')" />
+              <sec:intercept-url pattern="/geodatastore/api/datasets" access="hasRole('Reviewer')" />
+
               <sec:intercept-url pattern="/geodatastore/api/.*" access="permitAll"></sec:intercept-url>
               <sec:intercept-url pattern="/geodatastore/registry/*.*" access="permitAll"></sec:intercept-url>
               <sec:intercept-url pattern="/api/.*" access="permitAll"></sec:intercept-url>

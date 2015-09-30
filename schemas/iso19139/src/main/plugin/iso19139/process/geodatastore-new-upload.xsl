@@ -21,7 +21,6 @@
   <xsl:param name="thumbnailUri" select="$defaultConstant"/>
   <xsl:param name="keywords" select="$defaultConstant"/>
   <xsl:param name="keywordSeparator" select="$defaultConstant"/>
-  <xsl:param name="useLimitation" select="$defaultConstant"/>
   <xsl:param name="resolution" select="$defaultConstant"/>
   <xsl:param name="topics" select="$defaultConstant"/>
   <xsl:param name="topicSeparator" select="$defaultConstant"/>
@@ -259,21 +258,12 @@
     </xsl:copy>
   </xsl:template>
 
-  <!-- User limitation -->
-  <xsl:template match="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:resourceConstraints/gmd:MD_Constraints/gmd:useLimitation">
-    <xsl:copy>
-      <xsl:call-template name="defaultCharacterStringTemplate">
-        <xsl:with-param name="fieldValue" select="$useLimitation"/>
-        <xsl:with-param name="defaultValue" select="$defaultConstant"></xsl:with-param>
-      </xsl:call-template>
-    </xsl:copy>
-  </xsl:template>
 
   <xsl:template match="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:resourceConstraints[gmd:MD_LegalConstraints]">
     <xsl:copy>
       <gmd:MD_LegalConstraints>
         <gmd:useLimitation>
-          <gco:CharacterString>Geen gebruiksbeperking</gco:CharacterString>
+          <gco:CharacterString>Geen beperkingen</gco:CharacterString>
         </gmd:useLimitation>
         <gmd:accessConstraints>
           <gmd:MD_RestrictionCode codeList="http://www.isotc211.org/2005/resources/codeList.xml#MD_RestrictionCode"

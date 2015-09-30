@@ -158,14 +158,14 @@ Op http://www.kadaster.nl/web/artikel/download/Beschrijving-velden-RDinfo-PDOK-1
 			<gmd:resourceConstraints>
 				<gmd:MD_Constraints>
 					<gmd:useLimitation>
-						<gco:CharacterString>Geen gebruiksbeperking</gco:CharacterString>
+						<gco:CharacterString>Geen beperkingen</gco:CharacterString>
 					</gmd:useLimitation>
 				</gmd:MD_Constraints>
 			</gmd:resourceConstraints>
 			<gmd:resourceConstraints>
 				<gmd:MD_LegalConstraints>
 					<gmd:useLimitation>
-						<gco:CharacterString>Geen gebruiksbeperking</gco:CharacterString>
+						<gco:CharacterString>Geen beperkingen</gco:CharacterString>
 					</gmd:useLimitation>
 					<gmd:accessConstraints>
 						<gmd:MD_RestrictionCode codeList="http://www.isotc211.org/2005/resources/codeList.xml#MD_RestrictionCode" codeListValue="otherRestrictions"/>

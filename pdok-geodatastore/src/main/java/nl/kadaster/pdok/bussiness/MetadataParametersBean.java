@@ -18,7 +18,6 @@ public class MetadataParametersBean {
     private List<String> topicCategories;
     private String location;
     private String lineage;
-    private String useLimitation;
     private String license;
     private String resolution;
     private String identifier;
@@ -84,14 +83,6 @@ public class MetadataParametersBean {
 
     public void setLineage(String lineage) {
         this.lineage = lineage;
-    }
-
-    public String getUseLimitation() {
-        return useLimitation;
-    }
-
-    public void setUseLimitation(String useLimitation) {
-        this.useLimitation = useLimitation;
     }
 
     public String getLicense() {
@@ -201,7 +192,7 @@ public class MetadataParametersBean {
                 && StringUtils.isNotBlank(this.lineage) && StringUtils.isNotBlank(this.location)
                 && StringUtils.isNotBlank(this.resolution) && StringUtils.isNotBlank(this.summary)
                 && StringUtils.isNotBlank(this.title) && StringUtils.isNotBlank(this.url)
-                && StringUtils.isNotBlank(this.useLimitation) && this.topicCategories.size() > 0 && this.keywords.size() > 0);
+                && this.topicCategories.size() > 0 && this.keywords.size() > 0);
 
 
     }

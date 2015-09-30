@@ -76,7 +76,6 @@ public class GeodatastoreApi  {
     public static final String LINEAGE_KEY = "lineage";
     public static final String RESOLUTION_KEY = "resolution";
     public static final String ABSTRACT_KEY = "abstract";
-    public static final String USE_LIMITATION_KEY = "useLimitation";
     public static final String FORMAT_KEY = "format";
     public static final String UUID_KEY_ = "uuid";
     public static final String PUBLICATION_DATE_KEY = "publicationDate";
@@ -242,7 +241,6 @@ public class GeodatastoreApi  {
                 response.setStatus("draft");
                 response.setTitle((String) templateParameters.get(TITLE_KEY));
                 response.setUrl(downloadUrl);
-                response.setUseLimitation((String) templateParameters.get(USE_LIMITATION_KEY));
                 response.setFileType((String) templateParameters.get(FORMAT_KEY));
             } catch (UnAuthorizedException e) {
                 Log.info(GDS_LOG, "Unauthorized access", e);
@@ -512,9 +510,6 @@ public class GeodatastoreApi  {
         }
         if (metadataParameter.getLineage() != null) {
             parametersMap.put(LINEAGE_KEY, metadataParameter.getLineage());
-        }
-        if (metadataParameter.getUseLimitation() != null) {
-            parametersMap.put(USE_LIMITATION_KEY, metadataParameter.getUseLimitation());
         }
         if (metadataParameter.getLicense() != null) {
             parametersMap.put(LICENSE_KEY, metadataParameter.getLicense());
