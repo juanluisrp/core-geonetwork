@@ -236,7 +236,10 @@ public class GeodatastoreApi  {
                 response.setSummary((String) templateParameters.get(ABSTRACT_KEY));
                 response.setLineage((String) templateParameters.get(LINEAGE_KEY));
                 response.setLicense((String) templateParameters.get(LICENSE_KEY));
-                //response.setLocation();
+                // TODO set the right location
+                if (StringUtils.isNotBlank((String) templateParameters.get(GEOGRAPHIC_IDENTIFIER_KEY))) {
+                    response.setLocation((String) templateParameters.get(GEOGRAPHIC_IDENTIFIER_KEY));
+                }
                 response.setResolution((String) templateParameters.get(RESOLUTION_KEY));
                 response.setStatus("draft");
                 response.setTitle((String) templateParameters.get(TITLE_KEY));
