@@ -371,33 +371,17 @@
 
     <rule>
         <note>
-            Geodatastore
+            Geodatastore datasets rule
         </note>
-        <from>^/geodatastore/api/datasets(.*)$</from>
-        <to type="forward" last="true">/srv/dut/geodatastore/api/datasets</to>
+        <from>^/api/(v[0-9]+)/datasets(.*)$</from>
+        <to type="forward" last="true">/srv/dut/api/$1/datasets</to>
     </rule>
     <rule>
         <note>
-            Geodatastore
+            Geodatastore API general rule
         </note>
-        <from>^/geodatastore/api/(.*)$</from>
-        <to type="forward">/srv/dut/geodatastore/api/$1</to>
-    </rule>
-
-    <rule>
-        <note>
-            Geodatastore available codelists
-        </note>
-        <from>^/geodatastore/registry</from>
-        <to type="forward">/srv/dut/geodatastore/registry</to>
-    </rule>
-
-    <rule>
-        <note>
-            Geodatastore
-        </note>
-        <from>^/geodatastore/registry/(.*)$</from>
-        <to type="forward">/srv/dut/geodatastore/registry/$1</to>
+        <from>^/api/(v[0-9]+)/(.*)$</from>
+        <to type="forward">/srv/dut/api/$1/$2</to>
     </rule>
 
     <!-- hide jsession id from google bot -->

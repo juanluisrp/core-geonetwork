@@ -70,7 +70,7 @@ import static org.fao.geonet.repository.specification.UserGroupSpecs.hasUserId;
  */
 @Controller
 @ReadWriteController
-@RequestMapping("/{lang}/geodatastore")
+@RequestMapping("/{lang}/api/v1")
 public class GeodatastoreApi  {
     public static final String TITLE_KEY = "title";
     public static final String LINEAGE_KEY = "lineage";
@@ -136,7 +136,7 @@ public class GeodatastoreApi  {
     }
 
 
-    @RequestMapping(value = "/api/dataset", method = RequestMethod.POST)
+    @RequestMapping(value = "/dataset", method = RequestMethod.POST)
     public @ResponseBody ResponseEntity<Object> uploadDataset(@RequestParam("dataset") MultipartFile dataset,
                                                               @PathVariable("lang") String lang, HttpServletRequest request)
             throws Exception {
@@ -321,7 +321,7 @@ public class GeodatastoreApi  {
      * @param identifier
      * @return
      */
-    @RequestMapping(value = "/api/dataset/{identifier}", method = RequestMethod.POST)
+    @RequestMapping(value = "/dataset/{identifier}", method = RequestMethod.POST)
     public @ResponseBody
     ResponseEntity<Object> updateDataset(@PathVariable("lang") String lang,
                                          @PathVariable("identifier") String identifier,
@@ -526,7 +526,7 @@ public class GeodatastoreApi  {
         return parametersMap;
     }
 
-    @RequestMapping(value = "/api/dataset/{identifier}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/dataset/{identifier}", method = RequestMethod.DELETE)
     public  @ResponseBody
     ResponseEntity<Object> deleteDataset(@PathVariable("identifier") String identifier, @PathVariable("lang") String lang,
                                          HttpServletRequest request) {
@@ -639,7 +639,7 @@ public class GeodatastoreApi  {
      * Search user datasets.
      * @return
      */
-    @RequestMapping(value = "/api/datasets", produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/datasets", produces = MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody ResponseEntity<Object> uploadDataset(
             @PathVariable("lang") String lang,
             @RequestParam(value = "q", defaultValue = "") String q,

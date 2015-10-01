@@ -1,12 +1,14 @@
-(function() {
+(function () {
   goog.provide('geodatastore_edit_metadata_controller');
 
   goog.require('geodatastore_upload_service');
   goog.require('gn_utility_directive');
   goog.require('gn_popup_service');
   goog.require('gds_thesaurus_directive');
+  goog.require('geodatastore_api_urls');
 
   var module = angular.module('geodatastore_edit_metadata_controller', [
+    'geodatastore_api_urls',
     'blueimp.fileupload',
     'geodatastore_upload_service',
     'gn_utility_directive',
@@ -20,7 +22,7 @@
   module.constant('$LOCALES', ['geodatastore']);
 
   module.config(['$translateProvider', '$LOCALES',
-    function($translateProvider, $LOCALES) {
+    function ($translateProvider, $LOCALES) {
       $translateProvider.useLoader('localeLoader', {
         locales: $LOCALES,
         prefix: '../../catalog/views/geodatastore/locales/',
@@ -35,7 +37,8 @@
 
 
   module.controller('GdsEditMetadataController', ['$scope', 'GdsUploadFactory', '$log', 'gnPopup', '$translate', '$q',
-    function($scope, GdsUploadFactory, $log, gnPopup, $translate, $q) {
+    'UPDATE_DATASET_URL',
+    function ($scope, GdsUploadFactory, $log, gnPopup, $translate, $q, UPDATE_DATASET_URL) {
       $scope.GdsUploadFactory = GdsUploadFactory;
       $scope.publish = false;
 
@@ -57,24 +60,24 @@
       ];
 
       $scope.resolutionList = [
-          { value:"1000000", label: "1:1.000.000"},
-          { value:"250000", label: "1:250.000"},
-          { value:"100000", label: "1:100.000"},
-          { value:"25000", label: "1:25.000"},
-          { value:"10000", label: "1:10.000"},
-          { value:"2500", label: "1:2.500"},
-          { value:"1000", label: "1:1.000"}
+        {value: "1000000", label: "1:1.000.000"},
+        {value: "250000", label: "1:250.000"},
+        {value: "100000", label: "1:100.000"},
+        {value: "25000", label: "1:25.000"},
+        {value: "10000", label: "1:10.000"},
+        {value: "2500", label: "1:2.500"},
+        {value: "1000", label: "1:1.000"}
       ];
 
-      $scope.$watch("editMdForm.$dirty", function(newValue) {
+      $scope.$watch("editMdForm.$dirty", function (newValue) {
         GdsUploadFactory.setDirty(newValue);
 
       });
 
-      $scope.$watch(GdsUploadFactory.getMdSelected, function() {
+      $scope.$watch(GdsUploadFactory.getMdSelected, function () {
         $log.debug("watch on GdsUploadFactory.getMdSelected changed");
-        var isSameMetadata =  false;
-        if ($scope.mdToEdit && GdsUploadFactory.getMdSelected().identifier === $scope.mdToEdit.identifier){
+        var isSameMetadata = false;
+        if ($scope.mdToEdit && GdsUploadFactory.getMdSelected().identifier === $scope.mdToEdit.identifier) {
           isSameMetadata = true;
         }
         if (!GdsUploadFactory.getMdSelected()) {
@@ -88,7 +91,7 @@
           // reset form status
           $scope.editMdForm.$setPristine();
           $scope.editMdForm.$setUntouched();
-          var updateUrl = '../../geodatastore/api/dataset/' + $scope.mdToEdit.identifier;
+          var updateUrl = UPDATE_DATASET_URL + $scope.mdToEdit.identifier;
           $scope.datasetEditOptions = {
             url: updateUrl,
             type: 'POST',
@@ -112,7 +115,7 @@
 
       // watch md object for changes and evaluate if it is publishable. Then save this state to md.$publishable property.
       // $publishable starts with a '$' character so it is not take in account for detecting object changes
-      $scope.$watch('mdToEdit', function(newValue, oldValue) {
+      $scope.$watch('mdToEdit', function (newValue, oldValue) {
         if (newValue) {
           var isPublishable = GdsUploadFactory.isPublishable(newValue);
           newValue.$publishable = isPublishable;
@@ -126,8 +129,8 @@
        * provided by jQuery ajax() and will also be called if the server returns a JSON response with an error property.
        *
        */
-      var successfulUpload = function(e, response) {
-        var data = (response ? response.result: e);
+      var successfulUpload = function (e, response) {
+        var data = (response ? response.result : e);
         if ($scope.uploadDeferred) {
           $scope.uploadDeferred.resolve(data);
         }
@@ -159,10 +162,10 @@
 
       };
 
-      var failedUpload = function(e, response) {
-        var error =  {};
+      var failedUpload = function (e, response) {
+        var error = {};
         try {
-          error = (response && response.jqXHR ? angular.fromJson(response.jqXHR.responseText): e);
+          error = (response && response.jqXHR ? angular.fromJson(response.jqXHR.responseText) : e);
         } catch (exception) {
           $log.error(response.jqXHR.responseText);
         }
@@ -188,31 +191,30 @@
         }, $scope);
       };
 
-      var filesChanged = function(e, data) {
+      var filesChanged = function (e, data) {
         if (data.files.length > 0) {
           $scope.editMdForm.$setDirty();
         }
       };
 
-      var getMetadataJson = function() {
+      var getMetadataJson = function () {
         var metadata = [{
           name: 'metadata',
           value: angular.toJson($scope.mdToEdit)
         }, {
-           name: 'publish',
-           value: $scope.publish
-          }
+          name: 'publish',
+          value: $scope.publish
+        }
         ];
         return metadata;
       }
 
 
-
-      $scope.getMdSelected = function() {
+      $scope.getMdSelected = function () {
         return GdsUploadFactory.getMdSelected();
       }
 
-      $scope.processSubmit = function() {
+      $scope.processSubmit = function () {
         $scope.error = false;
         $scope.messages = [];
         $scope.saved = false;
