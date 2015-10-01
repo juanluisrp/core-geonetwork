@@ -4,32 +4,27 @@ template for metadata form
 
 <form id="metadataForm" method="POST" enctype="multipart/form-data" data-file-upload="datasetEditOptions"
 	  data-ng-controller="GdsEditMetadataController" name="editMdForm">
-	<div ng-show="mdToEdit.saved">
-		<br/><br/><br/><br/>
-		<h2><i class="fa fa-check fa-fw"></i> {{"Data-succesfully-updated"|translate}}</h2>
-		<br/><br/><br/><br/>
-	</div>
 	
-	
-	<div class="row">
-		
-		
-	</div>
-	
-    <div class="form-group row" data-ng-show="tab === 'published'">
+    	<div class="row" data-ng-show="tab === 'published'">
     		<div class="col-md-6">
 	        	<a class="btn btn-default" href="{{mdToEdit.url}}">
 	        	<span class="fa-download fa-fw"></span> {{"Download-link"|translate}}</a>
 			<a class="btn btn-default" href="http://nationaalgeoregsiter.nl/geonetwork/srv/dut/search?uuid={{mdToEdit.identifier}}">
-	        	<span class="fa-file-o fa-fw"></span> {{"Metadata-link"|translate}}</a></div>	
+	        	<span class="fa-file-o fa-fw"></span> {{"Metadata-link"|translate}}</a>	
 		</div>
 		<div class="col-md-6">	
 			<a class="btn btn-default" href="#" data-ng-show="edit">
 	        	<span class="fa-pencil fa-fw"></span> {{"Modify"|translate}}</a>
 			<a class="btn btn-default" href="#" data-ng-hide="edit">
-	        	<span class="fa-disk-o fa-fw"></span> {{"Save"|translate}}</a></div>	
+	        	<span class="fa-disk-o fa-fw"></span> {{"Save"|translate}}</a>	
 		</div>
-    </div>
+    	</div>
+
+	<div ng-show="mdToEdit.saved">
+		<br/><br/><br/><br/>
+		<h2><i class="fa fa-check fa-fw"></i> {{"Data-succesfully-updated"|translate}}</h2>
+		<br/><br/><br/><br/>
+	</div>
 
 	<div class="form-group">
 		<i class="fa fa-question-circle fa-fw floatright" style="margin-top: 6px" data-tooltip="{{'placeholderTitleField'|translate}}"></i>
