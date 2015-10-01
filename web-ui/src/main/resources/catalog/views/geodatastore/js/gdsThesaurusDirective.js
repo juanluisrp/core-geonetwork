@@ -1,9 +1,8 @@
-(function() {
+(function () {
   goog.provide('gds_thesaurus_directive');
 
 
   goog.require('gn_thesaurus_service');
-
 
 
   var module = angular.module('gds_thesaurus_directive', ['gn_thesaurus_service']);
@@ -20,7 +19,7 @@
    */
   module.directive('gdsKeywordPicker', [
     'gnThesaurusService', '$compile', '$translate',
-    function(gnThesaurusService, $compile, $translate) {
+    function (gnThesaurusService, $compile, $translate) {
       return {
         restrict: 'A',
         require: '?ngModel',  // The two-way data bound value that is returned by the directive
