@@ -29,17 +29,29 @@
         <from>^(.+)@json(\?.*)$</from>
         <to type="permanent-redirect">%{context-path}$1$2&amp;_content_type=json</to>
     </rule>
-    <rule>
+     <rule>
         <from>^(.*)/ar/(.*)$</from>
-        <to type="permanent-redirect" last="true">%{context-path}$1/ara/$2</to>
+        <to type="permanent-redirect" last="true">%{context-path}$1/dut/$2</to>
+    </rule>
+    <rule>
+        <from>^(.*)/ara/(.*)$</from>
+        <to type="permanent-redirect" last="true">%{context-path}$1/dut/$2</to>
     </rule>
     <rule>
         <from>^(.*)/ca/(.*)$</from>
-        <to type="permanent-redirect" last="true">%{context-path}$1/cat/$2</to>
+        <to type="permanent-redirect" last="true">%{context-path}$1/dut/$2</to>
+    </rule>
+    <rule>
+        <from>^(.*)/cat/(.*)$</from>
+        <to type="permanent-redirect" last="true">%{context-path}$1/dut/$2</to>
     </rule>
     <rule>
         <from>^(.*)/cn/(.*)$</from>
-        <to type="permanent-redirect" last="true">%{context-path}$1/chi/$2</to>
+        <to type="permanent-redirect" last="true">%{context-path}$1/dut/$2</to>
+    </rule>
+    <rule>
+        <from>^(.*)/chi/(.*)$</from>
+        <to type="permanent-redirect" last="true">%{context-path}$1/dut/$2</to>
     </rule>
     <rule>
         <from>^(.*)/nl/(.*)$</from>
@@ -47,43 +59,83 @@
     </rule>
     <rule>
         <from>^(.*)/fi/(.*)$</from>
-        <to type="permanent-redirect" last="true">%{context-path}$1/fin/$2</to>
+        <to type="permanent-redirect" last="true">%{context-path}$1/dut/$2</to>
+    </rule>
+    <rule>
+        <from>^(.*)/fin/(.*)$</from>
+        <to type="permanent-redirect" last="true">%{context-path}$1/dut/$2</to>
     </rule>
     <rule>
         <from>^(.*)/fr/(.*)$</from>
-        <to type="permanent-redirect" last="true">%{context-path}$1/fre/$2</to>
+        <to type="permanent-redirect" last="true">%{context-path}$1/dut/$2</to>
+    </rule>
+    <rule>
+        <from>^(.*)/fre/(.*)$</from>
+        <to type="permanent-redirect" last="true">%{context-path}$1/dut/$2</to>
     </rule>
     <rule>
         <from>^(.*)/de/(.*)$</from>
-        <to type="permanent-redirect" last="true">%{context-path}$1/ger/$2</to>
+        <to type="permanent-redirect" last="true">%{context-path}$1/dut/$2</to>
+    </rule>
+     <rule>
+        <from>^(.*)/ger/(.*)$</from>
+        <to type="permanent-redirect" last="true">%{context-path}$1/dut/$2</to>
     </rule>
     <rule>
         <from>^(.*)/no/(.*)$</from>
-        <to type="permanent-redirect" last="true">%{context-path}$1/nor/$2</to>
+        <to type="permanent-redirect" last="true">%{context-path}$1/dut/$2</to>
+    </rule>
+    <rule>
+        <from>^(.*)/nor/(.*)$</from>
+        <to type="permanent-redirect" last="true">%{context-path}$1/dut/$2</to>
     </rule>
     <rule>
         <from>^(.*)/pt/(.*)$</from>
-        <to type="permanent-redirect" last="true">%{context-path}$1/por/$2</to>
+        <to type="permanent-redirect" last="true">%{context-path}$1/dut/$2</to>
+    </rule>
+    <rule>
+        <from>^(.*)/por/(.*)$</from>
+        <to type="permanent-redirect" last="true">%{context-path}$1/dut/$2</to>
     </rule>
     <rule>
         <from>^(.*)/ru/(.*)$</from>
-        <to type="permanent-redirect" last="true">%{context-path}$1/rus/$2</to>
+        <to type="permanent-redirect" last="true">%{context-path}$1/dut/$2</to>
+    </rule>
+    <rule>
+        <from>^(.*)/rus/(.*)$</from>
+        <to type="permanent-redirect" last="true">%{context-path}$1/dut/$2</to>
     </rule>
     <rule>
         <from>^(.*)/es/(.*)$</from>
-        <to type="permanent-redirect" last="true">%{context-path}$1/spa/$2</to>
+        <to type="permanent-redirect" last="true">%{context-path}$1/dut/$2</to>
+    </rule>
+    <rule>
+        <from>^(.*)/spa/(.*)$</from>
+        <to type="permanent-redirect" last="true">%{context-path}$1/dut/$2</to>
     </rule>
     <rule>
         <from>^(.*)/en/(.*)$</from>
-        <to type="permanent-redirect" last="true">%{context-path}$1/eng/$2</to>
+        <to type="permanent-redirect" last="true">%{context-path}$1/dut/$2</to>
+    </rule>
+    <rule>
+        <from>^(.*)/eng/(.*)$</from>
+        <to type="permanent-redirect" last="true">%{context-path}$1/dut/$2</to>
     </rule>
     <rule>
         <from>^(.*)/tr/(.*)$</from>
-        <to type="permanent-redirect" last="true">%{context-path}$1/tur/$2</to>
+        <to type="permanent-redirect" last="true">%{context-path}$1/dut/$2</to>
+    </rule>
+     <rule>
+        <from>^(.*)/tur/(.*)$</from>
+        <to type="permanent-redirect" last="true">%{context-path}$1/dut/$2</to>
     </rule>
     <rule>
         <from>^(.*)/it/(.*)$</from>
-        <to type="permanent-redirect" last="true">%{context-path}$1/ita/$2</to>
+        <to type="permanent-redirect" last="true">%{context-path}$1/dut/$2</to>
+    </rule>
+    <rule>
+        <from>^(.*)/ita/(.*)$</from>
+        <to type="permanent-redirect" last="true">%{context-path}$1/dut/$2</to>
     </rule>
     <rule>
         <note>
