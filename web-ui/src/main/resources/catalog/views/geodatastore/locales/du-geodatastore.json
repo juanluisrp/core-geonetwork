@@ -31,7 +31,7 @@
   "publish":"Publiceren",
   "remove":"Verwijderen",
   "edit.success.title": "Dataset informatie opgeslagen",
-  "edit.success.content": "Dataset informatie is succesvol opgeslagen.",
+  "edit.success.content": "Attentie: de metadata is niet direct zichtbaar, maar zal de volgende dag gepubliceerd zijn op het Nationaal Georegister en over 2 dagen eveneens op Data.overheid.nl.",
   "edit.error.title": "Fout bij het bijwerken van de dataset informatie",
   "update.error.listTitle": "De volgende fouten zijn opgetreden tijdens het bijwerken:",
   "update.server.error": "Fout bij het opslaan van metadata. Graag nog een keer proberen.",
@@ -56,7 +56,8 @@
   "modal.publish.button.accept": "Ok",
   "Select":"Selecteer...",
   "signinFailure":"Er is een probleem opgetreden bij het inloggen, probeer het opnieuw",
-  "Data-succesfully-updated":"Data succesvol bijgewerkt",
-  "Download-link":"Download link"
+  "Data-succesfully-updated":"Uw wijziging is succesvol afgerond. Attentie: de metadata is niet direct zichtbaar, maar zal de volgende dag gepubliceerd zijn op het Nationaal Georegister en over 2 dagen eveneens op Data.overheid.nl.",
+  "Download-link":"Download link",
+  "Metadata-link":"Metadata link"
 
 }
