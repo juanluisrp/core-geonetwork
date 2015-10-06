@@ -27,20 +27,20 @@ template for metadata form
 	</div>
 
 	<div class="form-group">
-		<i class="fa fa-question-circle fa-fw floatright" style="margin-top: 6px" data-tooltip="{{'placeholderTitleField'|translate}}"></i>
+		<i class="fa fa-question-circle fa-fw floatright" style="margin-top: 6px" data-tooltip="{{'helpTitleField'|translate}}"></i>
 		<label for="titleField">{{'title'|translate}}</label>
-		<input class="form-control" id="titleField" tabindex="1" data-ng-model="mdToEdit.title" />
+		<input class="form-control" id="titleField" tabindex="1" data-ng-model="mdToEdit.title" placeholder="{{'placeholderTitleField'|translate}}" />
 	</div>
 	<div class="form-group">
-		<i class="fa fa-question-circle fa-fw floatright" style="margin-top: 6px" data-tooltip="{{'placeholderAbstractField'|translate}}"></i>
+		<i class="fa fa-question-circle fa-fw floatright" style="margin-top: 6px" data-tooltip="{{'helpAbstractField'|translate}}"></i>
 		<label for="abstractField">{{'abstract'|translate}}</label>
-		<textarea rows="5" class="form-control" id="abstractField" data-ng-model="mdToEdit.summary" tabindex="2"></textarea>
+		<textarea rows="5" class="form-control" id="abstractField" data-ng-model="mdToEdit.summary" tabindex="2" placeholder="{{'placeholderAbstractField'|translate}}"></textarea>
 	</div>
 	<div class="form-group">
-		<i class="fa fa-question-circle fa-fw floatright" style="margin-top: 6px" data-tooltip="{{'placeholderTopicField'|translate}}"></i>
+		<i class="fa fa-question-circle fa-fw floatright" style="margin-top: 6px" data-tooltip="{{'helpTopicField'|translate}}"></i>
 		<label for="topic">{{'topic'|translate}}</label>
 		<select class="form-control" id="topic" tabindex=3 data-ng-model="mdToEdit.topicCategory">
-			<option value="null">{{'Select'|translate}}</option>
+			<option value="null">{{'placeholderTopicField'|translate}}</option>
 			<option value="imageryBaseMapsEarthCover">Luchtfoto / Dekking van de Aarde</option>
 			<option value="inlandWaters">Binnenwateren</option>
 			<option value="biota">Biota (flora, fauna, habitat)</option>
@@ -69,35 +69,35 @@ template for metadata form
 			   data-ng-model="mdToEdit.keywords"></bootstrap-tagsinput>
 	</div>
 	<div class="form-group">
-		<i class="fa fa-question-circle fa-fw floatright" style="margin-top: 6px" data-tooltip="{{'placeholderLineageField'|translate}}"></i>
+		<i class="fa fa-question-circle fa-fw floatright" style="margin-top: 6px" data-tooltip="{{'helpLineageField'|translate}}"></i>
 		<label for="lineage">{{'lineage'|translate}}</label>
-		<textarea rows="4" class="form-control" id="lineage" data-ng-model="mdToEdit.lineage" tabindex="5"></textarea>
+		<textarea rows="4" class="form-control" id="lineage" data-ng-model="mdToEdit.lineage" tabindex="5" placeholder="{{'placeholderLineageField'|translate}}"></textarea>
 	</div>
 	<div class="form-group">
-		<i class="fa fa-question-circle fa-fw floatright" style="margin-top: 6px" data-tooltip="{{'placeholderLocationField'|translate}}"></i>
+		<i class="fa fa-question-circle fa-fw floatright" style="margin-top: 6px" data-tooltip="{{'helpLocationField'|translate}}"></i>
 		<label for="location">{{'location'|translate}}</label>
-        <input id="location" tabindex="6" data-ng-model="mdToEdit.location" 
+        	<input id="location" tabindex="6" data-ng-model="mdToEdit.location" placeholder="{{'placeholderLocationField'|translate}}"
                data-uri-model="mdToEdit.locationUri"
                class="form-control" data-gds-keyword-picker data-thesaurus-key="external.place.administrativeAreas"/>
 	</div>
 	<div class="form-group">
-		<i class="fa fa-question-circle fa-fw floatright" style="margin-top: 6px" data-tooltip="{{'placeholderLicenseField'|translate}}"></i>
+		<i class="fa fa-question-circle fa-fw floatright" style="margin-top: 6px" data-tooltip="{{'helpLicenseField'|translate}}"></i>
 		<label for="license">{{'license'|translate}}</label>
 		<select class="form-control" id="license" tabindex=7 data-ng-model="mdToEdit.license"
                 data-ng-options="item.value as item.label for item in licenseList">
-			<option value="">{{'Select'|translate}}</option>
+			<option value="">{{'placeholderLicenseField'|translate}}</option>
 		</select>
 	</div>
 	<div class="form-group">
-		<i class="fa fa-question-circle fa-fw floatright" style="margin-top: 6px" data-tooltip="{{'placeholderScaleField'|translate}}"></i>
+		<i class="fa fa-question-circle fa-fw floatright" style="margin-top: 6px" data-tooltip="{{'helpScaleField'|translate}}"></i>
 		<label for="resolution">{{'scale'|translate}}</label>
 		<select class="form-control" id="resolution" tabindex=8 data-ng-model="mdToEdit.resolution"
                 data-ng-options="item.value as item.label for item in resolutionList">
-			<option value="">{{'Select'|translate}}</option>
+			<option value="">{{'placeholderScaleField'|translate}}</option>
 		</select>
 	</div>
 	<div class="form-group">
-		<i class="fa fa-question-circle fa-fw floatright" style="margin-top: 6px" data-tooltip="{{'placeholderThumbnailField'|translate}}"></i>
+		<i class="fa fa-question-circle fa-fw floatright" style="margin-top: 6px" data-tooltip="{{'helpThumbnailField'|translate}}"></i>
 		<label for="thumbnailUploadButton">{{'thumbnail'|translate}}</label>
 		<div id="thumbnailDropZone">
             <div>
