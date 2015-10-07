@@ -79,6 +79,11 @@
         var isSameMetadata = false;
         if ($scope.mdToEdit && GdsUploadFactory.getMdSelected().identifier === $scope.mdToEdit.identifier) {
           isSameMetadata = true;
+          var mdSelected = GdsUploadFactory.getMdSelected();
+          if (mdSelected && $scope.mdToEdit) {
+            $scope.mdToEdit.location = mdSelected.location;
+            $scope.mdToEdit.locationUri = mdSelected.locationUri;
+          }
         }
         if (!GdsUploadFactory.getMdSelected()) {
           $scope.editMdForm.$setPristine();
@@ -137,6 +142,7 @@
         $scope.saved = true;
         if (!data.error) {
           GdsUploadFactory.setMdSelected(data);
+
           // reset form status
           $scope.editMdForm.$setPristine();
           $scope.editMdForm.$setUntouched();

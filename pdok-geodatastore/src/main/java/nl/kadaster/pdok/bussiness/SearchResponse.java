@@ -1,13 +1,14 @@
 package nl.kadaster.pdok.bussiness;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.common.collect.Lists;
 import jeeves.constants.Jeeves;
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.math.NumberUtils;
 import org.fao.geonet.constants.Geonet;
 import org.fao.geonet.constants.Params;
-import org.fao.geonet.nl.kadaster.pdok.api.MetadataResponseBean;
+import org.fao.geonet.kernel.KeywordBean;
 import org.jdom.Element;
-import org.jdom.Namespace;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +21,16 @@ public class SearchResponse {
     private Integer to;
     private Integer selected;
     private Integer count;
+
+    @JsonIgnore
+    private LocationManager locationManager;
+    @JsonIgnore
+    private String locationThesaurus;
+
+    public SearchResponse(LocationManager locationManager, String locationThesaurus) {
+        this.locationManager = locationManager;
+        this.locationThesaurus = locationThesaurus;
+    }
 
     public Integer getFrom() {
         return from;
@@ -87,13 +98,22 @@ public class SearchResponse {
         return this;
     }
 
-    public static MetadataParametersBean getMetadataParametersBeanFromElement(Element metadataEl) {
+    public MetadataParametersBean getMetadataParametersBeanFromElement(Element metadataEl) {
         MetadataParametersBean md = new MetadataParametersBean();
         md.setTitle(metadataEl.getChildText("defaultTitle"));
         md.setSummary(metadataEl.getChildText("abstract"));
         md.setKeywords(getStringListOf(metadataEl, "keyword"));
         md.setTopicCategories(getStringListOf(metadataEl, Geonet.SearchResult.TOPIC_CAT));
-        md.setLocation(metadataEl.getChildText("geoDescCode"));
+        if (StringUtils.isNotBlank(metadataEl.getChildText("geoDescCode"))) {
+            String locationUriString = "http://geodatastore.pdok.nl/registry/location#" + metadataEl.getChildText("geoDescCode");
+            if (this.locationManager != null && this.locationThesaurus != null) {
+                KeywordBean locBean =  this.locationManager.getKeywordById(this.locationThesaurus, locationUriString);
+                if (locBean != null) {
+                    md.setLocationUri(locationUriString);
+                    md.setLocation(locBean.getDefaultValue());
+                }
+            }
+        }
         md.setLineage(metadataEl.getChildText("lineage"));
         // FIXME license, where is this stored?
         List<Element> legalConstraints = metadataEl.getChildren("legalConstraints");

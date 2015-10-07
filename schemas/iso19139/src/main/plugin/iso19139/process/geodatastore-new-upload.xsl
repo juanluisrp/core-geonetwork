@@ -25,6 +25,7 @@
   <xsl:param name="topics" select="$defaultConstant"/>
   <xsl:param name="topicSeparator" select="$defaultConstant"/>
   <xsl:param name="geographicIdentifier" select="$defaultConstant"/>
+  <xsl:param name="locationUri" select="$defaultConstant" />
   <xsl:param name="bboxWestLongitude" select="$defaultConstant"/>
   <xsl:param name="bboxEastLongitude" select="$defaultConstant"/>
   <xsl:param name="bboxSouthLatitude" select="$defaultConstant"/>
@@ -132,12 +133,14 @@
   </xsl:template>
 
   <!-- Metadata modified date -->
-  <!-- // FIXME is this neccesary or is fixed by up updade-fixed-info.xsl? -->
-  <!--
   <xsl:template match="/gmd:MD_Metadata/gmd:dateStamp">
-     <gco:Date><xsl:value-of select="$metadataModifiedDate"></xsl:value-of></gco:Date>
+    <xsl:copy>
+      <xsl:call-template name="defaultDateTemplate">
+        <xsl:with-param name="fieldValue" select="$metadataModifiedDate" />
+        <xsl:with-param name="defaultValue" select="$defaultConstant"/>
+      </xsl:call-template>
+    </xsl:copy>
   </xsl:template>
-  -->
 
   <!-- Title -->
   <xsl:template match="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:citation/gmd:CI_Citation/gmd:title">
@@ -367,21 +370,33 @@
 
   <!-- Geographic Identifier -->
   <xsl:template match="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:extent/gmd:EX_Extent/gmd:geographicElement/gmd:EX_GeographicDescription/gmd:geographicIdentifier">
-    <xsl:variable name="identifierUri" select="concat('http://gazetteer.pdok.nl/#', $geographicIdentifier)"/>
-    <xsl:copy>
-      <gmd:RS_Identifier>
-        <xsl:attribute name="uuid" select="$identifierUri" />
-        <gmd:code>
-          <xsl:call-template name="defaultCharacterStringTemplate">
-            <xsl:with-param name="fieldValue" select="$geographicIdentifier"/>
-            <xsl:with-param name="defaultValue" select="$defaultConstant" />
-          </xsl:call-template>
-        </gmd:code>
-        <gmd:codeSpace>
-          <gco:CharacterString>PDOK</gco:CharacterString>
-        </gmd:codeSpace>
-      </gmd:RS_Identifier>
-    </xsl:copy>
+    <xsl:choose>
+      <xsl:when test="$geographicIdentifier = $defaultConstant">
+        <xsl:copy>
+          <xsl:apply-templates select="@*|node()"/>
+        </xsl:copy>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:copy>
+          <gmd:RS_Identifier>
+            <xsl:choose>
+              <xsl:when test="$locationUri != $defaultConstant">
+                <xsl:attribute name="uuid" select="$locationUri" />
+              </xsl:when>
+            </xsl:choose>
+            <gmd:code>
+              <xsl:call-template name="defaultCharacterStringTemplate">
+                <xsl:with-param name="fieldValue" select="$geographicIdentifier"/>
+                <xsl:with-param name="defaultValue" select="$defaultConstant" />
+              </xsl:call-template>
+            </gmd:code>
+            <gmd:codeSpace>
+              <gco:CharacterString>PDOK</gco:CharacterString>
+            </gmd:codeSpace>
+          </gmd:RS_Identifier>
+        </xsl:copy>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
 
   <!-- Bounding Box -->
