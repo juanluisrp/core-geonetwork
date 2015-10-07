@@ -189,7 +189,7 @@ public class MetadataParametersBean {
 
     public boolean isValid() {
         return (StringUtils.isNotBlank(this.identifier) && StringUtils.isNotBlank(this.license)
-                && StringUtils.isNotBlank(this.lineage) && StringUtils.isNotBlank(this.location)
+                && StringUtils.isNotBlank(this.lineage) && StringUtils.isNotBlank(this.locationUri)
                 && StringUtils.isNotBlank(this.resolution) && StringUtils.isNotBlank(this.summary)
                 && StringUtils.isNotBlank(this.title) && StringUtils.isNotBlank(this.url)
                 && this.topicCategories.size() > 0 && this.keywords.size() > 0);

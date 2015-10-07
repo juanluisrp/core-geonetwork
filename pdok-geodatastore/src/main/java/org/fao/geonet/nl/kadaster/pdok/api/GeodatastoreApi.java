@@ -9,6 +9,7 @@ import jeeves.server.context.ServiceContext;
 import jeeves.server.dispatchers.ServiceManager;
 import jeeves.server.sources.http.ServletPathFinder;
 import jeeves.services.ReadWriteController;
+import nl.kadaster.pdok.bussiness.LocationManager;
 import nl.kadaster.pdok.bussiness.MetadataParametersBean;
 import nl.kadaster.pdok.bussiness.MetadataUtil;
 import nl.kadaster.pdok.bussiness.SearchResponse;
@@ -21,6 +22,7 @@ import org.fao.geonet.exceptions.*;
 import org.fao.geonet.kernel.AccessManager;
 import org.fao.geonet.kernel.DataManager;
 import org.fao.geonet.kernel.GeonetworkDataDirectory;
+import org.fao.geonet.kernel.KeywordBean;
 import org.fao.geonet.kernel.search.LuceneSearcher;
 import org.fao.geonet.kernel.search.MetaSearcher;
 import org.fao.geonet.kernel.search.SearchManager;
@@ -44,6 +46,7 @@ import org.fao.geonet.utils.Log;
 import org.fao.geonet.utils.Xml;
 import org.jdom.Element;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.data.jpa.domain.Specifications;
 import org.springframework.http.HttpHeaders;
@@ -87,6 +90,7 @@ public class GeodatastoreApi  {
     public static final String TOPICS_KEY = "topics";
     public static final String TOPIC_SEPARATOR_KEY = "topicSeparator";
     public static final String GEOGRAPHIC_IDENTIFIER_KEY = "geographicIdentifier";
+    public static final String GEOGRAPHIC_URI_KEY = "locationUri";
     public static final String BBOX_WEST_LONGITUDE_KEY = "bboxWestLongitude";
     public static final String BBOX_EAST_LONGITUDE_KEY = "bboxEastLongitude";
     public static final String BBOX_SOUTH_LATITUDE_KEY = "bboxSouthLatitude";
@@ -126,6 +130,9 @@ public class GeodatastoreApi  {
     private GeonetworkDataDirectory geonetworkDataDirectory;
     @Autowired
     private Publish publishController;
+    @Value("#{geodatastoreProperties[locationThesaurusName]}")
+    private String locationThesaurus;
+    @Autowired LocationManager locationManager;
 
 
 
@@ -135,10 +142,20 @@ public class GeodatastoreApi  {
     }
 
 
+    /**
+     * Create a new dataset with the received file, some default data and some calculated data from the received file.
+     * @param dataset the file
+     * @param lang dataset language
+     * @param request the HttpServletRequest
+     * @return a {@link ResponseEntity} with {@link MetadataParametersBean} with the dataset properties and a 200 status
+     * if the data was created. It has an error property. If it is <code>true</code> then there was an error when trying
+     * to create the dataset and the message property should contain the cause.
+     *
+     * @see MetadataParametersBean
+     */
     @RequestMapping(value = "/dataset", method = RequestMethod.POST)
-    public @ResponseBody ResponseEntity<Object> uploadDataset(@RequestParam("dataset") MultipartFile dataset,
-                                                              @PathVariable("lang") String lang, HttpServletRequest request)
-            throws Exception {
+    public @ResponseBody ResponseEntity<MetadataParametersBean> uploadDataset(@RequestParam("dataset") MultipartFile dataset,
+                                                              @PathVariable("lang") String lang, HttpServletRequest request) {
         if (!dataset.isEmpty()) {
             MetadataParametersBean response = new MetadataParametersBean();
             HttpStatus status = HttpStatus.OK;
@@ -170,8 +187,11 @@ public class GeodatastoreApi  {
                 String organisationEmail = group.getEmail();
                 UUID uuid = UUID.randomUUID();
                 ISODate creationDate = new ISODate();
+                String defaultLocation = "http://geodatastore.pdok.nl/registry/location#Nederland_country";
+
+
                 Map<String, Object> templateParameters = prepareTemplateParameters(organisation, organisationEmail,
-                        new ArrayList<String>(), new ArrayList<String>(), "Nederland", "2", "5", "50", "54",
+                        new ArrayList<String>(), new ArrayList<String>(), defaultLocation, "2", "5", "50", "54",
                         dataset.getContentType(), "http://example.com/geonetwork/id/dataset/" + uuid.toString(), dataset.getOriginalFilename(),
                         uuid.toString(), creationDate, "http://creativecommons.org/licenses/by/4.0/", "");
 
@@ -238,7 +258,11 @@ public class GeodatastoreApi  {
                 response.setLicense((String) templateParameters.get(LICENSE_KEY));
                 // TODO set the right location
                 if (StringUtils.isNotBlank((String) templateParameters.get(GEOGRAPHIC_IDENTIFIER_KEY))) {
-                    response.setLocation((String) templateParameters.get(GEOGRAPHIC_IDENTIFIER_KEY));
+                    KeywordBean locationResult = locationManager.getKeywordById(locationThesaurus, defaultLocation);
+                    if (locationResult != null && locationResult.getDefaultValue() != null) {
+                        response.setLocation(locationResult.getDefaultValue());
+                    }
+                    response.setLocationUri(defaultLocation);
                 }
                 response.setResolution((String) templateParameters.get(RESOLUTION_KEY));
                 response.setStatus("draft");
@@ -266,14 +290,13 @@ public class GeodatastoreApi  {
                 response.addMessage(e.getMessage());
                 status = HttpStatus.INTERNAL_SERVER_ERROR;
             }
-            return new ResponseEntity<Object>(response, status);
+            return new ResponseEntity<>(response, status);
         } else {
             MetadataParametersBean response = new MetadataParametersBean();
             response.setError(true);
             response.addMessage("empty.file");
-            return new ResponseEntity<Object>(response, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
         }
-
     }
 
     private Map<String, Object> prepareTemplateParameters(String organisation, String organisationEmail, List<String> keywords,
@@ -302,7 +325,12 @@ public class GeodatastoreApi  {
         String topicList = Joiner.on("#").join(topics);
         parameters.put(TOPICS_KEY, topicList);
         parameters.put(TOPIC_SEPARATOR_KEY, "#");
-        parameters.put(GEOGRAPHIC_IDENTIFIER_KEY, geographicIdentifier); // location
+        if (StringUtils.isNotBlank(geographicIdentifier) && geographicIdentifier.contains("#")){
+            String[] splitedUri = StringUtils.split(geographicIdentifier, '#');
+            String geographicCode = splitedUri[1];
+            parameters.put(GEOGRAPHIC_URI_KEY, geographicIdentifier); // location
+            parameters.put(GEOGRAPHIC_IDENTIFIER_KEY, geographicCode);
+        }
         parameters.put(BBOX_WEST_LONGITUDE_KEY, bboxWestLongitude);
         parameters.put(BBOX_EAST_LONGITUDE_KEY, bboxEastLongitude);
         parameters.put(BBOX_SOUTH_LATITUDE_KEY, bboxSouthLatitude);
@@ -379,7 +407,7 @@ public class GeodatastoreApi  {
                 Element oldMetadata = metadataManager.getMetadataNoInfo(context, metadataId);
                 Element newMetadata = metadataUtil.updateMetadataContents(templateParameters, oldMetadata);
 
-                boolean updateFixedInfo = true, indexImmediate = false, validate = false, updateTimespamp = true;
+                boolean updateFixedInfo = true, indexImmediate = false, validate = false, updateTimespamp = false;
                 Metadata createdMd = metadataManager.updateMetadata(context, metadataId, newMetadata, validate,
                         updateFixedInfo, indexImmediate, lang, changeDate.getDateAsString(), updateTimespamp);
                 Log.debug(GDS_LOG, "Metadata " + createdMd.getId() + " updated");
@@ -400,9 +428,6 @@ public class GeodatastoreApi  {
                 Log.debug(GDS_LOG, "Thumbnail to metadata " + metadataId + " successfully added");
             }
 
-
-
-
             metadataManager.indexMetadata(metadataId, true);
             LuceneSearcher searcher = (LuceneSearcher) searchManager.newSearcher(SearcherType.LUCENE, Geonet.File.SEARCH_LUCENE);
             Element queryParameters = new Element(Jeeves.Elem.REQUEST);
@@ -411,11 +436,18 @@ public class GeodatastoreApi  {
             queryParameters = SearchDefaults.getDefaultSearch(context, queryParameters);
             searcher.search(context, queryParameters, serviceConfig);
             Element results = searcher.present(context, queryParameters, serviceConfig);
-            SearchResponse searchResponse = new SearchResponse();
+            SearchResponse searchResponse = new SearchResponse(locationManager, locationThesaurus);
             searchResponse.initFromXml(results);
+
             MetadataParametersBean result  = new MetadataParametersBean();
             if (searchResponse.getCount() > 0 && searchResponse.getMetadata().size() > 0) {
                 result = searchResponse.getMetadata().get(0);
+                /*if (StringUtils.isNotBlank(result.getLocationUri())) {
+                    KeywordBean locationBean = locationManager.getKeywordById(locationThesaurus, result.getLocationUri());
+                    if (locationBean != null) {
+                        result.setLocation(locationBean.getDefaultValue());
+                    }
+                }*/
             }
 
             if (publish && result.isValid()) {
@@ -472,8 +504,8 @@ public class GeodatastoreApi  {
             response.addMessage("update.server.error");
             status = HttpStatus.INTERNAL_SERVER_ERROR;
         }
-        return new ResponseEntity<Object>(response, status);
 
+        return new ResponseEntity<Object>(response, status);
     }
 
     private Map<String, Object> prepareTemplateParameters(MetadataParametersBean metadataParameter, String organisation, String organisationEmail, String changeDate) {
@@ -481,7 +513,6 @@ public class GeodatastoreApi  {
         parametersMap.put(ORGANISATION_NAME_KEY, organisation);
         parametersMap.put(ORGANISATION_EMAIL_KEY, organisationEmail);
         parametersMap.put(METADATA_MODIFIED_DATE_KEY, changeDate);
-
 
         if (metadataParameter.getTitle() != null) {
             parametersMap.put(TITLE_KEY, metadataParameter.getTitle());
@@ -501,13 +532,29 @@ public class GeodatastoreApi  {
             parametersMap.put(TOPIC_SEPARATOR_KEY, topicSeparator);
             parametersMap.put(TOPICS_KEY, topicList);
         }
-        if (metadataParameter.getLocation() != null && StringUtils.isNotBlank(metadataParameter.getLocationUri())) {
-
+        // Location
+        if (StringUtils.isNotBlank(metadataParameter.getLocationUri())) {
             // TODO recover coordinates from the service and pass them to the template
             String[] splitLocationUri = StringUtils.split(metadataParameter.getLocationUri(), "#");
-            if (splitLocationUri.length > 0) {
-                String location = splitLocationUri[splitLocationUri.length - 1];
-                parametersMap.put(GEOGRAPHIC_IDENTIFIER_KEY, location);
+            if (splitLocationUri.length == 2) {
+                String location = splitLocationUri[1];
+                KeywordBean locationKeyword =  locationManager.getKeywordById(locationThesaurus, metadataParameter.getLocationUri());
+                if (locationKeyword != null) {
+                    parametersMap.put(GEOGRAPHIC_URI_KEY, metadataParameter.getLocationUri());
+                    parametersMap.put(GEOGRAPHIC_IDENTIFIER_KEY, location);
+                    parametersMap.put(BBOX_WEST_LONGITUDE_KEY, locationKeyword.getCoordWest());
+                    parametersMap.put(BBOX_EAST_LONGITUDE_KEY, locationKeyword.getCoordEast());
+                    parametersMap.put(BBOX_SOUTH_LATITUDE_KEY, locationKeyword.getCoordSouth());
+                    parametersMap.put(BBOX_NORTH_LATITUDE_KEY, locationKeyword.getCoordNorth());
+                } else {
+                    // reset the location URI
+                    Log.info(GDS_LOG, "Location id " + location + " not found in thesaurus " + locationThesaurus
+                            + " and language " + locationManager.getDefaultLanguage());
+                    parametersMap.remove(GEOGRAPHIC_IDENTIFIER_KEY);
+                    parametersMap.remove(GEOGRAPHIC_URI_KEY);
+                }
+            } else {
+                Log.info(GDS_LOG, "Location URI isn't compounded by firstpart#secondpart. Ignoring the value.");
             }
 
         }
@@ -663,7 +710,7 @@ public class GeodatastoreApi  {
             searcher.search(context, parametersAsXml, serviceConfig);
             if (!summaryOnly) {
                 Element results = searcher.present(context, parametersAsXml, serviceConfig);
-                SearchResponse searchResponse = new SearchResponse();
+                SearchResponse searchResponse = new SearchResponse(locationManager, locationThesaurus);
                 searchResponse.initFromXml(results);
 
                 return new ResponseEntity<>((Object) searchResponse, HttpStatus.OK);
