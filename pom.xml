@@ -25,7 +25,7 @@
     <developerConnection>
     scm:git:git@github.so.kadaster.nl:NGR/core-geonetwork.git
     </developerConnection>
-    <tag>geonetwork-3.0.36</tag>
+    <tag>geonetwork-3.0.35</tag>
   </scm>
   <inceptionYear>2003</inceptionYear>
   <issueManagement>
