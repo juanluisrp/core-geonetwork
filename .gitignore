@@ -72,3 +72,4 @@ datadir_*
 wro4j-cache*
 *.releaseBackup
 *.orig
+trust.jks
