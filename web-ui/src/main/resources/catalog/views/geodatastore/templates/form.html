@@ -6,18 +6,22 @@ template for metadata form
 	  data-ng-controller="GdsEditMetadataController" name="editMdForm">
 	
     	<div class="row" data-ng-show="tab === 'published'">
-    		<div class="col-md-6">
-	        	<a class="btn btn-default" href="{{mdToEdit.url}}">
-	        	<span class="fa-download fa-fw"></span> {{"Download-link"|translate}}</a>
-			<a class="btn btn-default" href="http://nationaalgeoregsiter.nl/geonetwork/srv/dut/search?uuid={{mdToEdit.identifier}}">
-	        	<span class="fa-file-o fa-fw"></span> {{"Metadata-link"|translate}}</a>	
-		</div>
-		<div class="col-md-6">	
-			<a class="btn btn-default" href="#" data-ng-show="edit">
-	        	<span class="fa-pencil fa-fw"></span> {{"Modify"|translate}}</a>
-			<a class="btn btn-default" href="#" data-ng-hide="edit">
-	        	<span class="fa-disk-o fa-fw"></span> {{"Save"|translate}}</a>	
-		</div>
+
+           <div class="col-lg-5 form-group">
+           	<label><i class="fa fa-cloud-upload fa-fw" style="font-size:1em; margin-right: 4px"></i>Publicatiedatum</label>
+            	<div class="value"  style="padding-left:23px">{{publication-date}}</div>
+            </div><!-- /.col-lg-5 -->
+            <div class="col-lg-5 form-group">
+            	<label><i class="fa fa-pencil fa-fw" style="font-size:1em; margin-right: 4px"></i>Wijzigingsdatum</label>
+            	<div class="value"  style="padding-left:23px">{{modification-date}}</div>
+            </div><!-- /.col-lg-5 -->
+            <div class="col-lg-2 form-group">
+            	<a class="btn btn-default floatright" href="#" data-ng-show="edit">
+        	<i class="fa fa-pencil fa-fw"></i>{{"Modify"|translate}}</a>
+		<a class="btn btn-default floatright" href="#" data-ng-hide="edit">
+        	<i class="fa fa-disk-o fa-fw"></i>{{"Save"|translate}}</a>
+            </div><!-- /.col-lg-2 -->
+
     	</div>
 
 	<div ng-show="mdToEdit.saved">
@@ -96,18 +100,36 @@ template for metadata form
 			<option value="">{{'placeholderScaleField'|translate}}</option>
 		</select>
 	</div>
-	<div class="form-group">
-		<i class="fa fa-question-circle fa-fw floatright" style="margin-top: 6px" data-tooltip="{{'helpThumbnailField'|translate}}"></i>
-		<label for="thumbnailUploadButton">{{'thumbnail'|translate}}</label>
-		<div id="thumbnailDropZone">
-            <div>
-                <span class="btn btn-default btn-sm fileinput-button" data-ng-class="{disabled: disabled}">
+	<div class="row">
+            <div class="col-lg-6">
+              <div class="form-group">
+               <i class="fa fa-question-circle fa-fw floatright" style="margin-top: 6px" data-tooltip="{{'helpThumbnailField'|translate}}"></i>
+                <label for="thumbnailUploadButton">{{'thumbnail'|translate}}</label>
+                <span class="btn btn-default btn-sm fileinput-button" style="width: 100%" data-ng-class="{disabled: disabled}">
                     <i class="fa fa-folder-open-o fa-fw"></i>
                     <span>Selecteer een bestand</span>
                     <input type="file" id="thumbnailUploadButton" tabindex=9 name="thumbnail" data-ng-disabled="disabled" >
                 </span>
-            </div>
-		</div>
+                <div class="thumbcont"><img src="/img/thumbnail.png" alt="Afbeelding/Thumbnail"></div>
+                <div class="thumbact">
+                 <button type="button" id="Vervangen" class="btn btn-default btn-sm floatright"><i class="fa fa-exchange fa-fw"></i>{{'replace'|translate}}</button>
+                  <button type="button" id="Verwijder" class="btn btn-default btn-sm"><i class="fa fa-trash fa-fw"></i>{{'delete'|translate}}</button>
+                </div>
+              </div>
+            </div><!-- /.col-lg-6 -->
+            <div class="col-lg-6 ">
+            	<div class="form-group">
+            		<label for="bb">&nbsp;</label>
+			<a class="btn btn-default" style="width: 100%" target="_blank" href="http://nationaalgeoregsiter.nl/geonetwork/srv/dut/search?uuid={{mdToEdit.identifier}}">
+	        	<i class="fa fa-link fa-fw"></i>{{"Metadata-link"|translate}}</a>
+        	</div>
+        	<div class="form-group">
+	                <a class="btn btn-default" style="width: 100%" href="{{mdToEdit.url}}">
+	        	<i class="fa fa-file-o fa-fw"></i>{{"Download-link"|translate}}</a>
+	        </div>
+            </div><!-- /.col-lg-6 -->
+          </div><!-- /.row -->
+	<div class="form-group">
         <ul>
             <li data-ng-repeat="file in queue" data-ng-class="{'processing': file.$processing()}">
                 <div data-ng-switch data-on="!!file.thumbnailUrl">
