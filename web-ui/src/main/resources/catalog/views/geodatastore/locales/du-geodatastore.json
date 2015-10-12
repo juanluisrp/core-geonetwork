@@ -37,6 +37,7 @@
   "save":"Opslaan",
   "publish":"Publiceren",
   "remove":"Verwijderen",
+  "replace":"Vervangen",
   "edit.success.title": "Dataset informatie opgeslagen",
   "edit.success.content": "Attentie: de metadata is niet direct zichtbaar, maar zal de volgende dag gepubliceerd zijn op het Nationaal Georegister en over 2 dagen eveneens op Data.overheid.nl.",
   "edit.error.title": "Fout bij het bijwerken van de dataset informatie",
