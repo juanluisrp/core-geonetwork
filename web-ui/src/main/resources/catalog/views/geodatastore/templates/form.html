@@ -18,8 +18,8 @@ template for metadata form
             <div class="col-lg-2 form-group">
             	<a class="btn btn-default floatright" href="#" data-ng-show="edit">
         	<i class="fa fa-pencil fa-fw"></i>{{'modify'|translate}}</a>
-		<a class="btn btn-default floatright" href="#" data-ng-hide="edit">
-        	<i class="fa fa-disk-o fa-fw"></i>{{'save'|translate}}</a>
+		<button type="button" id="saveFormButton1" class="btn btn-default btn-sm" data-gn-click-and-spin="processSubmit()" data-ng-hide="edit"
+					data-ng-disabled="editMdForm.$pristine && editMdForm.$valid"><i class="fa fa-floppy-o fa-fw"></i> {{'save'|translate}}</button>
             </div><!-- /.col-lg-2 -->
 
     	</div>
@@ -44,7 +44,7 @@ template for metadata form
 		<i class="fa fa-question-circle fa-fw floatright" style="margin-top: 6px" data-tooltip="{{'helpTopicField'|translate}}"></i>
 		<label for="topic">{{'topic'|translate}}</label>
 		<select class="form-control" id="topic" tabindex=3 data-ng-model="mdToEdit.topicCategory">
-			<option value="null">{{'placeholderTopicField'|translate}}</option>
+			<option value="null" selected>{{'placeholderTopicField'|translate}}</option>
 			<option value="imageryBaseMapsEarthCover">Luchtfoto / Dekking van de Aarde</option>
 			<option value="inlandWaters">Binnenwateren</option>
 			<option value="biota">Biota (flora, fauna, habitat)</option>
