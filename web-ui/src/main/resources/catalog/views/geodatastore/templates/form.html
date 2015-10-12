@@ -9,11 +9,11 @@ template for metadata form
 
            <div class="col-lg-5 form-group">
            	<label><i class="fa fa-cloud-upload fa-fw" style="font-size:1em; margin-right: 4px"></i>Publicatiedatum</label>
-            	<div class="value"  style="padding-left:23px">{{publication-date}}</div>
+            	<div class="value"  style="padding-left:23px">{{md.uploadDate | date:'MM-dd-yyyy' }}</div>
             </div><!-- /.col-lg-5 -->
             <div class="col-lg-5 form-group">
             	<label><i class="fa fa-pencil fa-fw" style="font-size:1em; margin-right: 4px"></i>Wijzigingsdatum</label>
-            	<div class="value"  style="padding-left:23px">{{modification-date}}</div>
+            	<div class="value"  style="padding-left:23px">{{md.changeDate | date:'MM-dd-yyyy' }}</div>
             </div><!-- /.col-lg-5 -->
             <div class="col-lg-2 form-group">
             	<a class="btn btn-default floatright" href="#" data-ng-show="edit">
