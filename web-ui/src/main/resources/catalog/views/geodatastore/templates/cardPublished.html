@@ -8,6 +8,10 @@ template for card to be used after being published
     </div>
     <div class="col-md-10">
         <div class="title">
+            <div class="floatright"> 
+		        <a class="delete" data-tooltip="{{'tooltip.remove' | translate}}"  title="{{'tooltip.remove' | translate}}" 
+				data-ng-click="showDeleteConfirm(md, $event)"><i class="fa fa-trash-o fa-lg"></i></a> 
+            </div> 
             <span>{{md.title}}</span>
         </div>
         <p>{{md.summary | words:18 }}</p>
