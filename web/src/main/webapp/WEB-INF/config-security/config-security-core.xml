@@ -165,7 +165,7 @@
 	</bean>
 
     <bean id="logoutSuccessHandler" class="jeeves.config.springutil.JeevesNodeAwareLogoutSuccessHandler">
-    	<property name="defaultTargetUrl" value="{{geonetwork.url.afterlogout}}></property>
+    	<property name="defaultTargetUrl" value="{{geonetwork.url.afterlogout}}"></property>
     </bean>
     <bean id="requestCacheFilter" class="org.springframework.security.web.savedrequest.RequestCacheAwareFilter" />
 
