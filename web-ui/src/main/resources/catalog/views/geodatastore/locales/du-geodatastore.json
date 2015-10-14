@@ -37,6 +37,7 @@
   "topic":"Onderwerp",
   "save":"Opslaan",
   "publish":"Publiceren",
+  "publishAgain":"Publiceer opnieuw",
   "remove":"Verwijderen",
   "replace":"Vervangen",
   "edit.success.title": "Dataset informatie opgeslagen",
