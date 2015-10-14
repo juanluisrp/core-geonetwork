@@ -19,7 +19,7 @@ template for metadata form
             	<a class="btn btn-default floatright" href="#" data-ng-show="edit">
         	<i class="fa fa-pencil fa-fw"></i>{{'modify'|translate}}</a>
 		<button type="button" id="saveFormButton1" class="btn btn-default btn-sm" data-gn-click-and-spin="processSubmit()" data-ng-hide="edit"
-					data-ng-disabled="editMdForm.$pristine && editMdForm.$valid"><i class="fa fa-floppy-o fa-fw"></i> {{'save'|translate}}</button>
+					data-ng-disabled="editMdForm.$pristine && editMdForm.$valid"><i class="fa fa-share fa-fw"></i> {{'publishAgain'|translate}}</button>
             </div><!-- /.col-lg-2 -->
 
     	</div>
@@ -118,6 +118,7 @@ template for metadata form
               </div>
             </div><!-- /.col-lg-6 -->
             <div class="col-lg-6 ">
+            	<div data-ng-show="tab === 'published'">
             	<div class="form-group">
             		<label for="bb">&nbsp;</label>
 			<a class="btn btn-default" style="width: 100%" target="_blank" href="http://nationaalgeoregsiter.nl/geonetwork/srv/dut/search?uuid={{mdToEdit.identifier}}">
@@ -126,6 +127,7 @@ template for metadata form
         	<div class="form-group">
 	                <a class="btn btn-default" style="width: 100%" href="{{mdToEdit.url}}">
 	        	<i class="fa fa-file-o fa-fw"></i>{{"Download-link"|translate}}</a>
+	        </div>
 	        </div>
             </div><!-- /.col-lg-6 -->
           </div><!-- /.row -->
@@ -162,7 +164,7 @@ template for metadata form
 			<button type="button" id="saveFormButton" tabindex=11 class="btn btn-default btn-sm" data-gn-click-and-spin="processSubmit()"
 					data-ng-disabled="editMdForm.$pristine && editMdForm.$valid"><i class="fa fa-floppy-o fa-fw"></i> {{'save'|translate}}</button>
 			<button type="button" id="publishFormButton" tabindex=12 data-ng-disabled="editMdForm.$dirty || !mdToEdit.$publishable"
-					class="btn btn-default btn-md" ng-show="tab=='upload'" data-gn-click-and-spin="publishMetadata(mdToEdit)"><i class="fa fa-share fa-fw"></i> {{'publish'|translate}}</button>
+					class="btn btn-default btn-sm btn-primary" ng-show="tab=='upload'" data-gn-click-and-spin="publishMetadata(mdToEdit)"><i class="fa fa-share fa-fw"></i> {{'publish'|translate}}</button>
 		</div>
 		<button type="button" id="removeFormButton" tabindex=10 class="btn btn-default btn-sm" data-ng-click="showDeleteConfirm(mdToEdit, $event)"><i class="fa fa-trash-o fa-fw"></i> {{'remove'|translate}}</button>
 			
