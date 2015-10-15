@@ -36,19 +36,7 @@
       moment.lang(lang);
     }]);
 
-  module.controller('gnsSearchController', [
-    '$scope', 'gnSearchSettings', 'GdsUploadFactory',
-    function ($scope, gnSearchSettings, GdsUploadFactory) {
-      $scope.searchObj = {
-        permalink: false,
-        params: {
-          sortBy: 'changeDate',
-          filter: '',
-          from: 1,
-          to: 9
-        }
-      };
-    }]);
+
 
   module.controller('geoDataStoreMainController', [
     '$scope',
@@ -75,22 +63,82 @@
       $scope.tab = "upload";
       $scope.perPage = 8;
       $scope.page = 1;
+      $scope.searchParams = {
+        selectedOrder: 'changeDate',
+        searchQuery: null,
+        sortDirection: 'desc'
+      };
+
+      $scope.orderList = [
+        {
+          fieldName: '_title',
+          labelKey: 'title'
+        }, {
+          fieldName:'changeDate',
+          labelKey: 'changeDate'
+        }];
+
+      $scope.orderListUpload = [
+        {
+          fieldName:'changeDate',
+          labelKey: 'changeDate'
+        }];
 
       $scope.$watch('user', function () {
+        $scope.getResultsSummary('draft');
+        $scope.getResultsSummary('published');
         $scope.updateResults(1);
       });
 
+      $scope.sortResults = function() {
+        var query = $scope.searchParams.searchQuery;
+        var page = $scope.page;
+        var fieldOrder = $scope.searchParams.selectedOrder;
+        var direction = $scope.searchParams.sortDirection;
+        if (!$scope.page || isNaN($scope.page)) {
+          page = 1;
+        }
+
+        return $scope.updateResults(page, query, fieldOrder, direction);
+      };
+
+      $scope.toggleSortOrder = function() {
+        if ($scope.searchParams.sortDirection === 'desc') {
+          $scope.searchParams.sortDirection = 'asc';
+        } else {
+          $scope.searchParams.sortDirection = 'desc';
+        }
+        $scope.sortResults();
+      };
+
+      $scope.search = function() {
+        var searchQuery = $scope.searchParams.searchQuery;
+        var page = 1;
+        var sortOrder = $scope.searchParams.selectedOrder;
+        var sortDirection = $scope.searchParams.sortDirection;
+        return $scope.updateResults(page, searchQuery, sortOrder, sortDirection);
+      };
+
+      $scope.searchFromKeypress = function(evt) {
+        if (evt.which === 13) {
+          evt.preventDefault();
+          $scope.search();
+        }
+      };
+
+
+
       $scope.$watch('tab', function (newValue, oldValue) {
         // Retrieve the register count for the not selected tab.
-        var status;
         if (newValue) {
-          //noinspection JSValidateTypes
-          if (newValue === "upload") {
-            status = 'published';
-          } else {
-            status = 'draft';
-          }
-          $scope.getResultsSummary(status);
+          $scope.searchParams = {
+            selectedOrder: 'changeDate',
+            searchQuery: null,
+            sortDirection: 'desc'
+          };
+          $scope.page = 1,
+          $scope.getResultsSummary('draft');
+          $scope.getResultsSummary('published');
           $scope.hasSelected = false;
           GdsUploadFactory.setMdSelected(null);
           GdsUploadFactory.clearList();
@@ -99,29 +147,53 @@
         }
       });
 
+      $scope.updateResultsAndPreserveSearch = function(page) {
+        $scope.updateResults(page, $scope.searchParams.searchQuery, $scope.searchParams.selectedOrder,
+            $scope.searchParams.sortDirection);
+      };
 
-      $scope.updateResults = function (page, any, order) {
+      $scope.updateResults = function (page, any, order, sortDirection) {
         $scope.page = page;
+        var orderParam = order;
         if (!order) {
-          order = "changeDate";
+          orderParam = "changeDate";
         }
-        gdsSearchManagerService.search({
+        var searchParams = {
           from: (page - 1) * $scope.perPage + 1,
-          sortBy: order,
+          sortBy: orderParam,
           sortOrder: 'desc',
           pageSize: $scope.perPage,
           status: ($scope.tab === 'upload') ? 'draft' : 'published'
-        }).then(function (data) {
+        };
+
+        if (any) {
+          $scope.filterActive = true;
+         /* var queryObject = {};
+          queryObject['title_OR_abstract'] = any;*/
+          angular.extend(searchParams, {q: any});
+        } else {
+          $scope.filterActive = false;
+        }
+        if (sortDirection) {
+          angular.extend(searchParams, {sortOrder: sortDirection});
+        }
+
+
+        $scope.searching = true;
+        gdsSearchManagerService.search(searchParams).then(function (data) {
           GdsUploadFactory.clearList();
           $scope.searchResults = data;
+          $scope.filterCount = data.count;
           if ($scope.tab === 'upload') {
-            $scope.totalNotPublished = data.count;
+            //$scope.totalNotPublished = data.count;
           } else if ($scope.tab === 'published') {
-            $scope.totalPublished = data.count;
+            //$scope.totalPublished = data.count;
           }
           $scope.pages = new Array(Math.ceil(data.count / $scope.perPage));
         }, function (error) {
           $log.error("Error in search: " + error);
+        }).finally(function() {
+          $scope.searching= false;
         });
       };
 

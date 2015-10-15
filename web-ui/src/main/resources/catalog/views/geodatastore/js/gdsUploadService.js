@@ -109,10 +109,15 @@
         var mustPublish = publish || false;
         var defer = $q.defer();
         if (md && md.identifier) {
-          var request = new FormData();
-          var url = UPDATE_DATASET_URL + md.identifier;
+          var mdToPublish = angular.extend({}, md);
+          if (mdToPublish.topicCategory) {
+            mdToPublish.topicCategories = [mdToPublish.topicCategory];
+          }
 
-          request.append("metadata", angular.toJson(md));
+          var request = new FormData();
+          var url = UPDATE_DATASET_URL + mdToPublish.identifier;
+
+          request.append("metadata", angular.toJson(mdToPublish));
           request.append("publish", mustPublish);
           $http.post(url, request, {
             transformRequest: angular.identity,

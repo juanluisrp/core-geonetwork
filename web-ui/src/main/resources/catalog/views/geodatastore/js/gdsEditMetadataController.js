@@ -204,9 +204,11 @@
       };
 
       var getMetadataJson = function () {
+        var data = angular.extend({}, $scope.mdToEdit);
+        data.topicCategories = [data.topicCategory];
         var metadata = [{
           name: 'metadata',
-          value: angular.toJson($scope.mdToEdit)
+          value: angular.toJson(data)
         }, {
           name: 'publish',
           value: $scope.publish
