@@ -68,6 +68,11 @@
   "signinFailure":"Er is een probleem opgetreden bij het inloggen, probeer het opnieuw",
   "Data-succesfully-updated":"Uw wijziging is succesvol afgerond. Attentie: de metadata is niet direct zichtbaar, maar zal de volgende dag gepubliceerd zijn op het Nationaal Georegister en over 2 dagen eveneens op Data.overheid.nl.",
   "Download-link":"Download bestand",
-  "Metadata-link":"Bekijk metadata in NGR"
+  "Metadata-link":"Bekijk metadata in NGR",
+  "placeholderSearchField": "Zoek voor...",
+  "go": "Ga!",
+  "title": "Titel",
+  "changeDate": "Wijzigingsdatum"
+
 
 }
