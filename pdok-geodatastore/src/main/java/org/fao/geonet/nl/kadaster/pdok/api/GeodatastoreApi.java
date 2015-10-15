@@ -363,7 +363,6 @@ public class GeodatastoreApi  {
         ServiceContext context = serviceManager.createServiceContext("geodatastore.api.dataset", lang, request);
 
         try {
-
             String metadataId = metadataManager.getMetadataId(identifier);
             if (StringUtils.isBlank(metadataId)) {
                 Log.info(GDS_LOG, "Metadata with UUID " + identifier + " not found");
@@ -688,7 +687,7 @@ public class GeodatastoreApi  {
     public @ResponseBody ResponseEntity<Object> uploadDataset(
             @PathVariable("lang") String lang,
             @RequestParam(value = "q", defaultValue = "") String q,
-            @RequestParam(value = "sortBy", defaultValue="modifiedDate") String sortBy,
+            @RequestParam(value = "sortBy", defaultValue="changeDate") String sortBy,
             @RequestParam(value = "sortOrder", defaultValue = "desc") String sortOrder,
             @RequestParam(value = "from", defaultValue = "1") Integer from,
             @RequestParam(value = "pageSize", defaultValue = "20") Integer pageSize,
@@ -751,7 +750,10 @@ public class GeodatastoreApi  {
         Element queryParameters = new Element(Jeeves.Elem.REQUEST);
         queryParameters.addContent(new Element(Geonet.IndexFieldNames.ANY).setText(q));
         queryParameters.addContent(new Element(Geonet.SearchResult.SORT_BY).setText(sortBy));
-        queryParameters.addContent(new Element(Geonet.SearchResult.SORT_ORDER).setText(sortOrder));
+        if (StringUtils.isNotBlank(sortOrder) && sortOrder.equals("asc")) {
+            // This is not a bug. Ascending order needs "reverse" to be passed to Lucene.
+            queryParameters.addContent(new Element(Geonet.SearchResult.SORT_ORDER).setText("reverse"));
+        }
         queryParameters.addContent(new Element(Geonet.SearchResult.HITS_PER_PAGE).setText(Integer.toString(pageSize)));
         queryParameters.addContent(new Element("from").setText(Integer.toString(from)));
         queryParameters.addContent(new Element("to").setText(Integer.toString(from + pageSize - 1)));
