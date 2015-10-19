@@ -115,7 +115,7 @@
                         </div><!-- /.col-lg-6 -->
                     </div>
                     <div>
-                        <div class="overlay" data-ng-show="searching"><i class="fa fa-spinner fa-pulse fa-fw fa-3x"></i>{{'loading' | translate}}</div>
+                        <div class="overlay" data-ng-show="searching"><i class="fa fa-spinner fa-pulse fa-fw fa-3x"></i></br>{{'loading' | translate}}</div>
                         <ol id="selectable" data-ng-hide="searching">
                            <!-- List of files in queue -->
                            <li data-ng-repeat="file in queue" data-ng-class="{'processing': file.$processing()}" data-ng-cloak>
