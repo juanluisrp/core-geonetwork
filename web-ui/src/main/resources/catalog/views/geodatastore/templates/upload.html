@@ -40,13 +40,22 @@
             <section class="ng-cloack">
                 <div class="row" data-ng-if="tab == 'published'">
                     <div class="col-lg-6">
-                        <div class="input-group">
-                            <input type="text" id="queryPublished" class="form-control" placeholder="{{'placeholderSearchField' | translate}}"
-                                    data-ng-model="searchParams.searchQuery" data-ng-keydown="$event.which === 13  && search()">
-                            <span class="input-group-btn">
-                              <button id="searchButtonPublished" class="btn btn-default" type="button" data-ng-click="searchFromKeypress()">{{'go' | translate}}</button>
-                            </span>
-                        </div><!-- /input-group -->
+                        <div class="form-group has-feedback">
+
+                            <div class="input-group">
+                                <input type="text" id="queryPublished" class="form-control" placeholder="{{'placeholderSearchField' | translate}}"
+                                        data-ng-model="searchParams.searchQuery" data-ng-keydown="searchFromKeypress($event)">
+                                <span class="input-group-btn">
+                                  <button id="searchButtonPublished" class="btn btn-default" type="button" data-ng-click="search()">{{'go' | translate}}</button>
+                                </span>
+                            </div><!-- /input-group -->
+                            <span class="fa fa-times-circle-o form-control-feedback"
+                                  data-ng-show="filterActive"
+                                  data-ng-click="clearSearch()"
+                                  style="right: 44px; top: 0px; z-index: 2; cursor:pointer"
+                                  aria-label="Clear search"
+                                  data-tooltip="Clear search" data-tooltip-placement="bottom" data-tooltip-append-to-body="true"></span>
+                        </div>
                     </div><!-- /.col-lg-6 -->
                     <div class="col-lg-6 ">
                         <div>
@@ -77,13 +86,21 @@
                     </div>
                     <div class="row" data-ng-if="tab == 'upload'">
                         <div class="col-lg-6">
-                            <div class="input-group">
-                                <input type="text" id="queryUpload" class="form-control" placeholder="{{'placeholderSearchField' | translate}}"
-                                       data-ng-model="searchParams.searchQuery" data-ng-keydown="searchFromKeypress($event)">
-                            <span class="input-group-btn">
-                              <button id="searchButtonUpload" class="btn btn-default" type="button" data-ng-click="search()">{{'go' | translate}}</button>
-                            </span>
-                            </div><!-- /input-group -->
+                            <div class="form-group has-feedback">
+                                <div class="input-group">
+                                    <input type="text" id="queryUpload" class="form-control" placeholder="{{'placeholderSearchField' | translate}}"
+                                           data-ng-model="searchParams.searchQuery" data-ng-keydown="searchFromKeypress($event)">
+                                <span class="input-group-btn">
+                                  <button id="searchButtonUpload" class="btn btn-default" type="button" data-ng-click="search()">{{'go' | translate}}</button>
+                                </span>
+                                </div><!-- /input-group -->
+                                <span class="fa fa-times-circle-o form-control-feedback"
+                                      data-ng-show="filterActive"
+                                      data-ng-click="clearSearch()"
+                                      style="right: 44px; top: 0px; z-index: 2; cursor:pointer"
+                                      aria-label="Clear search"
+                                      data-tooltip="Clear search" data-tooltip-append-to-body="true"></span>
+                            </div>
                         </div><!-- /.col-lg-6 -->
                         <div class="col-lg-6 ">
                             <div>

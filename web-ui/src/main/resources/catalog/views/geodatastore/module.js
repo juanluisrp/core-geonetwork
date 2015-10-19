@@ -119,6 +119,11 @@
         return $scope.updateResults(page, searchQuery, sortOrder, sortDirection);
       };
 
+      $scope.clearSearch = function () {
+        $scope.searchParams.searchQuery = null;
+        return $scope.search();
+      }
+
       $scope.searchFromKeypress = function(evt) {
         if (evt.which === 13) {
           evt.preventDefault();
