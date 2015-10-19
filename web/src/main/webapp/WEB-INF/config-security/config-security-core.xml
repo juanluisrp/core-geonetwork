@@ -82,7 +82,7 @@
 	<!-- A filter that check if an external service already authenticated user
 					 (default implementation does nothing but can be overridden) -->
 	<bean id="multiNodeAuthenticationFilter" class="jeeves.config.springutil.MultiNodeAuthenticationFilter">
-        <property name="location" value="${wrongNodeRedirectURL}" />
+        <property name="location" value="{{geonetwork.url.onFailedAuthentication}}" />
     </bean>
 	<bean id="preAuthenticationFilter" class="jeeves.config.springutil.PassthroughFilter"/>
 	<bean id="securityContextPersistenceFilter" class="org.springframework.security.web.context.SecurityContextPersistenceFilter">
