@@ -72,7 +72,8 @@
   "placeholderSearchField": "Zoek voor...",
   "go": "Ga!",
   "title": "Titel",
-  "changeDate": "Wijzigingsdatum"
+  "changeDate": "Wijzigingsdatum",
+  "loading": "Laden"
 
 
 }
