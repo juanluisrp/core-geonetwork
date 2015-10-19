@@ -7,20 +7,20 @@ template for metadata form
 	
     	<div class="row" data-ng-show="tab === 'published'">
 
-           <div class="col-lg-5 form-group">
+           <div class="col-lg-4 form-group">
            	<label><i class="fa fa-cloud-upload fa-fw" style="font-size:1em; margin-right: 4px"></i>Publicatiedatum</label>
             	<div class="value"  style="padding-left:23px">{{md.uploadDate | date:'MM-dd-yyyy' }}</div>
-            </div><!-- /.col-lg-5 -->
-            <div class="col-lg-5 form-group">
+            </div><!-- /.col-lg-4 -->
+            <div class="col-lg-4 form-group">
             	<label><i class="fa fa-pencil fa-fw" style="font-size:1em; margin-right: 4px"></i>Wijzigingsdatum</label>
             	<div class="value"  style="padding-left:23px">{{md.changeDate | date:'MM-dd-yyyy' }}</div>
-            </div><!-- /.col-lg-5 -->
-            <div class="col-lg-2 form-group">
+            </div><!-- /.col-lg-4 -->
+            <div class="col-lg-4 form-group">
             	<a class="btn btn-default floatright" href="#" data-ng-show="edit">
         	<i class="fa fa-pencil fa-fw"></i>{{'modify'|translate}}</a>
 		<button type="button" id="saveFormButton1" class="btn btn-default btn-sm" data-gn-click-and-spin="processSubmit()" data-ng-hide="edit"
 					data-ng-disabled="editMdForm.$pristine && editMdForm.$valid"><i class="fa fa-share fa-fw"></i> {{'publishAgain'|translate}}</button>
-            </div><!-- /.col-lg-2 -->
+            </div><!-- /.col-lg-4 -->
 
     	</div>
 
