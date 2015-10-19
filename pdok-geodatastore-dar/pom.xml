@@ -76,7 +76,7 @@
                         </deployable>
 						<deployable>
 							<name>geonetwork-war</name>
-							<contextRoot>root</contextRoot>
+							<contextRoot>ROOT</contextRoot>
 							<type>tomcat.War</type>
 							<location>../web/target/geonetwork.war</location>
 							<excludeFileNamesRegex>.*(config-editor\.xml|urlrewrite\.xml|wro-sources\.xml|strings\.xml|.*\.(gif|html|jar|jpg|js|mef|pdf|png|psd|txt|xsl))</excludeFileNamesRegex>
