@@ -53,7 +53,11 @@ public class MonitorManager {
 
     public void init(ServletContext context, String baseUrl) {
 
-        String webappName = baseUrl.substring(1);
+        String webappName;
+        if(baseUrl.length() < 1)
+            webappName = "ROOT";
+        else
+            webappName = baseUrl.substring(1);
 
         if (context != null) {
             HealthCheckRegistry tmpHealthCheckRegistry = lookUpHealthCheckRegistry(context,HEALTH_CHECK_REGISTRY);
