@@ -74,6 +74,14 @@
 
       });
 
+      $scope.$watch("editState.isEditing", function(newValue) {
+        if (newValue && $scope.tab === 'published') {
+          $scope.publish = true;
+        }  else {
+          $scope.publish = false;
+        }
+      });
+
       $scope.$watch(GdsUploadFactory.getMdSelected, function () {
         $log.debug("watch on GdsUploadFactory.getMdSelected changed");
         var isSameMetadata = false;
@@ -215,14 +223,14 @@
         }
         ];
         return metadata;
-      }
+      };
 
 
       $scope.getMdSelected = function () {
         return GdsUploadFactory.getMdSelected();
-      }
+      };
 
-      $scope.processSubmit = function () {
+      $scope.processSubmit = function (mustPublish) {
         $scope.error = false;
         $scope.messages = [];
         $scope.saved = false;
@@ -233,13 +241,11 @@
           return $scope.uploadDeferred.promise;
         } else {
           // manually send the form without the thumbnail.
-          return GdsUploadFactory.saveMetadata($scope.mdToEdit).then(
+          return GdsUploadFactory.saveMetadata($scope.mdToEdit, mustPublish).then(
               successfulUpload,
               failedUpload
           );
         }
       }
-
     }]);
-
 })();

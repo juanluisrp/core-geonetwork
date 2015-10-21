@@ -9,16 +9,14 @@ template for metadata form
 
            <div class="col-lg-4 form-group">
            	<label><i class="fa fa-cloud-upload fa-fw" style="font-size:1em; margin-right: 4px"></i>Publicatiedatum</label>
-            	<div class="value"  style="padding-left:23px">{{md.uploadDate | date:'MM-dd-yyyy' }}</div>
+            	<div class="value"  style="padding-left:23px">{{mdToEdit.uploadDate | date:'MM-dd-yyyy' }}</div>
             </div><!-- /.col-lg-4 -->
             <div class="col-lg-4 form-group">
             	<label><i class="fa fa-pencil fa-fw" style="font-size:1em; margin-right: 4px"></i>Wijzigingsdatum</label>
-            	<div class="value"  style="padding-left:23px">{{md.changeDate | date:'MM-dd-yyyy' }}</div>
+            	<div class="value"  style="padding-left:23px">{{mdToEdit.changeDate | date:'MM-dd-yyyy' }}</div>
             </div><!-- /.col-lg-4 -->
             <div class="col-lg-4 form-group">
-            	<a class="btn btn-default floatright" href="#" data-ng-show="edit">
-        	<i class="fa fa-pencil fa-fw"></i>{{'modify'|translate}}</a>
-		<button type="button" id="saveFormButton1" class="btn btn-default btn-sm" data-gn-click-and-spin="processSubmit()" data-ng-hide="edit"
+			<button type="button" id="saveFormButton1" class="btn btn-default btn-sm" data-gn-click-and-spin="processSubmit(tab==='published')"
 					data-ng-disabled="editMdForm.$pristine && editMdForm.$valid"><i class="fa fa-share fa-fw"></i> {{'publishAgain'|translate}}</button>
             </div><!-- /.col-lg-4 -->
 
@@ -42,8 +40,8 @@ template for metadata form
 	</div>
 	<div class="form-group">
 		<i class="fa fa-question-circle fa-fw floatright" style="margin-top: 6px" data-tooltip="{{'helpTopicField'|translate}}"></i>
-		<label for="topic">{{'topic'|translate}}</label>
-		<select class="form-control" id="topic" tabindex=3 data-ng-model="mdToEdit.topicCategory">
+		<label for="topicField">{{'topic'|translate}}</label>
+		<select class="form-control" id="topicField" tabindex=3 data-ng-model="mdToEdit.topicCategory">
 			<option value="null" selected>{{'placeholderTopicField'|translate}}</option>
 			<option value="imageryBaseMapsEarthCover">Luchtfoto / Dekking van de Aarde</option>
 			<option value="inlandWaters">Binnenwateren</option>
@@ -74,28 +72,28 @@ template for metadata form
 	</div>
 	<div class="form-group">
 		<i class="fa fa-question-circle fa-fw floatright" style="margin-top: 6px" data-tooltip="{{'helpLineageField'|translate}}"></i>
-		<label for="lineage">{{'lineage'|translate}}</label>
-		<textarea rows="4" class="form-control" id="lineage" data-ng-model="mdToEdit.lineage" tabindex="5" placeholder="{{'placeholderLineageField'|translate}}"></textarea>
+		<label for="lineageField">{{'lineage'|translate}}</label>
+		<textarea rows="4" class="form-control" id="lineageField" data-ng-model="mdToEdit.lineage" tabindex="5" placeholder="{{'placeholderLineageField'|translate}}"></textarea>
 	</div>
 	<div class="form-group">
 		<i class="fa fa-question-circle fa-fw floatright" style="margin-top: 6px" data-tooltip="{{'helpLocationField'|translate}}"></i>
-		<label for="location">{{'location'|translate}}</label>
-        	<input id="location" tabindex="6" data-ng-model="mdToEdit.location" placeholder="{{'placeholderLocationField'|translate}}"
+		<label for="locationField">{{'location'|translate}}</label>
+        	<input id="locationField" tabindex="6" data-ng-model="mdToEdit.location" placeholder="{{'placeholderLocationField'|translate}}"
                data-uri-model="mdToEdit.locationUri"
                class="form-control" data-gds-keyword-picker data-thesaurus-key="external.place.administrativeAreas"/>
 	</div>
 	<div class="form-group">
 		<i class="fa fa-question-circle fa-fw floatright" style="margin-top: 6px" data-tooltip="{{'helpLicenseField'|translate}}"></i>
-		<label for="license">{{'license'|translate}}</label>
-		<select class="form-control" id="license" tabindex=7 data-ng-model="mdToEdit.license"
+		<label for="licenseField">{{'license'|translate}}</label>
+		<select class="form-control" id="licenseField" tabindex=7 data-ng-model="mdToEdit.license"
                 data-ng-options="item.value as item.label for item in licenseList">
 			<option value="">{{'placeholderLicenseField'|translate}}</option>
 		</select>
 	</div>
 	<div class="form-group">
 		<i class="fa fa-question-circle fa-fw floatright" style="margin-top: 6px" data-tooltip="{{'helpScaleField'|translate}}"></i>
-		<label for="resolution">{{'scale'|translate}}</label>
-		<select class="form-control" id="resolution" tabindex=8 data-ng-model="mdToEdit.resolution"
+		<label for="resolutionField">{{'scale'|translate}}</label>
+		<select class="form-control" id="resolutionField" tabindex=8 data-ng-model="mdToEdit.resolution"
                 data-ng-options="item.value as item.label for item in resolutionList">
 			<option value="">{{'placeholderScaleField'|translate}}</option>
 		</select>
@@ -161,12 +159,21 @@ template for metadata form
 	</div>
 	<div class="form-group metadataFormButtons">
 		<div class="floatright">
-			<button type="button" id="saveFormButton" tabindex=11 class="btn btn-default btn-sm" data-gn-click-and-spin="processSubmit()"
-					data-ng-disabled="editMdForm.$pristine && editMdForm.$valid"><i class="fa fa-floppy-o fa-fw"></i> {{'save'|translate}}</button>
+			<button type="button" id="saveFormButton" tabindex=11 class="btn btn-default btn-sm" data-gn-click-and-spin="processSubmit(tab==='published')"
+					data-ng-show="tab === 'upload" data-ng-disabled="editMdForm.$pristine && editMdForm.$valid">
+				<i class="fa fa-floppy-o fa-fw"></i>
+				<span data-ng-show="tab==='upload'">{{'save'|translate}}</span>
+				<span data-ng-show="tab==='published'">{{'publishAgain'|translate}}</span>
+
+			</button>
 			<button type="button" id="publishFormButton" tabindex=12 data-ng-disabled="editMdForm.$dirty || !mdToEdit.$publishable"
-					class="btn btn-default btn-sm btn-primary" ng-show="tab=='upload'" data-gn-click-and-spin="publishMetadata(mdToEdit)"><i class="fa fa-share fa-fw"></i> {{'publish'|translate}}</button>
+					class="btn btn-default btn-sm btn-primary" ng-show="tab=='upload'" data-gn-click-and-spin="publishMetadata(mdToEdit)">
+				<i class="fa fa-share fa-fw"></i> {{'publish'|translate}}
+			</button>
 		</div>
-		<button type="button" id="removeFormButton" tabindex=10 class="btn btn-default btn-sm" data-ng-click="showDeleteConfirm(mdToEdit, $event)"><i class="fa fa-trash-o fa-fw"></i> {{'remove'|translate}}</button>
+		<button type="button" id="removeFormButton" tabindex=10 class="btn btn-default btn-sm" data-ng-click="showDeleteConfirm(mdToEdit, $event)">
+			<i class="fa fa-trash-o fa-fw"></i> {{'remove'|translate}}
+		</button>
 			
 	</div>
 </form>

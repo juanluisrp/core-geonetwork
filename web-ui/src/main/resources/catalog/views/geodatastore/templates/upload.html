@@ -203,12 +203,15 @@
                 <div id="metadata" class="fade" data-ng-switch-when="true" data-ng-class="{'in': hasSelected }">
 					<div ng-show="getMdSelected().error != ''">
 						<br/><br/><br/><br/>
-						<h3><i class="fa fa-exclamation-triangle fa-fw"></i> Er is iets mis gegaan bij het uploaden van uw bestand, probeer het later nog een keer.</h3>
+						<h3><i class="fa fa-exclamation-triangle fa-fw"></i> <span>{{uploadError | translate}}</span></h3>
 						
 						<p>{{getMdSelected().message|translate}}</p>
 						<br/><br/><br/><br/>
 					</div>
-					<div data-ng-include="'../../catalog/views/geodatastore/templates/form.html'" ng-hide="getMdSelected().error || getMdSelected().$processing()" data-ng-cloak></div>
+                    <div data-ng-include="'../../catalog/views/geodatastore/templates/readonlyMetadata.html'"
+                         data-ng-cloak data-ng-if="tab === 'published' && !editState.isEditing"></div>
+					<div data-ng-include="'../../catalog/views/geodatastore/templates/form.html'"
+                         data-ng-if="editState.isEditing && !(getMdSelected().error || getMdSelected().$processing())" data-ng-cloak></div>
                 </div>
                 <div data-ng-switch-default class="padding-25 padding-top-10em">
 					

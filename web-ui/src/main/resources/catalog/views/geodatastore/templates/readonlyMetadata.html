@@ -1,0 +1,78 @@
+<div data-ng-controller="GdsReadonlyMetadataController">
+    <div class="row">
+        <div class="col-lg-4 form-group">
+            <label><i class="fa fa-cloud-upload fa-fw" style="font-size:1em; margin-right: 4px"></i>Publicatiedatum</label>
+            <div class="value"  style="padding-left:23px">{{mdSelected.uploadDate | date:'MM-dd-yyyy' }}</div>
+        </div><!-- /.col-lg-4 -->
+        <div class="col-lg-4 form-group">
+            <label><i class="fa fa-pencil fa-fw" style="font-size:1em; margin-right: 4px"></i>Wijzigingsdatum</label>
+            <div class="value"  style="padding-left:23px">{{mdSelected.changeDate | date:'MM-dd-yyyy' }}</div>
+        </div><!-- /.col-lg-4 -->
+        <div class="col-lg-4 form-group">
+            <div class="floatright"><button type="button" id="editUpperButton" class="btn btn-default btn-sm floatright"
+                    data-ng-click="toggleEditMode()" data-ng-hide="editState.isEditing">
+                <i class="fa fa-pencil fa-fw"></i>{{'edit' | translate}}</button></div>
+        </div><!-- /.col-lg-2 -->
+    </div><!-- /.row -->
+    <div class="form-group">
+        <label for="title">{{'title'|translate}}</label></br>
+        <h4 id="title" class="value">{{mdSelected.title}}</h4>
+    </div>
+    <div class="form-group">
+        <label for="abstract">{{'abstract'|translate}}</label></br>
+        <span id="abstract" class="value">{{mdSelected.summary}}</span>
+    </div>
+    <div class="form-group">
+        <label for="topic">{{'topic'|translate}}</label>
+        <div id="topic" class="value">
+            <span data-ng-repeat="topicCategory in mdSelected.topicCategories track by $index">{{'topic.' + topicCategory | translate}}<span>{{$last ? '' : ', '}}</span></span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="keywords">{{'keywords'|translate}}</label>
+        <div id="keywords" class="value" >
+            <span data-ng-repeat="keyword in mdSelected.keywords track by $index"><span class="tag">{{keyword}}</span>{{$last ? '' : ', '}}</span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="lineage">{{'lineage'|translate}}</label>
+        <div id="lineage" class="value">{{mdSelected.lineage}}</div>
+    </div>
+    <div class="form-group">
+        <label for="location">{{'location'|translate}}</label>
+        <div id="location" class="value">{{mdSelected.location}}</div>
+    </div>
+    <div class="form-group">
+        <label for="license">{{'license'|translate}}</label>
+        <div id="license" class="value">{{'license.' + mdSelected.license | lowercase | translate}}</div>
+    </div>
+
+    <div class="form-group">
+        <label for="resolution">{{'scale'|translate}}</label>
+        <div id="resolution" class="value">{{'scale.' + mdSelected.resolution | translate}}</div>
+    </div>
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="form-group">
+                <label for="thumbnail">Afbeelding</label>
+                <div id="thumbnail" class="thumbcont"><img src="img/thumbnail.png" alt="Afbeelding/Thumbnail"></div>
+
+            </div>
+        </div><!-- /.col-lg-6 -->
+        <div class="col-lg-6 ">
+            <div class="form-group">
+                <label for="Vervangen">&nbsp;</label>
+                <button type="button" id="Vervangen" class="btn btn-default btn-sm " style="width: 100%"><i class="fa fa-link fa-fw"></i>Bekijk in NGR</button>
+            </div>
+            <div class="form-group">
+                <button type="button" class="btn btn-default btn-sm " style="width: 100%"><i class="fa fa-file-pdf-o fa-fw"></i>Download dataset (812 KB)</button>
+            </div>
+        </div><!-- /.col-lg-6 -->
+    </div><!-- /.row -->
+    <div class="form-group" style="border-top: solid 1px; padding-top: 15px;">
+        <button type="button" id="editBottomButton" class="btn btn-default btn-sm floatright" data-ng-click="toggleEditMode()">
+            <i class="fa fa-pencil fa-fw"></i>{{'edit' | translate}}</button>
+        <button type="button" id="deleteButton" class="btn btn-default btn-sm ">
+            <i class="fa fa-trash fa-fw"></i>{{'remove' | translate}}</button>
+    </div>
+</div>
