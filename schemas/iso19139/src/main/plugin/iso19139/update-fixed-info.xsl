@@ -498,6 +498,23 @@
 		</xsl:call-template>
 	</xsl:template>
 
+	<!-- ==================== geodatastore =====================-->
+	<!-- Dutch profile require dateStamp to be a gco:Date -->
+	<xsl:template match="gmd:dateStamp" priority="99">
+		<xsl:choose>
+			<xsl:when test="/root/env/changeDate">
+				<xsl:copy>
+					<gco:Date>
+						<xsl:value-of select="/root/env/changeDate"/>
+					</gco:Date>
+				</xsl:copy>
+			</xsl:when>
+			<xsl:otherwise>
+				<xsl:copy-of select="."/>
+			</xsl:otherwise>
+		</xsl:choose>
+	</xsl:template>
+
 <!-- ================================================================= -->
 	<!-- copy everything else as is -->
 	
