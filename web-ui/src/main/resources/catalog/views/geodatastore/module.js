@@ -450,7 +450,14 @@
                 }
                 if (srMd.identifier === result.identifier) {
                   $scope.searchResults.metadata.splice(i, 1);
-                  $scope.totalNotPublished = $scope.totalNotPublished - 1;
+                  if ($scope.tab === 'upload') {
+                    $scope.totalNotPublished = $scope.totalNotPublished - 1;
+                  } else  if ($scope.tab = 'published') {
+                    $scope.totalPublished = $scope.totalPublished - 1;
+                  }
+                  if ($scope.filterActive && $scope.filterCount) {
+                    $scope.filterCount = $scope.filterCount - 1;
+                  }
                 }
               }
               return result;
