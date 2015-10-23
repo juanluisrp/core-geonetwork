@@ -161,7 +161,7 @@ template for metadata form
 		<div class="floatright">
 			<button type="button" id="saveFormButton" tabindex=11 class="btn btn-default btn-sm" data-gn-click-and-spin="processSubmit(tab==='published')"
 					data-ng-show="tab === 'upload" data-ng-disabled="editMdForm.$pristine && editMdForm.$valid">
-				<i class="fa fa-floppy-o fa-fw"></i>
+				<i class="fa fa-fw" data-ng-class="{'fa-floppy-o': tab === 'upload', 'fa fa-share': tab === 'published'}"></i>
 				<span data-ng-show="tab==='upload'">{{'save'|translate}}</span>
 				<span data-ng-show="tab==='published'">{{'publishAgain'|translate}}</span>
 
