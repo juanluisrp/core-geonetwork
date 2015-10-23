@@ -36,6 +36,11 @@
 
     this.$container = $('<div class="bootstrap-tagsinput"></div>');
     this.$input = $('<input size="' + this.inputSize + '" type="text" placeholder="' + this.placeholderText + '"/>').appendTo(this.$container);
+    if (this.$element.attr('tabindex')) {
+      var tabIndex = this.$element.attr('tabindex');
+      this.$element.removeAttr('tabindex');
+      this.$input.attr('tabindex', tabIndex);
+    }
 
     this.$element.after(this.$container);
 
