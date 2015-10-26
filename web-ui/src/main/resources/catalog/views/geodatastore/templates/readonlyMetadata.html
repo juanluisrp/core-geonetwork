@@ -55,7 +55,7 @@
         <div class="col-lg-6">
             <div class="form-group">
                 <label for="thumbnail">Afbeelding</label>
-                <div id="thumbnail" class="thumbcont"><img src="img/thumbnail.png" alt="Afbeelding/Thumbnail"></div>
+                <div id="thumbnail" class="thumbcont" style="background-image=url('{{mdSelected.thumbnail}}');background-size: 100% auto;"></div>
 
             </div>
         </div><!-- /.col-lg-6 -->
@@ -70,9 +70,11 @@
         </div><!-- /.col-lg-6 -->
     </div><!-- /.row -->
     <div class="form-group" style="border-top: solid 1px; padding-top: 15px;">
-        <button type="button" id="editBottomButton" class="btn btn-default btn-sm floatright" data-ng-click="toggleEditMode()">
-            <i class="fa fa-pencil fa-fw"></i>{{'edit' | translate}}</button>
-        <button type="button" id="deleteButton" class="btn btn-default btn-sm ">
-            <i class="fa fa-trash fa-fw"></i>{{'remove' | translate}}</button>
+
+			<a class="btn btn-default btn-sm" style="width: 100%" target="_blank" href="http://nationaalgeoregsiter.nl/geonetwork/srv/dut/search?uuid={{mdSelected.identifier}}"> 
+	        <i class="fa fa-link fa-fw"></i>{{"Metadata-link"|translate}}</a><br/> 
+	        <a class="btn btn-default btn-sm" style="width: 100%" href="{{mdSelected.url}}"> 
+	        <i class="fa fa-file-o fa-fw"></i>{{"Download-link"|translate}}</a> 
+
     </div>
 </div>
