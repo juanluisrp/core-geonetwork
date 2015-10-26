@@ -221,6 +221,11 @@
     </rule>
 
     <rule> 
+        <from>^/web/dut/intro#(.*)</from> 
+        <to type="forward">/srv/dut/catalogue.search#$1</to> 
+    </rule> 
+
+    <rule> 
         <from>^/id/dataset/(.*)/(.*)</from> 
         <to type="forward">/srv/dut/resources.get?uuid=$1&amp;fname=$2</to> 
     </rule> 
