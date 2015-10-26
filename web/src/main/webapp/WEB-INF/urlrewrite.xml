@@ -222,7 +222,7 @@
 
     <rule> 
         <from>^/web/dut/intro#(.*)</from> 
-        <to type="forward">/srv/dut/catalogue.search#$1</to> 
+        <to type="forward">/srv/dut/catalog.search#$1</to> 
     </rule> 
 
     <rule> 
