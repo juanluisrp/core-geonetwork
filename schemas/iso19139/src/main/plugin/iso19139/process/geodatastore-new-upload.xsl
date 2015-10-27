@@ -261,27 +261,47 @@
     </xsl:copy>
   </xsl:template>
 
-
+  <xsl:template match="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:resourceConstraints[gmd:MD_Constraints]">
+	<xsl:copy>
+		<gmd:MD_Constraints>
+			<gmd:useLimitation>
+				<gco:CharacterString>Geen beperkingen</gco:CharacterString>
+			</gmd:useLimitation>					
+		</gmd:MD_Constraints>
+	</xsl:copy>
+  </xsl:template>
+  
   <xsl:template match="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:resourceConstraints[gmd:MD_LegalConstraints]">
     <xsl:copy>
       <gmd:MD_LegalConstraints>
-        <gmd:useLimitation>
-          <gco:CharacterString>Geen beperkingen</gco:CharacterString>
-        </gmd:useLimitation>
         <gmd:accessConstraints>
           <gmd:MD_RestrictionCode codeList="http://www.isotc211.org/2005/resources/codeList.xml#MD_RestrictionCode"
                                   codeListValue="otherRestrictions"/>
         </gmd:accessConstraints>
         <gmd:otherConstraints>
-          <gco:CharacterString>Geen beperkingen</gco:CharacterString>
+          <gco:CharacterString>
+		    <xsl:choose>
+					<xsl:when test="$license='Public Domain'">Geen beperkingen</xsl:when>
+					<xsl:when test="$license='CC0'">Geen beperkingen</xsl:when>
+					<xsl:when test="$license='CC-BY'">Naamsvermelding verplicht, <xsl:value-of select="$organisationName"/></xsl:when>
+					<xsl:otherwise><xsl:value-of select="$license"/></xsl:otherwise>
+				</xsl:choose>
+		  </gco:CharacterString>
         </gmd:otherConstraints>
         <gmd:otherConstraints>
           <xsl:call-template name="defaultCharacterStringTemplate">
-            <xsl:with-param name="fieldValue" select="$license"/>
+            <xsl:with-param name="fieldValue">
+				<xsl:choose>
+					<xsl:when test="$license='Public Domain'">http://creativecommons.org/publicdomain/mark/1.0/deed.nl</xsl:when>
+					<xsl:when test="$license='CC0'">http://creativecommons.org/publicdomain/mark/1.0/deed.nl</xsl:when>
+					<xsl:when test="$license='CC-BY'">http://creativecommons.org/licenses/by/3.0/nl/</xsl:when>
+					<xsl:otherwise>Beperkingen onbekend</xsl:otherwise>
+				</xsl:choose>
+			</xsl:with-param>
             <xsl:with-param name="defaultValue" select="$defaultConstant"></xsl:with-param>
           </xsl:call-template>
         </gmd:otherConstraints>
-        <xsl:choose>
+       <!-- <xsl:choose>
           <xsl:when test="$license != $defaultConstant and contains(lower-case($license), 'by')">
             <gmd:otherConstraints>
               <xsl:call-template name="defaultCharacterStringTemplate">
@@ -298,7 +318,7 @@
               </xsl:call-template>
             </gmd:otherConstraints>
           </xsl:when>
-        </xsl:choose>
+        </xsl:choose> -->
       </gmd:MD_LegalConstraints>
     </xsl:copy>
   </xsl:template>

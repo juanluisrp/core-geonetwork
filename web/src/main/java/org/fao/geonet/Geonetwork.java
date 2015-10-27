@@ -168,12 +168,10 @@ public class Geonetwork implements ApplicationHandler {
         appPath = finder.getAppPath();
         String baseURL = context.getBaseUrl();
         String webappName;
-        if(baseURL.length() < 1) //is ROOT
+        if(baseURL.length() < 2) //is ROOT
             webappName = "ROOT";
         else
             webappName = baseURL.substring(1);
-        // TODO : if webappName is "". ie no context
-
         final SystemInfo systemInfo = _applicationContext.getBean(SystemInfo.class);
         String version = systemInfo.getVersion();
         String subVersion = systemInfo.getSubVersion();

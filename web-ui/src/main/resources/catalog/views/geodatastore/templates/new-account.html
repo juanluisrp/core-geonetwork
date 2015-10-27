@@ -13,7 +13,7 @@
       Indien uw organisatie al een NGR account heeft, dan kan de NGR contactpersoon van uw organisatie een persoonlijk (sub) account voor u aanmaken. 
       </p>
   <p>
-      Let op dat de organisatie gegevens gebruikt worden als publieke contactgegevens ten behoeve van het publiceren van uw dataset, de contactgegevens worden niet publiekelijk gedeeld en worden slechts gebruikt als het kadaster klant contact centrum met u in contact wil komen.
+      Let op dat de organisatie gegevens gebruikt worden als publieke contactgegevens ten behoeve van het publiceren van uw dataset, de contactgegevens worden niet publiekelijk gedeeld en worden slechts gebruikt als het PDOK klant contact centrum met u in contact wil komen.
      </p>
   <p>
       Indien uw organisatie nog geen NGR account heeft, dan kunt u bijgaand formulier invullen om een nieuw account aan te vragen, waarmee u kunt inloggen op PDOK Geodatastore en NGR (doorlooptijd is ca. 3 werkdagen).
@@ -24,81 +24,78 @@
   </div>
   <div class="col-lg-6 col-lg-pull-6">
     <div class="panel panel-default">
-      <div class="panel-heading" data-translate="">needAnAccount</div>
+      <div class="panel-heading">Account aanvragen</div>
       <div class="panel-body">
         <form class="form-horizontal" id="userinfo" action="create.account" method="post">
 
           <h2>Organisatie</h2>
 
           <div class="form-group required">
-            <label class="control-label col-lg-4" data-translate="">organisation</label>
+            <label class="control-label col-lg-4" data-translate="">Organisatie</label>
             <div class="col-lg-8">
               <!-- TODO : Add org list -->
               <input type="text" name="org" class="form-control" data-required="true"/>
             </div>
           </div>
 
-            <div class="form-group">
-              <label class="control-label col-lg-4" data-translate="">address</label>
+            <div class="form-group required">
+              <label class="control-label col-lg-4" data-translate="">Adres</label>
               <div class="col-lg-8">
                 <input type="text" name="address" class="form-control"/>
               </div>
             </div>
-            <div class="form-group">
-              <label class="control-label col-lg-4" data-translate="">zip</label>
+            <div class="form-group required">
+              <label class="control-label col-lg-4" data-translate="">Postcode</label>
               <div class="col-lg-8">
                 <input type="text" name="zip" class="form-control"/>
               </div>
             </div>
-            <div class="form-group">
-              <label class="control-label col-lg-4" data-translate="">city</label>
+            <div class="form-group required">
+              <label class="control-label col-lg-4" data-translate="">Plaats</label>
               <div class="col-lg-8">
                 <input type="text" name="city" class="form-control"/>
               </div>
             </div>
-            <div class="form-group">
-              <label class="control-label col-lg-4" data-translate="">country</label>
+            <div class="form-group required">
+              <label class="control-label col-lg-4" data-translate="">Land</label>
               <div class="col-lg-8">
                 <!-- TODO : Add country list -->
                 <input type="text" name="country" class="form-control"/>
               </div>
             </div>
             <div class="form-group required">
-              <label class="control-label col-lg-4" data-translate="">email</label>
+              <label class="control-label col-lg-4" data-translate="">E-mail</label>
               <div class="col-lg-8">
                 <!-- TODO : Add country list -->
                 <input type="email" name="email" class="form-control" required="true"/> 
 
               </div>
             </div>
-            <div class="form-group">
-              <label class="control-label col-lg-4" data-translate="">telephone</label>
-              <div class="col-lg-8">
-                <!-- TODO : Add country list -->
-                <input type="text" name="telephone" class="form-control"/> 
-              </div>
-            </div>
-            <div class="form-group">
-              <label class="control-label col-lg-4" data-translate="">website</label>
+           
+            <div class="form-group required">
+              <label class="control-label col-lg-4" data-translate="">Website</label>
               <div class="col-lg-8">
                 <input type="text" name="website" class="form-control"/>
               </div>
             </div>
-            <div class="form-group">
-              <label class="control-label col-lg-4" data-translate="">logo</label>
+            
+            <div class="form-group required">
+              <label class="control-label col-lg-4" data-translate="">Logo</label>
               <div class="col-lg-8">
                 <input type="file" name="logo" class="form-control"/>
-              </div>
+              <br/>
+              <small>Het logo van de organisatie moet worden geupload in het formaat PNG met zelfde breedte en hoogte verhoudingen, ongeveer 100*100.</small>
+            </div>
             </div>
             
 
-          <h2>Contactpersoon voor kadaster</h2>
+          <h2>Contactpersoon voor PDOK</h2>
           
           <div class="form-group">
             <label class="control-label col-lg-4" data-translate="">Aanhef</label>
             <div class="col-lg-8">
                 <label>
-                    <input type="radio" id="q128" name="aanhef" value="mr" /> De heer
+                    <input type="radio" id="q128" name="aanhef" value="mr" checked="true" /> De heer
                 </label> 
                 <label >
                     <input type="radio" id="q129" name="aanhef" value="ms" /> Mevrouw
@@ -106,28 +103,34 @@
             </div>
           </div>
           
-          <div class="form-group">
-            <label class="control-label col-lg-4" for="inputName" data-translate="">name</label>
+          <div class="form-group required">
+            <label class="control-label col-lg-4" for="inputName" data-translate="">Achternaam</label>
             <div class="col-lg-8">
               <input type="text" class="form-control" id="inputName" name="name"/>
             </div>
           </div>
 
-          <div class="form-group">
-            <label class="control-label col-lg-4" for="inputUsername" data-translate="">surname</label>
+          <div class="form-group required">
+            <label class="control-label col-lg-4" for="inputUsername" data-translate="">Voorletters</label>
             <div class="col-lg-8">
               <input type="text" class="form-control" id="inputUsername" name="surname"/>
             </div>
           </div>
           
           <div class="form-group required">
-            <label class="control-label col-lg-4" data-translate="">email</label>
+            <label class="control-label col-lg-4" data-translate="">E-mail</label>
             <div class="col-lg-8">
               <input type="email" name="email" autofocus="" class="form-control"/>
             </div>
           </div>         
           
-
+         <div class="form-group required">
+              <label class="control-label col-lg-4" data-translate="">Telefoon</label>
+              <div class="col-lg-8">
+                <!-- TODO : Add country list -->
+                <input type="text" name="telephone" class="form-control"/> 
+              </div>
+            </div>
           
         </form>
         <button data-ng-click="register('#userinfo')" class="btn btn-primary btn-block"
@@ -148,5 +151,4 @@
       </div>
     </div>
   </div>
-  
 </div>

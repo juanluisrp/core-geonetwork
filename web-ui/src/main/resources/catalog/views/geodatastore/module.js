@@ -12,12 +12,13 @@
   goog.require('geodatastore_fileupload');
   goog.require('geodatastore_upload_service');
   goog.require('geodatastore_edit_metadata_controller');
+  goog.require('geodatastore_readonly_metadata_controller');
 
   var module = angular.module('gn_search_geodatastore',
       ['geodatastore_fileupload', 'gn_search', 'geodatastore_login', 'gn_login_controller', 'ngRoute', 'gn_search_geodatastore_config',
         'gn_search_geodatastore_directive', 'gn_mdactions_directive', 'geodatastore_upload_service', 'bootstrap-tagsinput',
         'geodatastore_edit_metadata_controller', 'gn_utility_directive', 'pascalprecht.translate', 'ui.bootstrap.modal', 'ngAnimate',
-        'ui.bootstrap.tooltip']);
+        'ui.bootstrap.tooltip', 'geodatastore_readonly_metadata_controller']);
 
   // Define the translation files to load
   module.constant('$LOCALES', ['geodatastore']);
@@ -56,6 +57,11 @@
               gnUtilityService, gnSearchSettings, gnViewerSettings, Metadata, gdsSearchManagerService, GdsUploadFactory,
               $modal, $q) {
       $scope.loadCatalogInfo();
+
+      $scope.editState = {
+        isEditing: true
+      };
+
       $scope.searchResults = {records: [], metadata: []};
       $scope.totalNotPublished = 0;
       $scope.totalPublished = 0;
@@ -149,6 +155,7 @@
           GdsUploadFactory.clearList();
           GdsUploadFactory.setDirty(false);
           $scope.updateResults(1);
+          $scope.resetEditState(newValue);
         }
       });
 
@@ -249,7 +256,11 @@
             }
           });
 
-          modalInstance.result.then($scope.$setMdSelected,
+          modalInstance.result.then(
+              function(md) {
+                GdsUploadFactory.setDirty(false);
+                $scope.$setMdSelected(md);
+              },
               function () {
                 $log.debug("Card change cancelled");
               }
@@ -257,6 +268,20 @@
 
         } else {
           $scope.$setMdSelected(md);
+        }
+      };
+
+      /**
+       * Reset the edit state depending on the tab selected.
+       */
+      $scope.resetEditState = function(selectedTab) {
+        if (!GdsUploadFactory.isDirty()) {
+
+          if (selectedTab === 'upload') {
+            $scope.editState.isEditing = true;
+          } else if (selectedTab === 'published') {
+            $scope.editState.isEditing = false;
+          }
         }
       };
 
@@ -268,6 +293,9 @@
           GdsUploadFactory.getMdSelected().topicCategory = null;
         }
         $scope.hasSelected = true;
+        if (!GdsUploadFactory.isDirty()) {
+          $scope.resetEditState($scope.tab);
+        }
       };
 
       $scope.getMdSelected = function () {
@@ -422,7 +450,14 @@
                 }
                 if (srMd.identifier === result.identifier) {
                   $scope.searchResults.metadata.splice(i, 1);
-                  $scope.totalNotPublished = $scope.totalNotPublished - 1;
+                  if ($scope.tab === 'upload') {
+                    $scope.totalNotPublished = $scope.totalNotPublished - 1;
+                  } else  if ($scope.tab = 'published') {
+                    $scope.totalPublished = $scope.totalPublished - 1;
+                  }
+                  if ($scope.filterActive && $scope.filterCount) {
+                    $scope.filterCount = $scope.filterCount - 1;
+                  }
                 }
               }
               return result;
