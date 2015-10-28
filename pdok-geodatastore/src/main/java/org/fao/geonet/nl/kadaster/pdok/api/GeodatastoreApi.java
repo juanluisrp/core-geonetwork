@@ -9,12 +9,10 @@ import jeeves.server.context.ServiceContext;
 import jeeves.server.dispatchers.ServiceManager;
 import jeeves.server.sources.http.ServletPathFinder;
 import jeeves.services.ReadWriteController;
-import nl.kadaster.pdok.bussiness.LocationManager;
-import nl.kadaster.pdok.bussiness.MetadataParametersBean;
-import nl.kadaster.pdok.bussiness.MetadataUtil;
-import nl.kadaster.pdok.bussiness.SearchResponse;
+import nl.kadaster.pdok.bussiness.*;
 import org.apache.commons.lang.StringUtils;
 import org.fao.geonet.ApplicationContextHolder;
+import org.fao.geonet.Util;
 import org.fao.geonet.constants.Geonet;
 import org.fao.geonet.constants.Params;
 import org.fao.geonet.domain.*;
@@ -41,6 +39,7 @@ import org.fao.geonet.services.metadata.XslProcessingReport;
 import org.fao.geonet.services.resources.handlers.IResourceUploadHandler;
 import org.fao.geonet.services.schema.Info;
 import org.fao.geonet.services.util.SearchDefaults;
+import org.fao.geonet.util.MailUtil;
 import org.fao.geonet.utils.IO;
 import org.fao.geonet.utils.Log;
 import org.fao.geonet.utils.Xml;
@@ -102,6 +101,7 @@ public class GeodatastoreApi  {
     private static final String QUERY_SERVICE= "q";
     private static final String ISO_19139 = "iso19139";
     private static final String LICENSE_KEY = "license";
+    private static final String PUBLISH_EMAIL_XSLT = "/templates/publish-email-transform.xsl";
     @Autowired
     ServletContext servletContext;
     private ServiceConfig serviceConfig = new ServiceConfig();
@@ -133,6 +133,8 @@ public class GeodatastoreApi  {
     @Value("#{geodatastoreProperties[locationThesaurusName]}")
     private String locationThesaurus;
     @Autowired LocationManager locationManager;
+    @Autowired
+    private MailUtils mailUtils;
 
 
 
@@ -459,6 +461,27 @@ public class GeodatastoreApi  {
                     metadataManager.indexMetadata(metadataId, true);
                     result.setStatus("published");
                     Log.debug(GDS_LOG, "Metadata " + metadataId + " successfully published");
+                    String userEmail = user.getEmail();
+
+                    try {
+                        if (StringUtils.isBlank(userEmail)) {
+                            Log.warning(GDS_LOG, "Cannot send published email to user " + user.getUsername()
+                                    + " because there is not associated email address");
+                        } else  {
+                            Map<String, String> mailTemplateParameters = new HashMap<>();
+                            mailTemplateParameters.put("site", settingManager.getSiteName());
+                            mailTemplateParameters.put("siteURL", settingManager.getSiteURL("dut"));
+                            mailTemplateParameters.put("userName", user.getName());
+                            mailTemplateParameters.put("datasetTile", result.getTitle());
+
+                            boolean sent = mailUtils.sendHtmlEmail(userEmail, mailTemplateParameters, PUBLISH_EMAIL_XSLT);
+                            if (!sent) {
+                                Log.error(GDS_LOG, "The publish email cannot be sent. Please review the mail server settings in the database");
+                            }
+                        }
+                    } catch (Exception e) {
+                        Log.error(GDS_LOG, "Error sending publish email to " + userEmail, e);
+                    }
                 } else if (report.getDisallowed() > 0) {
                     response = result;
                     String message = "You cannot publish data. You must be at least Reviewer in the group {id="
@@ -466,6 +489,7 @@ public class GeodatastoreApi  {
                     Log.warning(GDS_LOG, message);
                     throw new UnAuthorizedException(message, null);
                 }
+
 
             }
 
