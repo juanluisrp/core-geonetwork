@@ -13,6 +13,7 @@ import org.apache.commons.mail.EmailException;
 import org.apache.commons.mail.HtmlEmail;
 import org.apache.commons.mail.SimpleEmail;
 import org.fao.geonet.kernel.setting.SettingManager;
+import org.fao.geonet.utils.Log;
 
 /**
  * Utility class to send mails. Supports both html and plain text. It usually
@@ -173,6 +174,7 @@ public class MailUtil {
             email.setHtmlMsg(htmlMessage);
         } catch (EmailException e1) {
             e1.printStackTrace();
+            Log.error(Log.JEEVES, "Error sending email", e1);
             return false;
         }
         email.setSSL(true);
@@ -331,7 +333,7 @@ public class MailUtil {
             throw new IllegalArgumentException(
                     "Missing settings in System Configuration (see Administration menu) - cannot send mail");
         }
-        if (username != null) {
+        if (username != null && !"".equals(username)) {
             email.setAuthenticator(new DefaultAuthenticator(username, password));
         }
         
