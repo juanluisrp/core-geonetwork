@@ -347,7 +347,7 @@
 
     <servlet-mapping>
         <servlet-name>spring</servlet-name>
-        <url-pattern>/srv/*</url-pattern>
+        <url-pattern>/web/*</url-pattern>
     </servlet-mapping>
 
 
