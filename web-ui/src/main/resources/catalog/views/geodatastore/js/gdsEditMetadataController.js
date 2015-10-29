@@ -55,7 +55,7 @@
         },
         {
           value: "CC-BY",
-          label: "CC-BY (Creative Commons Naamsvermelding"
+          label: "CC-BY (Creative Commons Naamsvermelding)"
         }
       ];
 
