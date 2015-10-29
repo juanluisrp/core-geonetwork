@@ -60,21 +60,15 @@
             </div>
         </div><!-- /.col-lg-6 -->
         <div class="col-lg-6 ">
-            <div class="form-group">
-                <label for="Vervangen">&nbsp;</label>
-                <button type="button" id="Vervangen" class="btn btn-default btn-sm " style="width: 100%"><i class="fa fa-link fa-fw"></i>Bekijk in NGR</button>
-            </div>
-            <div class="form-group">
-                <button type="button" class="btn btn-default btn-sm " style="width: 100%"><i class="fa fa-file-pdf-o fa-fw"></i>Download dataset (812 KB)</button>
-            </div>
+                <a class="btn btn-default btn-sm" style="width: 100%" target="_blank" href="http://www.nationaalgeoregister.nl/geonetwork/resource/{{mdSelected.identifier}}"> 
+	        <i class="fa fa-link fa-fw"></i>{{"Metadata-link"|translate}}</a><br/> 
+	        <a class="btn btn-default btn-sm" style="width: 100%" href="{{mdSelected.url}}"> 
+	        <i class="fa fa-file-o fa-fw"></i>{{"Download-link"|translate}}</a>
         </div><!-- /.col-lg-6 -->
     </div><!-- /.row -->
     <div class="form-group" style="border-top: solid 1px; padding-top: 15px;">
 
-			<a class="btn btn-default btn-sm" style="width: 100%" target="_blank" href="http://nationaalgeoregsiter.nl/geonetwork/srv/dut/search?uuid={{mdSelected.identifier}}"> 
-	        <i class="fa fa-link fa-fw"></i>{{"Metadata-link"|translate}}</a><br/> 
-	        <a class="btn btn-default btn-sm" style="width: 100%" href="{{mdSelected.url}}"> 
-	        <i class="fa fa-file-o fa-fw"></i>{{"Download-link"|translate}}</a> 
+		 
 
     </div>
 </div>
