@@ -375,6 +375,11 @@ public class GeodatastoreApi  {
             final String username = session.getUsername();
             assert username != null;
             String organisation = session.getOrganisation();
+            if (organisation==""){
+                Log.warning(GDS_LOG, "organisationname-cannot-be-empty: "+username);
+                throw new UnAuthorizedException("organisationname-cannot-be-empty",null);
+            }
+            
             User user = userRepository.findOneByUsername(username);
             List<Integer> groupsIds = userGroupRepository.findGroupIds(Specifications.where(
                     hasProfile(Profile.Reviewer)).and(hasUserId(user.getId())));
