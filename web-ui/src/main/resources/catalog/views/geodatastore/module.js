@@ -182,7 +182,7 @@
           $scope.filterActive = true;
          /* var queryObject = {};
           queryObject['title_OR_abstract'] = any;*/
-          angular.extend(searchParams, {q: any});
+          angular.extend(searchParams, {q: "*"+any+"*"});
         } else {
           $scope.filterActive = false;
         }
