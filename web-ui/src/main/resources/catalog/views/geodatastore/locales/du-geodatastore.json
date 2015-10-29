@@ -107,8 +107,8 @@
   "scale.2500": "1:2.500",
   "scale.1000": "1:1.000",
   "scale.": "Not set",
-  "edit": "Bewerken"
-
-
+  "edit": "Bewerken",
+  "registrationError":"Fout tijdens registratie",
+  "Wrong parameter":"Onjuiste parameter"
 
 }
