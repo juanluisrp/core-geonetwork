@@ -92,6 +92,8 @@
     <xsl:param name="fieldValue" />
     <xsl:param name="defaultValue" />
 
+	<!-- todo: check if the fieldvalue has format yyyy-mm-dd, else skip element -->
+	
     <xsl:choose>
       <xsl:when test="$fieldValue != $defaultValue">
         <gco:Date><xsl:value-of select="$fieldValue" /></gco:Date>
@@ -179,7 +181,7 @@
   <xsl:template match="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:citation/gmd:CI_Citation/gmd:date/gmd:CI_Date/gmd:date[../gmd:dateType/gmd:CI_DateTypeCode[@codeListValue='creation']]">
     <xsl:copy>
       <xsl:comment>
-        Datum waarop de dataset is gepubliceerd
+        Datum waarop de dataset is aangemaakt
       </xsl:comment>
       <xsl:call-template name="defaultDateTemplate">
         <xsl:with-param name="fieldValue" select="$publicationDate" />
@@ -281,7 +283,7 @@
         <gmd:otherConstraints>
           <gco:CharacterString>
 		    <xsl:choose>
-					<xsl:when test="$license='Public Domain'">Geen beperkingen</xsl:when>
+					<xsl:when test="$license='PublicDomain'">Geen beperkingen</xsl:when>
 					<xsl:when test="$license='CC0'">Geen beperkingen</xsl:when>
 					<xsl:when test="$license='CC-BY'">Naamsvermelding verplicht, <xsl:value-of select="$organisationName"/></xsl:when>
 					<xsl:otherwise><xsl:value-of select="$license"/></xsl:otherwise>
@@ -292,7 +294,7 @@
           <xsl:call-template name="defaultCharacterStringTemplate">
             <xsl:with-param name="fieldValue">
 				<xsl:choose>
-					<xsl:when test="$license='Public Domain'">http://creativecommons.org/publicdomain/mark/1.0/deed.nl</xsl:when>
+					<xsl:when test="$license='PublicDomain'">http://creativecommons.org/publicdomain/mark/1.0/deed.nl</xsl:when>
 					<xsl:when test="$license='CC0'">http://creativecommons.org/publicdomain/mark/1.0/deed.nl</xsl:when>
 					<xsl:when test="$license='CC-BY'">http://creativecommons.org/licenses/by/3.0/nl/</xsl:when>
 					<xsl:otherwise>Beperkingen onbekend</xsl:otherwise>
@@ -467,26 +469,6 @@
     </xsl:copy>
   </xsl:template>
 
-  <!-- Distributor organisation -->
-  <xsl:template match="/gmd:MD_Metadata/gmd:distributionInfo/gmd:MD_Distribution/gmd:distributor/gmd:MD_Distributor/gmd:distributorContact/gmd:CI_ResponsibleParty/gmd:organisationName">
-    <xsl:copy>
-      <xsl:call-template name="defaultCharacterStringTemplate">
-        <xsl:with-param name="fieldValue" select="$organisationName"/>
-        <xsl:with-param name="defaultValue" select="$defaultConstant"></xsl:with-param>
-      </xsl:call-template>
-    </xsl:copy>
-  </xsl:template>
-
-  <!-- Distributor email -->
-  <xsl:template match="/gmd:MD_Metadata/gmd:distributionInfo/gmd:MD_Distribution/gmd:distributor/gmd:MD_Distributor/gmd:distributorContact/gmd:CI_ResponsibleParty/gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:electronicMailAddress">
-    <xsl:copy>
-      <xsl:call-template name="defaultCharacterStringTemplate">
-        <xsl:with-param name="fieldValue" select="$organisationEmail"/>
-        <xsl:with-param name="defaultValue" select="$defaultConstant"></xsl:with-param>
-      </xsl:call-template>
-    </xsl:copy>
-  </xsl:template>
-
   <!-- CI_OnlineResource -->
   <!--  <xsl:template match="/gmd:MD_Metadata/gmd:distributionInfo/gmd:MD_Distribution/gmd:transferOptions/gmd:MD_DigitalTransferOptions/gmd:onLine/gmd:CI_OnlineResource">
       <xsl:copy>
@@ -501,7 +483,6 @@
         </gmd:name>
       </xsl:copy>
     </xsl:template>-->
-
 
   <!-- lineage -->
   <xsl:template match="/gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:lineage/gmd:LI_Lineage/gmd:statement">
