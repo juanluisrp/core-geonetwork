@@ -340,7 +340,7 @@
         </servlet-class>
         <init-param>
             <param-name>nodeId</param-name>
-            <param-value>srv</param-value>
+            <param-value>web</param-value>
         </init-param>
         <load-on-startup>2</load-on-startup>
     </servlet>
