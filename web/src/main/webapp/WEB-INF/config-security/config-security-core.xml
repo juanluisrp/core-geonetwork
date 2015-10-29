@@ -182,7 +182,7 @@
 
 	<bean id="accessDeniedHandler"
 		class="jeeves.config.springutil.JeevesAccessDeniedHandler">
-		<property name="errorPage" value="/accessDenied.jsp" />
+		<property name="errorPage" value="{{geonetwork.url.onfailedauthentication}}" />
 	</bean>
 
 <!-- TODO remember me.  
