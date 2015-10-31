@@ -400,7 +400,7 @@
       $scope.publishMetadata = function (md) {
         return GdsUploadFactory.saveMetadata(md, true).then(
             function (data) {
-              if (data && data.status === 'published') {
+              if (data.status === 'published') {
                 GdsUploadFactory.removeFromList(md, $scope.searchResults.metadata);
                 GdsUploadFactory.removeFromList(md);
                 $scope.totalPublished = $scope.totalPublished + 1;
@@ -408,7 +408,7 @@
                   GdsUploadFactory.setMdSelected({});
                   $scope.hasSelected = false;
                 }
-              }
+			  }
             }, function (error) {
               var modalInstance = $modal.open({
                 templateUrl: '../../catalog/views/geodatastore/templates/publishFormModal.html',

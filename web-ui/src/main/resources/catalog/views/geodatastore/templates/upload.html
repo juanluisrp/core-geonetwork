@@ -200,6 +200,8 @@
                 </div>
             </section>
             <aside data-ng-switch data-on="hasSelected">
+				<div style="width:100%;margin-bottom:0px;display:none;border-radius:0px;" id="msg-warning" class="alert alert-warning"><i class="fa fa-warning fa-fw"/><span/></div>
+				<div style="width:100%;margin-bottom:0px;display:none;border-radius:0px;" id="msg-success" class="alert alert-success"><i class="fa fa-thumbs-o-up fa-fw"/><span/></div>
                 <div id="metadata" class="fade" data-ng-switch-when="true" data-ng-class="{'in': hasSelected }">
 					<div ng-show="getMdSelected().error != ''">
 						<br/><br/><br/><br/>
