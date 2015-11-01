@@ -5,6 +5,7 @@ import com.google.common.collect.Lists;
 import org.apache.commons.lang.StringUtils;
 import org.codehaus.jackson.annotate.JsonIgnore;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -29,6 +30,7 @@ public class MetadataParametersBean {
     private String fileType;
     private String locationUri;
     private String changeDate;
+    private String thumbnailUri;
 
     public MetadataParametersBean() {
         this.keywords = Lists.newArrayList();
@@ -66,7 +68,11 @@ public class MetadataParametersBean {
     }
 
     public void setTopicCategories(List<String> topicCategories) {
-        this.topicCategories = topicCategories;
+        if (topicCategories == null) {
+            this.topicCategories = new ArrayList<>();
+        } else {
+            this.topicCategories = topicCategories;
+        }
     }
 
     public String getLocation() {
@@ -211,5 +217,13 @@ public class MetadataParametersBean {
 
     public void setChangeDate(String changeDate) {
         this.changeDate = changeDate;
+    }
+
+    public void setThumbnailUri(String thumbnailUri) {
+        this.thumbnailUri = thumbnailUri;
+    }
+
+    public String getThumbnailUri() {
+        return thumbnailUri;
     }
 }

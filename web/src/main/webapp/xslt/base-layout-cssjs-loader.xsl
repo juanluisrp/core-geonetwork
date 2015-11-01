@@ -90,9 +90,11 @@
 
         <!--<xsl:if test="$isEditing">-->
         <script src="{$uiResourcesPath}lib/jquery.ext/jquery.ui.widget.js"></script>
+        <script src="{$uiResourcesPath}lib/jquery.ext/load-image.all.min.js"></script>
         <script src="{$uiResourcesPath}lib/jquery.ext/jquery.iframe-transport.js"></script>
         <script src="{$uiResourcesPath}lib/jquery.ext/jquery.fileupload.js"></script>
         <script src="{$uiResourcesPath}lib/jquery.ext/jquery.fileupload-process.js"></script>
+        <script src="{$uiResourcesPath}lib/jquery.ext/jquery.fileupload-image.js"></script>
         <script src="{$uiResourcesPath}lib/jquery.ext/jquery.fileupload-angular.js"></script>
         <script src="{$uiResourcesPath}lib/bootstrap.ext/typeahead.js/typeahead.bundle.js"></script>
         <script src="{$uiResourcesPath}lib/bootstrap.ext/typeahead.js/handlebars-v2.0.0.js"></script>
