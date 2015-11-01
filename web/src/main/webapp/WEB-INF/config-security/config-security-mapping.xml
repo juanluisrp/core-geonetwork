@@ -19,6 +19,7 @@ xsi:schemaLocation="http://www.springframework.org/schema/beans
               <sec:intercept-url pattern="/api/v[0-9]+/registry/*.*" access="permitAll"></sec:intercept-url>
               <sec:intercept-url pattern="/api/v[0-9]+/.*" access="permitAll"></sec:intercept-url>
 
+			  <sec:intercept-url pattern="/web/dut/index!?.*" access="permitAll"></sec:intercept-url>
               <sec:intercept-url pattern="/id/thumbnail/*.*" access="permitAll"></sec:intercept-url>
               <sec:intercept-url pattern="/id/dataset/*.*" access="permitAll"></sec:intercept-url>
               <sec:intercept-url pattern="/doc/dataset/*.*" access="permitAll"></sec:intercept-url>

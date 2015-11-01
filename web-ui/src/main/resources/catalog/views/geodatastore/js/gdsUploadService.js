@@ -98,6 +98,13 @@
         return iconClass;
       };
 
+	  setMessage = function(msg,modus){
+		try{
+		  if (!modus) modus = "success";
+		  $("#msg-"+modus).children("span").html(msg).parent().show(500).delay(5000).hide(500);
+		} catch (e) {}
+	  }
+	  
       /**
        * Save a metadata object to the server.
        * @param md metadata.
@@ -106,6 +113,7 @@
        * if there is any problem at the server.
        */
       uploadedFiles.saveMetadata = function (md, publish) {
+
         var mustPublish = publish || false;
         var defer = $q.defer();
         if (md && md.identifier) {
@@ -123,6 +131,42 @@
             transformRequest: angular.identity,
             headers: {'Content-Type': undefined}
           }).success(function (data) {
+			
+			if (!data){
+				setMessage('Er is iets mis gegaan bij het opslaan','warning');
+				return false;
+			}
+			
+			//6 cases can occur:
+			
+			//data was already published 
+			if (md && md.status==='published'){ 
+				//data was not saved due to an error
+				if (data.error){
+					setMessage('Wijziging is niet opgeslagen, oude versie blijft gepubliceerd. '+((data.messages.length>0)?'Reden: '+data.messages[0]:''),'warning');
+				//data was saved and published
+				} else {
+					setMessage('Data succesvol opnieuw gepubliceerd');
+				}
+			
+			//data was not published yet
+			} else {			
+				//data was not saved due to an error
+				if (data.error){	
+					setMessage('Wijziging is niet opgeslagen. '+((data.messages.length>0)?'Reden: '+data.messages[0]:''),'warning');
+				//data was saved but publish was not requested
+				} else if (!publish){
+					setMessage('Dataset informatie is opgeslagen');
+				//data was saved but not published
+				} else if (data.status !== 'published') {
+					setMessage('Wijziging is opgeslagen maar dataset is niet gepubliceerd. '+((data.messages.length>0)?'Reden: '+data.messages[0]:''),'warning');
+				//data was published succesfully
+				} else {
+					setMessage('Dataset is succesvol gepubliceerd. De dataset zal de volgende dag gepubliceerd zijn op het Nationaal Georegister en over 2 dagen eveneens op Data.overheid.nl.');
+				}
+				
+			}			
+			  
             if (data.error) {
               defer.reject(data);
             } else {

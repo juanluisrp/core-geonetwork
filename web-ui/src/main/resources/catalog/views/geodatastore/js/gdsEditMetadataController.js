@@ -55,7 +55,7 @@
         },
         {
           value: "CC-BY",
-          label: "CC-BY (Creative Commons Naamsvermelding"
+          label: "CC-BY (Creative Commons Naamsvermelding)"
         }
       ];
 
@@ -156,10 +156,12 @@
           $scope.editMdForm.$setUntouched();
           GdsUploadFactory.replace(GdsUploadFactory.list, data);
           GdsUploadFactory.replace($scope.searchResults.metadata, data);
-          gnPopup.createModal({
-            title: '<strong>' + $translate('edit.success.title') + '</strong>',
-            content: '<div class="alert alert-success" role="alert">' + $translate('edit.success.content') + '</div>'
-          }, $scope);
+		  //a message in a div should not block workflow
+		  //$("#msg-success").children("span").html($translate('edit.success.title')).parent().show(500).delay(5000).hide(500);
+		  //gnPopup.createModal({
+          // title: '<strong>' + $translate('edit.success.title') + '</strong>',
+          //  content: '<div class="alert alert-success" role="alert">' + $translate('edit.success.content') + '</div>'
+          //}, $scope);
         } else {
           $scope.error = true;
           $scope.messages = data.messages;

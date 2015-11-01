@@ -6,7 +6,7 @@
             <div class="floatright">
                 <ul>
                     <li><a href="https://www.pdok.nl/nl/over-pdok/contact-met-pdok" target="_blank">Contact</a></li>
-                    <li class="last"><a href="https://test.loket.pdok.nl/nl/geodatastore-help" target="_blank">Help</a></li>
+                    <li class="last"><a href="../../catalog/views/geodatastore/PDOKGeodatastoreInstructie.pdf" target="_blank">Help</a></li>
                 </ul>
             </div>
 
@@ -19,7 +19,7 @@
                     </div>
                 </div>
                 <div class="branding">
-                    <a href="https://test.loket.pdok.nl/nl/producten/pdok-geodatastore" title="Ga naar de Geodatastore pagina op pdok.nl"><img height="57px" src="../../catalog/views/geodatastore/images/PDOK-GDS-logo.svg" alt="Publieke Dienstverlening Op de Kaart"></a>
+                    <a href="https://www.pdok.nl/nl/pdok-geodatastore" title="Ga naar de Geodatastore pagina op pdok.nl"><img height="57px" src="../../catalog/views/geodatastore/images/PDOK-GDS-logo.svg" alt="Publieke Dienstverlening Op de Kaart"></a>
                 </div>
             </header>
             <nav class="tabs">
@@ -200,6 +200,8 @@
                 </div>
             </section>
             <aside data-ng-switch data-on="hasSelected">
+				<div style="width:100%;margin-bottom:0px;display:none;border-radius:0px;" id="msg-warning" class="alert alert-warning"><i class="fa fa-warning fa-fw"/><span/></div>
+				<div style="width:100%;margin-bottom:0px;display:none;border-radius:0px;" id="msg-success" class="alert alert-success"><i class="fa fa-thumbs-o-up fa-fw"/><span/></div>
                 <div id="metadata" class="fade" data-ng-switch-when="true" data-ng-class="{'in': hasSelected }">
 					<div ng-show="getMdSelected().error != ''">
 						<br/><br/><br/><br/>
