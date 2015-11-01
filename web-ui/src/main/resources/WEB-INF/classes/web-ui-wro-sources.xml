@@ -43,9 +43,14 @@
     <jsSource webappPath="/catalog/lib/jsonix/jsonix/Jsonix-min.js" minimize="false" />
 
     <jsSource webappPath="/catalog/lib/jquery.ext/jquery.ui.widget.js"/>
+    <!-- The Load Image plugin is included for the preview images and image resizing functionality -->
+    <jsSource webappPath="/catalog/lib/jquery.ext/load-image.all.min.js" />
     <jsSource webappPath="/catalog/lib/jquery.ext/jquery.iframe-transport.js"/>
     <jsSource webappPath="/catalog/lib/jquery.ext/jquery.fileupload.js"/>
+    <!-- The File Upload processing plugin -->
     <jsSource webappPath="/catalog/lib/jquery.ext/jquery.fileupload-process.js"/>
+    <!-- The File Upload image preview & resize plugin -->
+    <jsSource webappPath="/catalog/lib/jquery.ext/jquery.fileupload-image.js"/>
     <jsSource webappPath="/catalog/lib/jquery.ext/jquery.fileupload-angular.js"/>
     <jsSource webappPath="/catalog/lib/jquery.ext/jquery-ui-slider.min.js"/>
     <jsSource webappPath="/catalog/lib/bootstrap.ext/typeahead.js/typeahead.bundle.js"/>

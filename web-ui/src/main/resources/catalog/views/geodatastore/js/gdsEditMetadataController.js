@@ -117,9 +117,9 @@
             fail: failedUpload,
             change: filesChanged,
             acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i,
-            previewMaxWidth: 100,
-            previewMaxHeight: 100,
-            previewCrop: true,
+            previewMaxWidth: 243,
+            previewMaxHeight: 243,
+            previewCrop: false,
             maxNumberOfFiles: 1
           };
           $scope.clear($scope.queue);

@@ -99,68 +99,54 @@ template for metadata form
 		</select>
 	</div>
 	<div class="row">
-            <div class="col-lg-6">
-              <div class="form-group">
-               <i class="fa fa-question-circle fa-fw floatright" style="margin-top: 6px" data-tooltip="{{'helpThumbnailField'|translate}}"></i>
-                <label for="thumbnailUploadButton">{{'thumbnail'|translate}}</label>
-                <span class="btn btn-default btn-sm fileinput-button" style="width: 100%" data-ng-class="{disabled: disabled}">
-                    <i class="fa fa-folder-open-o fa-fw"></i>
-                    <span>Selecteer een bestand</span>
-                    <input type="file" id="thumbnailUploadButton" tabindex=9 name="thumbnail" data-ng-disabled="disabled" >
-                </span>
-                <div class="thumbcont"><img src="/img/thumbnail.png" alt="Afbeelding/Thumbnail"></div>
-                <div class="thumbact">
-                	<button type="button" id="Vervangen" class="btn btn-default btn-sm floatright"><i class="fa fa-exchange fa-fw"></i>{{'replace'|translate}}</button>
-                	<button type="button" id="Verwijder" class="btn btn-default btn-sm"><i class="fa fa-trash-o fa-fw"></i>{{'remove'|translate}}</button>
-                </div>
-              </div>
-            </div><!-- /.col-lg-6 -->
-            <div class="col-lg-6 ">
-            	<div data-ng-show="tab === 'published'">
-            	<div class="form-group">
-            		<label for="bb">&nbsp;</label>
-			<a class="btn btn-default btn-sm" style="width: 100%" target="_blank" href="http://nationaalgeoregsiter.nl/geonetwork/srv/dut/search?uuid={{mdToEdit.identifier}}">
-	        	<i class="fa fa-link fa-fw"></i>{{"Metadata-link"|translate}}</a>
-        	</div>
-        	<div class="form-group">
-	                <a class="btn btn-default btn-sm" style="width: 100%" href="{{mdToEdit.url}}">
-	        	<i class="fa fa-file-o fa-fw"></i>{{"Download-link"|translate}}</a>
-	        </div>
-	        </div>
-            </div><!-- /.col-lg-6 -->
-          </div><!-- /.row -->
-	<div class="form-group">
-        <ul>
-            <li data-ng-repeat="file in queue" data-ng-class="{'processing': file.$processing()}">
-                <div data-ng-switch data-on="!!file.thumbnailUrl">
-                    <div class="preview" data-ng-switch-when="true">
-                        <a data-ng-href="{{file.url}}" title="{{file.name}}" download="{{file.name}}" data-gallery><img data-ng-src="{{file.thumbnailUrl}}" alt=""></a>
-                    </div>
-                    <div class="preview" data-ng-switch-default data-file-upload-preview="file"></div>
-                </div>
-                <div class="floatright" >
-                    <a data-tooltip="{{'tooltip.remove' | translate}}"
-                       title="{{'tooltip.remove' | translate}}" data-ng-click="file.$cancel()">
-                        <i class="fa fa-trash-o fa-lg"></i>
-                    </a>
-                </div>
-                <div>
-                    <p class="name" data-ng-switch data-on="!!file.url">
-                        <span data-ng-switch-when="true" data-ng-switch data-on="!!file.thumbnailUrl">
-                            <a data-ng-switch-when="true" data-ng-href="{{file.url}}" title="{{file.name}}" download="{{file.name}}" data-gallery>{{file.name}}</a>
-                            <a data-ng-switch-default data-ng-href="{{file.url}}" title="{{file.name}}" download="{{file.name}}">{{file.name}}</a>
-                        </span>
-                        <span data-ng-switch-default>{{file.name}}</span>
-                    </p>
-                    <strong data-ng-show="file.error" class="error text-danger">{{file.error}}</strong>
-                </div>
-            </li>
-        </ul>
-	</div>
+		<div class="col-lg-6">
+			<div class="form-group">
+				<i class="fa fa-question-circle fa-fw floatright" style="margin-top: 6px" data-tooltip="{{'helpThumbnailField'|translate}}"></i>
+				<label for="thumbnailUploadButton">{{'thumbnail'|translate}}</label>
+				<span class="btn btn-default btn-sm fileinput-button" style="width: 100%" data-ng-class="{disabled: disabled}">
+					<i class="fa fa-folder-open-o fa-fw"></i>
+					<span>Selecteer een bestand</span>
+					<input type="file" id="thumbnailUploadButton" tabindex=9 name="thumbnail" data-ng-disabled="disabled"
+						   accept="image/*">
+				</span>
+				<div data-ng-show="mdToEdit.thumbnailUri && (!queue || queue.length == 0)">
+					<div class="thumbcont">
+						<img data-ng-src="{{mdToEdit.thumbnailUri}}" alt="Afbeelding/Thumbnail" data-ng-if="mdToEdit.thumbnailUri">
+					</div>
+					<div class="thumbact">
+						<button type="button" id="Vervangen" class="btn btn-default btn-sm floatright"><i class="fa fa-exchange fa-fw"></i>{{'replace'|translate}}</button>
+						<button type="button" id="Verwijder" class="btn btn-default btn-sm"><i class="fa fa-trash-o fa-fw"></i>{{'remove'|translate}}</button>
+					</div>
+				</div>
+				<div data-ng-repeat="file in queue" data-ng-class="{'processing': file.$processing()}">
+					<div class="thumbcont text-center" data-file-upload-preview="file"></div>
+
+					<div class="thumbact">
+						<button type="button" id="VervangenPreview" class="btn btn-default btn-sm floatright" data-ng-click="file.$cancel()"><i class="fa fa-exchange fa-fw"></i>{{'replace'|translate}}</button>
+						<button type="button" id="VerwijderPreview" class="btn btn-default btn-sm"  data-ng-click="file.$cancel()"><i class="fa fa-trash-o fa-fw"></i>{{'remove'|translate}}</button>
+					</div>
+				</div>
+		  	</div>
+		</div><!-- /.col-lg-6 -->
+		<div class="col-lg-6 ">
+			<div data-ng-show="tab === 'published'">
+				<div class="form-group">
+					<label for="bb">&nbsp;</label>
+					<a class="btn btn-default btn-sm" style="width: 100%" target="_blank" href="http://nationaalgeoregsiter.nl/geonetwork/srv/dut/search?uuid={{mdToEdit.identifier}}">
+					<i class="fa fa-link fa-fw"></i>{{"Metadata-link"|translate}}</a>
+				</div>
+				<div class="form-group">
+					<a class="btn btn-default btn-sm" style="width: 100%" href="{{mdToEdit.url}}">
+						<i class="fa fa-file-o fa-fw"></i>{{"Download-link"|translate}}</a>
+				</div>
+			</div>
+		</div><!-- /.col-lg-6 -->
+  	</div><!-- /.row -->
+
 	<div class="form-group metadataFormButtons">
 		<div class="floatright">
 			<button type="button" id="saveFormButton" tabindex=11 class="btn btn-default btn-sm" data-gn-click-and-spin="processSubmit(tab==='published')"
-					data-ng-show="tab === 'upload'" data-ng-disabled="editMdForm.$pristine && editMdForm.$valid">
+					data-ng-disabled="editMdForm.$pristine && editMdForm.$valid">
 				<i class="fa fa-fw" data-ng-class="{'fa-floppy-o': tab === 'upload', 'fa fa-share': tab === 'published'}"></i>
 				<span data-ng-show="tab === 'upload'">{{'save'|translate}}</span>
 				<span data-ng-show="tab === 'published'">{{'publishAgain'|translate}}</span>

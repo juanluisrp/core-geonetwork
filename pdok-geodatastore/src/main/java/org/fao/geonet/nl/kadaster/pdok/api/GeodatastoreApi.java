@@ -551,7 +551,9 @@ public class GeodatastoreApi  {
         }
         if (metadataParameter.getTopicCategories() != null /*&& metadataParameter.getTopicCategories().size() > 0*/) {
             String topicSeparator = "#";
-            String topicList = Joiner.on(topicSeparator).join(metadataParameter.getTopicCategories());
+            List<String> purgedTopicCatList = new ArrayList<>(metadataParameter.getTopicCategories());
+            purgedTopicCatList.removeAll(Collections.singleton(null));
+            String topicList = Joiner.on(topicSeparator).join(purgedTopicCatList);
             parametersMap.put(TOPIC_SEPARATOR_KEY, topicSeparator);
             parametersMap.put(TOPICS_KEY, topicList);
         }

@@ -167,6 +167,17 @@ public class SearchResponse {
             }
         }
 
+        // ThumbnailURL
+        List images = metadataEl.getChildren("image");
+        if (images.size() > 0) {
+            Element imageEl = (Element) images.get(0);
+            String image = imageEl.getText();
+            String[] imageComponents = image.split("\\|");
+            if (imageComponents.length > 1) {
+                md.setThumbnailUri(imageComponents[1]);
+            }
+        }
+
         String geoBox = metadataEl.getChildText("geoBox");
         if (geoBox != null && geoBox.split("\\|").length == 4) {
             String[] geoBoxComponents = geoBox.split("\\|");
