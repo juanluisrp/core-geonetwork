@@ -201,7 +201,9 @@
           } else if ($scope.tab === 'published') {
             //$scope.totalPublished = data.count;
           }
-          $scope.pages = new Array(Math.ceil(data.count / $scope.perPage));
+          var cnt = Math.ceil(data.count / $scope.perPage);
+          if (cnt < -1) cnt = 1;
+          $scope.pages = new Array(cnt);
         }, function (error) {
           $log.error("Error in search: " + error);
         }).finally(function() {
