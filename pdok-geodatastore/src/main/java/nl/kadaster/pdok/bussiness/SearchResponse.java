@@ -175,7 +175,11 @@ public class SearchResponse {
             String[] imageComponents = image.split("\\|");
             if (imageComponents.length > 1) {
                 md.setThumbnailUri(imageComponents[1]);
-            }
+            } else if (imageComponents.length > 0) {
+                md.setThumbnailUri(imageComponents[0]);
+			} else {
+				md.setThumbnailUri("../../catalog/views/geodatastore/images/no-thumbnail.png");
+			}
         }
 
         String geoBox = metadataEl.getChildText("geoBox");
@@ -196,10 +200,12 @@ public class SearchResponse {
             md.setExtent(wkt);
         }
 
-        Element geonetInfo = metadataEl.getChild("info", Geonet.Namespaces.GEONET);
+		md.setpublishDate(geonetInfo.getChildText("publicationDate"));
+        
+		Element geonetInfo = metadataEl.getChild("info", Geonet.Namespaces.GEONET);
         if (geonetInfo != null) {
             md.setIdentifier(geonetInfo.getChildText("uuid"));
-            md.setChangeDate(geonetInfo.getChildText("changeDate"));
+            md.setChangeDate(geonetInfo.getChildText("changeDate"));	
         }
         return md;
     }

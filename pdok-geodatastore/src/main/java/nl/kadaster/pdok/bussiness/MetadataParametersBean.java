@@ -30,14 +30,15 @@ public class MetadataParametersBean {
     private String fileType;
     private String locationUri;
     private String changeDate;
+	private String publishDate;
     private String thumbnailUri;
 
     public MetadataParametersBean() {
         this.keywords = Lists.newArrayList();
         this.topicCategories = Lists.newArrayList();
         this.messages = Lists.newArrayList();
+		this.thumbnailUri = "../../catalog/views/geodatastore/images/no-thumbnail.png";
     }
-
 
     public String getTitle() {
         return title;
@@ -215,10 +216,18 @@ public class MetadataParametersBean {
         return changeDate;
     }
 
+    public void setpublishDate(String publishDate) {
+        this.publishDate = publishDate;
+    }
+
+	public String getpublishDate() {
+        return publishDate;
+    }
+
     public void setChangeDate(String changeDate) {
         this.changeDate = changeDate;
     }
-
+	
     public void setThumbnailUri(String thumbnailUri) {
         this.thumbnailUri = thumbnailUri;
     }
