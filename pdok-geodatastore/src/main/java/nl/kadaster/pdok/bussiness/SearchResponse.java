@@ -200,7 +200,7 @@ public class SearchResponse {
             md.setExtent(wkt);
         }
 
-		md.setpublishDate(metadataEl.getChild("publicationDate"));
+		md.setpublishDate(metadataEl.getChildText("publicationDate"));
 
 		Element geonetInfo = metadataEl.getChild("info", Geonet.Namespaces.GEONET);
         if (geonetInfo != null) {

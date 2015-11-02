@@ -778,6 +778,12 @@ public class GeodatastoreApi  {
      */
     private Element buildSearchXmlParameters(ServiceContext context, String q, String sortBy, String sortOrder, Integer from,
                                              Integer pageSize, String status) {
+		UserSession session = context.getUserSession();
+        final String username = session.getUsername();										 
+		User user = userRepository.findOneByUsername(username);
+        List<Integer> groupsIds = userGroupRepository.findGroupIds(Specifications.where(
+            hasProfile(Profile.Reviewer)).and(hasUserId(user.getId())));
+					
         Element queryParameters = new Element(Jeeves.Elem.REQUEST);
         queryParameters.addContent(new Element(Geonet.IndexFieldNames.ANY).setText(q));
         queryParameters.addContent(new Element(Geonet.SearchResult.SORT_BY).setText(sortBy));
@@ -793,7 +799,7 @@ public class GeodatastoreApi  {
         queryParameters.addContent(new Element(Geonet.SearchResult.FAST).setText("index"));
         queryParameters.addContent(new Element("_isTemplate").setText("n"));
         queryParameters.addContent(new Element("type").setText("dataset"));
-
+		queryParameters.addContent(new Element("_groupOwner").setText(StringUtils.join(groupsIds, " or ")));
 
         return SearchDefaults.getDefaultSearch(context, queryParameters);
     }
