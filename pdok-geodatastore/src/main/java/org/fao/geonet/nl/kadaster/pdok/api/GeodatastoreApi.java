@@ -167,7 +167,6 @@ public class GeodatastoreApi  {
                 UserSession session = context.getUserSession();
                 final String username = session.getUsername();
                 assert username != null;
-                String organisation = session.getOrganisation();
                 User user = userRepository.findOneByUsername(username);
                 List<Integer> groupsIds = userGroupRepository.findGroupIds(Specifications.where(
                         hasProfile(Profile.Reviewer)).and(hasUserId(user.getId())));
@@ -187,10 +186,17 @@ public class GeodatastoreApi  {
                     throw new ServiceNotAllowedEx(message);
                 }
                 String organisationEmail = group.getEmail();
+				
+				//metadata uses group description as organisation title, can not be empty
+				String organisation = group.getDescription();
+				if (organisation==""){
+					Log.warning(GDS_LOG, "organisationname-cannot-be-empty: "+username);
+					throw new ServiceNotAllowedEx("organisationname-cannot-be-empty",null);
+				}
+				
                 UUID uuid = UUID.randomUUID();
                 ISODate creationDate = new ISODate();
                 String defaultLocation = "http://geodatastore.pdok.nl/registry/location#Nederland_country";
-
 
                 Map<String, Object> templateParameters = prepareTemplateParameters(organisation, organisationEmail,
                         new ArrayList<String>(), new ArrayList<String>(), defaultLocation, "2", "5", "50", "54",
@@ -374,11 +380,7 @@ public class GeodatastoreApi  {
             UserSession session = context.getUserSession();
             final String username = session.getUsername();
             assert username != null;
-            String organisation = session.getOrganisation();
-            if (organisation==""){
-                Log.warning(GDS_LOG, "organisationname-cannot-be-empty: "+username);
-                throw new UnAuthorizedException("organisationname-cannot-be-empty",null);
-            }
+            //String organisation = session.getOrganisation();
             
             User user = userRepository.findOneByUsername(username);
             List<Integer> groupsIds = userGroupRepository.findGroupIds(Specifications.where(
@@ -393,7 +395,14 @@ public class GeodatastoreApi  {
                 Log.warning(GDS_LOG, message);
                 throw new UnAuthorizedException(message, groupsIds);
             }
-
+			
+			//organisation uses group description field, if empty no metadata creation is possible
+			String organisation = group.getDescription();
+			if (organisation==""){
+                Log.warning(GDS_LOG, "organisationname-cannot-be-empty: "+username);
+                throw new UnAuthorizedException("organisationname-cannot-be-empty",null);
+            }
+			
             if (StringUtils.isBlank(group.getEmail())) {
                 String message = "The group " + group.getName() + " must have an email set";
                 Log.warning(GDS_LOG, message);

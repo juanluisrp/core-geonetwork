@@ -1,16 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <gmd:MD_Metadata xmlns:gco="http://www.isotc211.org/2005/gco" xmlns:gmd="http://www.isotc211.org/2005/gmd" xmlns:gml="http://www.opengis.net/gml" xmlns:gts="http://www.isotc211.org/2005/gts" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.isotc211.org/2005/gmd http://schemas.opengis.net/iso/19139/20060504/gmd/gmd.xsd">
-  <!-- Voorbeeld document voor Metadata voor datasets -->
-  <!-- Het voorbeeld is gebaseerd op een fictieve dataset -->
-  <!-- Unieke identifier van dit metadata voor data document -->
   <gmd:fileIdentifier>
     <gco:CharacterString></gco:CharacterString>
   </gmd:fileIdentifier>
   <gmd:language>
-    <!-- Codering van de metadata taal in 3 letterige ISO 639-2 code -->
-    <!-- attribuut codeList bevat de verwijzing naar de ISO 639-2 online codelijst -->
-    <!-- attribuut codeListValue bevat de 3 letter ISO 639-2 code voor de taal -->
-    <!-- Waarde van het element LanguageCode bevat de uitgeschreven waarde in de taal die wordt aangegeven door de codeListValue -->
     <gmd:LanguageCode codeList="http://www.loc.gov/standards/iso639-2/" codeListValue="dut">Nederlands</gmd:LanguageCode>
   </gmd:language>
   <gmd:characterSet>
@@ -21,7 +14,6 @@
   </gmd:hierarchyLevel>
   <gmd:contact>
     <gmd:CI_ResponsibleParty>
-      <!-- Organisatie die verantwoordelijk is voor de metadata van de dataset -->
       <gmd:organisationName>
         <gco:CharacterString />
       </gmd:organisationName>
@@ -41,9 +33,7 @@
       </gmd:role>
     </gmd:CI_ResponsibleParty>
   </gmd:contact>
-  <gmd:dateStamp>
-    <!-- Datum waarop de metadata is aangemaakt -->
-  </gmd:dateStamp>
+  <gmd:dateStamp></gmd:dateStamp>
   <gmd:metadataStandardName>
     <gco:CharacterString>ISO 19115</gco:CharacterString>
   </gmd:metadataStandardName>
@@ -55,11 +45,9 @@
       <gmd:referenceSystemIdentifier>
         <gmd:RS_Identifier>
           <gmd:code>
-            <!-- Code voor het referentiessysteem 28992 is RD, 4937 is ETRS89 -->
             <gco:CharacterString>28992</gco:CharacterString>
           </gmd:code>
           <gmd:codeSpace>
-            <!-- verantwoordelijke organisatie voor code referentiessysteem -->
             <gco:CharacterString>EPSG</gco:CharacterString>
           </gmd:codeSpace>
         </gmd:RS_Identifier>
@@ -76,10 +64,7 @@
           <gmd:alternateTitle><gco:CharacterString></gco:CharacterString></gmd:alternateTitle>
           <gmd:date>
             <gmd:CI_Date>
-              <gmd:date>
-                <!-- Datum waarop de dataset is gepubliceerd -->
-
-              </gmd:date>
+              <gmd:date></gmd:date>
               <gmd:dateType>
                 <gmd:CI_DateTypeCode codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#CI_DateTypeCode" codeListValue="publication"/>
               </gmd:dateType>
@@ -88,8 +73,7 @@
           <gmd:date>
             <gmd:CI_Date>
               <gmd:date>
-                <!-- Datum waarop de dataset is aangepast -->
-                <gco:Date>2000-12-13</gco:Date>
+                <gco:Date></gco:Date>
               </gmd:date>
               <gmd:dateType>
                 <gmd:CI_DateTypeCode codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#CI_DateTypeCode" codeListValue="creation"/>
@@ -99,7 +83,6 @@
           <gmd:identifier>
             <gmd:MD_Identifier>
               <gmd:code>
-                <!-- Unieke identifier van de dataset, deze kan men zelf maken en beheren. Dit is niet hetzelfde als de metadata identifier van dit document -->
                 <gco:CharacterString/>
               </gmd:code>
             </gmd:MD_Identifier>
@@ -133,16 +116,6 @@
           </gmd:role>
         </gmd:CI_ResponsibleParty>
       </gmd:pointOfContact>
-      <gmd:graphicOverview>
-        <gmd:MD_BrowseGraphic>
-          <gmd:fileName>
-            <!-- Hiermee kan een voorbeeld weergave getoond worden, het is ook mogelijk om un het NGR een voorbeeldweergave te uploaden -->
-            <!-- De URL moet ook extern te benaderen zijn -->
-            <!-- Als een voorbeeldweergave word geupload, dit element leeg laten -->
-            <gco:CharacterString>{thumbnailUri}</gco:CharacterString>
-          </gmd:fileName>
-        </gmd:MD_BrowseGraphic>
-      </gmd:graphicOverview>
       <gmd:descriptiveKeywords>
         <gmd:MD_Keywords>
           <gmd:keyword>
@@ -224,30 +197,14 @@
       <gmd:distributionFormat>
         <gmd:MD_Format>
           <gmd:name>
-            <!-- Voor geharmoniseerde INSPIRE data naar het applicatie schema verwijzen, juiste benaming zie hoofdstuk 9.x in de dataspecificaties -->
-            <gco:CharacterString>{format}</gco:CharacterString>
+            <gco:CharacterString></gco:CharacterString>
           </gmd:name>
           <gmd:version>
             <gco:CharacterString/>
           </gmd:version>
         </gmd:MD_Format>
       </gmd:distributionFormat>
-      <gmd:transferOptions>
-       <!-- <gmd:MD_DigitalTransferOptions>
-          <gmd:onLine>
-            <gmd:CI_OnlineResource>
-              <gmd:linkage>
-                <gmd:URL />
-              </gmd:linkage>
-              <gmd:protocol>
-                <gco:CharacterString>download</gco:CharacterString>
-              </gmd:protocol>
-              <gmd:name>
-                <gco:CharacterString />
-              </gmd:name>
-            </gmd:CI_OnlineResource>
-          </gmd:onLine>
-        </gmd:MD_DigitalTransferOptions>-->
+      <gmd:transferOptions> 
       </gmd:transferOptions>
     </gmd:MD_Distribution>
   </gmd:distributionInfo>
