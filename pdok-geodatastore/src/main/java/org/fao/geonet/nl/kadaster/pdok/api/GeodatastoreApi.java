@@ -176,8 +176,8 @@ public class GeodatastoreApi  {
                     group = groupRepository.findOne(groupsIds.get(0));
                 } else {
                     String message = "No Reviewer group found for user " + username + ". Groups: [" + StringUtils.join(groupsIds, ",") + "]";
-                    Log.info(GDS_LOG, "UnauthorizedException - " + message);
-                    throw new UnAuthorizedException(message, groupsIds);
+                    Log.info(GDS_LOG, "ServiceNotAllowedEx - " + message);
+                    throw new ServiceNotAllowedEx(message);
                 }
 
                 if (StringUtils.isBlank(group.getEmail())) {
@@ -191,7 +191,7 @@ public class GeodatastoreApi  {
 				String organisation = group.getDescription();
 				if (organisation==""){
 					Log.warning(GDS_LOG, "organisationname-cannot-be-empty: "+username);
-					throw new ServiceNotAllowedEx("organisationname-cannot-be-empty",null);
+					throw new ServiceNotAllowedEx("organisationname-cannot-be-empty");
 				}
 				
                 UUID uuid = UUID.randomUUID();
@@ -393,14 +393,14 @@ public class GeodatastoreApi  {
             } else {
                 String message = "No Reviewer group found for user " + username + " in groups " + StringUtils.join(groupsIds, ", ");
                 Log.warning(GDS_LOG, message);
-                throw new UnAuthorizedException(message, groupsIds);
+                throw new ServiceNotAllowedEx(message);
             }
 			
 			//organisation uses group description field, if empty no metadata creation is possible
 			String organisation = group.getDescription();
 			if (organisation==""){
                 Log.warning(GDS_LOG, "organisationname-cannot-be-empty: "+username);
-                throw new UnAuthorizedException("organisationname-cannot-be-empty",null);
+                throw new ServiceNotAllowedEx("organisationname-cannot-be-empty");
             }
 			
             if (StringUtils.isBlank(group.getEmail())) {
@@ -418,7 +418,8 @@ public class GeodatastoreApi  {
                     templateParameters = prepareTemplateParameters(metadataParameter, organisation, organisationEmail, changeDate.getDateAsString());
                 }
 
-
+				//if metadata is published, the metadata can only be updated with valid metadata
+				
                 Element oldMetadata = metadataManager.getMetadataNoInfo(context, metadataId);
                 Element newMetadata = metadataUtil.updateMetadataContents(templateParameters, oldMetadata);
 
@@ -501,7 +502,7 @@ public class GeodatastoreApi  {
                     String message = "You cannot publish data. You must be at least Reviewer in the group {id="
                             + group.getId() +", name=" + group.getName() + "}";
                     Log.warning(GDS_LOG, message);
-                    throw new UnAuthorizedException(message, null);
+                    throw new ServiceNotAllowedEx(message);
                 }
 
 
@@ -551,19 +552,19 @@ public class GeodatastoreApi  {
         parametersMap.put(ORGANISATION_EMAIL_KEY, organisationEmail);
         parametersMap.put(METADATA_MODIFIED_DATE_KEY, changeDate);
 
-        if (metadataParameter.getTitle() != null) {
+        if (metadataParameter.getTitle() != null && metadataParameter.getTitle() != "") {
             parametersMap.put(TITLE_KEY, metadataParameter.getTitle());
         }
-        if (metadataParameter.getSummary() != null) {
+        if (metadataParameter.getSummary() != null && metadataParameter.getSummary() != "") {
             parametersMap.put(ABSTRACT_KEY, metadataParameter.getSummary());
         }
-        if (metadataParameter.getKeywords() != null /*&& metadataParameter.getKeywords().size() > 0*/) {
+        if (metadataParameter.getKeywords() != null && metadataParameter.getKeywords().size() > 0) {
             String keywordSeparator = "#";
             String keywordList = Joiner.on(keywordSeparator).join(metadataParameter.getKeywords());
             parametersMap.put(KEYWORD_SEPARATOR_KEY, keywordSeparator);
             parametersMap.put(KEYWORDS_KEY, keywordList);
         }
-        if (metadataParameter.getTopicCategories() != null /*&& metadataParameter.getTopicCategories().size() > 0*/) {
+        if (metadataParameter.getTopicCategories() != null && metadataParameter.getTopicCategories().size() > 0) {
             String topicSeparator = "#";
             List<String> purgedTopicCatList = new ArrayList<>(metadataParameter.getTopicCategories());
             purgedTopicCatList.removeAll(Collections.singleton(null));
@@ -597,13 +598,13 @@ public class GeodatastoreApi  {
             }
 
         }
-        if (metadataParameter.getLineage() != null) {
+        if (metadataParameter.getLineage() != null && metadataParameter.getLineage() != "") {
             parametersMap.put(LINEAGE_KEY, metadataParameter.getLineage());
         }
-        if (metadataParameter.getLicense() != null) {
+        if (metadataParameter.getLicense() != null && metadataParameter.getLicense() != "") {
             parametersMap.put(LICENSE_KEY, metadataParameter.getLicense());
         }
-        if (metadataParameter.getResolution() != null) {
+        if (metadataParameter.getResolution() != null && metadataParameter.getResolution() != "") {
             parametersMap.put(RESOLUTION_KEY, metadataParameter.getResolution());
         }
 
