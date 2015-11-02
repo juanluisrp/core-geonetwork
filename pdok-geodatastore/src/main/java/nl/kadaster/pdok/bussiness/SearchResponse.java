@@ -200,8 +200,8 @@ public class SearchResponse {
             md.setExtent(wkt);
         }
 
-		md.setpublishDate(geonetInfo.getChildText("publicationDate"));
-        
+		md.setpublishDate(metadataEl.getChild("publicationDate"));
+
 		Element geonetInfo = metadataEl.getChild("info", Geonet.Namespaces.GEONET);
         if (geonetInfo != null) {
             md.setIdentifier(geonetInfo.getChildText("uuid"));
