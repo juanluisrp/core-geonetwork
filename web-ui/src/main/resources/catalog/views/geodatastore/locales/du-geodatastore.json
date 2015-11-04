@@ -10,7 +10,7 @@
   "helpTopicField":"Selecteer het onderwerp die de dataset het beste beschrijft. Deze lijst is door de internationale standaardisatie organisatie (ISO) vastgesteld en kan niet worden uitgebreid.",
   "placeholderTopicField":"onderwerp van de dataset",
   "helpKeywordsField":"Vul hier meerdere trefwoorden in, die het (deel)onderwerp van de dataset voor burgers en vakgenoten  weergeven. Plaats na elk trefwoord een komma of druk op Enter om het vast te leggen.",
-  "placeholderKeywordsField":"trefwoorden voor burgers en vakgenoten",
+  "placeholderKeywordsField":"Trefwoorden gescheiden door een komma of Enter",
   "searchOrTypeKeyword": "Selecteer het gebied waar de dataset betrekking op heeft",
   "helpLineageField":"Geef in een algemeen beschrijvende tekst informatie over de geschiedenis, de bewerkingen en de kwaliteit van de gehele dataset, of van de gebruikte bronbestanden.",
   "placeholderLineageField":"informatie over de bewerking of kwaliteit of bron",
