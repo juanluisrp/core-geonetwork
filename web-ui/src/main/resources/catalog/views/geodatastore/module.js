@@ -67,6 +67,9 @@
       $scope.totalPublished = 0;
       $scope.GdsUploadFactory = GdsUploadFactory;
       $scope.tab = "upload";
+      $scope.ngr.url = gn.ngr-url;
+      //gn.ngr-url is defined by a param in loadjscss.xsl, which should be filled by deploy-it, else it will contain '{{' 
+      if (!$scope.ngr.url or $scope.ngr.url.indexOf('{{')>0) $scope.ngr.url = 'http://www.nationaalgeoregister.nl/geonetwork';
       $scope.perPage = 8;
       $scope.page = 1;
       $scope.searchParams = {
