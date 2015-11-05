@@ -26,7 +26,7 @@
 
     <link href="{/root/gui/url}/static/{$customFilename}.css{$minimizedParam}" rel="stylesheet" media="screen" />
 
-    <link href="{/root/gui/url}/static/{/root/gui/nodeId}_custom_style.css{$minimizedParam}" rel="stylesheet" media="screen" />
+    <!--<link href="{/root/gui/url}/static/{/root/gui/nodeId}_custom_style.css{$minimizedParam}" rel="stylesheet" media="screen" />-->
   </xsl:template>
 
 
@@ -174,7 +174,7 @@
           gnViewerSettings.mapConfig = <xsl:value-of select="$mapConfig"/>;
           gnGlobalSettings.isMapViewerEnabled = <xsl:value-of select="$isMapViewerEnabled"/>;
         }]);
-        var gn.ngr-url = '{{geonetwork.ngr.url}}';
+        var ngr_url = "{{geonetwork.ngr.url}}";
       </script>
     </xsl:if>
     

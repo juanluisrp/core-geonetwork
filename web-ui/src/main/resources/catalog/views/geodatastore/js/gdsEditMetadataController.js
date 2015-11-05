@@ -83,7 +83,7 @@
       });
 
       $scope.$watch(GdsUploadFactory.getMdSelected, function () {
-        $log.debug("watch on GdsUploadFactory.getMdSelected changed");
+        //$log.debug("watch on GdsUploadFactory.getMdSelected changed");
         var isSameMetadata = false;
         if ($scope.mdToEdit && GdsUploadFactory.getMdSelected().identifier === $scope.mdToEdit.identifier) {
           isSameMetadata = true;

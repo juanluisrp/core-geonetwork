@@ -221,8 +221,8 @@
     </rule>
 
     <rule> 
-        <from>^/web/dut/index(.*)</from> 
-        <to type="forward">/web/dut/catalog.search</to> 
+        <from>^/web/(.*)/index(.*)</from> 
+        <to type="forward">/web/$1/catalog.search</to> 
     </rule> 
 
     <rule> 
