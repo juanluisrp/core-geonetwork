@@ -174,6 +174,7 @@
           gnViewerSettings.mapConfig = <xsl:value-of select="$mapConfig"/>;
           gnGlobalSettings.isMapViewerEnabled = <xsl:value-of select="$isMapViewerEnabled"/>;
         }]);
+        var gn.ngr-url = '{{geonetwork.ngr.url}}';
       </script>
     </xsl:if>
     
