@@ -225,15 +225,15 @@
         <to type="forward">/web/dut/catalog.search</to> 
     </rule> 
 
-    <rule> 
-        <from>^/id/dataset/(.*)/(.*)</from> 
-        <to type="forward">/web/dut/resources.get?uuid=$1&amp;fname=$2</to> 
-    </rule> 
-    
-    <rule> 
-        <from>^/id/thumbnail/(.*)/(.*)</from> 
-        <to type="forward">/web/dut/resources.get?uuid=$1&amp;fname=$2</to> 
-    </rule> 
+    <rule>
+        <from>^/id/dataset/(.*)</from>
+        <to type="forward">/web/id/dataset/$1</to>
+    </rule>
+
+    <rule>
+        <from>^/id/thumbnail/(.*)</from>
+        <to type="forward">/web/id/thumbnail/$1</to>
+    </rule>
     
     <rule> 
         <condition name="Accept">application/rdf\+xml</condition> 

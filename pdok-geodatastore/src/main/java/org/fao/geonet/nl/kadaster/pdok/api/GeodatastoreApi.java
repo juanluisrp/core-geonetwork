@@ -773,6 +773,8 @@ public class GeodatastoreApi  {
         return new ResponseEntity<>((Object) "{}",  HttpStatus.OK);
     }
 
+
+
     /**
      * Builds an Element that can be used by the searcher with the parameters passed to the method.
      * It also add the default values for missing parameters.
