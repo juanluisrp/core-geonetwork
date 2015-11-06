@@ -46,15 +46,15 @@
 
       $scope.licenseList = [
         {
-          value: "PublicDomain",
+          value: "http://creativecommons.org/publicdomain/mark/1.0/deed.nl",
           label: "Public Domain"
         },
         {
-          value: "CC0",
+          value: "http://creativecommons.org/publicdomain/zero/1.0/",
           label: "CC0 (Creative Commons)"
         },
         {
-          value: "CC-BY",
+          value: "http://creativecommons.org/licenses/by/3.0/nl/",
           label: "CC-BY (Creative Commons Naamsvermelding)"
         }
       ];
@@ -83,7 +83,7 @@
       });
 
       $scope.$watch(GdsUploadFactory.getMdSelected, function () {
-        $log.debug("watch on GdsUploadFactory.getMdSelected changed");
+        //$log.debug("watch on GdsUploadFactory.getMdSelected changed");
         var isSameMetadata = false;
         if ($scope.mdToEdit && GdsUploadFactory.getMdSelected().identifier === $scope.mdToEdit.identifier) {
           isSameMetadata = true;

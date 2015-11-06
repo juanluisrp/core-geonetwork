@@ -31,7 +31,7 @@
       uploadedFiles.list = [];
       uploadedFiles.setMdSelected = function (md) {
         selected = md;
-        $log.debug("setMdSelected called: " + angular.toJson(md));
+        //$log.debug("setMdSelected called: " + angular.toJson(md));
       };
       uploadedFiles.getMdSelected = function () {
         return selected;
@@ -176,7 +176,7 @@
             defer.reject(error);
           });
         } else {
-          $log.debug("GdsUploadService.saveMetadata -> No metadata or metadata without identifier");
+          //$log.debug("GdsUploadService.saveMetadata -> No metadata or metadata without identifier");
         }
         return defer.promise;
       };

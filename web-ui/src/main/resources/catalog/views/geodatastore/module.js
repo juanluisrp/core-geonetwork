@@ -67,6 +67,9 @@
       $scope.totalPublished = 0;
       $scope.GdsUploadFactory = GdsUploadFactory;
       $scope.tab = "upload";
+      $scope.ngr_url = ngr_url;
+      //gn.ngr-url is defined by a param in loadjscss.xsl, which should be filled by deploy-it, else it will contain '{{' 
+      if (!$scope.ngr_url || $scope.ngr_url.indexOf('{{')>0) $scope.ngr_url = 'http://www.nationaalgeoregister.nl/geonetwork';
       $scope.perPage = 8;
       $scope.page = 1;
       $scope.searchParams = {
@@ -202,7 +205,7 @@
             //$scope.totalPublished = data.count;
           }
           var cnt = Math.ceil(data.count / $scope.perPage);
-          if (cnt < -1) cnt = 1;
+          if (!cnt || cnt < 1) cnt = 1;
           $scope.pages = new Array(cnt);
         }, function (error) {
           $log.error("Error in search: " + error);
@@ -240,13 +243,13 @@
       $scope.formModified = false;
 
       $scope.setMD = function (md) {
-        $log.debug(md);
+        //$log.debug(md);
 
         var selectedInService = GdsUploadFactory.getMdSelected();
 
         // If you are trying to change selected card and edit form is dirty, ask user what to do with changes
         if (GdsUploadFactory.isDirty() && selectedInService && selectedInService.identifier && selectedInService.identifier !== md.identifier) {
-          $log.debug("Show confirmation modal");
+          //$log.debug("Show confirmation modal");
           var modalInstance = $modal.open({
             scope: $scope,
             templateUrl: '../../catalog/views/geodatastore/templates/dirtyFormModal.html',
@@ -264,7 +267,7 @@
                 $scope.$setMdSelected(md);
               },
               function () {
-                $log.debug("Card change cancelled");
+                //$log.debug("Card change cancelled");
               }
           );
 
@@ -315,7 +318,7 @@
       };
 
       $scope.$watch($scope.getTopicCategoryAsString, function (newValue, oldValue) {
-        $log.debug("topicCategory changed: " + oldValue + "--> " + newValue);
+        //$log.debug("topicCategory changed: " + oldValue + "--> " + newValue);
         var selected = GdsUploadFactory.getMdSelected();
         if (selected) {
           if (newValue !== null && newValue !== undefined) {

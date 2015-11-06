@@ -132,11 +132,11 @@ template for metadata form
 			<div data-ng-show="tab === 'published'">
 				<div class="form-group">
 					<label for="bb">&nbsp;</label>
-					<a class="btn btn-default btn-sm" style="width: 100%" target="_blank" href="http://nationaalgeoregsiter.nl/geonetwork/srv/dut/search?uuid={{mdToEdit.identifier}}">
+					<a class="btn btn-default btn-sm" style="width: 100%" target="_blank" href="{{ngr_url}}/srv/dut/search?uuid={{mdToEdit.identifier}}">
 					<i class="fa fa-link fa-fw"></i>{{"Metadata-link"|translate}}</a>
 				</div>
 				<div class="form-group">
-					<a class="btn btn-default btn-sm" style="width: 100%" href="{{mdToEdit.url}}">
+					<a class="btn btn-default btn-sm" style="width: 100%" target="_blank" href="{{mdToEdit.url}}">
 						<i class="fa fa-file-o fa-fw"></i>{{"Download-link"|translate}}</a>
 				</div>
 			</div>
