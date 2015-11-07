@@ -82,7 +82,7 @@
 	<!-- A filter that check if an external service already authenticated user
 					 (default implementation does nothing but can be overridden) -->
 	<bean id="multiNodeAuthenticationFilter" class="jeeves.config.springutil.MultiNodeAuthenticationFilter">
-        <property name="location" value="{{geonetwork.baseurl}}/${wrongNodeRedirectURL}" />
+        <property name="location" value="${wrongNodeRedirectURL}" />
     </bean>
 	<bean id="preAuthenticationFilter" class="jeeves.config.springutil.PassthroughFilter"/>
 	<bean id="securityContextPersistenceFilter" class="org.springframework.security.web.context.SecurityContextPersistenceFilter">
@@ -110,7 +110,7 @@
 		<property name="usernameParameter" value="username" />
 		<property name="passwordParameter" value="password" />
 		<property name="authenticationManager" ref="authenticationManager" />
-		<property name="filterProcessesUrl" value="{{geonetwork.baseurl}}/j_spring_security_check" />
+		<property name="filterProcessesUrl" value="/j_spring_security_check" />
 		<property name="authenticationDetailsSource" ref="authenticationDetailsSource" />
 		<property name="authenticationFailureHandler">
 			<bean class="org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler">
@@ -161,7 +161,7 @@
 				</bean>
 			</list>
 		</constructor-arg>
-		<property name="filterProcessesUrl" value="{{geonetwork.baseurl}}/j_spring_security_logout"/>
+		<property name="filterProcessesUrl" value="/j_spring_security_logout"/>
 	</bean>
 
     <bean id="logoutSuccessHandler" class="jeeves.config.springutil.JeevesNodeAwareLogoutSuccessHandler">
@@ -177,7 +177,7 @@
 
 	<bean id="authenticationEntryPoint"
 		class="jeeves.config.springutil.JeevesNodeAwareLoginUrlEntryPoint">
-        <constructor-arg index="0" value="{{geonetwork.baseurl}}/${loginForm}" />
+        <constructor-arg index="0" value="${loginForm}" />
 	</bean>
 
 	<bean id="accessDeniedHandler"
