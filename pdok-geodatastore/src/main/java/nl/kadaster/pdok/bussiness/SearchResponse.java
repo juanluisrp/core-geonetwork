@@ -164,6 +164,8 @@ public class SearchResponse {
             String[] linkComponents = link.split("\\|");
             if (linkComponents.length == 6 && "download".equals(linkComponents[3])) {
                 md.setUrl(linkComponents[2]);
+                md.setFileName(linkComponents[0]);
+                md.setFileType(linkComponents[4]);
             }
         }
 

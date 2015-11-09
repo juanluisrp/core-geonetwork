@@ -32,6 +32,7 @@ public class MetadataParametersBean {
     private String changeDate;
 	private String publishDate;
     private String thumbnailUri;
+    private String fileName;
 
     public MetadataParametersBean() {
         this.keywords = Lists.newArrayList();
@@ -234,5 +235,13 @@ public class MetadataParametersBean {
 
     public String getThumbnailUri() {
         return thumbnailUri;
+    }
+
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
+    }
+
+    public String getFileName() {
+        return fileName;
     }
 }
