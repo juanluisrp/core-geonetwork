@@ -201,7 +201,7 @@ public class GeodatastoreApi  {
                 Map<String, Object> templateParameters = prepareTemplateParameters(organisation, organisationEmail,
                         new ArrayList<String>(), new ArrayList<String>(), defaultLocation, "2", "5", "50", "54",
                         dataset.getContentType(), "http://example.com/geonetwork/id/dataset/" + uuid.toString(), dataset.getOriginalFilename(),
-                        uuid.toString(), creationDate, "http://creativecommons.org/licenses/by/4.0/", "");
+                        uuid.toString(), creationDate, "http://creativecommons.org/publicdomain/mark/1.0/deed.nl", "");
 
                 Element metadata = metadataUtil.fillXmlTemplate(templateParameters);
 
@@ -229,7 +229,7 @@ public class GeodatastoreApi  {
                 Log.info(GDS_LOG, "UPLOADED:" + fileName + "," + createdId + "," + context.getIpAddress() + "," + username);
 
                 ServletPathFinder pathFinder = new ServletPathFinder(servletContext);
-                String downloadUrl = getSiteURL(pathFinder) + "/id/dataset/" + uuid.toString()+ "/" + fileName;
+                String downloadUrl = getSiteURL(pathFinder) + "/id/dataset/" + uuid.toString();
                 Map<String, String[]> allParams = Maps.newHashMap(request.getParameterMap());
                 // Set parameter and process metadata to reference the uploaded file
                 allParams.put("url", new String[]{downloadUrl});

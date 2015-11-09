@@ -42,7 +42,7 @@ template for metadata form
 		<i class="fa fa-question-circle fa-fw floatright" style="margin-top: 6px" data-tooltip="{{'helpTopicField'|translate}}"></i>
 		<label for="topicField">{{'topic'|translate}}</label>
 		<select class="form-control" id="topicField" tabindex=3 data-ng-model="mdToEdit.topicCategory">
-			<option value="null" selected>{{'placeholderTopicField'|translate}}</option>
+			<option value="">{{'placeholderTopicField'|translate}}</option>
 			<option value="imageryBaseMapsEarthCover">Luchtfoto / Dekking van de Aarde</option>
 			<option value="inlandWaters">Binnenwateren</option>
 			<option value="biota">Biota (flora, fauna, habitat)</option>
@@ -87,7 +87,7 @@ template for metadata form
 		<label for="licenseField">{{'license'|translate}}</label>
 		<select class="form-control" id="licenseField" tabindex=7 data-ng-model="mdToEdit.license"
                 data-ng-options="item.value as item.label for item in licenseList">
-			<option value="">{{'placeholderLicenseField'|translate}}</option>
+			<!--<option value="">{{'placeholderLicenseField'|translate}}</option>-->
 		</select>
 	</div>
 	<div class="form-group">
