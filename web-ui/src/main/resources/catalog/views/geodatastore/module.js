@@ -381,9 +381,8 @@
       $scope.getFileName = function (md) {
         if (md instanceof File) {
           return md.name;
-        }
-        if (!md.url || md.url.length == 0) {
-          return md.title
+        } else if (md.fileName && md.fileName.length > 0) {
+          return md.fileName;
         } else {
           var fprops = md.url.split('/');
           if (fprops.length > 3 && fprops[fprops.length - 1] != '') {
