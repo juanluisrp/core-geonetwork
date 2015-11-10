@@ -1,154 +1,155 @@
-<style>
-.required .control-label:after { 
-   content:"*";
-   color:red;
-} 
+<style type="text/css">
+  .required .control-label:after {
+     content:"*";
+     color:red;
+  }
 </style>
 
 <div class="container" data-ng-controller="GnLoginController"> 
-<div class="row">
-<div class="col-lg-6 col-lg-push-6">
-    <p>
-      Voor toegang tot PDOK Geodatastore gelden dezelfde accounts als voor de beheeromgeving van het Nationaal Georegister (NGR). 
-      Indien uw organisatie al een NGR account heeft, dan kan de NGR contactpersoon van uw organisatie een persoonlijk (sub) account voor u aanmaken. 
+  <div class="row">
+    <div class="col-lg-6 col-lg-push-6">
+        <p>
+          Voor toegang tot PDOK Geodatastore gelden dezelfde accounts als voor de beheeromgeving van het Nationaal Georegister (NGR).
+          Indien uw organisatie al een NGR account heeft, dan kan de NGR contactpersoon van uw organisatie een persoonlijk (sub) account voor u aanmaken.
+          </p>
+      <p>
+          Let op dat de organisatie gegevens gebruikt worden als publieke contactgegevens ten behoeve van het publiceren van uw dataset, de contactgegevens worden niet publiekelijk gedeeld en worden slechts gebruikt als het PDOK klant contact centrum met u in contact wil komen.
+         </p>
+      <p>
+          Indien uw organisatie nog geen NGR account heeft, dan kunt u bijgaand formulier invullen om een nieuw account aan te vragen, waarmee u kunt inloggen op PDOK Geodatastore en NGR (doorlooptijd is ca. 3 werkdagen).
       </p>
-  <p>
-      Let op dat de organisatie gegevens gebruikt worden als publieke contactgegevens ten behoeve van het publiceren van uw dataset, de contactgegevens worden niet publiekelijk gedeeld en worden slechts gebruikt als het PDOK klant contact centrum met u in contact wil komen.
-     </p>
-  <p>
-      Indien uw organisatie nog geen NGR account heeft, dan kunt u bijgaand formulier invullen om een nieuw account aan te vragen, waarmee u kunt inloggen op PDOK Geodatastore en NGR (doorlooptijd is ca. 3 werkdagen).
-  </p>
-  <p>
-    Met vragen kunt u terecht bij het PDOK Klantcontactcenter (tel.: 088-1834500, email: <a href="mailto:beheerpdok@kadaster.nl?subject=Vraag over nieuw account Geodatastore">beheerpdok@kadaster.nl</a>) 
-  </p>
-  </div>
-  <div class="col-lg-6 col-lg-pull-6">
-    <div class="panel panel-default">
-      <div class="panel-heading">Account aanvragen</div>
-      <div class="panel-body">
-        <form class="form-horizontal" id="userinfo" action="create.account" method="post">
-
-          <h2>Organisatie</h2>
-
-          <div class="form-group required">
-            <label class="control-label col-lg-4" data-translate="">Organisatie</label>
-            <div class="col-lg-8">
-              <!-- TODO : Add org list -->
-              <input type="text" name="org" class="form-control" data-required="true"/>
-            </div>
-          </div>
-
-            <div class="form-group required">
-              <label class="control-label col-lg-4" data-translate="">Adres</label>
-              <div class="col-lg-8">
-                <input type="text" name="address" class="form-control"/>
-              </div>
-            </div>
-            <div class="form-group required">
-              <label class="control-label col-lg-4" data-translate="">Postcode</label>
-              <div class="col-lg-8">
-                <input type="text" name="zip" class="form-control"/>
-              </div>
-            </div>
-            <div class="form-group required">
-              <label class="control-label col-lg-4" data-translate="">Plaats</label>
-              <div class="col-lg-8">
-                <input type="text" name="city" class="form-control"/>
-              </div>
-            </div>
-            <div class="form-group required">
-              <label class="control-label col-lg-4" data-translate="">Land</label>
-              <div class="col-lg-8">
-                <!-- TODO : Add country list -->
-                <input type="text" name="country" class="form-control"/>
-              </div>
-            </div>
-            <div class="form-group required">
-              <label class="control-label col-lg-4" data-translate="">E-mail</label>
-              <div class="col-lg-8">
-                <!-- TODO : Add country list -->
-                <input type="email" name="email" class="form-control" required="true"/> 
-
-              </div>
-            </div>
-           
-            <div class="form-group required">
-              <label class="control-label col-lg-4" data-translate="">Website</label>
-              <div class="col-lg-8">
-                <input type="text" name="website" class="form-control"/>
-              </div>
-            </div>
-            
-            <div class="form-group required">
-              <label class="control-label col-lg-4" data-translate="">Logo</label>
-              <div class="col-lg-8">
-                <input type="file" name="logo" class="form-control"/>
-              <br/>
-              <small>Het logo van de organisatie moet worden geupload in het formaat PNG met zelfde breedte en hoogte verhoudingen, ongeveer 100*100.</small>
-            </div>
-            </div>
-            
-
-          <h2>Contactpersoon voor PDOK</h2>
-          
-          <div class="form-group">
-            <label class="control-label col-lg-4" data-translate="">Aanhef</label>
-            <div class="col-lg-8">
-                <label>
-                    <input type="radio" id="q128" name="aanhef" value="mr" checked="true" /> De heer
-                </label> 
-                <label >
-                    <input type="radio" id="q129" name="aanhef" value="ms" /> Mevrouw
-                </label> 
-            </div>
-          </div>
-          
-          <div class="form-group required">
-            <label class="control-label col-lg-4" for="inputName" data-translate="">Achternaam</label>
-            <div class="col-lg-8">
-              <input type="text" class="form-control" id="inputName" name="name"/>
-            </div>
-          </div>
-
-          <div class="form-group required">
-            <label class="control-label col-lg-4" for="inputUsername" data-translate="">Voorletters</label>
-            <div class="col-lg-8">
-              <input type="text" class="form-control" id="inputUsername" name="surname"/>
-            </div>
-          </div>
-          
-          <div class="form-group required">
-            <label class="control-label col-lg-4" data-translate="">E-mail</label>
-            <div class="col-lg-8">
-              <input type="email" name="email" autofocus="" class="form-control"/>
-            </div>
-          </div>         
-          
-         <div class="form-group required">
-              <label class="control-label col-lg-4" data-translate="">Telefoon</label>
-              <div class="col-lg-8">
-                <!-- TODO : Add country list -->
-                <input type="text" name="telephone" class="form-control"/> 
-              </div>
-            </div>
-          
-        </form>
-        <button data-ng-click="register('#userinfo')" class="btn btn-primary btn-block"
-          data-translate="">register</button>
-          
-      <!-- Send mail with this info (and logo as attachement) to beheerpdok@kadaster.nl. -->
-      
-        <p
-          data-ng-show="registrationStatus && registrationStatus['result'] != 'errorEmailAddressAlreadyRegistered'">
-          <span data-translate="">contactDetailsSentTo</span>
-          <strong>{{registrationStatus['@email']}}</strong>. </p>
-        <p
-          data-ng-show="registrationStatus && registrationStatus['result'] == 'errorEmailAddressAlreadyRegistered'">
-          <span class="text-danger"
-            data-ng-show="registrationStatus['result'] == 'errorEmailAddressAlreadyRegistered'">
-            {{registrationStatus['result'] | translate}} </span>
-        </p>
+      <p>
+        Met vragen kunt u terecht bij het PDOK Klantcontactcenter (tel.: 088-1834500, email: <a href="mailto:beheerpdok@kadaster.nl?subject=Vraag over nieuw account Geodatastore">beheerpdok@kadaster.nl</a>)
+      </p>
       </div>
-    </div>
+      <div class="col-lg-6 col-lg-pull-6">
+        <div class="panel panel-default">
+          <div class="panel-heading">Account aanvragen</div>
+          <div class="panel-body">
+            <form class="form-horizontal" id="userinfo" action="create.account" method="post">
+
+              <h2>Organisatie</h2>
+
+              <div class="form-group required">
+                <label class="control-label col-lg-4" data-translate="">Organisatie</label>
+                <div class="col-lg-8">
+                  <!-- TODO : Add org list -->
+                  <input type="text" name="org" class="form-control" data-required="true"/>
+                </div>
+              </div>
+
+                <div class="form-group required">
+                  <label class="control-label col-lg-4" data-translate="">Adres</label>
+                  <div class="col-lg-8">
+                    <input type="text" name="address" class="form-control"/>
+                  </div>
+                </div>
+                <div class="form-group required">
+                  <label class="control-label col-lg-4" data-translate="">Postcode</label>
+                  <div class="col-lg-8">
+                    <input type="text" name="zip" class="form-control"/>
+                  </div>
+                </div>
+                <div class="form-group required">
+                  <label class="control-label col-lg-4" data-translate="">Plaats</label>
+                  <div class="col-lg-8">
+                    <input type="text" name="city" class="form-control"/>
+                  </div>
+                </div>
+                <div class="form-group required">
+                  <label class="control-label col-lg-4" data-translate="">Land</label>
+                  <div class="col-lg-8">
+                    <!-- TODO : Add country list -->
+                    <input type="text" name="country" class="form-control"/>
+                  </div>
+                </div>
+                <div class="form-group required">
+                  <label class="control-label col-lg-4" data-translate="">E-mail</label>
+                  <div class="col-lg-8">
+                    <!-- TODO : Add country list -->
+                    <input type="email" name="orgEmail" class="form-control" required="true"/>
+
+                  </div>
+                </div>
+
+                <div class="form-group required">
+                  <label class="control-label col-lg-4" data-translate="">Website</label>
+                  <div class="col-lg-8">
+                    <input type="text" name="website" class="form-control"/>
+                  </div>
+                </div>
+
+                <div class="form-group required">
+                  <label class="control-label col-lg-4" data-translate="">Logo</label>
+                  <div class="col-lg-8">
+                    <input type="file" name="logo" class="form-control"/>
+                  <br/>
+                  <small>Het logo van de organisatie moet worden geupload in het formaat PNG met zelfde breedte en hoogte verhoudingen, ongeveer 100*100.</small>
+                </div>
+                </div>
+
+
+              <h2>Contactpersoon voor PDOK</h2>
+
+              <div class="form-group">
+                <label class="control-label col-lg-4" data-translate="">Aanhef</label>
+                <div class="col-lg-8">
+                    <label>
+                        <input type="radio" id="q128" name="title" value="mr" checked="true" /> De heer
+                    </label>
+                    <label >
+                        <input type="radio" id="q129" name="title" value="ms" /> Mevrouw
+                    </label>
+                </div>
+              </div>
+
+              <div class="form-group required">
+                <label class="control-label col-lg-4" for="inputName" data-translate="">Achternaam</label>
+                <div class="col-lg-8">
+                  <input type="text" class="form-control" id="inputName" name="name"/>
+                </div>
+              </div>
+
+              <div class="form-group required">
+                <label class="control-label col-lg-4" for="inputUsername" data-translate="">Voorletters</label>
+                <div class="col-lg-8">
+                  <input type="text" class="form-control" id="inputUsername" name="surname"/>
+                </div>
+              </div>
+
+              <div class="form-group required">
+                <label class="control-label col-lg-4" data-translate="">E-mail</label>
+                <div class="col-lg-8">
+                  <input type="email" name="email" autofocus="" class="form-control"/>
+                </div>
+              </div>
+
+             <div class="form-group required">
+                  <label class="control-label col-lg-4" data-translate="">Telefoon</label>
+                  <div class="col-lg-8">
+                    <!-- TODO : Add country list -->
+                    <input type="text" name="telephone" class="form-control"/>
+                  </div>
+                </div>
+
+            </form>
+            <button data-ng-click="register('#userinfo')" class="btn btn-primary btn-block"
+              data-translate="">register</button>
+
+          <!-- Send mail with this info (and logo as attachement) to beheerpdok@kadaster.nl. -->
+
+            <p
+              data-ng-show="registrationStatus && registrationStatus['result'] != 'errorEmailAddressAlreadyRegistered'">
+              <span data-translate="">contactDetailsSentTo</span>
+              <strong>{{registrationStatus['@email']}}</strong>. </p>
+            <p
+              data-ng-show="registrationStatus && registrationStatus['result'] == 'errorEmailAddressAlreadyRegistered'">
+              <span class="text-danger"
+                data-ng-show="registrationStatus['result'] == 'errorEmailAddressAlreadyRegistered'">
+                {{registrationStatus['result'] | translate}} </span>
+            </p>
+          </div>
+        </div>
+      </div>
   </div>
 </div>
