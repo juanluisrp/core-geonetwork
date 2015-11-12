@@ -1,5 +1,6 @@
 package nl.kadaster.pdok.bussiness;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -8,6 +9,11 @@ import java.util.List;
 public class ValidationResponse {
     private String status;
     private List<String> errorMessageList;
+    private String globalError;
+
+    public ValidationResponse() {
+        errorMessageList = new ArrayList<>();
+    }
 
     public List<String> getErrorMessageList() {
         return errorMessageList;
@@ -24,5 +30,13 @@ public class ValidationResponse {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getGlobalError() {
+        return globalError;
+    }
+
+    public void setGlobalError(String globalError) {
+        this.globalError = globalError;
     }
 }

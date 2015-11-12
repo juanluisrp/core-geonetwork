@@ -69,6 +69,7 @@
         <script src="{$uiResourcesPath}lib/jquery.ext/jquery-ui-slider.min.js"></script>
         <script src="{$uiResourcesPath}lib/proj4js-compressed.js"></script>
         <script src="{$uiResourcesPath}lib/ngeo/ngeo-debug.js"></script>
+        <script src="{$uiResourcesPath}lib/ngShowErrors/showErrors.js"></script>
 
 
         <xsl:if test="$withD3">

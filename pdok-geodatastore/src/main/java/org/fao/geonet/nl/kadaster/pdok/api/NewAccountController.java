@@ -1,7 +1,6 @@
 package org.fao.geonet.nl.kadaster.pdok.api;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.common.collect.Lists;
 import jeeves.server.context.ServiceContext;
 import jeeves.server.dispatchers.ServiceManager;
 import nl.kadaster.pdok.bussiness.MailUtils;
@@ -14,27 +13,18 @@ import org.fao.geonet.utils.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
-import org.springframework.validation.ObjectError;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.validation.*;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import javax.validation.Validator;
 import java.io.File;
 import java.io.IOException;
-import java.lang.reflect.Field;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.attribute.FileAttribute;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by juanluisrp on 04/11/2015.
@@ -46,34 +36,41 @@ public class NewAccountController {
     @Autowired private ServiceManager serviceManager;
     @Autowired private MailUtils mailUtils;
     @Autowired private SettingManager settingManager;
+    @Autowired private Validator validator;
     @Value("#{geodatastoreProperties[registrationEmailAddress]}")
     private String registrationEmailAddress;
 
-    @RequestMapping("/{lang}/gdsRegister")
+    @RequestMapping(value = "/{lang}/gdsRegister", method = RequestMethod.POST)
     public @ResponseBody
-    ValidationResponse register(@PathVariable("lang") String lang, HttpServletRequest request, @RequestParam("logo") MultipartFile logo,
-                                @Valid RegisterBean registerBean, BindingResult bindingResult) {
+    ValidationResponse register(@PathVariable("lang") String lang,
+                                @Valid @RequestPart("registerBean") RegisterBean registerBean, BindingResult bindingResult,
+                                @RequestPart("logo") MultipartFile logo,
+                                HttpServletRequest request) {
+
+
         ValidationResponse response = new ValidationResponse();
         response.setStatus("SUCCESS");
         ServiceContext context = serviceManager.createServiceContext("geodatastore.register", lang, request);
         try {
+            List<String> fieldsWithErrors = new ArrayList<>();
             if (logo.isEmpty()) {
-                bindingResult.addError(new FieldError("registerBean", "logo", "notNull"));
+                fieldsWithErrors.add("logo");
             }
-            if (bindingResult.getErrorCount() > 0) {
+            for (FieldError error : bindingResult.getFieldErrors()) {
+                fieldsWithErrors.add(error.getField());
+            }
+            if (!fieldsWithErrors.isEmpty()) {
                 response.setStatus("ERROR");
-                List<String> fieldsWithErrors = new ArrayList<>();
-                for (FieldError error : bindingResult.getFieldErrors()) {
-                    fieldsWithErrors.add(error.getField());
-                }
                 response.setErrorMessageList(fieldsWithErrors);
             } else {
                 if (!sendEmail(registerBean, logo)) {
                     response.setStatus("ERROR");
+                    response.setGlobalError("emailNotSent");
                 }
             }
         } catch (Exception e) {
             response.setStatus("ERROR");
+            response.setGlobalError(e.getClass().getCanonicalName());
         }
 
 

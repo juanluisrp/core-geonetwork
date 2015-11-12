@@ -61,5 +61,6 @@
     <jsSource webappPath="/catalog/lib/zip/zip.js"/>
     <jsSource webappPath="/catalog/lib/zip/include.js"/>
     <jsSource webappPath="/catalog/lib/base64.js"/>
+    <jsSource webappPath="/catalog/lib/ngShowErrors/showErrors.js" />
   </declarative>
 </sources>
