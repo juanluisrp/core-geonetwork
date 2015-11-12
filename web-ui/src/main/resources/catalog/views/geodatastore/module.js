@@ -199,10 +199,10 @@
           GdsUploadFactory.clearList();
           $scope.searchResults = data;
           $scope.filterCount = data.count;
-          if ($scope.tab === 'upload') {
-            //$scope.totalNotPublished = data.count;
-          } else if ($scope.tab === 'published') {
-            //$scope.totalPublished = data.count;
+          if ($scope.tab === 'upload' && data.count>-1) {
+            $scope.totalNotPublished = data.count;
+          } else if ($scope.tab === 'published' && data.count>-1) {
+            $scope.totalPublished = data.count;
           }
           var cnt = Math.ceil(data.count / $scope.perPage);
           if (!cnt || cnt < 1) cnt = 1;
@@ -454,9 +454,9 @@
                 }
                 if (srMd.identifier === result.identifier) {
                   $scope.searchResults.metadata.splice(i, 1);
-                  if ($scope.tab === 'upload') {
+                  if ($scope.tab === 'upload' && $scope.totalNotPublished>-1) {
                     $scope.totalNotPublished = $scope.totalNotPublished - 1;
-                  } else  if ($scope.tab = 'published') {
+                  } else  if ($scope.tab === 'published' && $scope.totalPublished>-1) {
                     $scope.totalPublished = $scope.totalPublished - 1;
                   }
                   if ($scope.filterActive && $scope.filterCount) {
