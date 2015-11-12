@@ -109,6 +109,8 @@
   "scale.": "Not set",
   "edit": "Bewerken",
   "registrationError":"Fout tijdens registratie",
-  "Wrong parameter":"Onjuiste parameter"
+  "Wrong parameter":"Onjuiste parameter",
+  "register": "Inschrijven",
+  "contactDetailsSent": "The contact details has been sent to the PDOK team."
 
 }

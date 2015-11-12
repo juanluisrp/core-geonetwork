@@ -121,7 +121,7 @@
             previewMaxHeight: 243,
             previewCrop: false,
             maxNumberOfFiles: 1
-          };
+        };
           $scope.clear($scope.queue);
         }
       });

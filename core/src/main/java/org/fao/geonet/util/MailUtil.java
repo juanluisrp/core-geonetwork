@@ -244,6 +244,44 @@ public class MailUtil {
         return send(email);
     }
 
+    public static Boolean sendHtmlMailWithAttachment(List<String> toAddress, SettingManager settings,
+                                                      String subject, String htmlMessage,
+                                                     List<EmailAttachment> attachment) {
+        // Create data information to compose the mail
+        HtmlEmail email = new HtmlEmail();
+
+        configureBasics(settings, email);
+
+        for (EmailAttachment attach : attachment) {
+            try {
+                email.attach(attach);
+            } catch (EmailException e) {
+                e.printStackTrace();
+            }
+        }
+
+        email.setSubject(subject);
+        email.setCharset(org.apache.commons.mail.EmailConstants.UTF_8);
+        try {
+            email.setHtmlMsg(htmlMessage);
+        } catch (EmailException e1) {
+            e1.printStackTrace();
+            return false;
+        }
+
+        // send to all mails extracted from settings
+        for (String add : toAddress) {
+            try {
+                email.addBcc(add);
+            } catch (EmailException e) {
+                e.printStackTrace();
+                return false;
+            }
+        }
+
+        return sendSameThread(email);
+    }
+
     private static Boolean send(final Email email) {
         try {
         	Thread t = new Thread() {
@@ -263,6 +301,17 @@ public class MailUtil {
             e.printStackTrace();
             return false;
         }
+        return true;
+    }
+
+    private static Boolean sendSameThread(final Email email) {
+        try {
+            email.send();
+        } catch (EmailException e) {
+            e.printStackTrace();
+            return false;
+        }
+
         return true;
     }
 
