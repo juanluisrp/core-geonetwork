@@ -163,16 +163,16 @@
                 </form>
                 <div>
                     <nav class="floatright" data-ng-cloak>
-                        <ul class="pagination" ng-show="pages.length>1">
-                            <li ng-class="{'disabled':page==1}">
+                        <ul class="pagination" data-ng-show="pages.length>1">
+                            <li data-ng-class="{'disabled':page==1}">
                                 <a href="#" aria-label="Previous" data-ng-click="updateResultsAndPreserveSearch(page-1)">
                                     <span aria-hidden="true">&laquo;</span>
                                 </a>
                             </li>
 							
-							<li ng-repeat="i in pages track by $index" ng-class="{'active': page==$index+1}"><a href="#" data-ng-click="updateResultsAndPreserveSearch($index+1)">{{$index+1}}</a></li>
+				<li data-ng-repeat="i in pages track by $index" data-ng-class="{'active': page==$index+1}"><a href="#" data-ng-click="updateResultsAndPreserveSearch($index+1)">{{$index+1}}</a></li>
 							
-                            <li ng-class="{'disabled':page==pages.length}">
+                            <li data-ng-class="{'disabled':page==pages.length}">
                                 <a href="#" aria-label="Next" data-ng-click="updateResultsAndPreserveSearch(page+1)">
                                     <span aria-hidden="true">&raquo;</span>
                                 </a>
@@ -180,9 +180,9 @@
                         </ul>
                     </nav>
                     <span style="margin-top:6px; display: inline-block;">
-					<span ng-show="tab=='upload'">{{totalNotPublished}}</span>
-					<span ng-show="tab=='published'">{{totalPublished}}</span>
-					datasets</span>
+					<span data-ng-show="tab=='upload'">{{totalNotPublished}} datasets.</span>
+					<span data-ng-show="tab=='published'">{{totalPublished}} datasets.</span>
+		    </span>
                 </div>
             </section>
             <aside data-ng-switch data-on="hasSelected">
@@ -203,15 +203,15 @@
                 </div>
                 <div data-ng-switch-default class="padding-25 padding-top-10em">
 					
-						<p class="h3 text-center" ng-show="tab=='upload' && totalNotPublished>0">
+						<p class="h3 text-center" data-ng-show="tab=='upload' && totalNotPublished>0">
 							Vul informatie over een dataset in alvorens deze te delen.<br/>
 							<small>Selecteer een bestand uit de linker kolom om deze te bewerken.</small></p>
-						<p class="h3 text-center" ng-show="tab=='published' && totalPublished>0">
+						<p class="h3 text-center" data-ng-show="tab=='published' && totalPublished>0">
 							U kunt de informatie over een dataset wijzigen, ook nadat deze gepubliceerd is.<br/>
 							<small>Selecteer een bestand uit de linker kolom om deze te bewerken.</small></p>
-						<p class="h3 text-center" ng-show="tab=='upload' && totalNotPublished==0">
+						<p class="h3 text-center" data-ng-show="tab=='upload' && totalNotPublished==0">
 							Upload een dataset door deze op het vlak links te slepen of "selecteer bestanden" te klikken</p>
-						<p class="h3 text-center" ng-show="tab=='published' && totalPublished==0">
+						<p class="h3 text-center" data-ng-show="tab=='published' && totalPublished==0">
 							Eerder gepubliceerde datasets worden hier getoond</p>
 						
                     <p class="text-center" aria-label="Left arrow"><i class="fa fa-arrow-left fa-4x"></i></i></p>
