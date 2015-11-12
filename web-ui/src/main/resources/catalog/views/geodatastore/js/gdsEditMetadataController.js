@@ -210,6 +210,8 @@
       var filesChanged = function (e, data) {
         if (data.files.length > 0) {
           $scope.editMdForm.$setDirty();
+          var file = $scope.queue.pop();
+           $log.debug("File removed from queue: " + file);
         }
       };
 
