@@ -62,7 +62,7 @@
           $scope.success = false;
           var fieldsWithErrorsList = data.result.errorMessageList;
           // Set returned fields as invalid.
-          if (fieldsWithErrorsList.lentgh > 0) {
+          if (fieldsWithErrorsList.length > 0) {
             $scope.errors = true;
           }
           angular.forEach(fieldsWithErrorsList, function(value, key) {
@@ -109,9 +109,9 @@
         fail: failedUpload,
         change: filesChanged,
         always: always,
-        acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i,
-        previewMaxWidth: 243,
-        previewMaxHeight: 243,
+        acceptFileTypes: /(\.|\/)(png)$/i,
+        previewMaxWidth: 100,
+        previewMaxHeight: 100,
         previewCrop: false,
         maxNumberOfFiles: 1
       };
