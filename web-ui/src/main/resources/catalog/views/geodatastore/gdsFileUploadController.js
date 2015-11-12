@@ -52,7 +52,9 @@
         sequentialUploads: true,
         autoUpload: true,
         done: successfulUpload,
-        fail: failedUpload
+        fail: failedUpload,
+        maxFileSize: 500000000,
+        minFileSize: 1
       };
 
     }]);
