@@ -51,6 +51,7 @@
     <jsSource webappPath="/catalog/lib/jquery.ext/jquery.fileupload-process.js"/>
     <!-- The File Upload image preview & resize plugin -->
     <jsSource webappPath="/catalog/lib/jquery.ext/jquery.fileupload-image.js"/>
+    <jsSource webappPath="/catalog/lib/jquery.ext/jquery.fileupload-validate.js"/>
     <jsSource webappPath="/catalog/lib/jquery.ext/jquery.fileupload-angular.js"/>
     <jsSource webappPath="/catalog/lib/jquery.ext/jquery-ui-slider.min.js"/>
     <jsSource webappPath="/catalog/lib/bootstrap.ext/typeahead.js/typeahead.bundle.js"/>
