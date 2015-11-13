@@ -75,7 +75,7 @@
                 <div class="form-group required" data-show-errors>
                   <label class="control-label col-lg-4" for="website" data-translate="">Website</label>
                   <div class="col-lg-8">
-                    <input type="text" id="website" name="website" data-ng-model="registerBean.website" class="form-control" required/>
+                    <input type="url" id="website" name="website" data-ng-model="registerBean.website" class="form-control" required/>
                   </div>
                 </div>
 
@@ -134,7 +134,7 @@
              <div class="form-group required" data-show-errors>
                   <label class="control-label col-lg-4" for="telephone" data-translate="">Telefoon</label>
                   <div class="col-lg-8">
-                    <input type="text" id="telephone" name="telephone" data-ng-model="registerBean.telephone" class="form-control" required/>
+                    <input type="tel" id="telephone" name="telephone" data-ng-model="registerBean.telephone" class="form-control" required/>
                   </div>
                 </div>
 
@@ -143,7 +143,7 @@
             </form>
             <div class="row spacer">
               <div data-ng-show="success" class="alert alert-success" role="alert">
-                <span data-translate="">contactDetailsSent</span>.
+                <span data-translate="">contactDetailsSent</span>
               </div>
               <div data-ng-show="errors" class="alert alert-danger" role="alert">
                   There are fields with errors. Please fix them.
