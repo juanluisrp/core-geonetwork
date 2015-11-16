@@ -69,7 +69,7 @@
   "Data-succesfully-updated":"Uw wijziging is succesvol afgerond. Attentie: de metadata is niet direct zichtbaar, maar zal de volgende dag gepubliceerd zijn op het Nationaal Georegister en over 2 dagen eveneens op Data.overheid.nl.",
   "Download-link":"Download bestand",
   "Metadata-link":"Bekijk metadata in NGR",
-  "placeholderSearchField": "Zoek voor...",
+  "placeholderSearchField": "Zoeken naar...",
   "go": "Ga!",
   "title": "Titel",
   "changeDate": "Wijzigingsdatum",
@@ -111,6 +111,6 @@
   "registrationError":"Fout tijdens registratie",
   "Wrong parameter":"Onjuiste parameter",
   "register": "Inschrijven",
-  "contactDetailsSent": "The contact details has been sent to the PDOK team."
+  "contactDetailsSent": "Uw verzoek is verzonden naar het PDOK team."
 
 }
