@@ -189,7 +189,7 @@ public class GeodatastoreApi  {
 				
 				//metadata uses group description as organisation title, can not be empty
 				String organisation = group.getDescription();
-				if (organisation==""){
+				if (StringUtils.isEmpty(organisation)){
 					Log.warning(GDS_LOG, "organisationname-cannot-be-empty: "+username);
 					throw new ServiceNotAllowedEx("organisationname-cannot-be-empty");
 				}
@@ -277,6 +277,7 @@ public class GeodatastoreApi  {
                 response.setTitle((String) templateParameters.get(TITLE_KEY));
                 response.setUrl(downloadUrl);
                 response.setFileType((String) templateParameters.get(FORMAT_KEY));
+                response.setFileName((String) templateParameters.get(FILE_NAME_KEY));
             } catch (UnAuthorizedException e) {
                 Log.info(GDS_LOG, "Unauthorized access", e);
                 response.setError(true);
