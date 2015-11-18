@@ -274,6 +274,8 @@
 
       var search = function (params, errorFn) {
         var parameters = params || {};
+		//add a random val to prevent brower cache (todo: until proper nocache header is provided for IE)
+		params.rnd=Math.random().toString().substr(2,8);
         var defer = $q.defer();
         $http.get(url, {
           params: parameters
