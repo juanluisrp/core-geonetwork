@@ -233,7 +233,7 @@ public class GeodatastoreApi  {
                 // Set parameter and process metadata to reference the uploaded file
                 allParams.put("url", new String[]{downloadUrl});
                 allParams.put("name", new String[]{dataset.getOriginalFilename()});
-                allParams.put("desc", new String[]{"Geodatastore uploaded file"});
+                allParams.put("desc", new String[]{"Download link"});
                 allParams.put("protocol", new String[]{"download"});
 
                 String process = "onlinesrc-add";
