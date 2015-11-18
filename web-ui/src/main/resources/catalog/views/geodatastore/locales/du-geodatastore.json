@@ -71,7 +71,6 @@
   "Metadata-link":"Bekijk metadata in NGR",
   "placeholderSearchField": "Zoeken naar...",
   "go": "Ga!",
-  "title": "Titel",
   "changeDate": "Wijzigingsdatum",
   "loading": "Laden",
   "uploadError": "Er is iets mis gegaan bij het uploaden van uw bestand, probeer het later nog een keer.",
@@ -111,6 +110,8 @@
   "registrationError":"Fout tijdens registratie",
   "Wrong parameter":"Onjuiste parameter",
   "register": "Inschrijven",
-  "contactDetailsSent": "Uw verzoek is verzonden naar het PDOK team."
+  "contactDetailsSent": "Uw verzoek is verzonden naar het PDOK team.",
+  "maxFileSizeError": "Files van maximaal 500 MiB zijn toegestaan",
+  "uploadMaxSizeError": "Files van maximaal 500 MiB zijn toegestaan"
 
 }

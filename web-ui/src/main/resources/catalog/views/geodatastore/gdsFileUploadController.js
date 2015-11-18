@@ -11,8 +11,8 @@
   ]);
 
 
-  module.controller('GdsFileUploadController', ['$scope', 'GdsUploadFactory', 'NEW_DATASET_URL',
-    function ($scope, GdsUploadFactory, NEW_DATASET_URL) {
+  module.controller('GdsFileUploadController', ['$scope', 'GdsUploadFactory', 'NEW_DATASET_URL', '$translate',
+    function ($scope, GdsUploadFactory, NEW_DATASET_URL, $translate) {
       $scope.GdsUploadFactory = GdsUploadFactory;
 
       /**
@@ -37,14 +37,15 @@
         if (data.errorThrown) {
           err.status = data.errorThrown;
         }
-        if (data.response() && data.response().jqXHR.responseJSON.messages) {
+        if (data.response() && data.response().jqXHR.responseJSON && data.response().jqXHR.responseJSON.messages) {
           err.message = data.response().jqXHR.responseJSON.messages[0];
         } else {
-          err.message = "An error occured";
+          err.message = "An error occurred";
         }
         GdsUploadFactory.add(err);
         $scope.clear(data.files);
       };
+
 
       $scope.datasetUploadOptions = {
         url: NEW_DATASET_URL,
@@ -53,8 +54,12 @@
         autoUpload: true,
         done: successfulUpload,
         fail: failedUpload,
-        maxFileSize: 500000000,
-        minFileSize: 1
+        maxFileSize: 524300000,
+        minFileSize: 1,
+        messages: {
+          maxFileSize: $translate('maxFileSizeError'),
+          uploadedBytes: 'Uploaded bytes exceed file size'
+        }
       };
 
     }]);

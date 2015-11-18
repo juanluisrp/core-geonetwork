@@ -10,6 +10,7 @@ import jeeves.server.dispatchers.ServiceManager;
 import jeeves.server.sources.http.ServletPathFinder;
 import jeeves.services.ReadWriteController;
 import nl.kadaster.pdok.bussiness.*;
+import org.apache.commons.fileupload.FileUploadBase;
 import org.apache.commons.lang.StringUtils;
 import org.fao.geonet.ApplicationContextHolder;
 import org.fao.geonet.Util;
@@ -859,5 +860,18 @@ public class GeodatastoreApi  {
         if (!new File(file).delete()) {
             context.error("Error while deleting thumbnail : "+file);
         }*/
+    }
+
+    @ExceptionHandler(FileUploadBase.SizeLimitExceededException.class)
+    private @ResponseBody ResponseEntity<MetadataParametersBean> handleMaxsizeException(FileUploadBase.SizeLimitExceededException exception) {
+        Log.warning(GDS_LOG, "File uploaded is too big. Actual size: " + exception.getActualSize()/1024L
+                + "MiB, max permitted size " + exception.getPermittedSize()/1024L + " MiB", exception);
+        MetadataParametersBean pb = new MetadataParametersBean();
+        pb.addMessage("fileTooBig");
+        pb.setError(true);
+
+        ResponseEntity<MetadataParametersBean> response = new ResponseEntity<MetadataParametersBean>(pb, HttpStatus.REQUEST_ENTITY_TOO_LARGE);
+
+        return response;
     }
 }

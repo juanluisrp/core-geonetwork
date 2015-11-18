@@ -231,10 +231,12 @@
       $scope.getStatus = function (md) {
         if (md.$publishable) {
           return 'publish';
+        } else if (md.error) {
+          return 'error';
         } else {
           return 'metadataMissing';
         }
-      }
+      };
 
       $scope.pages = [];
       $scope.updateResults(1);
