@@ -742,6 +742,7 @@ public class GeodatastoreApi  {
 
 
         try {
+
             String statusParam = Params.Status.APPROVED;
             if ("draft".equals(status)) {
                 statusParam = Params.Status.DRAFT;
@@ -749,25 +750,37 @@ public class GeodatastoreApi  {
             MetaSearcher searcher = searchManager.newSearcher(SearcherType.LUCENE, Geonet.File.SEARCH_LUCENE);
             ServiceContext context = serviceManager.createServiceContext("geodatastore.api", lang, request);
             UserSession session = context.getUserSession();
-            Element parametersAsXml = buildSearchXmlParameters(context, q, sortBy, sortOrder, from, pageSize, statusParam);
-            // FIXME Why save search parameters in session?
-            session.setProperty(Geonet.Session.SEARCH_REQUEST, parametersAsXml.clone());
-            searcher.search(context, parametersAsXml, serviceConfig);
-            if (!summaryOnly) {
-                Element results = searcher.present(context, parametersAsXml, serviceConfig);
-                SearchResponse searchResponse = new SearchResponse(locationManager, locationThesaurus);
-                searchResponse.initFromXml(results);
+            if (session.isAuthenticated()) {
 
-                return new ResponseEntity<>((Object) searchResponse, headers, HttpStatus.OK);
-            } else {
-                // summary only
-                Element summary = searcher.getSummary();
-                SearchResponse searchResponse = new SearchResponse();
-                searchResponse.initFromSummary(summary);
+                User user = userRepository.findOneByUsername(session.getUsername());
+                List<Integer> groupsIds = userGroupRepository.findGroupIds(Specifications.where(
+                        hasProfile(Profile.Reviewer)).and(hasUserId(user.getId())));
 
-                return new ResponseEntity<>((Object) searchResponse, headers, HttpStatus.OK);
+                Group group;
+                if (groupsIds.size() == 0) {
+                    Log.warning(GDS_LOG, "/api/v1/datasets: the user " + session.getUsername() + " needs to belong to a group to be able to search");
+                    return new ResponseEntity<>((Object) "{}", headers,  HttpStatus.OK);
+                }
+
+                Element parametersAsXml = buildSearchXmlParameters(context, q, sortBy, sortOrder, from, pageSize, statusParam);
+                // FIXME Why save search parameters in session?
+                session.setProperty(Geonet.Session.SEARCH_REQUEST, parametersAsXml.clone());
+                searcher.search(context, parametersAsXml, serviceConfig);
+                if (!summaryOnly) {
+                    Element results = searcher.present(context, parametersAsXml, serviceConfig);
+                    SearchResponse searchResponse = new SearchResponse(locationManager, locationThesaurus);
+                    searchResponse.initFromXml(results);
+
+                    return new ResponseEntity<>((Object) searchResponse, headers, HttpStatus.OK);
+                } else {
+                    // summary only
+                    Element summary = searcher.getSummary();
+                    SearchResponse searchResponse = new SearchResponse();
+                    searchResponse.initFromSummary(summary);
+
+                    return new ResponseEntity<>((Object) searchResponse, headers, HttpStatus.OK);
+                }
             }
-
 
 
         } catch (Exception e) {
