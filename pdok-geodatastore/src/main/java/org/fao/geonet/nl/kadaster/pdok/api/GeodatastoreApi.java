@@ -13,7 +13,6 @@ import nl.kadaster.pdok.bussiness.*;
 import org.apache.commons.fileupload.FileUploadBase;
 import org.apache.commons.lang.StringUtils;
 import org.fao.geonet.ApplicationContextHolder;
-import org.fao.geonet.Util;
 import org.fao.geonet.constants.Geonet;
 import org.fao.geonet.constants.Params;
 import org.fao.geonet.domain.*;
@@ -40,7 +39,6 @@ import org.fao.geonet.services.metadata.XslProcessingReport;
 import org.fao.geonet.services.resources.handlers.IResourceUploadHandler;
 import org.fao.geonet.services.schema.Info;
 import org.fao.geonet.services.util.SearchDefaults;
-import org.fao.geonet.util.MailUtil;
 import org.fao.geonet.utils.IO;
 import org.fao.geonet.utils.Log;
 import org.fao.geonet.utils.Xml;
@@ -158,7 +156,7 @@ public class GeodatastoreApi  {
      */
     @RequestMapping(value = "/dataset", method = RequestMethod.POST)
     public @ResponseBody ResponseEntity<MetadataParametersBean> uploadDataset(@RequestParam("dataset") MultipartFile dataset,
-                                                              @PathVariable("lang") String lang, HttpServletRequest request) {
+                                                                              @PathVariable("lang") String lang, HttpServletRequest request) {
         if (!dataset.isEmpty()) {
             MetadataParametersBean response = new MetadataParametersBean();
             HttpStatus status = HttpStatus.OK;
@@ -187,14 +185,14 @@ public class GeodatastoreApi  {
                     throw new ServiceNotAllowedEx(message);
                 }
                 String organisationEmail = group.getEmail();
-				
-				//metadata uses group description as organisation title, can not be empty
-				String organisation = group.getDescription();
-				if (StringUtils.isEmpty(organisation)){
-					Log.warning(GDS_LOG, "organisationname-cannot-be-empty: "+username);
-					throw new ServiceNotAllowedEx("organisationname-cannot-be-empty");
-				}
-				
+
+                //metadata uses group description as organisation title, can not be empty
+                String organisation = group.getDescription();
+                if (StringUtils.isEmpty(organisation)){
+                    Log.warning(GDS_LOG, "organisationname-cannot-be-empty: "+username);
+                    throw new ServiceNotAllowedEx("organisationname-cannot-be-empty");
+                }
+
                 UUID uuid = UUID.randomUUID();
                 ISODate creationDate = new ISODate();
                 String defaultLocation = "http://geodatastore.pdok.nl/registry/location#Nederland_country";
@@ -383,7 +381,7 @@ public class GeodatastoreApi  {
             final String username = session.getUsername();
             assert username != null;
             //String organisation = session.getOrganisation();
-            
+
             User user = userRepository.findOneByUsername(username);
             List<Integer> groupsIds = userGroupRepository.findGroupIds(Specifications.where(
                     hasProfile(Profile.Reviewer)).and(hasUserId(user.getId())));
@@ -397,14 +395,14 @@ public class GeodatastoreApi  {
                 Log.warning(GDS_LOG, message);
                 throw new ServiceNotAllowedEx(message);
             }
-			
-			//organisation uses group description field, if empty no metadata creation is possible
-			String organisation = group.getDescription();
-			if (organisation==""){
+
+            //organisation uses group description field, if empty no metadata creation is possible
+            String organisation = group.getDescription();
+            if (organisation==""){
                 Log.warning(GDS_LOG, "organisationname-cannot-be-empty: "+username);
                 throw new ServiceNotAllowedEx("organisationname-cannot-be-empty");
             }
-			
+
             if (StringUtils.isBlank(group.getEmail())) {
                 String message = "The group " + group.getName() + " must have an email set";
                 Log.warning(GDS_LOG, message);
@@ -420,8 +418,8 @@ public class GeodatastoreApi  {
                     templateParameters = prepareTemplateParameters(metadataParameter, organisation, organisationEmail, changeDate.getDateAsString());
                 }
 
-				//if metadata is published, the metadata can only be updated with valid metadata
-				
+                //if metadata is published, the metadata can only be updated with valid metadata
+
                 Element oldMetadata = metadataManager.getMetadataNoInfo(context, metadataId);
                 Element newMetadata = metadataUtil.updateMetadataContents(templateParameters, oldMetadata);
 
@@ -737,6 +735,11 @@ public class GeodatastoreApi  {
             @RequestParam(value = "status", defaultValue = "published") String status,
             @RequestParam(value = "summaryOnly", defaultValue = "false") Boolean summaryOnly,
             HttpServletRequest request) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
+        headers.add("Pragma", "no-cache"); // HTTP 1.0.;
+        headers.setDate("Expires", 0); // Proxies.
+
 
         try {
             String statusParam = Params.Status.APPROVED;
@@ -755,24 +758,24 @@ public class GeodatastoreApi  {
                 SearchResponse searchResponse = new SearchResponse(locationManager, locationThesaurus);
                 searchResponse.initFromXml(results);
 
-                return new ResponseEntity<>((Object) searchResponse, HttpStatus.OK);
+                return new ResponseEntity<>((Object) searchResponse, headers, HttpStatus.OK);
             } else {
                 // summary only
                 Element summary = searcher.getSummary();
                 SearchResponse searchResponse = new SearchResponse();
                 searchResponse.initFromSummary(summary);
 
-                return new ResponseEntity<>((Object) searchResponse, HttpStatus.OK);
+                return new ResponseEntity<>((Object) searchResponse, headers, HttpStatus.OK);
             }
 
 
 
         } catch (Exception e) {
-            e.printStackTrace();
+            Log.warning(GDS_LOG, e);
         }
 
 
-        return new ResponseEntity<>((Object) "{}",  HttpStatus.OK);
+        return new ResponseEntity<>((Object) "{}", headers,  HttpStatus.OK);
     }
 
 
@@ -792,12 +795,12 @@ public class GeodatastoreApi  {
      */
     private Element buildSearchXmlParameters(ServiceContext context, String q, String sortBy, String sortOrder, Integer from,
                                              Integer pageSize, String status) {
-		UserSession session = context.getUserSession();
-        final String username = session.getUsername();										 
-		User user = userRepository.findOneByUsername(username);
+        UserSession session = context.getUserSession();
+        final String username = session.getUsername();
+        User user = userRepository.findOneByUsername(username);
         List<Integer> groupsIds = userGroupRepository.findGroupIds(Specifications.where(
-            hasProfile(Profile.Reviewer)).and(hasUserId(user.getId())));
-					
+                hasProfile(Profile.Reviewer)).and(hasUserId(user.getId())));
+
         Element queryParameters = new Element(Jeeves.Elem.REQUEST);
         queryParameters.addContent(new Element(Geonet.IndexFieldNames.ANY).setText(q));
         queryParameters.addContent(new Element(Geonet.SearchResult.SORT_BY).setText(sortBy));
@@ -813,7 +816,7 @@ public class GeodatastoreApi  {
         queryParameters.addContent(new Element(Geonet.SearchResult.FAST).setText("index"));
         queryParameters.addContent(new Element("_isTemplate").setText("n"));
         queryParameters.addContent(new Element("type").setText("dataset"));
-		queryParameters.addContent(new Element("_groupOwner").setText(StringUtils.join(groupsIds, " or ")));
+        queryParameters.addContent(new Element("_groupOwner").setText(StringUtils.join(groupsIds, " or ")));
 
         return SearchDefaults.getDefaultSearch(context, queryParameters);
     }
