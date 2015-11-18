@@ -846,7 +846,7 @@ public class GeodatastoreApi  {
         String host    = settingManager.getValue(Geonet.Settings.SERVER_HOST);
         String port    = settingManager.getValue(Geonet.Settings.SERVER_PORT);
 
-        return protocol + "://" + host + (port.equals("80") ? "" : ":" + port) + baseURL;
+        return protocol + "://" + host + ((port.equals("80")||port.equals("443")) ? "" : ":" + port) + baseURL;
     }
 
     private void removeOldThumbnail(ServiceContext context, String id, String type, boolean indexAfterChange) throws Exception {
