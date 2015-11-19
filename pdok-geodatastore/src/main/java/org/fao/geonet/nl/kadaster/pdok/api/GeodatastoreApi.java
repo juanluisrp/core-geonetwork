@@ -750,17 +750,7 @@ public class GeodatastoreApi  {
             MetaSearcher searcher = searchManager.newSearcher(SearcherType.LUCENE, Geonet.File.SEARCH_LUCENE);
             ServiceContext context = serviceManager.createServiceContext("geodatastore.api", lang, request);
             UserSession session = context.getUserSession();
-            if (session.isAuthenticated()) {
-
-                User user = userRepository.findOneByUsername(session.getUsername());
-                List<Integer> groupsIds = userGroupRepository.findGroupIds(Specifications.where(
-                        hasProfile(Profile.Reviewer)).and(hasUserId(user.getId())));
-
-                Group group;
-                if (groupsIds.size() == 0) {
-                    Log.warning(GDS_LOG, "/api/v1/datasets: the user " + session.getUsername() + " needs to belong to a group to be able to search");
-                    return new ResponseEntity<>((Object) "{\"from\":0,\"to\":0,\"selected\":0,\"count\":0,\"metadata\":[],\"error\":\"the user needs to belong to a group to be able to search\"}", headers,  HttpStatus.OK);
-                }
+            
 
                 Element parametersAsXml = buildSearchXmlParameters(context, q, sortBy, sortOrder, from, pageSize, statusParam);
                 // FIXME Why save search parameters in session?
@@ -780,7 +770,7 @@ public class GeodatastoreApi  {
 
                     return new ResponseEntity<>((Object) searchResponse, headers, HttpStatus.OK);
                 }
-            }
+            
 
 
         } catch (Exception e) {
