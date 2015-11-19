@@ -133,7 +133,7 @@ public class GeodatastoreApi  {
     private String locationThesaurus;
     @Autowired LocationManager locationManager;
     @Autowired
-    private MailUtils mailUtils;
+    private GeodatastoreMailUtils geodatastoreMailUtils;
 
 
 
@@ -489,7 +489,7 @@ public class GeodatastoreApi  {
                             mailTemplateParameters.put("userName", user.getName());
                             mailTemplateParameters.put("datasetTile", result.getTitle());
 
-                            boolean sent = mailUtils.sendHtmlEmail(userEmail, mailTemplateParameters, PUBLISH_EMAIL_XSLT);
+                            boolean sent = geodatastoreMailUtils.sendHtmlEmail(userEmail, mailTemplateParameters, PUBLISH_EMAIL_XSLT);
                             if (!sent) {
                                 Log.error(GDS_LOG, "The publish email cannot be sent. Please review the mail server settings in the database");
                             }

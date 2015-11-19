@@ -3,7 +3,7 @@ package org.fao.geonet.nl.kadaster.pdok.api;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jeeves.server.context.ServiceContext;
 import jeeves.server.dispatchers.ServiceManager;
-import nl.kadaster.pdok.bussiness.MailUtils;
+import nl.kadaster.pdok.bussiness.GeodatastoreMailUtils;
 import nl.kadaster.pdok.bussiness.RegisterBean;
 import nl.kadaster.pdok.bussiness.ValidationResponse;
 import org.apache.commons.io.FileUtils;
@@ -34,7 +34,7 @@ public class NewAccountController {
     private static final String GDS_LOG = "geodatastore.register";
     private static final String REGISTRATION_EMAIL_XSLT = "/templates/registration-email-transform.xsl";
     @Autowired private ServiceManager serviceManager;
-    @Autowired private MailUtils mailUtils;
+    @Autowired private GeodatastoreMailUtils geodatastoreMailUtils;
     @Autowired private SettingManager settingManager;
     @Autowired private Validator validator;
     @Value("#{geodatastoreProperties[registrationEmailAddress]}")
@@ -106,7 +106,7 @@ public class NewAccountController {
         try {
             logo.transferTo(logoFile);
             attachmentList.add(logoPath);
-            sent = mailUtils.sendHtmlEmailWithAttachments(registrationEmailAddress, mailTemplateParameters, attachmentList, REGISTRATION_EMAIL_XSLT);
+            sent = geodatastoreMailUtils.sendHtmlEmailWithAttachments(registrationEmailAddress, mailTemplateParameters, attachmentList, REGISTRATION_EMAIL_XSLT);
         } catch (Exception e) {
             Log.error(GDS_LOG, "Error sending registration email", e);
             sent = false;
