@@ -759,7 +759,7 @@ public class GeodatastoreApi  {
                 Group group;
                 if (groupsIds.size() == 0) {
                     Log.warning(GDS_LOG, "/api/v1/datasets: the user " + session.getUsername() + " needs to belong to a group to be able to search");
-                    return new ResponseEntity<>((Object) "{'from':0,'to':0,'selected':0,'count':0,'metadata':[],'error':'the user needs to belong to a group to be able to search'}", headers,  HttpStatus.OK);
+                    return new ResponseEntity<>((Object) "{\"from\":0,\"to\":0,\"selected\":0,\"count\":0,\"metadata\":[],\"error\":\"the user needs to belong to a group to be able to search\"}", headers,  HttpStatus.OK);
                 }
 
                 Element parametersAsXml = buildSearchXmlParameters(context, q, sortBy, sortOrder, from, pageSize, statusParam);
@@ -788,7 +788,7 @@ public class GeodatastoreApi  {
         }
 
 
-        return new ResponseEntity<>((Object) "{'from':0,'to':0,'selected':0,'count':0,'metadata':[]}", headers,  HttpStatus.OK);
+        return new ResponseEntity<>((Object) "{\"from\":0,\"to\":0,\"selected\":0,\"count\":0,\"metadata\":[]}", headers,  HttpStatus.OK);
     }
 
 
