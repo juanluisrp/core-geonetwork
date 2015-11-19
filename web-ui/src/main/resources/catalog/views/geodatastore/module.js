@@ -198,11 +198,11 @@
         gdsSearchManagerService.search(searchParams).then(function (data) {
           GdsUploadFactory.clearList();
           $scope.searchResults = data;
-          $scope.filterCount = data.count;
-          if ($scope.tab === 'upload' && data.count>-1) {
-            $scope.totalNotPublished = data.count;
+          $scope.filterCount = data.count?data.count:0;
+          if ($scope.tab === 'upload' && data.count && data.count>-1) {
+            $scope.totalNotPublished = data.count?data.count:0;
           } else if ($scope.tab === 'published' && data.count>-1) {
-            $scope.totalPublished = data.count;
+            $scope.totalPublished = data.count?data.count:0;
           }
           var cnt = Math.ceil(data.count / $scope.perPage);
           if (!cnt || cnt < 1) cnt = 1;
@@ -220,9 +220,9 @@
           summaryOnly: true
         }).then(function (data) {
           if (status === 'draft') {
-            $scope.totalNotPublished = data.count;
+            $scope.totalNotPublished = data.count?data.count:0;
           } else if (status === 'published') {
-            $scope.totalPublished = data.count;
+            $scope.totalPublished = data.count?data.count:0;
           }
         })
       }
