@@ -28,12 +28,8 @@
         <meta name="description" content=""/>
         <meta name="keywords" content=""/>
 
-
-        <link rel="icon" sizes="16x16 32x32 48x48" type="image/png" href="../../images/logos/favicon.png"/>
-        <link href="rss.search?sortBy=changeDate" rel="alternate" type="application/rss+xml"
-          title="{concat($env/system/site/name, ' - ', $env/system/site/organization)}"/>
-        <link href="portal.opensearch" rel="search" type="application/opensearchdescription+xml"
-          title="{concat($env/system/site/name, ' - ', $env/system/site/organization)}"/>
+  <link rel="shortcut icon" href="../../images/logos/favicon.ico" type="image/vnd.microsoft.icon" />
+  <link rel="icon" href="../../images/logos/favicon.ico" type="image/x-icon" />
 
         <xsl:call-template name="css-load"/>
       </head>

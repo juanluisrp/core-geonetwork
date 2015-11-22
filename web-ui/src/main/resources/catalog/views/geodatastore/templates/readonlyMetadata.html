@@ -1,17 +1,17 @@
 <div data-ng-controller="GdsReadonlyMetadataController">
     <div class="row">
-        <div class="col-lg-4 form-group">
+        <div class="col-md-5 form-group hidden-xs hidden-sm">
             <label><i class="fa fa-cloud-upload fa-fw" style="font-size:1em; margin-right: 4px"></i>Publicatiedatum</label>
             <div class="value"  style="padding-left:23px">{{mdSelected.publishDate | date:'dd-MM-yyyy' }}</div>
         </div><!-- /.col-lg-4 -->
-        <div class="col-lg-4 form-group">
+        <div class="col-md-5 form-group hidden-xs hidden-sm">
             <label><i class="fa fa-pencil fa-fw" style="font-size:1em; margin-right: 4px"></i>Wijzigingsdatum</label>
             <div class="value"  style="padding-left:23px">{{mdSelected.changeDate | date:'dd-MM-yyyy' }}</div>
         </div><!-- /.col-lg-4 -->
-        <div class="col-lg-4 form-group">
-            <div class="floatright"><button type="button" id="editUpperButton" class="btn btn-default btn-sm floatright"
+        <div class="col-md-2 form-group">
+            <div class="floatright"><button type="button" id="editUpperButton" class="btn btn-default btn-sm"
                     data-ng-click="toggleEditMode()" data-ng-hide="editState.isEditing">
-                <i class="fa fa-pencil fa-fw"></i>{{'edit' | translate}}</button></div>
+                <i class="fa fa-pencil fa-fw hidden-md"></i>{{'edit' | translate}}</button></div>
         </div><!-- /.col-lg-2 -->
     </div><!-- /.row -->
     <div class="form-group">
