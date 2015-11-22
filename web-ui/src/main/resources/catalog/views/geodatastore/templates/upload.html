@@ -9,16 +9,17 @@
 	
             
             <nav class="tabs">
-                <div class="floatright userlog">
+                <div class="floatright userlog hidden-xs">
                     <div class="user floatright">{{user.name}} {{user.surname}}</div><br/>
                     <div class="log floatright"><a href="../../j_spring_security_logout" title="Afmelden"><i class="fa fa-power-off"></i>Uitloggen</a></div>
                 </div>
                 <ul class="nav nav-tabs">
-                    <li role="presentation" data-ng-class="{active: tab === 'upload'}" class="first"><a href data-ng-click="setTab('upload')" >Mijn publiceerbare datasets <span class="badge">
+                    <li role="presentation" data-ng-class="{active: tab === 'upload'}" class="first">
+						<a href data-ng-click="setTab('upload')" ><span class="hidden-xs">Mijn</span> publiceerbare <span class="hidden-xs">datasets</span> <span class="badge">
                         <span data-ng-show="filterActive && tab === 'upload'">{{filterCount}} / </span>{{totalNotPublished + GdsUploadFactory.list.length}}</span></a>
                     </li>
                     <li role="presentation" data-ng-class="{active: tab == 'published'}" >
-                        <a href data-ng-click="setTab('published')">Mijn gepubliceerde datasets <span class="badge">
+                        <a href data-ng-click="setTab('published')"><span class="hidden-xs">Mijn</span> gepubliceerde <span class="hidden-xs">datasets</span> <span class="badge">
                             <span data-ng-show="filterActive && tab === 'published'">{{filterCount}} / </span>{{totalPublished}}</span></a>
                     </li>
                 </ul>
@@ -59,13 +60,13 @@
                         data-ng-class="{'fileupload-processing': processing() || loadingFiles}" data-ng-controller="GdsFileUploadController" data-ng-cloak>
                     <!-- Select file button  and dropzone -->
                     <div id="dropzone" class="fade" data-gds-drop-zone data-ng-show="tab=='upload'">
-                        <div class="floatright">
+                        <div class="floatright hidden-xs">
                             <i class="fa fa-cloud-upload fa-4x floatright"></i>
                         </div>
-                        <div>Sleep de bestanden hier op of<br/>
-                                <span class="btn btn-default btn-sm fileinput-button" data-ng-class="{disabled: disabled}">
+                        <div><span class="hidden-xs">Sleep de bestanden hier op of<br/></span>
+                                <span class="btn btn-default btn-sm fileinput-button" style="margin-top:.5em;" data-ng-class="{disabled: disabled}">
                                     <i class="fa fa-folder-open-o fa-fw"></i>
-                                    <span>selecteer bestanden</span>
+                                    <span>selecteer <span class="hidden-xs">bestanden</span></span>
                                     <input type="file" name="dataset" multiple data-ng-disabled="disabled">
                                 </span>
                         </div>
