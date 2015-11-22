@@ -97,6 +97,7 @@ label {
 #metadata a.btn {
   color: #000;
   text-decoration: none;
+  margin-bottom:: .5em;
 }
 .bootstrap-tagsinput input {
   width: 100%;
@@ -111,7 +112,7 @@ label {
 .btn-primary {
     background-color: #154273;
     border-color: #154273;
-    color: #9cf;
+    color: #fff;
 }
 .btn-primary:hover,
 .btn-primary:focus,
@@ -125,3 +126,7 @@ label {
 .gn-stack {
  display:none; 
 }
+
+.btn.disabled,.btn[disabled],fieldset[disabled].btn{cursor:not-allowed;pointer-events:none;background-color: #fff;border-color: #ccc;color:#ccc;-webkit-box-shadow:none;box-shadow:none;}
+
+.modal-content { border-radius: 0px; }
