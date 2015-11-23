@@ -39,6 +39,8 @@ public class NewAccountController {
     @Autowired private Validator validator;
     @Value("#{geodatastoreProperties[registrationEmailAddress]}")
     private String registrationEmailAddress;
+    @Value("#{geodatastoreProperties['registrationEmailAddress.bcc']}")
+    private String registrationEmailAddressBccString;
 
     @RequestMapping(value = "/{lang}/gdsRegister", method = RequestMethod.POST)
     public @ResponseBody
@@ -106,7 +108,17 @@ public class NewAccountController {
         try {
             logo.transferTo(logoFile);
             attachmentList.add(logoPath);
-            sent = geodatastoreMailUtils.sendHtmlEmailWithAttachments(registrationEmailAddress, mailTemplateParameters, attachmentList, REGISTRATION_EMAIL_XSLT);
+            List<String> bccList = new ArrayList<>();
+            if (StringUtils.isNotEmpty(registrationEmailAddressBccString)) {
+                String[] addresses = StringUtils.split(registrationEmailAddressBccString, ',');
+                if (addresses != null) {
+                    for (String address : addresses) {
+                        bccList.add(StringUtils.trim(address));
+                    }
+                }
+            }
+
+            sent = geodatastoreMailUtils.sendHtmlEmailWithAttachments(registrationEmailAddress, bccList, mailTemplateParameters, attachmentList, REGISTRATION_EMAIL_XSLT);
         } catch (Exception e) {
             Log.error(GDS_LOG, "Error sending registration email", e);
             sent = false;
