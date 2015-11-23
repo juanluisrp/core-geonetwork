@@ -349,6 +349,7 @@
             <configuration>
                 <argLine>-Dfile.encoding=UTF-8  -Xmx512M -XX:MaxPermSize=128M</argLine>
                 <rerunFailingTestsCount>5</rerunFailingTestsCount>
+				<skip>true</skip>
                 <runOrder>alphabetical</runOrder>
                 <redirectTestOutputToFile>true</redirectTestOutputToFile>
                 <forkCount>4</forkCount>
