@@ -10,6 +10,7 @@ import org.fao.geonet.utils.Log;
 import org.fao.geonet.utils.Xml;
 import org.jdom.Element;
 import org.jdom.Text;
+import org.jdom.transform.JDOMResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
@@ -17,6 +18,10 @@ import org.springframework.stereotype.Service;
 
 import javax.mail.Authenticator;
 import javax.mail.Session;
+import javax.xml.transform.Result;
+import javax.xml.transform.Source;
+import javax.xml.transform.stream.StreamSource;
+import java.io.InputStream;
 import java.net.URI;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -100,12 +105,17 @@ public class GeodatastoreMailUtils {
 
         // Find XSLT
         Resource xsltResource = new ClassPathResource(transformPath);
-        URI xsltUri = xsltResource.getURI();
 
         // Apply XSLT with parameters to the template.
-        Element email = Xml.transform(root, Paths.get(xsltUri));
+        try(InputStream xsltInputStream = xsltResource.getInputStream()) {
+            Source xsltSource = new StreamSource(xsltInputStream);
+            xsltSource.setSystemId("http://example.com/newAccountEemailTemplate");
+            //Element email = Xml.transform(root, Paths.get(xsltUri));
+            JDOMResult resXml = new JDOMResult();
+            Xml.transformWithXmlParam(root, xsltSource, resXml, null, null);
 
-        return email;
+            return resXml.getDocument().getRootElement();
+        }
     }
 
     private void getMessage(Element messageElement, StringBuilder messageSb) {
