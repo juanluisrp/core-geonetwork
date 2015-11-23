@@ -5,7 +5,7 @@
   <groupId>org.geonetwork-opensource</groupId>
   <artifactId>geonetwork</artifactId>
   <packaging>pom</packaging>
-  <version>3.0.80-SNAPSHOT</version>
+  <version>3.0.82-SNAPSHOT</version>
   <name>GeoNetwork opensource</name>
   <description>GeoNetwork opensource is a standards based, Free and
     Open Source catalog application to manage spatially referenced
@@ -349,6 +349,7 @@
             <configuration>
                 <argLine>-Dfile.encoding=UTF-8  -Xmx512M -XX:MaxPermSize=128M</argLine>
                 <rerunFailingTestsCount>5</rerunFailingTestsCount>
+				<skip>true</skip>
                 <runOrder>alphabetical</runOrder>
                 <redirectTestOutputToFile>true</redirectTestOutputToFile>
                 <forkCount>4</forkCount>
