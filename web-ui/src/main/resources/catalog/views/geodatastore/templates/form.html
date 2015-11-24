@@ -35,12 +35,12 @@ template for metadata form
 	</div>
 	<div class="form-group">
 		<i class="fa fa-question-circle fa-fw floatright" style="margin-top: 6px" data-tooltip="{{'helpAbstractField'|translate}}"></i>
-		<label for="abstractField">{{'abstract'|translate}}</label>
+		<label for="abstractField">{{'summary'|translate}}</label>
 		<textarea rows="5" class="form-control" id="abstractField" data-ng-model="mdToEdit.summary" tabindex="2" placeholder="{{'placeholderAbstractField'|translate}}"></textarea>
 	</div>
 	<div class="form-group">
 		<i class="fa fa-question-circle fa-fw floatright" style="margin-top: 6px" data-tooltip="{{'helpTopicField'|translate}}"></i>
-		<label for="topicField">{{'topic'|translate}}</label>
+		<label for="topicField">{{'topicCategory'|translate}}</label>
 		<select class="form-control" id="topicField" tabindex=3 data-ng-model="mdToEdit.topicCategory">
 			<option value="">{{'placeholderTopicField'|translate}}</option>
 			<option value="imageryBaseMapsEarthCover">Luchtfoto / Dekking van de Aarde</option>
@@ -92,7 +92,7 @@ template for metadata form
 	</div>
 	<div class="form-group">
 		<i class="fa fa-question-circle fa-fw floatright" style="margin-top: 6px" data-tooltip="{{'helpScaleField'|translate}}"></i>
-		<label for="resolutionField">{{'scale'|translate}}</label>
+		<label for="resolutionField">{{'resolution'|translate}}</label>
 		<select class="form-control" id="resolutionField" tabindex=8 data-ng-model="mdToEdit.resolution"
                 data-ng-options="item.value as item.label for item in resolutionList">
 			<option value="">{{'placeholderScaleField'|translate}}</option>
@@ -113,10 +113,10 @@ template for metadata form
 					<div class="thumbcont">
 						<img data-ng-src="{{mdToEdit.thumbnailUri}}" alt="Afbeelding/Thumbnail" data-ng-if="mdToEdit.thumbnailUri">
 					</div>
-					<div class="thumbact">
+					<!--<div class="thumbact">
 						<button type="button" id="Vervangen" class="btn btn-default btn-sm floatright"><i class="fa fa-exchange fa-fw"></i>{{'replace'|translate}}</button>
 						<button type="button" id="Verwijder" class="btn btn-default btn-sm"><i class="fa fa-trash-o fa-fw"></i>{{'remove'|translate}}</button>
-					</div>
+					</div>-->
 				</div>
 				<div data-ng-repeat="file in queue" data-ng-class="{'processing': file.$processing()}">
 					<div class="thumbcont text-center" data-file-upload-preview="file"></div>
@@ -131,12 +131,12 @@ template for metadata form
 		<div class="col-lg-6 ">
 			<div data-ng-show="tab === 'published'">
 				<div class="form-group">
-					<label for="bb">&nbsp;</label>
-					<a class="btn btn-default btn-sm" style="width: 100%" target="_blank" href="{{ngr_url}}/srv/dut/search?uuid={{mdToEdit.identifier}}">
+					<label>&nbsp;</label>
+					<a id="metadataLink" class="btn btn-default btn-sm" style="width: 100%" target="_blank" data-ng-href="{{ngr_url}}/resource/{{mdToEdit.identifier}}">
 					<i class="fa fa-link fa-fw"></i>{{"Metadata-link"|translate}}</a>
 				</div>
 				<div class="form-group">
-					<a class="btn btn-default btn-sm" style="width: 100%" target="_blank" href="{{mdToEdit.url}}">
+					<a id="downloadLink" class="btn btn-default btn-sm" style="width: 100%" target="_blank" data-ng-href="{{mdToEdit.url}}">
 						<i class="fa fa-file-o fa-fw"></i>{{"Download-link"|translate}}</a>
 				</div>
 			</div>

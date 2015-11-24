@@ -238,6 +238,30 @@
         $scope.error = false;
         $scope.messages = [];
         $scope.saved = false;
+
+        if (mustPublish && !$scope.mdToEdit.$publishable) {
+          var invalidFields = GdsUploadFactory.getInvalidFields($scope.mdToEdit);
+          $scope.invalidFields = invalidFields;
+          $scope.uploadDeferred = $q.defer();
+          gnPopup.createModal({
+            title: 'updatePublished.fieldErrors.title',
+            content: '<div class="alert alert-danger" role="alert">'
+                + "<p><i class='fa fa-exclamation-circle fa-fw' aria-hidden='true'></i>"
+                + "<span class='sr-only'>Error: </span><span data-translate=''>updatePublished.fieldErrors.header</span></p>"
+                + "<p data-translate=''>updatePublished.fieldErrors.body</p>"
+                + "<p data-translate=''>updatePublished.fieldErrors.listOfFields</p>"
+                + '<ul>'
+                + '<li data-ng-repeat="field in invalidFields">{{field | translate}}</li>'
+                + '</ul></div>',
+            onCloseCallback: function(modal) {
+              $scope.invalidFields = null;
+              $scope.uploadDeferred.resolve();
+            }
+          }, $scope);
+          return $scope.uploadDeferred.promise;
+        }
+
+
         if ($scope.queue && $scope.queue.length > 0) {
           // call submit in blueimp.fileupload
           $scope.uploadDeferred = $q.defer();
