@@ -398,7 +398,7 @@ public class GeodatastoreApi  {
 
             //organisation uses group description field, if empty no metadata creation is possible
             String organisation = group.getDescription();
-            if (organisation==""){
+            if (organisation == ""){
                 Log.warning(GDS_LOG, "organisationname-cannot-be-empty: "+username);
                 throw new ServiceNotAllowedEx("organisationname-cannot-be-empty");
             }
