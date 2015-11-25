@@ -20,17 +20,17 @@ import java.util.Map;
 public class MetadataUtil {
 
     public static final String TEMPLATE_FILE = "templates/pdok-datastore-template.xml";
-    private static final java.lang.String NEW_FILE_STYLESHEET_FILE = "geodatastore-new-upload.xsl" ;
+    private static final java.lang.String NEW_FILE_STYLESHEET_FILE = "geodatastore-new-upload.xsl";
     @Autowired
     private SchemaManager schemaManager;
 
 
-     public Element fillXmlTemplate(Map<String, Object> parameters) throws Exception {
-         Resource resource = new ClassPathResource(TEMPLATE_FILE);
-         InputStream resourceInputStream = resource.getInputStream();
-         Element template = Xml.loadStream(resourceInputStream);
-         return updateMetadataContents(parameters, template);
-     }
+    public Element fillXmlTemplate(Map<String, Object> parameters) throws Exception {
+        Resource resource = new ClassPathResource(TEMPLATE_FILE);
+        InputStream resourceInputStream = resource.getInputStream();
+        Element template = Xml.loadStream(resourceInputStream);
+        return updateMetadataContents(parameters, template);
+    }
 
     public Element updateMetadataContents(Map<String, Object> parameters, Element oldMetadata) throws Exception {
         Path xsltTransform = schemaManager.getSchemaDir(ISO19139SchemaPlugin.IDENTIFIER).resolve("process/")

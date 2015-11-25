@@ -6,11 +6,11 @@ package org.fao.geonet.nl.kadaster.pdok.api;
 public class MetadataResponseBean {
     private String identifier;
 
-    public void setIdentifier(String identifier) {
-        this.identifier = identifier;
-    }
-
     public String getIdentifier() {
         return identifier;
+    }
+
+    public void setIdentifier(String identifier) {
+        this.identifier = identifier;
     }
 }

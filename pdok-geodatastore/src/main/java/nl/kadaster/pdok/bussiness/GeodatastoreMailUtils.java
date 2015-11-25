@@ -18,17 +18,11 @@ import org.springframework.stereotype.Service;
 
 import javax.mail.Authenticator;
 import javax.mail.Session;
-import javax.xml.transform.Result;
 import javax.xml.transform.Source;
 import javax.xml.transform.stream.StreamSource;
 import java.io.InputStream;
-import java.net.URI;
 import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Properties;
+import java.util.*;
 
 /**
  * Created by juanluisrp on 26/10/2015.
@@ -40,7 +34,7 @@ public class GeodatastoreMailUtils {
     private SettingManager settings;
 
 
-    public boolean sendHtmlEmail(String userEmail, List<String> bccList, Map<String, String> templateParameters, String publishEmailXslt) throws Exception {
+    public boolean sendHtmlEmail(List<String> toList, List<String> bccList, Map<String, String> templateParameters, String publishEmailXslt) throws Exception {
 
         Element mail = getContent(templateParameters, publishEmailXslt);
         String subject = mail.getChildText("subject");
@@ -49,27 +43,28 @@ public class GeodatastoreMailUtils {
         getMessage(messageElement, messageSb);
         String message = messageSb.toString();
 
-        return sendEmail(subject, bccList, message, userEmail, new ArrayList<EmailAttachment>(0));
+        return sendEmail(subject, bccList, message, toList, new ArrayList<EmailAttachment>(0));
     }
 
 
     /**
      * Sends an email to userEmail with BCC to the addresses in bccList and the attachments set in attachmentList.
-     * @param userEmail the TO address.
-     * @param bccList a list of addresses to BCC.
+     *
+     * @param toList             the TO address list.
+     * @param bccList            a list of addresses to BCC.
      * @param templateParameters parameters used to fill the template XSLT.
-     * @param attachmentList a list of the path of the files that will be attached to the email.
-     * @param emailXslt the email content. It need to have this structure:
-     *                  <code>
-     *                      &lt;email&gt;
-     *                          &lt;subject&gt;Example subject&lt;/subject&gt;
-     *                          &lt;content&gt;Example content&lt;/content&gt;
-     *                      &lt;/email&gt;
-     *                  </code>
+     * @param attachmentList     a list of the path of the files that will be attached to the email.
+     * @param emailXslt          the email content. It need to have this structure:
+     *                           <code>
+     *                           &lt;email&gt;
+     *                           &lt;subject&gt;Example subject&lt;/subject&gt;
+     *                           &lt;content&gt;Example content&lt;/content&gt;
+     *                           &lt;/email&gt;
+     *                           </code>
      * @return <code>true</code> if the email was sent, <code>false</code> if not.
      * @throws Exception if there is any problem with the addresses, the attachments, the email template or the email server.
      */
-    public boolean sendHtmlEmailWithAttachments(String userEmail, List<String> bccList, Map<String, String> templateParameters, List<Path> attachmentList, String emailXslt) throws Exception {
+    public boolean sendHtmlEmailWithAttachments(List<String> toList, List<String> bccList, Map<String, String> templateParameters, List<Path> attachmentList, String emailXslt) throws Exception {
         Element mail = getContent(templateParameters, emailXslt);
         String subject = mail.getChildText("subject");
         Element messageElement = mail.getChild("content");
@@ -85,7 +80,7 @@ public class GeodatastoreMailUtils {
             attachment.setDisposition(EmailAttachment.ATTACHMENT);
             emailAttachments.add(attachment);
         }
-        return sendEmail(subject, bccList, message, userEmail, emailAttachments);
+        return sendEmail(subject, bccList, message, toList, emailAttachments);
     }
 
     /**
@@ -107,7 +102,7 @@ public class GeodatastoreMailUtils {
         Resource xsltResource = new ClassPathResource(transformPath);
 
         // Apply XSLT with parameters to the template.
-        try(InputStream xsltInputStream = xsltResource.getInputStream()) {
+        try (InputStream xsltInputStream = xsltResource.getInputStream()) {
             Source xsltSource = new StreamSource(xsltInputStream);
             xsltSource.setSystemId("http://example.com/newAccountEemailTemplate");
             //Element email = Xml.transform(root, Paths.get(xsltUri));
@@ -129,7 +124,7 @@ public class GeodatastoreMailUtils {
         }
     }
 
-    public boolean sendEmail(String subject, List<String> bccList, String message, String to, List<EmailAttachment> attachment) {
+    public boolean sendEmail(String subject, List<String> bccList, String message, List<String> toList, List<EmailAttachment> attachment) {
 
         String username = settings
                 .getValue("system/feedback/mailServer/username");
@@ -177,20 +172,28 @@ public class GeodatastoreMailUtils {
             email.setFrom(from);
             email.setSubject(subject);
             email.setHtmlMsg(message);
-            if (bccList != null) {
-                email.addBcc(bccList.toArray(new String[0]));
+            String bccString = "";
+            String toString = "";
+            if (bccList != null && bccList.size() > 0) {
+                String[] bccArray = bccList.toArray(new String[bccList.size()]);
+                email.addBcc(bccArray);
+                bccString = Arrays.toString(bccArray);
             }
-            email.addTo(to);
-            //email.addTo("juanluisrp@geocat.net", "Juan Luis Rodríguez");
+            if (toList != null && toList.size() > 0) {
+                String[] toArray = toList.toArray(new String[toList.size()]);
+                email.addTo(toArray);
+                toString = Arrays.toString(toArray);
+            }
 
             for (EmailAttachment attach : attachment) {
                 email.attach(attach);
             }
 
             String emailId = email.send();
-            Log.info(LOG_MODULE, "Email to " + to + " sent using server " + hostName + ":" + smtpPort + " with ID " + emailId);
+            Log.info(LOG_MODULE, "Email to [" + toString + "] and BCC [" + bccString + "] sent using server "
+                    + hostName + ":" + smtpPort + " with ID " + emailId);
             return true;
-        } catch(EmailException e) {
+        } catch (EmailException e) {
             Log.error(LOG_MODULE, "Error sending email", e);
         }
 

@@ -1,10 +1,8 @@
 package org.fao.geonet.nl.kadaster.pdok.api;
 
-import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import nl.kadaster.pdok.bussiness.MetadataParametersBean;
 import org.fao.geonet.utils.Log;
-import org.json.JSONObject;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
@@ -24,8 +22,9 @@ import java.io.PrintWriter;
  * Created by juanluisrp on 17/11/2015.
  */
 @Component
-public class MaxSizeHandlerExceptionResolver implements HandlerExceptionResolver{
+public class MaxSizeHandlerExceptionResolver implements HandlerExceptionResolver {
     private static final String LOG_MODULE = "MaxSizeHandlerExceptionResolver";
+
     @Override
     public ModelAndView resolveException(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) {
         if (ex instanceof MaxUploadSizeExceededException) {
@@ -33,7 +32,7 @@ public class MaxSizeHandlerExceptionResolver implements HandlerExceptionResolver
             Log.warning(LOG_MODULE, "Maximum upload size of " + maxSizeInBytes / 1024L + " MiB per attachment exceeded", ex);
             response.setContentType(MediaType.APPLICATION_JSON_VALUE);
             response.setStatus(HttpStatus.REQUEST_ENTITY_TOO_LARGE.value());
-            try (PrintWriter out = response.getWriter()){
+            try (PrintWriter out = response.getWriter()) {
                 MetadataParametersBean mpb = new MetadataParametersBean();
                 mpb.setError(true);
                 mpb.addMessage("uploadMaxSizeError");

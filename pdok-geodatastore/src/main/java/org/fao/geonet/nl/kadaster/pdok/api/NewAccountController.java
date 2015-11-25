@@ -1,30 +1,30 @@
 package org.fao.geonet.nl.kadaster.pdok.api;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import jeeves.server.context.ServiceContext;
-import jeeves.server.dispatchers.ServiceManager;
+import com.google.common.collect.Lists;
 import nl.kadaster.pdok.bussiness.GeodatastoreMailUtils;
 import nl.kadaster.pdok.bussiness.RegisterBean;
 import nl.kadaster.pdok.bussiness.ValidationResponse;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
-import org.fao.geonet.kernel.setting.SettingManager;
 import org.fao.geonet.utils.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.*;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import javax.validation.Validator;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by juanluisrp on 04/11/2015.
@@ -33,26 +33,23 @@ import java.util.*;
 public class NewAccountController {
     private static final String GDS_LOG = "geodatastore.register";
     private static final String REGISTRATION_EMAIL_XSLT = "/templates/registration-email-transform.xsl";
-    @Autowired private ServiceManager serviceManager;
-    @Autowired private GeodatastoreMailUtils geodatastoreMailUtils;
-    @Autowired private SettingManager settingManager;
-    @Autowired private Validator validator;
+    @Autowired
+    private GeodatastoreMailUtils geodatastoreMailUtils;
     @Value("#{geodatastoreProperties[registrationEmailAddress]}")
     private String registrationEmailAddress;
     @Value("#{geodatastoreProperties['registrationEmailAddress.bcc']}")
     private String registrationEmailAddressBccString;
 
     @RequestMapping(value = "/{lang}/gdsRegister", method = RequestMethod.POST)
-    public @ResponseBody
+    public
+    @ResponseBody
     ValidationResponse register(@PathVariable("lang") String lang,
                                 @Valid @RequestPart("registerBean") RegisterBean registerBean, BindingResult bindingResult,
-                                @RequestPart("logo") MultipartFile logo,
-                                HttpServletRequest request) {
+                                @RequestPart("logo") MultipartFile logo) {
 
 
         ValidationResponse response = new ValidationResponse();
         response.setStatus("SUCCESS");
-        ServiceContext context = serviceManager.createServiceContext("geodatastore.register", lang, request);
         try {
             List<String> fieldsWithErrors = new ArrayList<>();
             if (logo.isEmpty()) {
@@ -74,8 +71,6 @@ public class NewAccountController {
             response.setStatus("ERROR");
             response.setGlobalError(e.getClass().getCanonicalName());
         }
-
-
 
 
         return response;
@@ -118,12 +113,12 @@ public class NewAccountController {
                 }
             }
 
-            sent = geodatastoreMailUtils.sendHtmlEmailWithAttachments(registrationEmailAddress, bccList, mailTemplateParameters, attachmentList, REGISTRATION_EMAIL_XSLT);
+            List<String> toList = Lists.newArrayList(registrationEmailAddress);
+            sent = geodatastoreMailUtils.sendHtmlEmailWithAttachments(toList, bccList, mailTemplateParameters, attachmentList, REGISTRATION_EMAIL_XSLT);
         } catch (Exception e) {
             Log.error(GDS_LOG, "Error sending registration email", e);
             sent = false;
-        }
-        finally {
+        } finally {
             FileUtils.deleteQuietly(logoDir.toFile());
         }
         if (!sent) {

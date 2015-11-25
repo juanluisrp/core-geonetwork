@@ -1,6 +1,7 @@
 package org.fao.geonet.nl.kadaster.pdok.api;
 
 import com.google.common.base.Joiner;
+import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import jeeves.constants.Jeeves;
 import jeeves.server.ServiceConfig;
@@ -72,7 +73,7 @@ import static org.fao.geonet.repository.specification.UserGroupSpecs.hasUserId;
 @Controller
 @ReadWriteController
 @RequestMapping("/{lang}/api/v1")
-public class GeodatastoreApi  {
+public class GeodatastoreApi {
     public static final String TITLE_KEY = "title";
     public static final String LINEAGE_KEY = "lineage";
     public static final String RESOLUTION_KEY = "resolution";
@@ -97,12 +98,14 @@ public class GeodatastoreApi  {
     public static final String DOWNLOAD_URI_KEY = "downloadUri";
     public static final String THUMBNAIL_URI_KEY = "thumbnailUri";
     private static final String GDS_LOG = "pdok.geodatastore.api";
-    private static final String QUERY_SERVICE= "q";
+    private static final String QUERY_SERVICE = "q";
     private static final String ISO_19139 = "iso19139";
     private static final String LICENSE_KEY = "license";
     private static final String PUBLISH_EMAIL_XSLT = "/templates/publish-email-transform.xsl";
     @Autowired
     ServletContext servletContext;
+    @Autowired
+    LocationManager locationManager;
     private ServiceConfig serviceConfig = new ServiceConfig();
     @Autowired
     private MetadataUtil metadataUtil;
@@ -112,9 +115,12 @@ public class GeodatastoreApi  {
     private DataManager metadataManager;
     @Autowired
     private UserGroupRepository userGroupRepository;
-    @Autowired private UserRepository userRepository;
-    @Autowired private GroupRepository groupRepository;
-    @Autowired private SettingManager settingManager;
+    @Autowired
+    private UserRepository userRepository;
+    @Autowired
+    private GroupRepository groupRepository;
+    @Autowired
+    private SettingManager settingManager;
     @Autowired
     private XslProcessing xslProcessing;
     @Autowired
@@ -131,10 +137,8 @@ public class GeodatastoreApi  {
     private Publish publishController;
     @Value("#{geodatastoreProperties[locationThesaurusName]}")
     private String locationThesaurus;
-    @Autowired LocationManager locationManager;
     @Autowired
     private GeodatastoreMailUtils geodatastoreMailUtils;
-
 
 
     public GeodatastoreApi() {
@@ -145,18 +149,20 @@ public class GeodatastoreApi  {
 
     /**
      * Create a new dataset with the received file, some default data and some calculated data from the received file.
+     *
      * @param dataset the file
-     * @param lang dataset language
+     * @param lang    dataset language
      * @param request the HttpServletRequest
      * @return a {@link ResponseEntity} with {@link MetadataParametersBean} with the dataset properties and a 200 status
      * if the data was created. It has an error property. If it is <code>true</code> then there was an error when trying
      * to create the dataset and the message property should contain the cause.
-     *
      * @see MetadataParametersBean
      */
     @RequestMapping(value = "/dataset", method = RequestMethod.POST)
-    public @ResponseBody ResponseEntity<MetadataParametersBean> uploadDataset(@RequestParam("dataset") MultipartFile dataset,
-                                                                              @PathVariable("lang") String lang, HttpServletRequest request) {
+    public
+    @ResponseBody
+    ResponseEntity<MetadataParametersBean> uploadDataset(@RequestParam("dataset") MultipartFile dataset,
+                                                         @PathVariable("lang") String lang, HttpServletRequest request) {
         if (!dataset.isEmpty()) {
             MetadataParametersBean response = new MetadataParametersBean();
             HttpStatus status = HttpStatus.OK;
@@ -188,8 +194,8 @@ public class GeodatastoreApi  {
 
                 //metadata uses group description as organisation title, can not be empty
                 String organisation = group.getDescription();
-                if (StringUtils.isEmpty(organisation)){
-                    Log.warning(GDS_LOG, "organisationname-cannot-be-empty: "+username);
+                if (StringUtils.isEmpty(organisation)) {
+                    Log.warning(GDS_LOG, "organisationname-cannot-be-empty: " + username);
                     throw new ServiceNotAllowedEx("organisationname-cannot-be-empty");
                 }
 
@@ -210,7 +216,6 @@ public class GeodatastoreApi  {
                 String createdId = metadataManager.insertMetadata(context, ISO19139SchemaPlugin.IDENTIFIER, metadata, uuid.toString(),
                         userId, Integer.toString(group.getId()), settingManager.getSiteId(), MetadataType.METADATA.codeString,
                         docType, category, creationDate.getDateAsString(), creationDate.getDateAsString(), updateFixedInfo, indexImmediate);
-
 
 
                 metadataManager.setStatus(context, Integer.parseInt(createdId), Integer.parseInt(Params.Status.DRAFT), creationDate,
@@ -245,7 +250,7 @@ public class GeodatastoreApi  {
                     processedMetadata = xslProcessing.process(context, createdId, process,
                             true, report, siteURL, allParams);
                     if (processedMetadata == null) {
-                        String message ="Not found: "
+                        String message = "Not found: "
                                 + report.getNotFoundMetadataCount() + ", Not owner: " + report.getNotEditableMetadataCount()
                                 + ", No process found: " + report.getNoProcessFoundCount() + ".";
                         Log.info(GDS_LOG, message);
@@ -333,7 +338,7 @@ public class GeodatastoreApi  {
         String topicList = Joiner.on("#").join(topics);
         parameters.put(TOPICS_KEY, topicList);
         parameters.put(TOPIC_SEPARATOR_KEY, "#");
-        if (StringUtils.isNotBlank(geographicIdentifier) && geographicIdentifier.contains("#")){
+        if (StringUtils.isNotBlank(geographicIdentifier) && geographicIdentifier.contains("#")) {
             String[] splitedUri = StringUtils.split(geographicIdentifier, '#');
             String geographicCode = splitedUri[1];
             parameters.put(GEOGRAPHIC_URI_KEY, geographicIdentifier); // location
@@ -347,7 +352,7 @@ public class GeodatastoreApi  {
         parameters.put(FORMAT_KEY, format);
         parameters.put(DOWNLOAD_URI_KEY, downloadUri);
         parameters.put(FILE_NAME_KEY, fileName);
-        parameters.put(LICENSE_KEY,license);
+        parameters.put(LICENSE_KEY, license);
 
 
         return parameters;
@@ -355,11 +360,13 @@ public class GeodatastoreApi  {
 
     /**
      * Update an existing metadata record.
+     *
      * @param identifier
      * @return
      */
     @RequestMapping(value = "/dataset/{identifier}", method = RequestMethod.POST)
-    public @ResponseBody
+    public
+    @ResponseBody
     ResponseEntity<Object> updateDataset(@PathVariable("lang") String lang,
                                          @PathVariable("identifier") String identifier,
                                          @RequestParam(value = "thumbnail", required = false) MultipartFile thumbnail,
@@ -398,8 +405,8 @@ public class GeodatastoreApi  {
 
             //organisation uses group description field, if empty no metadata creation is possible
             String organisation = group.getDescription();
-            if (organisation == ""){
-                Log.warning(GDS_LOG, "organisationname-cannot-be-empty: "+username);
+            if (StringUtils.isBlank(organisation)) {
+                Log.warning(GDS_LOG, "organisationname-cannot-be-empty: " + username);
                 throw new ServiceNotAllowedEx("organisationname-cannot-be-empty");
             }
 
@@ -435,7 +442,7 @@ public class GeodatastoreApi  {
                 Path metadataPublicDatadir = Lib.resource.getDir(context, Params.Access.PUBLIC, metadataId);
                 Files.createDirectories(metadataPublicDatadir);
 
-                removeOldThumbnail(context ,metadataId, "normal", false);
+                removeOldThumbnail(context, metadataId, "normal", false);
 
                 //--- move uploaded file to destination directory
                 Files.copy(thumbnail.getInputStream(), metadataPublicDatadir.resolve(thumbnail.getOriginalFilename()), StandardCopyOption.REPLACE_EXISTING);
@@ -455,7 +462,7 @@ public class GeodatastoreApi  {
             SearchResponse searchResponse = new SearchResponse(locationManager, locationThesaurus);
             searchResponse.initFromXml(results);
 
-            MetadataParametersBean result  = new MetadataParametersBean();
+            MetadataParametersBean result = new MetadataParametersBean();
             if (searchResponse.getCount() > 0 && searchResponse.getMetadata().size() > 0) {
                 result = searchResponse.getMetadata().get(0);
                 /*if (StringUtils.isNotBlank(result.getLocationUri())) {
@@ -468,8 +475,8 @@ public class GeodatastoreApi  {
 
             if (publish && result.isValid()) {
                 Log.debug(GDS_LOG, "Publishing metadata " + metadataId);
-                Publish.PublishReport report =  publishController.publish(lang, request, metadataId, false);
-                if (report.getPublished() > 0 || report.getUnmodified() > 0 ) {
+                Publish.PublishReport report = publishController.publish(lang, request, metadataId, false);
+                if (report.getPublished() > 0 || report.getUnmodified() > 0) {
                     metadataManager.setStatus(context, Integer.parseInt(metadataId),
                             Integer.parseInt(Params.Status.APPROVED), new ISODate(),
                             "Publish dataset");
@@ -482,14 +489,22 @@ public class GeodatastoreApi  {
                         if (StringUtils.isBlank(userEmail)) {
                             Log.warning(GDS_LOG, "Cannot send published email to user " + user.getUsername()
                                     + " because there is not associated email address");
-                        } else  {
+                        } else {
                             Map<String, String> mailTemplateParameters = new HashMap<>();
                             mailTemplateParameters.put("site", settingManager.getSiteName());
                             mailTemplateParameters.put("siteURL", settingManager.getSiteURL("dut"));
                             mailTemplateParameters.put("userName", user.getName());
                             mailTemplateParameters.put("datasetTile", result.getTitle());
+                            List<String> emailToList = Lists.newArrayList();
+                            if (StringUtils.isNotBlank(userEmail)) {
+                                emailToList.add(userEmail);
+                            }
+                            if (StringUtils.isNotBlank(group.getEmail())) {
+                                emailToList.add(group.getEmail());
+                            }
 
-                            boolean sent = geodatastoreMailUtils.sendHtmlEmail(userEmail, new ArrayList<String>(0), mailTemplateParameters, PUBLISH_EMAIL_XSLT);
+
+                            boolean sent = geodatastoreMailUtils.sendHtmlEmail(emailToList, new ArrayList<String>(0), mailTemplateParameters, PUBLISH_EMAIL_XSLT);
                             if (!sent) {
                                 Log.error(GDS_LOG, "The publish email cannot be sent. Please review the mail server settings in the database");
                             }
@@ -500,7 +515,7 @@ public class GeodatastoreApi  {
                 } else if (report.getDisallowed() > 0) {
                     response = result;
                     String message = "You cannot publish data. You must be at least Reviewer in the group {id="
-                            + group.getId() +", name=" + group.getName() + "}";
+                            + group.getId() + ", name=" + group.getName() + "}";
                     Log.warning(GDS_LOG, message);
                     throw new ServiceNotAllowedEx(message);
                 }
@@ -552,10 +567,10 @@ public class GeodatastoreApi  {
         parametersMap.put(ORGANISATION_EMAIL_KEY, organisationEmail);
         parametersMap.put(METADATA_MODIFIED_DATE_KEY, changeDate);
 
-        if (metadataParameter.getTitle() != null && metadataParameter.getTitle() != "") {
+        if (StringUtils.isNotEmpty(metadataParameter.getTitle())) {
             parametersMap.put(TITLE_KEY, metadataParameter.getTitle());
         }
-        if (metadataParameter.getSummary() != null && metadataParameter.getSummary() != "") {
+        if (StringUtils.isNotEmpty(metadataParameter.getSummary())) {
             parametersMap.put(ABSTRACT_KEY, metadataParameter.getSummary());
         }
         if (metadataParameter.getKeywords() != null && metadataParameter.getKeywords().size() > 0) {
@@ -578,7 +593,7 @@ public class GeodatastoreApi  {
             String[] splitLocationUri = StringUtils.split(metadataParameter.getLocationUri(), "#");
             if (splitLocationUri.length == 2) {
                 String location = splitLocationUri[1];
-                KeywordBean locationKeyword =  locationManager.getKeywordById(locationThesaurus, metadataParameter.getLocationUri());
+                KeywordBean locationKeyword = locationManager.getKeywordById(locationThesaurus, metadataParameter.getLocationUri());
                 if (locationKeyword != null) {
                     parametersMap.put(GEOGRAPHIC_URI_KEY, metadataParameter.getLocationUri());
                     parametersMap.put(GEOGRAPHIC_IDENTIFIER_KEY, location);
@@ -598,13 +613,13 @@ public class GeodatastoreApi  {
             }
 
         }
-        if (metadataParameter.getLineage() != null && metadataParameter.getLineage() != "") {
+        if (StringUtils.isNotBlank(metadataParameter.getLineage())) {
             parametersMap.put(LINEAGE_KEY, metadataParameter.getLineage());
         }
-        if (metadataParameter.getLicense() != null && metadataParameter.getLicense() != "") {
+        if (StringUtils.isNotBlank(metadataParameter.getLicense())) {
             parametersMap.put(LICENSE_KEY, metadataParameter.getLicense());
         }
-        if (metadataParameter.getResolution() != null && metadataParameter.getResolution() != "") {
+        if (StringUtils.isNotBlank(metadataParameter.getResolution())) {
             parametersMap.put(RESOLUTION_KEY, metadataParameter.getResolution());
         }
 
@@ -612,7 +627,8 @@ public class GeodatastoreApi  {
     }
 
     @RequestMapping(value = "/dataset/{identifier}", method = RequestMethod.DELETE)
-    public  @ResponseBody
+    public
+    @ResponseBody
     ResponseEntity<Object> deleteDataset(@PathVariable("identifier") String identifier, @PathVariable("lang") String lang,
                                          HttpServletRequest request) {
         ServiceContext context = serviceManager.createServiceContext("geodatastore.api.dataset", lang, request);
@@ -665,9 +681,7 @@ public class GeodatastoreApi  {
             responseMap.put("messages", messages);
             responseMap.put("identifier", identifier);
             status = HttpStatus.FORBIDDEN;
-        }
-
-        catch (Exception e) {
+        } catch (Exception e) {
             Log.error(GDS_LOG, "Unknown error deleting the metadata " + identifier, e);
             context.error(e);
             responseMap.put("error", true);
@@ -681,7 +695,7 @@ public class GeodatastoreApi  {
         return new ResponseEntity<Object>(responseMap, status);
     }
 
-    @RequestMapping(value="/registry")
+    @RequestMapping(value = "/registry")
     public List<String> getAvailableCodelists() {
         List<String> result = new ArrayList<>();
         result.add("gmd:MD_TopicCategoryCode");
@@ -704,13 +718,13 @@ public class GeodatastoreApi  {
         codelist.setAttribute("schema", ISO_19139);
         codelist.setAttribute("name", codeList);
         parameters.addContent(codelist.detach());
-        Element responseXML =  info.exec(parameters, context);
+        Element responseXML = info.exec(parameters, context);
         if (accept != null) {
             if (accept.toLowerCase().contains(MediaType.APPLICATION_XML_VALUE)) {
                 responseHeaders.setContentType(new MediaType("application", "xml"));
 
                 return new ResponseEntity<>(Xml.getString(responseXML), responseHeaders, HttpStatus.OK);
-            } else  {
+            } else {
                 responseHeaders.setContentType(new MediaType("application", "json"));
                 return new ResponseEntity<>(Xml.getJSON(responseXML), responseHeaders, HttpStatus.OK);
             }
@@ -722,13 +736,16 @@ public class GeodatastoreApi  {
 
     /**
      * Search user datasets.
+     *
      * @return
      */
     @RequestMapping(value = "/datasets", produces = MediaType.APPLICATION_JSON_VALUE)
-    public @ResponseBody ResponseEntity<Object> uploadDataset(
+    public
+    @ResponseBody
+    ResponseEntity<Object> uploadDataset(
             @PathVariable("lang") String lang,
             @RequestParam(value = "q", defaultValue = "") String q,
-            @RequestParam(value = "sortBy", defaultValue="changeDate") String sortBy,
+            @RequestParam(value = "sortBy", defaultValue = "changeDate") String sortBy,
             @RequestParam(value = "sortOrder", defaultValue = "desc") String sortOrder,
             @RequestParam(value = "from", defaultValue = "1") Integer from,
             @RequestParam(value = "pageSize", defaultValue = "20") Integer pageSize,
@@ -742,12 +759,10 @@ public class GeodatastoreApi  {
 
 
         try {
-
             String statusParam = Params.Status.APPROVED;
             if ("draft".equals(status)) {
                 statusParam = Params.Status.DRAFT;
             }
-            MetaSearcher searcher = searchManager.newSearcher(SearcherType.LUCENE, Geonet.File.SEARCH_LUCENE);
             ServiceContext context = serviceManager.createServiceContext("geodatastore.api", lang, request);
             UserSession session = context.getUserSession();
             if (session.isAuthenticated()) {
@@ -764,6 +779,7 @@ public class GeodatastoreApi  {
                 Element parametersAsXml = buildSearchXmlParameters(context, q, sortBy, sortOrder, from, pageSize, statusParam);
                 // FIXME Why save search parameters in session?
                 session.setProperty(Geonet.Session.SEARCH_REQUEST, parametersAsXml.clone());
+                MetaSearcher searcher = searchManager.newSearcher(SearcherType.LUCENE, Geonet.File.SEARCH_LUCENE);
                 searcher.search(context, parametersAsXml, serviceConfig);
                 if (!summaryOnly) {
                     Element results = searcher.present(context, parametersAsXml, serviceConfig);
@@ -786,22 +802,21 @@ public class GeodatastoreApi  {
         }
 
 
-        return new ResponseEntity<>((Object) "{\"from\":0,\"to\":0,\"selected\":0,\"count\":0,\"metadata\":[]}", headers,  HttpStatus.OK);
+        return new ResponseEntity<>((Object) "{\"from\":0,\"to\":0,\"selected\":0,\"count\":0,\"metadata\":[]}", headers, HttpStatus.OK);
     }
-
 
 
     /**
      * Builds an Element that can be used by the searcher with the parameters passed to the method.
      * It also add the default values for missing parameters.
      *
-     * @param context Service context
-     * @param q query string.
-     * @param sortBy field name to order by.
+     * @param context   Service context
+     * @param q         query string.
+     * @param sortBy    field name to order by.
      * @param sortOrder "asc" or "desc" order.
-     * @param from first element to return.
-     * @param pageSize elements per page.
-     * @param status draft or published.
+     * @param from      first element to return.
+     * @param pageSize  elements per page.
+     * @param status    draft or published.
      * @return the query for the searcher.
      */
     private Element buildSearchXmlParameters(ServiceContext context, String q, String sortBy, String sortOrder, Integer from,
@@ -838,15 +853,17 @@ public class GeodatastoreApi  {
      *
      * @return
      */
-    private @Nonnull String getSiteURL(ServletPathFinder servletPathFinder) {
+    private
+    @Nonnull
+    String getSiteURL(ServletPathFinder servletPathFinder) {
         String baseURL = servletPathFinder.getBaseUrl();
         String protocol = settingManager.getValue(Geonet.Settings.SERVER_PROTOCOL);
-        String host    = settingManager.getValue(Geonet.Settings.SERVER_HOST);
-        String port    = settingManager.getValue(Geonet.Settings.SERVER_PORT);
+        String host = settingManager.getValue(Geonet.Settings.SERVER_HOST);
+        String port = settingManager.getValue(Geonet.Settings.SERVER_PORT);
 
         String actualPort = ":" + port;
         if ((StringUtils.equalsIgnoreCase(protocol, "http") && StringUtils.equalsIgnoreCase(port, "80"))
-                ||(StringUtils.equalsIgnoreCase(protocol, "https") && StringUtils.equalsIgnoreCase(port, "443"))) {
+                || (StringUtils.equalsIgnoreCase(protocol, "https") && StringUtils.equalsIgnoreCase(port, "443"))) {
             actualPort = "";
         }
 
@@ -883,9 +900,11 @@ public class GeodatastoreApi  {
     }
 
     @ExceptionHandler(FileUploadBase.SizeLimitExceededException.class)
-    private @ResponseBody ResponseEntity<MetadataParametersBean> handleMaxsizeException(FileUploadBase.SizeLimitExceededException exception) {
-        Log.warning(GDS_LOG, "File uploaded is too big. Actual size: " + exception.getActualSize()/1024L
-                + "MiB, max permitted size " + exception.getPermittedSize()/1024L + " MiB", exception);
+    private
+    @ResponseBody
+    ResponseEntity<MetadataParametersBean> handleMaxsizeException(FileUploadBase.SizeLimitExceededException exception) {
+        Log.warning(GDS_LOG, "File uploaded is too big. Actual size: " + exception.getActualSize() / 1024L
+                + "MiB, max permitted size " + exception.getPermittedSize() / 1024L + " MiB", exception);
         MetadataParametersBean pb = new MetadataParametersBean();
         pb.addMessage("fileTooBig");
         pb.setError(true);

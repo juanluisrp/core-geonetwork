@@ -26,10 +26,24 @@ public class SearchResponse {
     private LocationManager locationManager;
     @JsonIgnore
     private String locationThesaurus;
+    private List<MetadataParametersBean> metadata;
 
     public SearchResponse(LocationManager locationManager, String locationThesaurus) {
         this.locationManager = locationManager;
         this.locationThesaurus = locationThesaurus;
+    }
+
+    public SearchResponse() {
+        metadata = new ArrayList<>();
+    }
+
+    private static List<String> getStringListOf(Element metadataEl, String childName) {
+        List<Element> children = metadataEl.getChildren(childName);
+        List<String> result = Lists.newArrayListWithCapacity(children.size());
+        for (Element child : children) {
+            result.add(child.getText());
+        }
+        return result;
     }
 
     public Integer getFrom() {
@@ -72,12 +86,6 @@ public class SearchResponse {
         this.metadata = metadata;
     }
 
-    private List<MetadataParametersBean> metadata;
-
-    public SearchResponse() {
-        metadata = new ArrayList<>();
-    }
-
     public SearchResponse initFromXml(Element element) {
         if (element != null && element.getName().equals(Jeeves.Elem.RESPONSE)) {
             from = NumberUtils.toInt(element.getAttributeValue("from"));
@@ -107,7 +115,7 @@ public class SearchResponse {
         if (StringUtils.isNotBlank(metadataEl.getChildText("geoDescCode"))) {
             String locationUriString = "http://geodatastore.pdok.nl/registry/location#" + metadataEl.getChildText("geoDescCode");
             if (this.locationManager != null && this.locationThesaurus != null) {
-                KeywordBean locBean =  this.locationManager.getKeywordById(this.locationThesaurus, locationUriString);
+                KeywordBean locBean = this.locationManager.getKeywordById(this.locationThesaurus, locationUriString);
                 if (locBean != null) {
                     md.setLocationUri(locationUriString);
                     md.setLocation(locBean.getDefaultValue());
@@ -179,9 +187,9 @@ public class SearchResponse {
                 md.setThumbnailUri(imageComponents[1]);
             } else if (imageComponents.length > 0) {
                 md.setThumbnailUri(imageComponents[0]);
-			} else {
-				md.setThumbnailUri("../../catalog/views/geodatastore/images/no-thumbnail.png");
-			}
+            } else {
+                md.setThumbnailUri("../../catalog/views/geodatastore/images/no-thumbnail.png");
+            }
         }
 
         String geoBox = metadataEl.getChildText("geoBox");
@@ -202,25 +210,15 @@ public class SearchResponse {
             md.setExtent(wkt);
         }
 
-		md.setpublishDate(metadataEl.getChildText("publicationDate"));
+        md.setpublishDate(metadataEl.getChildText("publicationDate"));
 
-		Element geonetInfo = metadataEl.getChild("info", Geonet.Namespaces.GEONET);
+        Element geonetInfo = metadataEl.getChild("info", Geonet.Namespaces.GEONET);
         if (geonetInfo != null) {
             md.setIdentifier(geonetInfo.getChildText("uuid"));
-            md.setChangeDate(geonetInfo.getChildText("changeDate"));	
+            md.setChangeDate(geonetInfo.getChildText("changeDate"));
         }
         return md;
     }
-
-    private static List<String> getStringListOf(Element metadataEl, String childName) {
-        List<Element> children =  metadataEl.getChildren(childName);
-        List<String> result = Lists.newArrayListWithCapacity(children.size());
-        for (Element child : children) {
-            result.add(child.getText());
-        }
-        return result;
-    }
-
 
     public void initFromSummary(Element summary) {
         if (summary != null && summary.getName().equals(Jeeves.Elem.RESPONSE)) {

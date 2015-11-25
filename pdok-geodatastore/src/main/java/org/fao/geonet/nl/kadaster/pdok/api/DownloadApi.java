@@ -1,6 +1,5 @@
 package org.fao.geonet.nl.kadaster.pdok.api;
 
-import jeeves.server.ServiceConfig;
 import jeeves.server.context.ServiceContext;
 import jeeves.server.dispatchers.ServiceManager;
 import org.apache.commons.lang.StringUtils;
@@ -47,8 +46,9 @@ public class DownloadApi {
 
     /**
      * Download the recentest thumbnail found in the public folder of the metadata.
-     * @param uuid Metadata UUID identifier
-     * @param request ServletRequest
+     *
+     * @param uuid     Metadata UUID identifier
+     * @param request  ServletRequest
      * @param response ServletResponse
      * @throws Exception
      */
@@ -60,25 +60,25 @@ public class DownloadApi {
 
     /**
      * Download the recentest thumbnail found in the public folder of the metadata.
-     * @param uuid Metadata UUID identifier
-     * @param request ServletRequest
+     *
+     * @param uuid     Metadata UUID identifier
+     * @param request  ServletRequest
      * @param response ServletResponse
      * @throws Exception
      */
     @RequestMapping(value = "/id/thumbnail/{uuid}", method = RequestMethod.GET)
     public void downloadThumbnail(@PathVariable("uuid") String uuid, HttpServletRequest request,
-                                HttpServletResponse response) throws Exception {
+                                  HttpServletResponse response) throws Exception {
         downloadFile(uuid, Params.Access.PUBLIC, request, response);
     }
 
 
-
-
     /**
      * Send to the client the most recent file in the metadata private or public folder, depending on the access parameter.
-     * @param uuid the metadata UUID
-     * @param access Must be one of the Params.Access
-     * @param request ServletRequest
+     *
+     * @param uuid     the metadata UUID
+     * @param access   Must be one of the Params.Access
+     * @param request  ServletRequest
      * @param response ServletResponse
      * @throws Exception thrown if the metadata or the file is not found or if there is any IOException while sending the file.
      * @see org.fao.geonet.constants.Params.Access
@@ -120,9 +120,9 @@ public class DownloadApi {
         } catch (ResourceNotFoundEx e) {
             Log.warning(GDS_LOG, "Metadata " + uuid + " has not dataset", e);
             throw e;
-        }catch (MetadataNotFoundEx e) {
+        } catch (MetadataNotFoundEx e) {
             e.printStackTrace();
-            Log.error(GDS_LOG, "Metadata "+ uuid + " not found", e);
+            Log.error(GDS_LOG, "Metadata " + uuid + " not found", e);
             throw e;
         } catch (Exception e) {
             e.printStackTrace();
@@ -135,14 +135,14 @@ public class DownloadApi {
      * Copy the file contents into the response output stream and tries to set the right headers (contentType, size,
      * fileDisposition) for the response.
      *
-     * @param file the file to transfer.
-     * @param request the ServletRequest.
+     * @param file     the file to transfer.
+     * @param request  the ServletRequest.
      * @param response the ServletResponse.
      * @throws IOException if there is any problem accessing the file or copying the content.
      */
     private void transferFile(Path file, HttpServletRequest request, HttpServletResponse response) throws IOException {
         ServletContext context = request.getServletContext();
-        try(InputStream fileInputStream = Files.newInputStream(file, StandardOpenOption.READ)) {
+        try (InputStream fileInputStream = Files.newInputStream(file, StandardOpenOption.READ)) {
             // get MIME type of the file
             String mimeType = context.getMimeType(file.toString());
             if (mimeType == null) {
@@ -181,9 +181,6 @@ public class DownloadApi {
     public void handleInternalServerError() {
 
     }
-
-
-
 
 
 }

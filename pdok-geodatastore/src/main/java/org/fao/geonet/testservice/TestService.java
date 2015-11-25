@@ -1,7 +1,6 @@
 package org.fao.geonet.testservice;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
@@ -10,7 +9,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 public class TestService {
 
-    public @ResponseBody
+    public
+    @ResponseBody
     String test() {
         return "{'key': 'value'}";
     }

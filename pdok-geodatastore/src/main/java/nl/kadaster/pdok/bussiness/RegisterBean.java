@@ -33,10 +33,11 @@ public class RegisterBean {
     String name;
     @NotEmpty
     String surname;
-    @NotNull @Email
+    @NotNull
+    @Email
     String email;
-    @NotBlank String telephone;
-
+    @NotBlank
+    String telephone;
 
 
     public String getSurname() {
