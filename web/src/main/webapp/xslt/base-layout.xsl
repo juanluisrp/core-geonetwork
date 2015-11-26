@@ -28,8 +28,8 @@
         <meta name="description" content=""/>
         <meta name="keywords" content=""/>
 
-  <link rel="shortcut icon" href="../../images/logos/favicon.ico" type="image/vnd.microsoft.icon" />
-  <link rel="icon" href="../../images/logos/favicon.ico" type="image/x-icon" />
+        <link rel="shortcut icon" href="../../images/logos/favicon.ico" type="image/vnd.microsoft.icon" />
+        <link rel="icon" href="../../images/logos/favicon.ico" type="image/x-icon" />
 
         <xsl:call-template name="css-load"/>
       </head>

@@ -37,6 +37,14 @@
       <xsl:when test="$isDebugMode">
 
         <script src="{$uiResourcesPath}lib/modernizr.js"></script>
+        <script type="text/javascript" language="JavaScript">
+          <![CDATA[
+
+          var browserSupported = Modernizr && Modernizr.filereader && Modernizr.blobconstructor;
+          if (!browserSupported) {
+          window.location.replace('../../catalog/views/geodatastore/templates/nonSupportedBrowser.html');
+          }]]>
+        </script>
         <script src="{$uiResourcesPath}lib/closure/base.js"></script>
 
         <script src="{$uiResourcesPath}lib/base64.js"></script>
@@ -121,6 +129,14 @@
         </xsl:when>
         <xsl:otherwise>
             <script src="{/root/gui/url}/static/lib.js"></script>
+            <script type="text/javascript" language="JavaScript">
+              <![CDATA[
+
+            var browserSupported = Modernizr && Modernizr.filereader && Modernizr.blobconstructor;
+            if (!browserSupported) {
+            window.location.replace('../../catalog/views/geodatastore/templates/nonSupportedBrowser.html');
+            }]]>
+            </script>
             <script src="{/root/gui/url}/static/{$angularModule}.js{$minimizedParam}"></script>
         </xsl:otherwise>
     </xsl:choose>
