@@ -198,11 +198,11 @@
         gdsSearchManagerService.search(searchParams).then(function (data) {
           GdsUploadFactory.clearList();
           $scope.searchResults = data;
-          $scope.filterCount = data.count;
-          if ($scope.tab === 'upload' && data.count>-1) {
-            $scope.totalNotPublished = data.count;
+          $scope.filterCount = data.count?data.count:0;
+          if ($scope.tab === 'upload' && data.count && data.count>-1) {
+            $scope.totalNotPublished = data.count?data.count:0;
           } else if ($scope.tab === 'published' && data.count>-1) {
-            $scope.totalPublished = data.count;
+            $scope.totalPublished = data.count?data.count:0;
           }
           var cnt = Math.ceil(data.count / $scope.perPage);
           if (!cnt || cnt < 1) cnt = 1;
@@ -220,9 +220,9 @@
           summaryOnly: true
         }).then(function (data) {
           if (status === 'draft') {
-            $scope.totalNotPublished = data.count;
+            $scope.totalNotPublished = data.count?data.count:0;
           } else if (status === 'published') {
-            $scope.totalPublished = data.count;
+            $scope.totalPublished = data.count?data.count:0;
           }
         })
       }
@@ -231,10 +231,12 @@
       $scope.getStatus = function (md) {
         if (md.$publishable) {
           return 'publish';
+        } else if (md.error) {
+          return 'error';
         } else {
           return 'metadataMissing';
         }
-      }
+      };
 
       $scope.pages = [];
       $scope.updateResults(1);
@@ -329,27 +331,20 @@
         }
       });
 
-
       //grab the filetype either from format or from file extension
       $scope.getFileType = function (md) {
         var ftype = "";
-        if (!md.fileType) {
-          var fprops = md.url.split('/');
-          if (fprops.length > 3 && fprops[fprops.length - 1] != '') {
-            var type = fprops[fprops.length - 1].split(".");
-            if (type.length >= 2) {
-              ftype = type[1];
-            }
-          } else {
-            ftype = "";
-          }
+        if (md instanceof File && md.name.split(".").length > 1) {
+          ftype = md.name.split('.')[md.name.split('.').length-1];
+        } else if (md.fileType && md.fileType != '') {
+           ftype = md.fileType;
+        } else if (md.fileName && md.fileName.split('.').length > 1){	
+            ftype = md.fileName.split('.')[md.fileName.split('.').length-1];	
         } else {
-          ftype = md.fileType;
+            ftype = "";
         }
         return GdsUploadFactory.getFileIcon(ftype);
-
       };
-
 
       $scope.setBackground = function (md) {
         var mdIdentifier = md.identifier || md['geonet:info'].uuid;
@@ -384,12 +379,7 @@
         } else if (md.fileName && md.fileName.length > 0) {
           return md.fileName;
         } else {
-          var fprops = md.url.split('/');
-          if (fprops.length > 3 && fprops[fprops.length - 1] != '') {
-            return fprops[fprops.length - 1];
-          } else {
             return md.title;
-          }
         }
       };
 

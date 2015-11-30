@@ -292,13 +292,17 @@ public class MailUtil {
 						email.send();
 					} catch (EmailException e) {
 						e.printStackTrace();
-					}
+                        Log.error("MailUtil", "Error sending email using " + email.getHostName() + ":"  + email.getSmtpPort(), e);
+
+                    }
         		}
         	};
         	
         	t.start();
         } catch (Exception e) {
             e.printStackTrace();
+            Log.error("MailUtil", "Error sending email using " + email.getHostName() + ":"  + email.getSmtpPort(), e);
+
             return false;
         }
         return true;
@@ -309,6 +313,7 @@ public class MailUtil {
             email.send();
         } catch (EmailException e) {
             e.printStackTrace();
+            Log.error("MailUtil", "Error sending email using " + email.getHostName() + ":"  + email.getSmtpPort(), e);
             return false;
         }
 
@@ -340,6 +345,7 @@ public class MailUtil {
             email.setMsg(message);
         } catch (EmailException e1) {
             e1.printStackTrace();
+            Log.error("MailUtil", "Error setting the email content ", e1);
             return false;
         }
         email.setSSL(true);
@@ -350,6 +356,8 @@ public class MailUtil {
                 email.addBcc(add);
             } catch (EmailException e) {
                 e.printStackTrace();
+                Log.error("MailUtil", "Error adding email address " + add + " to BCC", e);
+
                 return false;
             }
         }
@@ -394,6 +402,8 @@ public class MailUtil {
                 email.setFrom(from);
             } catch (EmailException e) {
                 e.printStackTrace();
+                Log.error("MailUtil", "Error setting email from header (" + from + ")", e);
+
             }
         } else {
             throw new IllegalArgumentException(

@@ -154,7 +154,7 @@
     </xsl:copy>
   </xsl:template>
 
-  <!-- Alternate title -->
+  <!-- Alternate title 
   <xsl:template match="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:citation/gmd:CI_Citation/gmd:alternateTitle">
     <xsl:copy>
       <xsl:call-template name="defaultCharacterStringTemplate">
@@ -162,7 +162,7 @@
         <xsl:with-param name="defaultValue" select="$defaultConstant"></xsl:with-param>
       </xsl:call-template>
     </xsl:copy>
-  </xsl:template>
+  </xsl:template>-->
 
   <!-- Publication date -->
   <xsl:template match="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:citation/gmd:CI_Citation/gmd:date/gmd:CI_Date/gmd:date[../gmd:dateType/gmd:CI_DateTypeCode[@codeListValue='publication']]">

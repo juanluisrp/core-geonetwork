@@ -10,7 +10,6 @@ web/src/main/webapp/WEB-INF/data/config/schema_plugins/dublin-core
 web/src/main/webapp/WEB-INF/data/config/schema_plugins/fgdc-std
 web/src/main/webapp/WEB-INF/data/config/schema_plugins/iso19*
 web/src/main/webapp/scripts/lib/*
-web/src/main/webapp/images/logos/*
 web/src/main/webapp/images/statTmp
 web/logs/
 web/jcs_caching/
@@ -48,7 +47,6 @@ datadir/
 *.factorypath
 web/src/main/webapp/WEB-INF/data/removed/
 web/.springBeans
-web/images/
 *.launch
 idea/
 web/src/main/webapp/WEB-INF/data/0*

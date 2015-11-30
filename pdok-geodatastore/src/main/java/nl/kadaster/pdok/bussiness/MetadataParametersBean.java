@@ -3,7 +3,6 @@ package nl.kadaster.pdok.bussiness;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.google.common.collect.Lists;
 import org.apache.commons.lang.StringUtils;
-import org.codehaus.jackson.annotate.JsonIgnore;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +29,7 @@ public class MetadataParametersBean {
     private String fileType;
     private String locationUri;
     private String changeDate;
-	private String publishDate;
+    private String publishDate;
     private String thumbnailUri;
     private String fileName;
 
@@ -38,7 +37,7 @@ public class MetadataParametersBean {
         this.keywords = Lists.newArrayList();
         this.topicCategories = Lists.newArrayList();
         this.messages = Lists.newArrayList();
-		this.thumbnailUri = "../../catalog/views/geodatastore/images/no-thumbnail.png";
+        this.thumbnailUri = "../../catalog/views/geodatastore/images/no-thumbnail.png";
     }
 
     public String getTitle() {
@@ -187,12 +186,12 @@ public class MetadataParametersBean {
         this.messages.add(message);
     }
 
-    public void setFileType(String fileType) {
-        this.fileType = fileType;
-    }
-
     public String getFileType() {
         return fileType;
+    }
+
+    public void setFileType(String fileType) {
+        this.fileType = fileType;
     }
 
     public boolean isValid() {
@@ -217,31 +216,31 @@ public class MetadataParametersBean {
         return changeDate;
     }
 
+    public void setChangeDate(String changeDate) {
+        this.changeDate = changeDate;
+    }
+
     public void setpublishDate(String publishDate) {
         this.publishDate = publishDate;
     }
 
-	public String getpublishDate() {
+    public String getpublishDate() {
         return publishDate;
-    }
-
-    public void setChangeDate(String changeDate) {
-        this.changeDate = changeDate;
-    }
-	
-    public void setThumbnailUri(String thumbnailUri) {
-        this.thumbnailUri = thumbnailUri;
     }
 
     public String getThumbnailUri() {
         return thumbnailUri;
     }
 
-    public void setFileName(String fileName) {
-        this.fileName = fileName;
+    public void setThumbnailUri(String thumbnailUri) {
+        this.thumbnailUri = thumbnailUri;
     }
 
     public String getFileName() {
         return fileName;
+    }
+
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
     }
 }

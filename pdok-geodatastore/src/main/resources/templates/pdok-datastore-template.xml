@@ -61,7 +61,6 @@
           <gmd:title>
             <gco:CharacterString></gco:CharacterString>
           </gmd:title>
-          <gmd:alternateTitle><gco:CharacterString></gco:CharacterString></gmd:alternateTitle>
           <gmd:date>
             <gmd:CI_Date>
               <gmd:date></gmd:date>

@@ -245,7 +245,7 @@
             if (!propertyValue || propertyValue.length == 0) {
               publishable = false;
             } else {
-              for (var j = 0; j < propertyValue && publishable; j++) {
+              for (var j = 0; j < propertyValue.length && publishable; j++) {
                 var arrayValue = propertyValue[j];
                 if (!arrayValue || arrayValue.trim() == '') {
                   publishable = false;
@@ -261,6 +261,39 @@
         return publishable;
       };
 
+      uploadedFiles.getInvalidFields = function (metadata) {
+        var stringProperties = ['identifier', 'license', 'lineage', 'location', 'resolution', 'summary', 'title', 'url'];
+        var arrayProperties = ['keywords', 'topicCategories'];
+        var badFields = [];
+        if (metadata) {
+          // Check scalar properties
+          for (var i = 0; i < stringProperties.length; i++) {
+            var property = stringProperties[i];
+            var propertyValue = metadata[property];
+            if (!propertyValue || propertyValue.trim() == '') {
+              badFields.push(property);
+            }
+          }
+
+          // Check array properties
+          for (var i = 0; i < arrayProperties.length; i++) {
+            var property = arrayProperties[i];
+            var propertyValue = metadata[property];
+            if (!propertyValue || propertyValue.length == 0) {
+              badFields.push(property);
+            } else {
+              for (var j = 0; j < propertyValue.length; j++) {
+                var arrayValue = propertyValue[j];
+                if (!arrayValue || arrayValue.trim() == '') {
+                  badFields.push(property);
+                }
+              }
+            }
+          }
+        }
+        return badFields;
+      };
+
 
       return uploadedFiles;
     }]);
@@ -274,6 +307,8 @@
 
       var search = function (params, errorFn) {
         var parameters = params || {};
+		//add a random val to prevent brower cache (todo: until proper nocache header is provided for IE)
+		params.rnd=Math.random().toString().substr(2,8);
         var defer = $q.defer();
         $http.get(url, {
           params: parameters

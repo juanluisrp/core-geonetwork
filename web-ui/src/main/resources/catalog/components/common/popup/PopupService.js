@@ -84,8 +84,8 @@
             '    <div class="modal-header">' +
             '      <button type="button" class="close" data-dismiss="modal">' +
             '        &times;</button>' +
-            '      <h5 class="modal-title" translate>' +
-            '        <span>' + options.title + '</span></h5>' +
+            '      <h5 class="modal-title">' +
+            '        <span data-translate>' + options.title + '</span></h5>' +
             '      </div>' +
             '    <div class="modal-body">' + options.content + '</div>' +
             '  </div>' +
@@ -99,6 +99,10 @@
         $(document.body).append(element);
         element.modal();
         element.on('hidden.bs.modal', function() {
+          var onCloseCallback = options.onCloseCallback;
+          if (angular.isFunction(onCloseCallback)) {
+            onCloseCallback(this);
+          }
           element.remove();
           if (isNewScope) {
             newScope.$destroy();

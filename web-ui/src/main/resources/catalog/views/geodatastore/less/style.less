@@ -266,13 +266,16 @@ footer ul li.first, .verytop ul li.first {
   font-weight: bold;
 }
 .thumbcont {
-  border: solid 1px black;
+  border-radius:3px;
   width: 100%;
+  border:none;
   min-height: 80px;
+  margin-top:.5em;
 }
 .thumbcont img{
   width: 100%;
   min-height: 80px;
+  border-radius:3px;
 }
 .thumbact {
   padding: 0 10px;
@@ -336,8 +339,9 @@ footer ul li.first, .verytop ul li.first {
 
 #metadataForm {
   .metadataFormButtons {
-    border-top: solid 1px;
+    border-top: solid 2px rgba(0,0,0,.4);
     padding-top: 15px;
+	button { margin-bottom: .5em; }
   }
 
   .twitter-typeahead {
@@ -482,10 +486,11 @@ div.filename i {
 	font-size: 1em;
 }
 .card-thumbnail img {
-	width: 75px;
-	height: 75px;
-	border: solid 1px #000;
-
+	max-width: 75px;
+	max-height: 75px;
+	-webkit-box-shadow: 0 1px 5px rgba(0,0,0,0.15);
+	-moz-box-shadow: 0 1px 5px rgba(0,0,0,0.15);
+	box-shadow: 0 1px 5px rgba(0,0,0,0.15);
 }
 
 .search-field {
