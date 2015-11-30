@@ -119,7 +119,10 @@
   "updatePublished.fieldErrors.title": "Opnieuw publiceren mislukt",
   "updatePublished.fieldErrors.header": "Één of meer fouten aangetroffen in de gewijzigde metadata.",
   "updatePublished.fieldErrors.body": "Er zijn één of meer fouten aangetroffen in de metadata, waardoor het opnieuw publiceren niet mogelijk is. Repareer de metadata en voer het opnieuw publiceren nog een keer uit.",
-  "updatePublished.fieldErrors.listOfFields": "Controleer de volgende velden:"
-
+  "updatePublished.fieldErrors.listOfFields": "Controleer de volgende velden:",
+"minFileSize":"Lege files zijn niet toegestaan",
+"maxFileSize":"Files van maximaal 500 MiB zijn toegestaan",
+"maxNumberOfFiles":"Teveel bestanden tegelijkertijd",
+"acceptFileTypes":"Het type bestand is niet toegestaan"
 
 }
