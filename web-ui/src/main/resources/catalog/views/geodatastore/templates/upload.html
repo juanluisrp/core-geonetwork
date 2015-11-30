@@ -117,7 +117,7 @@
                                    <i class="file-icon fa fa-lg fa-fw" data-ng-class="GdsUploadFactory.getFileIcon(file.type)"></i>
                                    <span class="name">{{file.name}}</span>
                                    <span class="size">({{file.size | formatFileSize}})</span>
-                                   <div data-ng-show="file.error"  class="message alert-danger"><i class="fa fa-exclamation-triangle fa-fw" style="font-size:1em; margin-right: 4px"></i>Upload fout. Klik hier voor meer informatie ({{file.error}}).</div>
+                                   <div data-ng-show="file.error"  class="message alert-danger"><i class="fa fa-exclamation-triangle fa-fw" style="font-size:1em; margin-right: 4px"></i>Fout tijdens uploaden. Meer informatie: ({{file.error|translate}}).</div>
                                </div>
                                <div class="progress progress-bar-striped progress-bar-inqueue active fade" data-ng-class="{'pending': 'in'}[file.$state()]"
                                     data-file-upload-progress="file.$progress()" style="width: 100%">
