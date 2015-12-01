@@ -10,6 +10,7 @@ import org.fao.geonet.constants.Params;
 import org.fao.geonet.kernel.KeywordBean;
 import org.jdom.Element;
 
+import javax.activation.MimetypesFileTypeMap;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -175,6 +176,11 @@ public class SearchResponse {
                 md.setFileName(linkComponents[0]);
                 md.setFileType(linkComponents[4]);
             }
+        }
+        String format = metadataEl.getChildText("format");
+        if (StringUtils.isNotBlank(format)) {
+            String type = MimetypesFileTypeMap.getDefaultFileTypeMap().getContentType(format);
+            md.setFileType(type);
         }
 
         // ThumbnailURL
