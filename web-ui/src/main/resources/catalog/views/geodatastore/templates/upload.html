@@ -116,7 +116,7 @@
                                    </div>
                                    <i class="file-icon fa fa-lg fa-fw" data-ng-class="GdsUploadFactory.getFileIcon(file.type)"></i>
                                    <span class="name">{{file.name}}</span>
-                                   <span class="size">({{file.size | formatFileSize}})</span>
+                                   <span class="size">({{file.size | formatFileBinarySize:true}})</span>
                                    <div data-ng-show="file.error"  class="message alert-danger"><i class="fa fa-exclamation-triangle fa-fw" style="font-size:1em; margin-right: 4px"></i>Fout tijdens uploaden. Meer informatie: ({{file.error|translate}}).</div>
                                </div>
                                <div class="progress progress-bar-striped progress-bar-inqueue active fade" data-ng-class="{'pending': 'in'}[file.$state()]"
