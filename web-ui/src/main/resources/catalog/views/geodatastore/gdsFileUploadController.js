@@ -4,11 +4,14 @@
   goog.require('geodatastore_api_urls');
   goog.require('geodatastore_dropzone_directive');
   goog.require('geodatastore_upload_service');
+  goog.require('format_file_size_filter');
+
 
   var module = angular.module('geodatastore_fileupload', [
     'geodatastore_api_urls', 'blueimp.fileupload', 'geodatastore_dropzone_directive',
-    'geodatastore_upload_service'
+    'geodatastore_upload_service', 'format_file_size_filter'
   ]);
+
 
 
   module.controller('GdsFileUploadController', ['$scope', 'GdsUploadFactory', 'NEW_DATASET_URL', '$translate',

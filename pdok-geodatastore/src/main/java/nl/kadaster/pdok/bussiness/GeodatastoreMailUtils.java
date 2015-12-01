@@ -104,7 +104,7 @@ public class GeodatastoreMailUtils {
         // Apply XSLT with parameters to the template.
         try (InputStream xsltInputStream = xsltResource.getInputStream()) {
             Source xsltSource = new StreamSource(xsltInputStream);
-            xsltSource.setSystemId("http://example.com/newAccountEemailTemplate");
+            xsltSource.setSystemId("http://example.com/newAccountEmailTemplate");
             //Element email = Xml.transform(root, Paths.get(xsltUri));
             JDOMResult resXml = new JDOMResult();
             Xml.transformWithXmlParam(root, xsltSource, resXml, null, null);

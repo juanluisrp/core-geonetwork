@@ -19,7 +19,7 @@
       <subject>Aanvraag nieuw NGR account</subject>
       <content>
         <xsl:text disable-output-escaping='yes'>&lt;!DOCTYPE html&gt;</xsl:text>
-        <html>
+        <html lang="nl">
           <head>
             <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
             <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />

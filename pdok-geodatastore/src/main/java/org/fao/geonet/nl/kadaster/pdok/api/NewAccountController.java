@@ -2,6 +2,7 @@ package org.fao.geonet.nl.kadaster.pdok.api;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import nl.kadaster.pdok.bussiness.GeodatastoreMailUtils;
 import nl.kadaster.pdok.bussiness.RegisterBean;
 import nl.kadaster.pdok.bussiness.ValidationResponse;
@@ -33,6 +34,7 @@ import java.util.Map;
 public class NewAccountController {
     private static final String GDS_LOG = "geodatastore.register";
     private static final String REGISTRATION_EMAIL_XSLT = "/templates/registration-email-transform.xsl";
+    private static final String CONFIRM_REGISTRATION_EMAIL_XSLT = "/templates/confirm-registration-email.xsl";
     @Autowired
     private GeodatastoreMailUtils geodatastoreMailUtils;
     @Value("#{geodatastoreProperties[registrationEmailAddress]}")
@@ -114,7 +116,12 @@ public class NewAccountController {
             }
 
             List<String> toList = Lists.newArrayList(registrationEmailAddress);
+            // Send new account request to PDOK
             sent = geodatastoreMailUtils.sendHtmlEmailWithAttachments(toList, bccList, mailTemplateParameters, attachmentList, REGISTRATION_EMAIL_XSLT);
+            // Send confirmation email to user and organization
+            List<String> confirmToList = Lists.newArrayList(registerBean.getEmail(), registerBean.getOrgEmail());
+            geodatastoreMailUtils.sendHtmlEmail(confirmToList, Lists.<String>newArrayList(), Maps.<String, String>newHashMap(), CONFIRM_REGISTRATION_EMAIL_XSLT);
+
         } catch (Exception e) {
             Log.error(GDS_LOG, "Error sending registration email", e);
             sent = false;
