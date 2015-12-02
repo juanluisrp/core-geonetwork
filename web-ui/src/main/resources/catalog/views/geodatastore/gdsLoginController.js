@@ -1,39 +1,47 @@
 (function () {
   goog.provide('geodatastore_login');
 
-  var module = angular.module('geodatastore_login', []);
+  goog.require('gds_login_service');
 
-  module.controller('GdsLoginController', ['$scope', '$http', '$location', '$rootScope',
-    function ($scope, $http, $location, $rootScope) {
-      var authenticate = function (credentials, callback) {
+  var module = angular.module('geodatastore_login', ['ui.bootstrap.showErrors', 'ngAnimate', 'gds_login_service']);
+  module.config(['$animateProvider', function($animateProvider){
+    // do not animate the elements with CSS class fa-spinner.
+    $animateProvider.classNameFilter(/^((?!(fa-spinner)).)*$/);
+  }]);
 
-        var cred = credentials || {};
-        $http.post('../../j_spring_security_check#' + $location.path(), $.param(cred),
-            {headers: {'Content-Type': 'application/x-www-form-urlencoded'}}).success(function (data) {
-              $scope.loadCatalogInfo().then(function () {
-                callback && callback();
-              });
+  module.controller('GdsLoginController', ['$scope', '$http', 'gdsLoginFactory',
+    function ($scope, $http, gdsLoginFactory) {
 
-            }).error(function () {
-              $scope.authenticated = false;
-              $scope.loadCatalogInfo().then(function () {
-                callback && callback();
-              });
-            });
-
-
-      }
+      $scope.loginForm = {};
 
       $scope.loadCatalogInfo();
-      $scope.credentials = {};
+
+
       $scope.login = function () {
-        authenticate($scope.credentials, function () {
-          if ($scope.authenticated) {
-            $scope.signinFailure = false;
-          } else {
-            $scope.signinFailure = true;
-          }
-        });
+        $scope.signinFailure = false;
+        if ($scope.gnSigningForm.$valid) {
+          $scope.loginWorking = true;
+          gdsLoginFactory.login($.param($scope.loginForm)).then(
+              function(data) {
+                if (data.status === true) {
+                  // We are logged-in
+                  $scope.loadCatalogInfo().finally(function() {
+                    $scope.signinFailure = false;
+                    $scope.loginWorking = false;
+                  });
+                } else {
+                  $scope.signinFailure = true;
+                  $scope.loginWorking = false;
+                }
+              },
+              function() {
+                $scope.signinFailure = true;
+                $scope.loginWorking = false;
+              }
+          ).finally(function() {
+            $scope.loginWorking = false;
+          });
+        }
       };
 
     }]);

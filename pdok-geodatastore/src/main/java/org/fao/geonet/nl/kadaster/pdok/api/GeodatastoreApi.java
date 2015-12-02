@@ -195,8 +195,8 @@ public class GeodatastoreApi {
                 //metadata uses group description as organisation title, can not be empty
                 String organisation = group.getDescription();
                 if (StringUtils.isEmpty(organisation)) {
-                    Log.warning(GDS_LOG, "organisationname-cannot-be-empty: " + username);
-                    throw new ServiceNotAllowedEx("organisationname-cannot-be-empty");
+                    Log.warning(GDS_LOG, "organisationdescription-cannot-be-empty: " + username);
+                    throw new ServiceNotAllowedEx("organisationdescription-cannot-be-empty");
                 }
 
                 UUID uuid = UUID.randomUUID();
@@ -773,7 +773,8 @@ public class GeodatastoreApi {
 
                 if (groupsIds.size() == 0) {
                     Log.warning(GDS_LOG, "/api/v1/datasets: the user " + session.getUsername() + " needs to belong to a group to be able to search");
-                    return new ResponseEntity<>((Object) "{'from':0,'to':0,'selected':0,'count':0,'metadata':[],'error':'the user needs to belong to a group to be able to search'}", headers, HttpStatus.OK);
+                    return new ResponseEntity<>((Object) ("{\"from\":0,\"to\":0,\"selected\":0,\"count\":0,\"metadata\":[], " +
+                            "\"error\":\"the user needs to belong to a group to be able to search\"}"), headers, HttpStatus.OK);
                 }
 
                 Element parametersAsXml = buildSearchXmlParameters(context, q, sortBy, sortOrder, from, pageSize, statusParam);
