@@ -68,7 +68,7 @@
   "modal.publish.error.body": "Tijdens het verwerken van de publicatie van de dataset zijn er fouten opgetreden.",
   "modal.publish.button.accept": "Ok",
   "Select":"Selecteer...",
-  "signinFailure":"Er is een probleem opgetreden bij het inloggen, probeer het opnieuw",
+  "signinFailure":"U heeft een onjuiste gebruikersnaam of wachtwoord ingevuld. Probeer het nogmaals of neem contact op met het PDOK Klantcontactcenter om uw accountgegevens op te vragen. Ga naar de <a href=' https://www.pdok.nl/nl/over-pdok/contact-met-pdok'>PDOK contactpagina</a>.",
   "Data-succesfully-updated":"Uw wijziging is succesvol afgerond. Attentie: de metadata is niet direct zichtbaar, maar zal de volgende dag gepubliceerd zijn op het Nationaal Georegister en over 2 dagen eveneens op Data.overheid.nl.",
   "Download-link":"Download bestand",
   "Metadata-link":"Bekijk metadata in NGR",
