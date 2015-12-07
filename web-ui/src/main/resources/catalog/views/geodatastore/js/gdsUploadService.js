@@ -153,13 +153,13 @@
 			} else {			
 				//data was not saved due to an error
 				if (data.error){	
-					setMessage('Wijziging is niet opgeslagen. '+((data.messages.length>0)?'Reden: '+data.messages[0]:''),'warning');
+					setMessage('Wijziging is niet opgeslagen. '+((data.messages&&data.messages.length>0)?'Reden: '+data.messages[0]:''),'warning');
 				//data was saved but publish was not requested
 				} else if (!publish){
 					setMessage('Dataset informatie is opgeslagen');
 				//data was saved but not published
 				} else if (data.status !== 'published') {
-					setMessage('Wijziging is opgeslagen maar dataset is niet gepubliceerd. '+((data.messages.length>0)?'Reden: '+data.messages[0]:''),'warning');
+					setMessage('Wijziging is opgeslagen maar dataset is niet gepubliceerd. '+((data.messages&&data.messages.length>0)?'Reden: '+data.messages[0]:''),'warning');
 				//data was published succesfully
 				} else {
 					setMessage('Dataset is succesvol gepubliceerd. De dataset zal de volgende dag gepubliceerd zijn op het Nationaal Georegister en over 2 dagen eveneens op Data.overheid.nl.');
@@ -316,6 +316,7 @@
           defer.resolve(data);
         }).error(function (data, status) {
           defer.reject(errorFn);
+		  setMessage('Ophalen datasets mislukt. '+((data.messages&&data.messages.length>0)?'Reden: '+data.messages[0]:''),'warning');
         });
         return defer.promise;
       };
