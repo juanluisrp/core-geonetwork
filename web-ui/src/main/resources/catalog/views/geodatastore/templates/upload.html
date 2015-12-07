@@ -2,7 +2,9 @@
 
 <div id="upload">
     <div  class="container">
-		
+		<div style="width:100%;margin-bottom:0px;display:none;border-radius:0px;left:0px;position:fixed;top:0px;opacity:.8;" id="msg-warning" class="alert alert-warning"><i class="fa fa-warning fa-fw"/><span/></div>
+		<div style="width:100%;margin-bottom:0px;display:none;border-radius:0px;left:0px;position:fixed;top:0px;opacity:.8;" id="msg-success" class="alert alert-success"><i class="fa fa-thumbs-o-up fa-fw"/><span/></div>
+                
         <nav class="verytop" data-ng-include="'../../catalog/views/geodatastore/templates/verytop.html'"></nav>
         <div class="page">
 			<header data-ng-include="'../../catalog/views/geodatastore/templates/header.html'"></header>
@@ -187,9 +189,7 @@
                 </div>
             </section>
             <aside data-ng-switch data-on="hasSelected">
-				<div style="width:100%;margin-bottom:0px;display:none;border-radius:0px;" id="msg-warning" class="alert alert-warning"><i class="fa fa-warning fa-fw"/><span/></div>
-				<div style="width:100%;margin-bottom:0px;display:none;border-radius:0px;" id="msg-success" class="alert alert-success"><i class="fa fa-thumbs-o-up fa-fw"/><span/></div>
-                <div id="metadata" class="fade" data-ng-switch-when="true" data-ng-class="{'in': hasSelected }">
+				<div id="metadata" class="fade" data-ng-switch-when="true" data-ng-class="{'in': hasSelected }">
 					<div ng-show="getMdSelected().error != ''">
 						<br/><br/><br/><br/>
 						<h3><i class="fa fa-exclamation-triangle fa-fw"></i> <span data-translate="">uploadError</span></h3>
