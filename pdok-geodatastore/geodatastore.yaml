@@ -75,15 +75,49 @@ paths:
       produces:
         - application/json
       parameters:  
-        - in: body
-          name: body
-          description: Dataset to be added to Godatastore
-          required: true
-          schema:
-            $ref: '#/definitions/dataset'
+        - in: formData
+          name: title
+          type: string
+        - in: formData
+          name: summary
+          type: string
+        - in: formData
+          name: keywords
+          type: array
+          items: 
+            type: string
+        - in: formData
+          name: lineage
+          type: string
+        - in: formData
+          name: license
+          type: string
+        - in: formData
+          name: resolution
+          type: string
+        - in: formData
+          name: locationUri
+          type: string
+        - in: formData
+          name: publish
+          type: boolean
+          description: if draft, indicate if try to publish
+        - in: formData
+          name: topicCategory
+          type: array
+          items: 
+            type: string
+        - in: formData
+          name: dataset
+          type: file
+        - in: formData
+          name: thumbnail
+          type: file
       responses:
         '200':
-          description: Successful response      
+          description: Successful response
+          schema:
+            $ref: "#/definitions/dataset"
         '405':
           description: Invalid input    
   /api/v1/dataset/{id}:
@@ -101,15 +135,48 @@ paths:
           description: identifier of the dataset
           required: true
           type: string
-        - in: body
-          name: body
-          description: Dataset to be added to Godatastore
-          required: true
-          schema:
-            $ref: '#/definitions/dataset'
+        - in: formData
+          name: title
+          type: string
+        - in: formData
+          name: summary
+          type: string
+        - in: formData
+          name: keywords
+          type: array
+          items: string
+        - in: formData
+          name: lineage
+          type: string
+        - in: formData
+          name: license
+          type: string
+        - in: formData
+          name: resolution
+          type: string
+        - in: formData
+          name: locationUri
+          type: string
+        - in: formData
+          name: publish
+          type: boolean
+          description: if draft, indicate if try to publish
+        - in: formData
+          name: topicCategory
+          type: array
+          items: 
+            type: string
+        - in: formData
+          name: dataset
+          type: file
+        - in: formData
+          name: thumbnail
+          type: file
       responses:
         '200':
-          description: Successful response      
+          description: Successful response
+          schema:
+            $ref: "#/definitions/dataset"
         '405':
           description: Invalid input 
   /api/v1/dataset/{id}:
@@ -217,6 +284,8 @@ paths:
                   type: string
                 bounds:
                   type: array
+                  items: 
+                    type: number
         '404':
           description: Registry does not exist
           schema: 
@@ -232,53 +301,22 @@ definitions:
         type: string
       keywords:
         type: array
-        items:
-          $ref: '#/definitions/keyword'
+        items: 
+          type: string
       lineage:
         type: string
       license:
-        $ref: '#/definitions/license'
+        type: string
       resolution:
         type: string
       locationUri:
-        $ref: '#/definitions/location'
+        type: string
       publish:
         type: boolean
         description: if draft, indicate if try to publish
       topicCategory:
         type: array
-        items:
-          $ref: '#/definitions/topicCategory'
-  keyword:
-    type: object
-    properties:
-      uri:
-        type: string
-      label:
-        type: string
-  license:
-    type: object
-    properties:
-      uri:
-        type: string
-      label:
-        type: string
-  topicCategory:
-    type: object
-    properties:
-      uri:
-        type: string
-      label:
-        type: string
-  location:
-    type: object
-    properties:
-      uri:
-        type: string
-      label:
-        type: string
-      bounds:
-        type: array
-        items:
-          type: number
+        items: 
+          type: string
+  
     
