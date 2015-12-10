@@ -53,13 +53,7 @@ paths:
             title: ArrayOfDatasets
             type: array
             items:
-              title: Dataset
-              type: object
-              properties:
-                name:
-                  type: string
-                single:
-                  type: boolean
+                $ref: "#/definitions/dataset"
         '500':
           description: Failed response
           schema: 
@@ -272,10 +266,10 @@ paths:
         '200':
           description: Successful response
           schema:
-            title: ArrayOfCodelists
+            title: Array of keywords
             type: array
             items:
-              title: Registry
+              title: Keyword
               type: object
               properties:
                 uri:
@@ -286,6 +280,8 @@ paths:
                   type: array
                   items: 
                     type: number
+                  maxItems: 4
+                  minItems: 4
         '404':
           description: Registry does not exist
           schema: 
@@ -295,6 +291,8 @@ definitions:
   dataset:
     type: object
     properties:
+      identifier:
+        type: string
       title:
         type: string
       summary:
@@ -311,12 +309,51 @@ definitions:
         type: string
       locationUri:
         type: string
+      extent:
+        type: array
+        items: 
+          type: number
+        maxItems: 4
+        minItems: 4
+      location:
+        description: the label of the location
+        type: string
       publish:
         type: boolean
         description: if draft, indicate if try to publish
-      topicCategory:
+      topicCategories:
         type: array
         items: 
           type: string
+      valid: 
+        type: boolean
+        description: indication if all required properties are filled and the dataset can be published
+      status:
+        type: string
+        enum: ["published","draft"]
+        description: true if this file has been previously published
+      error:
+        type: boolean
+        description: true if an error occured while processing the request
+      messages:
+        type: array
+        items:
+          type: string
+        description: if an error occured, this property has additional info about the error
+      fileName:
+        type: string
+        description: the fileName of the uploaded dataset
+      thumbnailUri:
+        type: string
+        description: url of the thumbnail
+      changeDate:
+        type: string
+        format: date
+        description: date of latest change of the metadata
+      publishDate:
+        type: string
+        format: date-time
+        description: date of publication of the metadata
+      
   
     
