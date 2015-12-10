@@ -1,0 +1,284 @@
+swagger: '2.0'
+info:
+  version: 1.0.0
+  title: 'Geodatastore'
+  description: Geodatastore is a project of PDOK that facilitates governaments to publish geospatial open datasets, a user can upload a dataset and provide minimal metadata, the metadata is then decorated serverside to meet national profile requirements 
+host: test.geodatastore.pdok.nl
+schemes:
+  - https
+paths:
+  /api/v1/datasets:
+    get:
+      description: |
+        Gets `datasets` objects.
+        Optional query params of **q**, **pageSize**, **sortOrder**, **sortBy** determines filter,
+        size and order of returned array
+        The status parameter indicates if datasets that are publised or draft are returned.
+      parameters:
+        - name: q
+          in: query
+          description: a filter used in query
+          required: false
+          type: string
+        - name: sortBy
+          in: query
+          description: an attribute to use as sort order
+          required: false
+          type: string
+          default: lastModified
+          enum: ["title","lastModified"]
+        - name: sortOrder
+          in: query
+          description: order of sort
+          required: false
+          type: string
+          default: Asc
+          enum: ["Asc","Desc"]
+        - name: pageSize
+          in: query
+          description: Size of array
+          required: false
+          type: integer
+        - name: status
+          in: query
+          description: Indicate to filter aither published of non published
+          required: false
+          default: published
+          type: string
+          enum: ["published","draft"]
+      responses:
+        '200':
+          description: Successful response
+          schema:
+            title: ArrayOfDatasets
+            type: array
+            items:
+              title: Dataset
+              type: object
+              properties:
+                name:
+                  type: string
+                single:
+                  type: boolean
+        '500':
+          description: Failed response
+          schema: 
+            title: Message
+            type: string
+  /api/v1/dataset:
+    post:
+      description: |
+        Create a new dataset
+      operationId: addDataset
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:  
+        - in: body
+          name: body
+          description: Dataset to be added to Godatastore
+          required: true
+          schema:
+            $ref: '#/definitions/dataset'
+      responses:
+        '200':
+          description: Successful response      
+        '405':
+          description: Invalid input    
+  /api/v1/dataset/{id}:
+    post:
+      description: |
+        Update a dataset
+      operationId: updateDataset
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters: 
+        - name: id
+          in: path
+          description: identifier of the dataset
+          required: true
+          type: string
+        - in: body
+          name: body
+          description: Dataset to be added to Godatastore
+          required: true
+          schema:
+            $ref: '#/definitions/dataset'
+      responses:
+        '200':
+          description: Successful response      
+        '405':
+          description: Invalid input 
+  /api/v1/dataset/{id}:
+    delete:
+      description: delete a dataset
+      operationId: deleteDataset
+      parameters:  
+        - name: id
+          in: path
+          description: the id of the Dataset
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Successful response      
+        '404':
+          description: Dataset not found 
+  /api/v1/dataset/{id}:
+    get:
+      description: |
+        Get `dataset` object.
+      parameters:
+        - name: id
+          in: path
+          description: the id of the Dataset
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Successful response
+          schema:
+            title: ArrayOfDatasets
+            type: array
+            items:
+              title: Dataset
+              type: object
+              properties:
+                name:
+                  type: string
+                single:
+                  type: boolean
+        '404':
+          description: Dataset does not exist or no privileges
+          schema: 
+            title: Message
+            type: string
+        '500':
+          description: Failed response
+          schema: 
+            title: Message
+            type: string
+  /api/v1/registries:
+    get:
+      description: |
+        Gets `registry` objects.
+      responses:
+        '200':
+          description: Successful response
+          schema:
+            title: ArrayOfRegistry
+            type: array
+            items:
+              title: Registry
+              type: object
+              properties:
+                name:
+                  type: string
+                url:
+                  type: string            
+  /api/v1/registry/{name}:
+    get:
+      description: |
+        Gets `registry` objects.
+        Optional query param of **pageSize** determines
+        size of returned array
+      parameters:
+        - name: name
+          in: path
+          description: the name of the Registry
+          required: true
+          type: string
+        - name: q
+          in: query
+          description: a filter used in query
+          required: false
+          type: string
+        - name: pageSize
+          in: query
+          description: Size of array
+          required: false
+          type: integer
+      responses:
+        '200':
+          description: Successful response
+          schema:
+            title: ArrayOfCodelists
+            type: array
+            items:
+              title: Registry
+              type: object
+              properties:
+                uri:
+                  type: string
+                label:
+                  type: string
+                bounds:
+                  type: array
+        '404':
+          description: Registry does not exist
+          schema: 
+            title: Message
+            type: string
+definitions:
+  dataset:
+    type: object
+    properties:
+      title:
+        type: string
+      summary:
+        type: string
+      keywords:
+        type: array
+        items:
+          $ref: '#/definitions/keyword'
+      lineage:
+        type: string
+      license:
+        $ref: '#/definitions/license'
+      resolution:
+        type: string
+      locationUri:
+        $ref: '#/definitions/location'
+      publish:
+        type: boolean
+        description: if draft, indicate if try to publish
+      topicCategory:
+        type: array
+        items:
+          $ref: '#/definitions/topicCategory'
+  keyword:
+    type: object
+    properties:
+      uri:
+        type: string
+      label:
+        type: string
+  license:
+    type: object
+    properties:
+      uri:
+        type: string
+      label:
+        type: string
+  topicCategory:
+    type: object
+    properties:
+      uri:
+        type: string
+      label:
+        type: string
+  location:
+    type: object
+    properties:
+      uri:
+        type: string
+      label:
+        type: string
+      bounds:
+        type: array
+        items:
+          type: number
+    
