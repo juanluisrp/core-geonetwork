@@ -119,7 +119,10 @@
                                    <i class="file-icon fa fa-lg fa-fw" data-ng-class="GdsUploadFactory.getFileIcon(file.type)"></i>
                                    <span class="name">{{file.name}}</span>
                                    <span class="size">({{file.size | formatFileBinarySize:true}})</span>
-                                   <div data-ng-show="file.error"  class="message alert-danger"><i class="fa fa-exclamation-triangle fa-fw" style="font-size:1em; margin-right: 4px"></i>Fout tijdens uploaden. Meer informatie: ({{file.error|translate}}).</div>
+                                   <div data-ng-show="file.error"  class="message alert-danger">
+                                       <i class="fa fa-exclamation-triangle fa-fw" style="margin-right: 4px"></i>
+                                       <span data-translate="datasetUploadError" data-translate-values="{errorText: '{{file.error}}'}"></span>
+                                   </div>
                                </div>
                                <div class="progress progress-bar-striped progress-bar-inqueue active fade" data-ng-class="{'pending': 'in'}[file.$state()]"
                                     data-file-upload-progress="file.$progress()" style="width: 100%">
@@ -144,13 +147,16 @@
                                <div class="message alert-success" data-ng-show="md.$publishable">
                                    <button type="button" class="btn btn-default btn-sm floatright" data-gn-click-and-spin="startPublish($event)"
                                            data-ng-disabled="!md.$publishable"><i class="fa fa-share fa-fw"></i>Publiceren</button>
-                                   <i class="fa fa-check fa-fw" style="font-size:1em; margin-right: 4px"></i>Data is klaar om te worden gedeeld.
+                                   <i class="fa fa-check fa-fw" style="font-size:1em; margin-right: 4px"></i>
+                                   <span data-translate="">dataReadyForSharing</span>
                                </div>
                                <div class="message alert-info" data-ng-hide="md.$publishable || getStatus(md) == 'error'">
-                                   <i class="fa fa-pencil fa-fw" style="font-size:1em; margin-right: 4px"></i>Voltooi de dataset informatie om te kunnen publiceren.
+                                   <i class="fa fa-pencil fa-fw" style="font-size:1em; margin-right: 4px"></i>
+                                   <span data-translate="">completeToPublish</span>
                                </div>
                                <div class="message alert-danger" data-ng-show="getStatus(md) == 'error'">
-                                   <i class="fa fa-exclamation-triangle fa-fw" style="font-size:1em; margin-right: 4px"></i>Upload fout. Klik hier voor meer informatie.
+                                   <i class="fa fa-exclamation-triangle fa-fw" style="font-size:1em; margin-right: 4px"></i>
+                                   <span data-translate="">datasetUploadServerError</span>
                                </div>
                            </li>
 
@@ -166,8 +172,8 @@
                 </form>
                 <div>
                     <nav class="floatright" data-ng-cloak>
-                        <ul class="pagination" data-ng-show="pages.length>1">
-                            <li data-ng-class="{'disabled':page==1}">
+                        <ul class="pagination" data-ng-show="pages.length > 1">
+                            <li data-ng-class="{'disabled': page==1}">
                                 <a href="#" aria-label="Previous" data-ng-click="updateResultsAndPreserveSearch(page-1)">
                                     <span aria-hidden="true">&laquo;</span>
                                 </a>
@@ -204,16 +210,17 @@
                 </div>
                 <div data-ng-switch-default class="padding-25 padding-top-10em">
 					
-						<p class="h3 text-center" data-ng-show="tab=='upload' && totalNotPublished>0">
-							Vul informatie over een dataset in alvorens deze te delen.<br/>
-							<small>Selecteer een bestand uit de linker kolom om deze te bewerken.</small></p>
-						<p class="h3 text-center" data-ng-show="tab=='published' && totalPublished>0">
-							U kunt de informatie over een dataset wijzigen, ook nadat deze gepubliceerd is.<br/>
-							<small>Selecteer een bestand uit de linker kolom om deze te bewerken.</small></p>
-						<p class="h3 text-center" data-ng-show="tab=='upload' && totalNotPublished==0">
-							Upload een dataset door deze op het vlak links te slepen of "selecteer bestanden" te klikken</p>
-						<p class="h3 text-center" data-ng-show="tab=='published' && totalPublished==0">
-							Eerder gepubliceerde datasets worden hier getoond</p>
+						<p class="h3 text-center" data-ng-show="tab == 'upload' && totalNotPublished > 0">
+                            <span data-translate="">enterInfoAboutDataset</span><br/>
+							<small><span data-translate="">selectFileFromLeft</span></small></p>
+						<p class="h3 text-center" data-ng-show="tab == 'published' && totalPublished > 0">
+							<span data-translate="">changeInfoAfterPublishing</span><br/>
+							<small><span data-translate="">selectFileFromLeft</span></small></p>
+						<p class="h3 text-center" data-ng-show="tab == 'upload' && totalNotPublished == 0">
+							<span data-translate="">uploadDatasetByDraggingFile</span></p>
+						<p class="h3 text-center" data-ng-show="tab =='published' && totalPublished == 0">
+                            <span data-translate="">previouslyPublishedDatasets</span>
+                        </p>
 						
                     <p class="text-center" aria-label="Left arrow"><i class="fa fa-arrow-left fa-4x"></i></i></p>
                 </div>
