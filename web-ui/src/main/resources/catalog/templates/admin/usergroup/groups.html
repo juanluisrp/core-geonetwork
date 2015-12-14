@@ -15,7 +15,7 @@
           <a href="" class="list-group-item"
              data-ng-repeat="g in pageItems()"
              data-ng-class="g.id === groupSelected.id ? 'active' : ''"
-             data-ng-click="selectGroup(g)"> {{g.label[lang]}} </a>
+             data-ng-click="selectGroup(g)"> {{g.label[lang]}} <span data-ng-show="g.label[lang]==''">{{g.name}}</span></a>
           <span data-gn-pagination-list=""
               data-items="groups | filter:groupSearch | orderBy:'name'"
               data-cache="groups"/>
