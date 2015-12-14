@@ -12,7 +12,7 @@
   <artifactId>web-ui</artifactId>
   <packaging>jar</packaging>
   <name>GeoNetwork user interface module</name>
-  <description />
+  <description/>
 
   <licenses>
     <license>
@@ -57,7 +57,7 @@
   </build>
   <properties>
     <geonetwork.build.dir>${project.build.directory}/${project.build.finalName}</geonetwork.build.dir>
-    <closure.compile.level />
+    <closure.compile.level/>
   </properties>
     <profiles>
         <profile>

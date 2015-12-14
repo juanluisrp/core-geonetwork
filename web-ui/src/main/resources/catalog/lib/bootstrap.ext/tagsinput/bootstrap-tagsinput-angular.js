@@ -26,7 +26,7 @@ angular.module('bootstrap-tagsinput', [])
           scope.model = [];
 
         var select = $('select', element);
-        
+
         if (attrs.placeholder) {
           select.attr('placeholder', attrs.placeholder);
         }
@@ -55,8 +55,8 @@ angular.module('bootstrap-tagsinput', [])
         select.on('itemAdded', function(event) {
           if (scope.model.indexOf(event.item) === -1) {
             scope.$apply(function() {
-              scope.model.push(event.item);
-            });
+            scope.model.push(event.item);
+        });
           }
         });
 
@@ -64,8 +64,8 @@ angular.module('bootstrap-tagsinput', [])
           var idx = scope.model.indexOf(event.item);
           if (idx !== -1) {
             scope.$apply(function() {
-              scope.model.splice(idx, 1);
-            });
+            scope.model.splice(idx, 1);
+        });
           }
         });
 

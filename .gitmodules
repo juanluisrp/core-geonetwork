@@ -5,5 +5,8 @@
 	        path = web-ui/src/main/resources/catalog/lib/style/bootstrap
 	url = http://github.so.kadaster.nl/NGR/bootstrap.git
 [submodule "web-ui/src/main/resources/catalog/lib/style/font-awesome"]
-	        path = web-ui/src/main/resources/catalog/lib/style/font-awesome
+    path = web-ui/src/main/resources/catalog/lib/style/font-awesome
 	url = http://github.so.kadaster.nl/NGR/Font-Awesome.git
+[submodule "web-ui/src/main/resources/catalog/lib/bootstrap-table"]
+	path = web-ui/src/main/resources/catalog/lib/bootstrap-table
+	url = https://github.com/wenzhixin/bootstrap-table.git
