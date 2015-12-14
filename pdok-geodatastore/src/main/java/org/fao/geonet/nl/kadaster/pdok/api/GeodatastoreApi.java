@@ -442,11 +442,12 @@ public class GeodatastoreApi {
                 Path metadataPublicDatadir = Lib.resource.getDir(context, Params.Access.PUBLIC, metadataId);
                 Files.createDirectories(metadataPublicDatadir);
 
-                removeOldThumbnail(context, metadataId, "normal", false);
+                removeOldThumbnail(context, metadataId, "small", false);
+                removeOldThumbnail(context, metadataId, "large", false);
 
                 //--- move uploaded file to destination directory
                 Files.copy(thumbnail.getInputStream(), metadataPublicDatadir.resolve(thumbnail.getOriginalFilename()), StandardCopyOption.REPLACE_EXISTING);
-                boolean small = false, indexAfterChange = false;
+                boolean small = true, indexAfterChange = false;
                 metadataManager.setThumbnail(context, metadataId, small, thumbnail.getOriginalFilename(), indexAfterChange);
                 Log.debug(GDS_LOG, "Thumbnail to metadata " + metadataId + " successfully added");
             }

@@ -93,10 +93,12 @@
           labelKey: 'changeDate'
         }];
 
-      $scope.$watch('user', function () {
-        $scope.getResultsSummary('draft');
-        $scope.getResultsSummary('published');
-        $scope.updateResults(1);
+      $scope.$watch('authenticated', function (newValue) {
+        if (newValue) {
+          $scope.getResultsSummary('draft');
+          $scope.getResultsSummary('published');
+          $scope.updateResults(1);
+        }
       });
 
       $scope.sortResults = function() {

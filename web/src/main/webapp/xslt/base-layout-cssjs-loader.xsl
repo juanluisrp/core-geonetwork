@@ -26,7 +26,10 @@
 
     <link href="{/root/gui/url}/static/{$customFilename}.css{$minimizedParam}" rel="stylesheet" media="screen" />
 
+    <link href="{/root/gui/url}/static/bootstrap-table.min.css" rel="stylesheet" media="screen"></link>
+    <link href="{/root/gui/url}/static/ng-skos.css" rel="stylesheet" media="screen"></link>
     <!--<link href="{/root/gui/url}/static/{/root/gui/nodeId}_custom_style.css{$minimizedParam}" rel="stylesheet" media="screen" />-->
+
   </xsl:template>
 
 
@@ -72,6 +75,8 @@
         <script src="{$uiResourcesPath}lib/angular.ext/tabs.js"></script>
         <script src="{$uiResourcesPath}lib/angular.ext/slider.js"></script>
         <script src="{$uiResourcesPath}lib/angular.ui/ui-bootstrap-custom-tpls-0.13.1.js"></script>
+        <script src="{$uiResourcesPath}lib/angular.ext/colorpicker/angularjs-color-picker.js"></script>
+        <script src="{$uiResourcesPath}lib/tinycolor.js"></script>
 
         <script src="{$uiResourcesPath}lib/style/bootstrap/dist/js/bootstrap.js"></script>
         <script src="{$uiResourcesPath}lib/jquery.ext/jquery-ui-slider.min.js"></script>
@@ -111,6 +116,7 @@
         <script src="{$uiResourcesPath}lib/bootstrap.ext/tagsinput/bootstrap-tagsinput.js"></script>
         <script src="{$uiResourcesPath}lib/bootstrap.ext/tagsinput/bootstrap-tagsinput-angular.js"></script>
         <script src="{$uiResourcesPath}lib/bootstrap.ext/datepicker/bootstrap-datepicker.js"></script>
+        <script src="{$uiResourcesPath}/lib/bootstrap-table/dist/bootstrap-table.js"></script>
         <!--</xsl:if>-->
 
       </xsl:when>
@@ -188,6 +194,7 @@
           <xsl:if test="$wmsUrl and $layerName">
             gnViewerSettings.wmsUrl = '<xsl:value-of select="$wmsUrl"/>';
             gnViewerSettings.layerName = '<xsl:value-of select="$layerName"/>';
+            gnViewerSettings.layerGroup = '<xsl:value-of select="$layerGroup"/>';
           </xsl:if>
           gnViewerSettings.mapConfig = <xsl:value-of select="$mapConfig"/>;
           gnGlobalSettings.isMapViewerEnabled = <xsl:value-of select="$isMapViewerEnabled"/>;
