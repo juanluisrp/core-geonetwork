@@ -107,7 +107,7 @@
                         <div class="overlay" data-ng-show="searching"><i class="fa fa-spinner fa-pulse fa-fw fa-3x"></i></br>{{'loading' | translate}}</div>
                         <ol id="selectable" data-ng-hide="searching">
                            <!-- List of files in queue -->
-                           <li data-ng-repeat="file in queue" data-ng-class="{'processing': file.$processing()}" data-ng-cloak>
+                           <li data-ng-repeat="file in queue" data-ng-class="{'processing': file.$processing()}" data-ng-cloak data-ng-show="tab === 'upload'">
 
                                <div class="title">
                                    <div class="floatright" >
@@ -133,7 +133,7 @@
                            </li>
                            <!-- Files uploaded since page reload -->
                            <li data-ng-repeat="md in GdsUploadFactory.list" data-ng-click="setMD(md)" data-ng-class="setBackground(md)"
-                               data-ng-controller="gdsCardController" class="card" data-ng-cloak>
+                               data-ng-controller="gdsCardController" class="card" data-ng-cloak data-ng-show="tab === 'upload'">
                                <div class="arrow-left" data-ng-show="md.identifier == getMdSelected().identifier"></div>
                                <div class="title">
                                    <div class="floatright">
