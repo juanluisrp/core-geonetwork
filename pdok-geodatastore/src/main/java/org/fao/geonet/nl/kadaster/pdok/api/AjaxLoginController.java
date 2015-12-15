@@ -80,7 +80,7 @@ public class AjaxLoginController {
         }
         catch (Exception ex) {
             Log.error(LOG_MODULE, "Error authenticating user " + username, ex);
-            throw new InternalError("Error authenticating user " + username + ". Cause: " + ex.getMessage(), ex);
+            throw new InternalError("Error authenticating user " + username + ". Cause: " + ex.getMessage());
         }
     }
 
