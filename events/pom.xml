@@ -3,7 +3,7 @@
   <parent>
     <artifactId>geonetwork</artifactId>
     <groupId>org.geonetwork-opensource</groupId>
-    <version>3.0.88</version>
+    <version>3.0.89-SNAPSHOT</version>
   </parent>
 
   <name>GeoNetwork Events</name>
