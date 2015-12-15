@@ -5,14 +5,14 @@
   <parent>
     <groupId>org.geonetwork-opensource</groupId>
     <artifactId>geonetwork</artifactId>
-    <version>3.0.87-SNAPSHOT</version>
+    <version>3.0.87</version>
   </parent>
 
   <groupId>org.geonetwork-opensource</groupId>
   <artifactId>web-ui</artifactId>
   <packaging>jar</packaging>
   <name>GeoNetwork user interface module</name>
-  <description/>
+  <description />
 
   <licenses>
     <license>
@@ -57,7 +57,7 @@
   </build>
   <properties>
     <geonetwork.build.dir>${project.build.directory}/${project.build.finalName}</geonetwork.build.dir>
-    <closure.compile.level/>
+    <closure.compile.level />
   </properties>
     <profiles>
         <profile>
