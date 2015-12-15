@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.MediaType;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -73,11 +74,14 @@ public class AjaxLoginController {
         } catch (BadCredentialsException ex) {
             Log.info(LOG_MODULE, "Cannot authenticate user " + username, ex);
             return new LoginResponse(false, "Bad Credentials");
-        } catch (Exception ex) {
+        } catch (AuthenticationServiceException ex) {
+            Log.info(LOG_MODULE, "Cannot authenticate user " + username + ". Cause: " + ex.getMessage());
+            return new LoginResponse(false, "Bad Credentials");
+        }
+        catch (Exception ex) {
             Log.error(LOG_MODULE, "Error authenticating user " + username, ex);
             throw new InternalError("Error authenticating user " + username + ". Cause: " + ex.getMessage(), ex);
         }
-
     }
 
 }
