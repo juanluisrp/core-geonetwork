@@ -79,8 +79,8 @@ public class AjaxLoginController {
             return new LoginResponse(false, "Bad Credentials");
         }
         catch (Exception ex) {
-            Log.error(LOG_MODULE, "Error authenticating user " + username, ex);
-            throw new InternalError("Error authenticating user " + username + ". Cause: " + ex.getMessage(), ex);
+            Log.error(LOG_MODULE, "Exception authenticating user " + username, ex);
+            throw ex;
         }
     }
 
