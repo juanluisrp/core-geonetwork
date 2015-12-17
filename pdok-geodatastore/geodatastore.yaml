@@ -1,16 +1,15 @@
 swagger: '2.0'
 info:
   version: 1.0.0
-  title: 'Geodatastore'
-  description: Geodatastore is a project of PDOK that facilitates governaments to publish geospatial open datasets, a user can upload a dataset and provide minimal metadata, the metadata is then decorated serverside to meet national profile requirements 
-host: test.geodatastore.pdok.nl
+  title: 'Geodatastore API v1 Documentation'
+  description: Geodatastore is a project of PDOK that facilitates governments to publish geospatial open datasets. A user is facilitated in uploading a dataset and provide some metadata, the metadata is then decorated serverside to meet national profile requirements 
 schemes:
   - https
 paths:
   /api/v1/datasets:
     get:
       description: |
-        Gets `datasets` objects.
+        Gets `dataset` objects.
         Optional query params of **q**, **pageSize**, **sortOrder**, **sortBy** determines filter,
         size and order of returned array
         The status parameter indicates if datasets that are publised or draft are returned.
@@ -54,8 +53,8 @@ paths:
             type: array
             items:
                 $ref: "#/definitions/dataset"
-        '500':
-          description: Failed response
+        '405':
+          description: Invalid input  
           schema: 
             title: Message
             type: string
@@ -64,48 +63,56 @@ paths:
       description: |
         Create a new dataset
       operationId: addDataset
-      consumes:
-        - application/json
       produces:
         - application/json
       parameters:  
         - in: formData
           name: title
+          description: Title of the dataset
           type: string
         - in: formData
           name: summary
+          description: Summary describing the dataset
           type: string
         - in: formData
           name: keywords
+          description: Keywords describing the dataset
           type: array
           items: 
             type: string
         - in: formData
           name: lineage
+          description: Lineage information on how the dataset has been created/collected
           type: string
         - in: formData
           name: license
+          description: License under which te dataset is made available. Should be a URI of one of /api/v1/registry/licenses.
           type: string
         - in: formData
           name: resolution
+          description: The resolution (scale) in which this dataset is best used. Should be a URI of one of /api/v1/registry/resolutions.
           type: string
         - in: formData
           name: locationUri
+          description: The location of the dataset. Should be a URI of one of /api/v1/registry/locations.
           type: string
         - in: formData
           name: publish
           type: boolean
-          description: if draft, indicate if try to publish
+          description: This flag indicates if the dataset should be instantly published or saved as draft.
         - in: formData
           name: topicCategory
+          description: The topic of the dataset. Should be a URI of one of /api/v1/registry/topicCategories.
           type: array
           items: 
             type: string
         - in: formData
           name: dataset
+          description: The dataset file
           type: file
         - in: formData
           name: thumbnail
+          description: A thumbnail file
           type: file
       responses:
         '200':
@@ -119,52 +126,61 @@ paths:
       description: |
         Update a dataset
       operationId: updateDataset
-      consumes:
-        - application/json
       produces:
         - application/json
       parameters: 
         - name: id
           in: path
-          description: identifier of the dataset
+          description: Identifier of the dataset
           required: true
           type: string
         - in: formData
           name: title
+          description: Title of the dataset
           type: string
         - in: formData
           name: summary
+          description: Summary describing the dataset
           type: string
         - in: formData
           name: keywords
+          description: Keywords describing the dataset
           type: array
-          items: string
+          items: 
+            type: string
         - in: formData
           name: lineage
+          description: Lineage information on how the dataset has been created/collected
           type: string
         - in: formData
           name: license
+          description: License under which te dataset is made available. Should be a URI of one of /api/v1/registry/licenses.
           type: string
         - in: formData
           name: resolution
+          description: The resolution (scale) in which this dataset is best used. Should be a URI of one of /api/v1/registry/resolutions.
           type: string
         - in: formData
           name: locationUri
+          description: The location of the dataset. Should be a URI of one of /api/v1/registry/locations.
           type: string
         - in: formData
           name: publish
           type: boolean
-          description: if draft, indicate if try to publish
+          description: This flag indicates if the dataset should be instantly published or saved as draft.
         - in: formData
           name: topicCategory
+          description: The topic of the dataset. Should be a URI of one of /api/v1/registry/topicCategories.
           type: array
           items: 
             type: string
         - in: formData
           name: dataset
+          description: The dataset file
           type: file
         - in: formData
           name: thumbnail
+          description: A thumbnail file
           type: file
       responses:
         '200':
@@ -202,23 +218,14 @@ paths:
         '200':
           description: Successful response
           schema:
-            title: ArrayOfDatasets
-            type: array
-            items:
-              title: Dataset
-              type: object
-              properties:
-                name:
-                  type: string
-                single:
-                  type: boolean
+            $ref: "#/definitions/dataset"
         '404':
           description: Dataset does not exist or no privileges
           schema: 
             title: Message
             type: string
-        '500':
-          description: Failed response
+        '405':
+          description: Invalid input  
           schema: 
             title: Message
             type: string
@@ -249,12 +256,12 @@ paths:
       parameters:
         - name: name
           in: path
-          description: the name of the Registry
+          description: The name of the Registry
           required: true
           type: string
         - name: q
           in: query
-          description: a filter used in query
+          description: A filter used in query
           required: false
           type: string
         - name: pageSize
@@ -293,36 +300,46 @@ definitions:
     properties:
       identifier:
         type: string
+        description: Identifier of dataset
       title:
         type: string
+        description: title of the dataset
       summary:
         type: string
+        description: summary of te dataset
       keywords:
         type: array
+        description: keywords that describe the dataset
         items: 
           type: string
       lineage:
         type: string
+        description: Information about dataset creation/collection
       license:
         type: string
+        description: License under which the dataset is made available
       resolution:
         type: string
+        description: Resolution for which the dataset is optimal
       locationUri:
         type: string
+        description: URI of a location of the dataset
       extent:
         type: array
+        description: The geographical extent (box) of the location of the dataset
         items: 
           type: number
         maxItems: 4
         minItems: 4
       location:
-        description: the label of the location
+        description: The label of the location
         type: string
       publish:
         type: boolean
-        description: if draft, indicate if try to publish
+        description: indicates if user tried to publish, and if publish succeeded
       topicCategories:
         type: array
+        description: the topic of the dataset
         items: 
           type: string
       valid: 
@@ -354,6 +371,3 @@ definitions:
         type: string
         format: date-time
         description: date of publication of the metadata
-      
-  
-    

@@ -430,6 +430,14 @@
         <note>
             Geodatastore datasets rule
         </note>
+        <from>^/api/(v[0-9]+)/docs(.*)$</from>
+        <to type="forward" last="true">/catalog/views/geodatastore/docs/$2</to>
+    </rule>
+
+    <rule>
+        <note>
+            Geodatastore datasets rule
+        </note>
         <from>^/api/(v[0-9]+)/datasets(.*)$</from>
         <to type="forward" last="true">/web/dut/api/$1/datasets</to>
     </rule>
