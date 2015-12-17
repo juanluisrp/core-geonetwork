@@ -2,7 +2,7 @@ swagger: '2.0'
 info:
   version: 1.0.0
   title: 'Geodatastore API v1 Documentation'
-  description: Geodatastore is a project of PDOK that facilitates governments to publish geospatial open datasets. A user is facilitated in uploading a dataset and provide some metadata, the metadata is then decorated serverside to meet national profile requirements 
+  description: Geodatastore is a project of PDOK that facilitates governments to publish geospatial open datasets. A user is facilitated in uploading a dataset and provide some metadata, the metadata is then decorated serverside to meet national profile requirements. Typical api workflow; authentication using basic auth, retrieve datasets, to see which datasets are already uploaded by user. Upload dataset (and update dataset). If all properties are provided the dataset can be published. Remove dataset. After publication, it can take upto 24 hours before the dataset will be available in http://www.nationaalgeoregister.nl and http://data.overheid.nl. Visit the PDOK forum at https://www.pdok.nl/forum for additional information about Geodatastore API development.
 schemes:
   - https
 paths:
@@ -189,6 +189,9 @@ paths:
             $ref: "#/definitions/dataset"
         '405':
           description: Invalid input 
+          schema: 
+            title: Message
+            type: string
   /api/v1/dataset/{id}:
     delete:
       description: delete a dataset
@@ -371,3 +374,4 @@ definitions:
         type: string
         format: date-time
         description: date of publication of the metadata
+    
