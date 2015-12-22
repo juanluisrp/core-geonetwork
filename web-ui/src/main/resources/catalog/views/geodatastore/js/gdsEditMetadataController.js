@@ -196,15 +196,17 @@
           $log.error("Error updating metadata: " + error);
           $scope.messages = ["update.server.error"];
         }
-        gnPopup.createModal({
-          title: '<strong>' + $translate('edit.error.title') + '</strong>',
-          content: '<div class="alert alert-danger" role="alert">'
-          + "<p><i class='fa fa-exclamation-circle fa-fw' aria-hidden='true'></i>"
-          + "<span class='sr-only'>Error: </span><span data-translate=''>update.error.listTitle</span></p>"
-          + '<ul>'
-          + '<li data-ng-repeat="message in messages">{{message | translate}}</li>'
-          + '</ul></div>'
-        }, $scope);
+        if (e.reqStatus != 401) {
+          gnPopup.createModal({
+            title: '<strong>' + $translate('edit.error.title') + '</strong>',
+            content: '<div class="alert alert-danger" role="alert">'
+            + "<p><i class='fa fa-exclamation-circle fa-fw' aria-hidden='true'></i>"
+            + "<span class='sr-only'>Error: </span><span data-translate=''>update.error.listTitle</span></p>"
+            + '<ul>'
+            + '<li data-ng-repeat="message in messages">{{message | translate}}</li>'
+            + '</ul></div>'
+          }, $scope);
+        }
       };
 
       var filesChanged = function (e, data) {

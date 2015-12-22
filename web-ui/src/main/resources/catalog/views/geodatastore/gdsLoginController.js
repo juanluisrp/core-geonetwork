@@ -9,19 +9,24 @@
     $animateProvider.classNameFilter(/^((?!(fa-spinner)).)*$/);
   }]);
 
-  module.controller('GdsLoginController', ['$scope', '$http', 'gdsLoginFactory',
-    function ($scope, $http, gdsLoginFactory) {
+  module.controller('GdsLoginController', ['$rootScope', '$scope', '$http', 'gdsLoginService',
+    function ($rootScope, $scope, $http, gdsLoginService) {
 
       $scope.loginForm = {};
+      $scope.gdsLoginService = gdsLoginService;
 
       $scope.loadCatalogInfo();
+
+      $rootScope.$on('unauthorized', function() {
+        gdsLoginService.setSessionExpired(true);
+      });
 
 
       $scope.login = function () {
         $scope.signinFailure = false;
         if ($scope.gnSigningForm.$valid) {
           $scope.loginWorking = true;
-          gdsLoginFactory.login($.param($scope.loginForm)).then(
+          gdsLoginService.login($.param($scope.loginForm)).then(
               function(data) {
                 if (data.status === true) {
                   // We are logged-in

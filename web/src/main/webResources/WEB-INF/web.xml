@@ -68,6 +68,7 @@
     <filter-mapping>
       <filter-name>SessionTimeoutCookieFilter</filter-name>
       <url-pattern>/srv/*</url-pattern>
+      <url-pattern>/api/*</url-pattern>
     </filter-mapping>
 
     <!-- url rewrite filter -->

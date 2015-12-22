@@ -387,6 +387,9 @@ public class GeodatastoreApi {
             UserSession session = context.getUserSession();
             final String username = session.getUsername();
             assert username != null;
+            if (StringUtils.isBlank(username)) {
+                return new ResponseEntity<Object>(HttpStatus.UNAUTHORIZED);
+            }
             //String organisation = session.getOrganisation();
 
             User user = userRepository.findOneByUsername(username);

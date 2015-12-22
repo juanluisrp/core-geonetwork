@@ -24,7 +24,12 @@
                       <form novalidate id="gnSigningForm" name="gnSigningForm"  method="post"
                           role="form" data-ng-submit="login()">
                         <!--<input type="hidden" name="redirectUrl" value="{{redirectUrl}}"/>-->
-                        <div class="row">
+                          <div class="row" data-ng-show="gdsLoginService.isSessionExpired()">
+                              <p class="alert alert-danger">
+                                  <span class="fa fa-exclamation-triangle fa-fw"></span>
+                                  <span data-translate="">server.session.timeout</span></p>
+                          </div>
+                          <div class="row">
 							<div class="col-md-6">
                                 <div class="form-group" data-show-errors>
                                     <label class="control-label"
@@ -44,24 +49,24 @@
                                             data-ng-model="loginForm.j_password" required/>
                                 </div>
 			                </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-xs-12">
-                                <a href="new.account">Account aanvragen</a>
-                                <button type="submit" class="btn btn-primary pull-right no-animate" data-ng-disabled="loginWorking">
-                                    <i class="fa fa-spinner fa-spin" data-ng-hide="!loginWorking"></i>
-                                    <i class="fa fa-sign-in"></i>
-                                    <span>Inloggen</span>
-                                </button>
                             </div>
-                        </div>
-                        <div class="row top-buffer">
-                            <div class="col-xs-12">
-                                <p class="alert alert-danger" data-ng-show="signinFailure">
-                                    <strong data-translate="">signinFailure</strong>
-                                </p>
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <a href="new.account">Account aanvragen</a>
+                                    <button type="submit" class="btn btn-primary pull-right no-animate" data-ng-disabled="loginWorking">
+                                        <i class="fa fa-spinner fa-spin" data-ng-hide="!loginWorking"></i>
+                                        <i class="fa fa-sign-in"></i>
+                                        <span>Inloggen</span>
+                                    </button>
+                                </div>
                             </div>
-                        </div>
+                            <div class="row top-buffer">
+                                <div class="col-xs-12">
+                                    <p class="alert alert-danger" data-ng-show="signinFailure">
+                                        <strong data-translate="">signinFailure</strong>
+                                    </p>
+                                </div>
+                            </div>
                     </form>
                 </div>
             </div>

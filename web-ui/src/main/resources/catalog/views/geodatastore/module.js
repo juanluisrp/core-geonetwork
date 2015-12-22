@@ -22,9 +22,35 @@
 
   // Define the translation files to load
   module.constant('$LOCALES', ['geodatastore']);
+  module.factory('sessionInterceptor', ['$q', '$injector', '$log', '$rootScope', function($q, $injector, $log, $rootScope) {
+    var sessionInterceptor = {
+      'request': function(config) {
+        $log.debug('Request to ' + config.url);
+        return config;
+      },
+      'responseError': function (rejection) {
+        // Session has expired
+        if (rejection.status == 401) {
+          $log.warn("Session expired");
+          var originalData = rejection.data;
+          rejection.data = {};
+          rejection.data.error = true;
+          rejection.data.messages = ['server.session.timeout'];
+          rejection.data.originalData = originalData;
+          rejection.data.reqStatus = rejection.status;
+          $rootScope.$broadcast('loadCatalogInfo');
+          $rootScope.$broadcast('unauthorized');
 
-  module.config(['$translateProvider', '$LOCALES',
-    function ($translateProvider, $LOCALES) {
+        }
+
+        return $q.reject(rejection);
+      }
+    };
+    return sessionInterceptor;
+  }]);
+
+  module.config(['$translateProvider', '$LOCALES', '$httpProvider',
+    function ($translateProvider, $LOCALES, $httpProvider) {
       $translateProvider.useLoader('localeLoader', {
         locales: $LOCALES,
         prefix: '../../catalog/views/geodatastore/locales/',
@@ -35,12 +61,20 @@
       var lang = 'du';
       $translateProvider.preferredLanguage(lang);
       moment.lang(lang);
+
+      // Config $httpProvider interceptor
+      $httpProvider.interceptors.push('sessionInterceptor');
+
+
     }]);
+
+
 
 
 
   module.controller('geoDataStoreMainController', [
     '$scope',
+    '$rootScope',
     '$http',
     '$translate',
     '$log',
@@ -53,9 +87,11 @@
     'GdsUploadFactory',
     '$modal',
     '$q',
-    function ($scope, $http, $translate, $log, $filter,
+    function ($scope, $rootScope, $http, $translate, $log, $filter,
               gnUtilityService, gnSearchSettings, gnViewerSettings, Metadata, gdsSearchManagerService, GdsUploadFactory,
               $modal, $q) {
+
+
       $scope.loadCatalogInfo();
 
       $scope.editState = {
@@ -100,6 +136,14 @@
           $scope.updateResults(1);
         }
       });
+
+      $rootScope.$on('unauthorized', function() {
+        $scope.hasSelected = false;
+        GdsUploadFactory.setMdSelected(null);
+        GdsUploadFactory.clearList();
+        GdsUploadFactory.setDirty(false);
+        $scope.tab = 'upload';
+      })
 
       $scope.sortResults = function() {
         var query = $scope.searchParams.searchQuery;
@@ -147,22 +191,25 @@
       $scope.$watch('tab', function (newValue, oldValue) {
         // Retrieve the register count for the not selected tab.
         if (newValue) {
-          $scope.searchParams = {
-            selectedOrder: 'changeDate',
-            searchQuery: null,
-            sortDirection: 'desc'
-          };
-          $scope.page = 1,
-          $scope.getResultsSummary('draft');
-          $scope.getResultsSummary('published');
-          $scope.hasSelected = false;
-          GdsUploadFactory.setMdSelected(null);
-          GdsUploadFactory.clearList();
-          GdsUploadFactory.setDirty(false);
-          $scope.updateResults(1);
-          $scope.resetEditState(newValue);
+          $scope.resetAll(newValue);
         }
       });
+      $scope.resetAll = function(newValue) {
+        $scope.searchParams = {
+          selectedOrder: 'changeDate',
+          searchQuery: null,
+          sortDirection: 'desc'
+        };
+        $scope.page = 1;
+        $scope.getResultsSummary('draft');
+        $scope.getResultsSummary('published');
+        $scope.hasSelected = false;
+        GdsUploadFactory.setMdSelected(null);
+        GdsUploadFactory.clearList();
+        GdsUploadFactory.setDirty(false);
+        $scope.updateResults(1);
+        $scope.resetEditState(newValue);
+      };
 
       $scope.updateResultsAndPreserveSearch = function(page) {
         $scope.updateResults(page, $scope.searchParams.searchQuery, $scope.searchParams.selectedOrder,

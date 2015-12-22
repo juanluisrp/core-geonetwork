@@ -42,8 +42,8 @@
       // TODO : add language
       var tokens = location.href.split('/');
       $scope.service = tokens[tokens.length - 1].split('?')[0];
-      $scope.lang = tokens[5];
-      $scope.nodeId = tokens[4];
+      $scope.lang = tokens[tokens.length - 2];
+      $scope.nodeId = tokens[tokens.length - 3];
       // TODO : get list from server side
       $scope.langs = {'eng': 'en', 'dut': 'du', 'fre': 'fr',
         'ger': 'ge', 'kor': 'ko', 'spa': 'es', 'cze': 'cz'};

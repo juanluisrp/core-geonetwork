@@ -132,7 +132,8 @@
   "selectFileFromLeft": "Selecteer een bestand uit de linker kolom om deze te bewerken.",
   "changeInfoAfterPublishing": "U kunt de informatie over een dataset wijzigen, ook nadat deze gepubliceerd is.",
   "uploadDatasetByDraggingFile": "Upload een dataset door deze op het vlak links te slepen of \"selecteer bestanden\" te klikken.",
-  "previouslyPublishedDatasets": "Eerder gepubliceerde datasets worden hier getoond"
+  "previouslyPublishedDatasets": "Eerder gepubliceerde datasets worden hier getoond",
+  "server.session.timeout": "Uw sessie is verlopen. Gelieve in te loggen weer door te gaan met het werk."
 
 
 
