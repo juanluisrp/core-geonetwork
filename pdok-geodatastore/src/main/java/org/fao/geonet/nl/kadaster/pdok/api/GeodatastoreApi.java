@@ -59,6 +59,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.annotation.Nonnull;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
+import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
@@ -725,15 +726,15 @@ public class GeodatastoreApi {
         Element responseXML = info.exec(parameters, context);
         if (accept != null) {
             if (accept.toLowerCase().contains(MediaType.APPLICATION_XML_VALUE)) {
-                responseHeaders.setContentType(new MediaType("application", "xml"));
+                responseHeaders.setContentType(new MediaType("application", "xml", Charset.forName("UTF-8")));
 
                 return new ResponseEntity<>(Xml.getString(responseXML), responseHeaders, HttpStatus.OK);
             } else {
-                responseHeaders.setContentType(new MediaType("application", "json"));
+                responseHeaders.setContentType(new MediaType("application", "json", Charset.forName("UTF-8")));
                 return new ResponseEntity<>(Xml.getJSON(responseXML), responseHeaders, HttpStatus.OK);
             }
         } else {
-            responseHeaders.setContentType(new MediaType("application", "json"));
+            responseHeaders.setContentType(new MediaType("application", "json", Charset.forName("UTF-8")));
             return new ResponseEntity<>(Xml.getJSON(responseXML), responseHeaders, HttpStatus.OK);
         }
     }
