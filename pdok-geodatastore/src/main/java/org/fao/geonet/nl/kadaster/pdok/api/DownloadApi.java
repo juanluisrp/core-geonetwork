@@ -4,14 +4,21 @@ import jeeves.server.context.ServiceContext;
 import jeeves.server.dispatchers.ServiceManager;
 import org.apache.commons.lang.StringUtils;
 import org.fao.geonet.constants.Params;
+import org.fao.geonet.domain.ISODate;
+import org.fao.geonet.domain.MetadataFileDownload;
+import org.fao.geonet.domain.MetadataFileUpload;
+import org.fao.geonet.domain.User;
 import org.fao.geonet.exceptions.MetadataNotFoundEx;
 import org.fao.geonet.exceptions.ResourceNotFoundEx;
 import org.fao.geonet.kernel.DataManager;
 import org.fao.geonet.lib.Lib;
+import org.fao.geonet.repository.MetadataFileDownloadRepository;
+import org.fao.geonet.repository.MetadataFileUploadRepository;
 import org.fao.geonet.util.MimeTypeFinder;
 import org.fao.geonet.utils.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StreamUtils;
 import org.springframework.web.bind.annotation.*;
@@ -43,6 +50,11 @@ public class DownloadApi {
     @Autowired
     private ServiceManager serviceManager;
 
+    @Autowired
+    private MetadataFileUploadRepository uploadRepository;
+
+    @Autowired
+    private MetadataFileDownloadRepository downloadRepository;
 
     /**
      * Download the recentest thumbnail found in the public folder of the metadata.
@@ -117,6 +129,12 @@ public class DownloadApi {
             }
             Path resource = files.get(files.size() - 1);
             transferFile(resource, request, response);
+
+            // Updates the download statistics for metadata files (except thumbnails)
+            if (access.equalsIgnoreCase(Params.Access.PRIVATE)) {
+                updateDownloadStatistics(Integer.parseInt(metadataId), resource.getFileName().toString());
+            }
+
         } catch (ResourceNotFoundEx e) {
             Log.warning(GDS_LOG, "Metadata " + uuid + " has not dataset", e);
             throw e;
@@ -180,6 +198,45 @@ public class DownloadApi {
     @ExceptionHandler(Exception.class)
     public void handleInternalServerError() {
 
+    }
+
+    /**
+     * Updates the download statistics for metadata files (except thumbnails).
+     *
+     * @param metadataId
+     * @param fname
+     */
+    private void updateDownloadStatistics(Integer metadataId, String fname) {
+        User activeUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        final String userName = activeUser.getUsername();
+
+        MetadataFileUpload metadataFileUpload;
+
+        // Each download is related to a file upload record
+        try {
+            metadataFileUpload = uploadRepository.findByMetadataIdAndFileNameNotDeleted(metadataId, fname);
+
+            if (metadataFileUpload != null) {
+                MetadataFileDownload metadataFileDownload = new MetadataFileDownload();
+
+                metadataFileDownload.setMetadataId(metadataId);
+                metadataFileDownload.setFileName(fname);
+                metadataFileDownload.setRequesterName(activeUser.getName());
+                metadataFileDownload.setRequesterMail(activeUser.getEmail());
+
+                metadataFileDownload.setRequesterOrg(activeUser.getOrganisation());
+                metadataFileDownload.setRequesterComments("");
+                metadataFileDownload.setDownloadDate(new ISODate().toString());
+                metadataFileDownload.setUserName(userName);
+                metadataFileDownload.setFileUploadId(metadataFileUpload.getId());
+
+                downloadRepository.save(metadataFileDownload);
+            }
+
+        } catch (org.springframework.dao.EmptyResultDataAccessException ex) {
+            Log.warning(GDS_LOG, "Store file download request: No upload request for (metadataid, file): (" + metadataId + "," + fname + ")");
+        }
     }
 
 
