@@ -189,7 +189,9 @@
 	<!-- online resources: download -->
 	<!-- ================================================================= -->
 
-	<xsl:template match="gmd:CI_OnlineResource[matches(gmd:protocol/gco:CharacterString,'^WWW:DOWNLOAD-.*-http--download.*') and gmd:name]">
+	<xsl:template match="gmd:CI_OnlineResource[(matches(gmd:protocol/gco:CharacterString,'^WWW:DOWNLOAD-.*-http--download.*')
+	                                              or gmd:protocol/gco:CharacterString='download') 
+	                                               and gmd:name]">
 		<xsl:variable name="fname" select="gmd:name/gco:CharacterString|gmd:name/gmx:MimeFileType"/>
 		<xsl:variable name="mimeType">
 			<xsl:call-template name="getMimeTypeFile">
