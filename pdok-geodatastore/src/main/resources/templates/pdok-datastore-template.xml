@@ -71,11 +71,9 @@
           </gmd:date>
           <gmd:date>
             <gmd:CI_Date>
-              <gmd:date>
-                <gco:Date></gco:Date>
-              </gmd:date>
+              <gmd:date></gmd:date>
               <gmd:dateType>
-                <gmd:CI_DateTypeCode codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#CI_DateTypeCode" codeListValue="creation"/>
+                <gmd:CI_DateTypeCode codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#CI_DateTypeCode" codeListValue="revision"/>
               </gmd:dateType>
             </gmd:CI_Date>
           </gmd:date>

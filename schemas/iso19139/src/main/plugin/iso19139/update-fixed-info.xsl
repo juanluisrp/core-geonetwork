@@ -56,8 +56,10 @@
 
 	<!-- ================================================================= -->
 
-	<xsl:template match="gmd:dateStamp">
-    <xsl:choose>
+  <xsl:template match="gmd:dateStamp">
+		<xsl:message>IN gmd:dateStamp 2</xsl:message>
+		<xsl:message>IN gmd:dateStamp 2 <xsl:value-of select="/root/env/changeDate" /></xsl:message>
+		<xsl:choose>
         <xsl:when test="/root/env/changeDate">
             <xsl:copy>
                     <gco:DateTime>
@@ -505,7 +507,7 @@
 			<xsl:when test="/root/env/changeDate">
 				<xsl:copy>
 					<gco:Date>
-						<xsl:value-of select="/root/env/changeDate"/>
+						<xsl:value-of select="tokenize(/root/env/changeDate,'T')[1]" />
 					</gco:Date>
 				</xsl:copy>
 			</xsl:when>

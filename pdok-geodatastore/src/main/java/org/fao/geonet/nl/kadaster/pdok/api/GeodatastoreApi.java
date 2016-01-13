@@ -83,6 +83,7 @@ public class GeodatastoreApi {
     public static final String UUID_KEY_ = "uuid";
     public static final String PUBLICATION_DATE_KEY = "publicationDate";
     public static final String METADATA_MODIFIED_DATE_KEY = "metadataModifiedDate";
+    public static final String REVISION_DATE_KEY = "revisionDate";
     public static final String ORGANISATION_EMAIL_KEY = "organisationEmail";
     public static final String ORGANISATION_NAME_KEY = "organisationName";
     public static final String KEYWORDS_KEY = "keywords";
@@ -324,7 +325,7 @@ public class GeodatastoreApi {
         parameters.put(METADATA_MODIFIED_DATE_KEY, creationDate.getDateAsString());
         parameters.put(LINEAGE_KEY, "");
         parameters.put(TITLE_KEY, title);
-        parameters.put(PUBLICATION_DATE_KEY, creationDate.getDateAsString());
+        parameters.put(REVISION_DATE_KEY, creationDate.getDateAsString());
 
         parameters.put(UUID_KEY_, uuid);
         parameters.put(ABSTRACT_KEY, "");
@@ -422,11 +423,33 @@ public class GeodatastoreApi {
             String organisationEmail = group.getEmail();
 
             if (metadata != null) {
+                // Update the publication date only the first time the metadata is published
+                boolean updatePublicationDate = false;
+
+                if (publish) {
+                    MetadataStatus mdStatus = metadataManager.getStatus(Integer.parseInt(metadataId));
+                    // If a publication and the metadata was not already published --> (first publication)
+                    // then set the publication date
+
+                    // In geodatastore editor, the status after the first publication is kept as APPROVED,
+                    // if the user makes changes, the metadata status is not changed.
+                    // This differs from the standard GN editor, where after an edit the metadata is set to DRAFT and
+                    // the user should publish it.
+                    //
+                    // If users can use both editors the following check should be updated to check not the last status,
+                    // but any previous status is APPROVED.
+                    if (!String.valueOf(mdStatus.getId().getStatusId()).equalsIgnoreCase(Params.Status.APPROVED)) {
+                        updatePublicationDate = true;
+                    }
+
+                }
+
                 MetadataParametersBean metadataParameter = metadataConverter.convert(metadata);
                 Map<String, Object> templateParameters = new HashMap<>();
                 ISODate changeDate = new ISODate();
                 if (metadataParameter != null) {
-                    templateParameters = prepareTemplateParameters(metadataParameter, organisation, organisationEmail, changeDate.getDateAsString());
+                    templateParameters = prepareTemplateParameters(metadataParameter, organisation, organisationEmail,
+                            changeDate.getDateAsString(), updatePublicationDate);
                 }
 
                 //if metadata is published, the metadata can only be updated with valid metadata
@@ -434,7 +457,7 @@ public class GeodatastoreApi {
                 Element oldMetadata = metadataManager.getMetadataNoInfo(context, metadataId);
                 Element newMetadata = metadataUtil.updateMetadataContents(templateParameters, oldMetadata);
 
-                boolean updateFixedInfo = true, indexImmediate = false, validate = false, updateTimespamp = false;
+                boolean updateFixedInfo = true, indexImmediate = false, validate = false, updateTimespamp = true;
                 Metadata createdMd = metadataManager.updateMetadata(context, metadataId, newMetadata, validate,
                         updateFixedInfo, indexImmediate, lang, changeDate.getDateAsString(), updateTimespamp);
                 Log.debug(GDS_LOG, "Metadata " + createdMd.getId() + " updated");
@@ -566,11 +589,14 @@ public class GeodatastoreApi {
         return new ResponseEntity<Object>(response, status);
     }
 
-    private Map<String, Object> prepareTemplateParameters(MetadataParametersBean metadataParameter, String organisation, String organisationEmail, String changeDate) {
+    private Map<String, Object> prepareTemplateParameters(MetadataParametersBean metadataParameter, String organisation, String organisationEmail, String changeDate, boolean updatePublicationDate) {
         Map<String, Object> parametersMap = new HashMap<>();
         parametersMap.put(ORGANISATION_NAME_KEY, organisation);
         parametersMap.put(ORGANISATION_EMAIL_KEY, organisationEmail);
         parametersMap.put(METADATA_MODIFIED_DATE_KEY, changeDate);
+        if (updatePublicationDate) {
+            parametersMap.put(PUBLICATION_DATE_KEY, changeDate);
+        }
 
         if (StringUtils.isNotEmpty(metadataParameter.getTitle())) {
             parametersMap.put(TITLE_KEY, metadataParameter.getTitle());
