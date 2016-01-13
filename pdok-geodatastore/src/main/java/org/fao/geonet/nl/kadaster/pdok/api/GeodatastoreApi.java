@@ -242,6 +242,8 @@ public class GeodatastoreApi {
                 allParams.put("name", new String[]{dataset.getOriginalFilename()});
                 allParams.put("desc", new String[]{"Download link"});
                 allParams.put("protocol", new String[]{"download"});
+                String[] split = fileName.split(java.util.regex.Pattern.quote("."));
+                allParams.put("mimetype", new String[]{split[split.length - 1]});
 
                 String process = "onlinesrc-add";
                 XslProcessingReport report = new XslProcessingReport(process);

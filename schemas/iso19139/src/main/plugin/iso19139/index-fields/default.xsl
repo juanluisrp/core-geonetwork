@@ -586,7 +586,7 @@
           <xsl:variable name="title" select="normalize-space(gmd:name/gco:CharacterString|gmd:name/gmx:MimeFileType)"/>
           <xsl:variable name="desc" select="normalize-space(gmd:description/gco:CharacterString)"/>
           <xsl:variable name="protocol" select="normalize-space(gmd:protocol/gco:CharacterString)"/>
-          <xsl:variable name="mimetype" select="geonet:protocolMimeType($linkage, $protocol, gmd:name/gmx:MimeFileType/@type)"/>
+          <xsl:variable name="mimetype" select="string(gmd:name/gmx:MimeFileType/@type)"/>
 
           <!-- If the linkage points to WMS service and no protocol specified, manage as protocol OGC:WMS -->
           <xsl:variable name="wmsLinkNoProtocol" select="contains(lower-case($linkage), 'service=wms') and not(string($protocol))" />
@@ -613,6 +613,7 @@
           </xsl:if>
 
           <!-- ignore WMS links without protocol (are indexed below with mimetype application/vnd.ogc.wms_xml) -->
+          
           <xsl:if test="not($wmsLinkNoProtocol)">
             <Field name="link" string="{concat($title, '|', $desc, '|', $linkage, '|', $protocol, '|', $mimetype, '|', $tPosition)}" store="true" index="false"/>
           </xsl:if>
