@@ -447,6 +447,7 @@
                 GdsUploadFactory.removeFromList(md, $scope.searchResults.metadata);
                 GdsUploadFactory.removeFromList(md);
                 $scope.totalPublished = $scope.totalPublished + 1;
+                $scope.totalNotPublished = $scope.totalNotPublished - 1;
                 if (GdsUploadFactory.getMdSelected() && GdsUploadFactory.getMdSelected().identifier === md.identifier) {
                   GdsUploadFactory.setMdSelected({});
                   $scope.hasSelected = false;
