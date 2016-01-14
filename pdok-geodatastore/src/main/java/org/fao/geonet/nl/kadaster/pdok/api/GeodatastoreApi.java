@@ -207,7 +207,7 @@ public class GeodatastoreApi {
 
                 UUID uuid = UUID.randomUUID();
                 ISODate creationDate = new ISODate();
-                String defaultLocation = "http://geodatastore.pdok.nl/registry/location#Nederland_country";
+                String defaultLocation = "";
 
                 Map<String, Object> templateParameters = prepareTemplateParameters(organisation, organisationEmail,
                         new ArrayList<String>(), new ArrayList<String>(), defaultLocation, "2", "5", "50", "54",
