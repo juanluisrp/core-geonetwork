@@ -11,6 +11,7 @@ import jeeves.server.dispatchers.ServiceManager;
 import jeeves.server.sources.http.ServletPathFinder;
 import jeeves.services.ReadWriteController;
 import nl.kadaster.pdok.bussiness.*;
+import nl.kadaster.pdok.bussiness.registryservices.Registry;
 import org.apache.commons.fileupload.FileUploadBase;
 import org.apache.commons.lang.StringUtils;
 import org.fao.geonet.ApplicationContextHolder;
@@ -75,6 +76,7 @@ import static org.fao.geonet.repository.specification.UserGroupSpecs.hasUserId;
 @ReadWriteController
 @RequestMapping("/{lang}/api/v1")
 public class GeodatastoreApi {
+    public static final String API_VERSION = "v1";
     public static final String TITLE_KEY = "title";
     public static final String LINEAGE_KEY = "lineage";
     public static final String RESOLUTION_KEY = "resolution";
@@ -141,6 +143,8 @@ public class GeodatastoreApi {
     private String locationThesaurus;
     @Autowired
     private GeodatastoreMailUtils geodatastoreMailUtils;
+    @Autowired
+    private RegistryServiceLocator registryServiceLocator;
 
 
     public GeodatastoreApi() {
@@ -728,16 +732,27 @@ public class GeodatastoreApi {
         return new ResponseEntity<Object>(responseMap, status);
     }
 
-    @RequestMapping(value = "/registry")
-    public List<String> getAvailableCodelists() {
-        List<String> result = new ArrayList<>();
+    @RequestMapping(value = "/registries", produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+    public @ResponseBody
+    List<Registry> getAvailableCodelists() {
+        ServletPathFinder pathFinder = new ServletPathFinder(servletContext);
+        String siteUrl = getSiteURL(pathFinder) + "/api/" + API_VERSION;
+        List<String> result = registryServiceLocator.getAvailableCodelists();
+        List<Registry> registryList = new ArrayList<>(result.size());
+        for (String registryName : result) {
+            Registry registry = new Registry();
+            registry.setName(registryName);
+            registry.setUrl(new StringBuilder(100).append(siteUrl).append("/registry/").append(registryName).toString());
+            registryList.add(registry);
+        }
+/*
         result.add("gmd:MD_TopicCategoryCode");
-        result.add("gmd:otherConstraints");
-        return result;
+        result.add("gmd:otherConstraints");*/
+        return registryList;
 
     }
 
-    @RequestMapping(value = "/registry/{codeList}")
+    @RequestMapping(value = "/registry/{codeList}", produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     public ResponseEntity<String> getCodelistEntries(@PathVariable("lang") String lang, @PathVariable("codeList") String codeList,
                                                      HttpServletRequest request, @RequestHeader(org.apache.http.HttpHeaders.ACCEPT) String accept) throws Exception {
         ConfigurableApplicationContext appContext = ApplicationContextHolder.get();
@@ -805,7 +820,7 @@ public class GeodatastoreApi {
                         hasProfile(Profile.Reviewer)).and(hasUserId(user.getId())));
 
                 if (groupsIds.size() == 0) {
-                    Log.warning(GDS_LOG, "/api/v1/datasets: the user " + session.getUsername() + " needs to belong to a group to be able to search");
+                    Log.warning(GDS_LOG, "/api/" + API_VERSION + "/datasets: the user " + session.getUsername() + " needs to belong to a group to be able to search");
                     return new ResponseEntity<>((Object) ("{\"from\":0,\"to\":0,\"selected\":0,\"count\":0,\"metadata\":[], " +
                             "\"error\":\"the user needs to belong to a group to be able to search\"}"), headers, HttpStatus.OK);
                 }
