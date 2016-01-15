@@ -1,5 +1,6 @@
 package org.fao.geonet.nl.kadaster.pdok.api;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.base.Joiner;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
@@ -11,7 +12,10 @@ import jeeves.server.dispatchers.ServiceManager;
 import jeeves.server.sources.http.ServletPathFinder;
 import jeeves.services.ReadWriteController;
 import nl.kadaster.pdok.bussiness.*;
+import nl.kadaster.pdok.bussiness.registryservices.CodelistElement;
 import nl.kadaster.pdok.bussiness.registryservices.Registry;
+import nl.kadaster.pdok.bussiness.registryservices.RegistryService;
+import org.apache.batik.dom.GenericEntity;
 import org.apache.commons.fileupload.FileUploadBase;
 import org.apache.commons.lang.StringUtils;
 import org.fao.geonet.ApplicationContextHolder;
@@ -734,7 +738,7 @@ public class GeodatastoreApi {
 
     @RequestMapping(value = "/registries", produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     public @ResponseBody
-    List<Registry> getAvailableCodelists() {
+    RegistryResponse getAvailableCodelists() {
         ServletPathFinder pathFinder = new ServletPathFinder(servletContext);
         String siteUrl = getSiteURL(pathFinder) + "/api/" + API_VERSION;
         List<String> result = registryServiceLocator.getAvailableCodelists();
@@ -748,26 +752,62 @@ public class GeodatastoreApi {
 /*
         result.add("gmd:MD_TopicCategoryCode");
         result.add("gmd:otherConstraints");*/
-        return registryList;
+        return new RegistryResponse(registryList);
 
     }
 
-    @RequestMapping(value = "/registry/{codeList}", produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
-    public ResponseEntity<String> getCodelistEntries(@PathVariable("lang") String lang, @PathVariable("codeList") String codeList,
-                                                     HttpServletRequest request, @RequestHeader(org.apache.http.HttpHeaders.ACCEPT) String accept) throws Exception {
+    @RequestMapping(value = "/registry/{name}", produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+    public ResponseEntity<Object> getCodelistEntries(
+            @PathVariable("lang") String lang, @PathVariable("name") String name,
+            @RequestParam(value = "q", required = false) String q,
+            @RequestParam(value = "pageSize", defaultValue = "200", required = false) Integer pageSize,
+            HttpServletRequest request,
+            @RequestHeader(org.apache.http.HttpHeaders.ACCEPT) String accept) throws Exception {
         ConfigurableApplicationContext appContext = ApplicationContextHolder.get();
         ServiceManager serviceManager = appContext.getBean(ServiceManager.class);
         HttpHeaders responseHeaders = new HttpHeaders();
-
         final ServiceContext context = serviceManager.createServiceContext("geodatastore.registry", lang, request);
-        Info info = new Info();
+        if (accept == null) {
+            accept = MediaType.APPLICATION_JSON_VALUE;
+        }
+
+        // Check if requested codelist exists. In other case return a 404 Not Found response.
+        RegistryService registryService = registryServiceLocator.getService(name);
+        if (registryService == null) {
+            String response;
+            if (accept.toLowerCase().contains(MediaType.APPLICATION_XML_VALUE)) {
+                responseHeaders.setContentType(new MediaType("application", "xml", Charset.forName("UTF-8")));
+                response = "<response><error>true</error><message>non_existent_codelist</message></response>";
+            } else {
+                responseHeaders.setContentType(new MediaType("application", "json", Charset.forName("UTF-8")));
+                response = "{\"error\": true, \"message\": \"non_existent_codelist\"}";
+            }
+            return new ResponseEntity<Object>(response, responseHeaders, HttpStatus.NOT_FOUND);
+        }
+
+        List<? extends CodelistElement> result = registryService.query(q, pageSize);
+        /*if (accept.toLowerCase().contains(MediaType.APPLICATION_XML_VALUE)) {
+            responseHeaders.setContentType(new MediaType("application", "xml", Charset.forName("UTF-8")));
+
+            return new ResponseEntity<Object>(result, responseHeaders, HttpStatus.OK);
+        } else {
+            ObjectMapper mapper = new ObjectMapper();
+            //String jsonString = mapper.writeValueAsString(result);
+
+            responseHeaders.setContentType(new MediaType("application", "json", Charset.forName("UTF-8")));
+            return new ResponseEntity<Object>(result, responseHeaders, HttpStatus.OK);
+        }*/
+        return new ResponseEntity<Object>(new GenericArrayResponse(result), HttpStatus.OK);
+
+
+
+        /*Info info = new Info();
         Element parameters = new Element("request");
         Element codelist = new Element("codelist");
         codelist.setAttribute("schema", ISO_19139);
-        codelist.setAttribute("name", codeList);
+        codelist.setAttribute("name", name);
         parameters.addContent(codelist.detach());
         Element responseXML = info.exec(parameters, context);
-        if (accept != null) {
             if (accept.toLowerCase().contains(MediaType.APPLICATION_XML_VALUE)) {
                 responseHeaders.setContentType(new MediaType("application", "xml", Charset.forName("UTF-8")));
 
@@ -775,11 +815,7 @@ public class GeodatastoreApi {
             } else {
                 responseHeaders.setContentType(new MediaType("application", "json", Charset.forName("UTF-8")));
                 return new ResponseEntity<>(Xml.getJSON(responseXML), responseHeaders, HttpStatus.OK);
-            }
-        } else {
-            responseHeaders.setContentType(new MediaType("application", "json", Charset.forName("UTF-8")));
-            return new ResponseEntity<>(Xml.getJSON(responseXML), responseHeaders, HttpStatus.OK);
-        }
+            }*/
     }
 
     /**

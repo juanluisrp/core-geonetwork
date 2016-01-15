@@ -1,9 +1,14 @@
 package nl.kadaster.pdok.bussiness.registryservices.bean;
 
+import nl.kadaster.pdok.bussiness.registryservices.CodelistElement;
+
+import javax.xml.bind.annotation.XmlRootElement;
+
 /**
  * Created by juanluisrp on 13/01/2016.
  */
-public class License implements Comparable<License> {
+@XmlRootElement
+public class License implements Comparable<License>, CodelistElement {
     private String key;
     private String translation;
 
