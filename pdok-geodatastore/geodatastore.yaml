@@ -138,6 +138,32 @@ paths:
         '405':
           description: Invalid input    
   /api/v1/dataset/{id}:
+    get:
+      description: |
+        Get `dataset` object.
+      security:
+       - basicAuth: []
+      parameters:
+        - name: id
+          in: path
+          description: the id of the Dataset
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Successful response
+          schema:
+            $ref: "#/definitions/dataset"
+        '404':
+          description: Dataset does not exist or no privileges
+          schema: 
+            title: Message
+            type: string
+        '405':
+          description: Invalid input  
+          schema: 
+            title: Message
+            type: string
     post:
       description: |
         Update a dataset
@@ -210,7 +236,6 @@ paths:
           schema: 
             title: Message
             type: string
-  /api/v1/dataset/{id}:
     delete:
       description: delete a dataset
       security:
@@ -227,33 +252,6 @@ paths:
           description: Successful response      
         '404':
           description: Dataset not found 
-  /api/v1/dataset/{id}:
-    get:
-      description: |
-        Get `dataset` object.
-      security:
-       - basicAuth: []
-      parameters:
-        - name: id
-          in: path
-          description: the id of the Dataset
-          required: true
-          type: string
-      responses:
-        '200':
-          description: Successful response
-          schema:
-            $ref: "#/definitions/dataset"
-        '404':
-          description: Dataset does not exist or no privileges
-          schema: 
-            title: Message
-            type: string
-        '405':
-          description: Invalid input  
-          schema: 
-            title: Message
-            type: string
   /api/v1/registries:
     get:
       description: |
