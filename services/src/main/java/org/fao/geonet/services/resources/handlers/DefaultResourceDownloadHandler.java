@@ -63,6 +63,7 @@ public class DefaultResourceDownloadHandler implements IResourceDownloadHandler 
                     case "tiff":
                     case "jpg":
                     case "jpeg":
+                    case "svg":
                         contentType = "image/" + ext;
                         break;
                     case "txt":
