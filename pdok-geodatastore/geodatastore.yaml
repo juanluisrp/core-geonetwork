@@ -198,11 +198,11 @@ paths:
           type: string
         - in: formData
           name: license
-          description: License under which te dataset is made available. Should be a URI of one of /api/v1/registry/licenses.
+          description: License under which te dataset is made available. Should be a URI of one of /api/v1/registry/license.
           type: string
         - in: formData
           name: resolution
-          description: The resolution (scale) in which this dataset is best used. Should be a URI of one of /api/v1/registry/resolutions.
+          description: The resolution (scale) in which this dataset is best used. Should be a URI of one of /api/v1/registry/denominator.
           type: string
         - in: formData
           name: locationUri
@@ -214,7 +214,7 @@ paths:
           description: This flag indicates if the dataset should be instantly published or saved as draft.
         - in: formData
           name: topicCategory
-          description: The topic of the dataset. Should be a URI of one of /api/v1/registry/topicCategories.
+          description: The topic of the dataset. Should be a URI of one of /api/v1/registry/topicCategory.
           type: array
           items: 
             type: string
@@ -256,6 +256,9 @@ paths:
     get:
       description: |
         Gets `registry` objects.
+	  produces:	
+		- text/xml
+		- application/json
       responses:
         '200':
           description: Successful response
@@ -270,18 +273,16 @@ paths:
                   type: string
                 url:
                   type: string            
-  /api/v1/registry/{name}:
+  /api/v1/registry/location:
     get:
       description: |
-        Gets `registry` objects.
-        Optional query param of **pageSize** determines
+        Gets `location` objects.
+        Optional query param of **pageSize** and **q** determines
         size of returned array
+	  produces:
+	    - text/xml
+		- application/json
       parameters:
-        - name: name
-          in: path
-          description: The name of the Registry
-          required: true
-          type: string
         - name: q
           in: query
           description: A filter used in query
@@ -292,6 +293,44 @@ paths:
           description: Size of array
           required: false
           type: integer
+      responses:
+        '200':
+          description: Successful response
+          schema:
+            title: Array of keywords
+            type: array
+            items:
+              title: Keyword
+              type: object
+              properties:
+                uri:
+                  type: string
+                label:
+                  type: string
+                bounds:
+                  type: array
+                  items: 
+                    type: number
+                  maxItems: 4
+                  minItems: 4
+        '404':
+          description: Registry does not exist
+          schema: 
+            title: Message
+            type: string
+  /api/v1/registry/{name}:
+    get:
+      description: |
+        Gets `keyword` objects.
+	  produces:
+	    - text/xml
+		- application/json
+      parameters:
+        - name: name
+          in: path
+          description: The name of the Registry
+          required: true
+          type: string
       responses:
         '200':
           description: Successful response
