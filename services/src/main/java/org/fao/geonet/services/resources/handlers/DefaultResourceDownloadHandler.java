@@ -51,8 +51,8 @@ public class DefaultResourceDownloadHandler implements IResourceDownloadHandler 
             MultiValueMap<String, String> headers = new HttpHeaders();
             headers.add("Content-Disposition", "inline; filename=\"" + fileName + "\"");
             headers.add("Cache-Control", "no-cache");
-            String contentType = MimeTypeFinder.detectMimeTypeFile(file.getParent().toString(), file.getFileName().toString());
-            //String contentType = null;
+            //String contentType = MimeTypeFinder.detectMimeTypeFile(file.getParent().toString(), file.getFileName().toString());
+            String contentType = null;
             if (contentType == null) {
                 String ext = com.google.common.io.Files.getFileExtension(file.getFileName().toString()).toLowerCase();
                 switch (ext) {
