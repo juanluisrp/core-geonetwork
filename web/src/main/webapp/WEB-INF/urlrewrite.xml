@@ -24,128 +24,129 @@
         <from>^(.+)@json$</from>
         <to type="permanent-redirect">%{context-path}$1?_content_type=json</to>
     </rule>
-    <rule>
-        <condition name="content-type" operator="notequal">multipart/form-data</condition>
-        <from>^(.+)@json(\?.*)$</from>
-        <to type="permanent-redirect">%{context-path}$1$2&amp;_content_type=json</to>
-    </rule>
-     <rule>
-        <from>^(.*)/ar/(.*)$</from>
-        <to type="permanent-redirect" last="true">%{context-path}$1/dut/$2</to>
-    </rule>
-    <rule>
-        <from>^(.*)/ara/(.*)$</from>
-        <to type="permanent-redirect" last="true">%{context-path}$1/dut/$2</to>
-    </rule>
-    <rule>
-        <from>^(.*)/ca/(.*)$</from>
-        <to type="permanent-redirect" last="true">%{context-path}$1/dut/$2</to>
-    </rule>
-    <rule>
-        <from>^(.*)/cat/(.*)$</from>
-        <to type="permanent-redirect" last="true">%{context-path}$1/dut/$2</to>
-    </rule>
-    <rule>
-        <from>^(.*)/cn/(.*)$</from>
-        <to type="permanent-redirect" last="true">%{context-path}$1/dut/$2</to>
-    </rule>
-    <rule>
-        <from>^(.*)/chi/(.*)$</from>
-        <to type="permanent-redirect" last="true">%{context-path}$1/dut/$2</to>
-    </rule>
-    <rule>
-        <from>^(.*)/nl/(.*)$</from>
-        <to type="permanent-redirect" last="true">%{context-path}$1/dut/$2</to>
-    </rule>
-    <rule>
-        <from>^(.*)/fi/(.*)$</from>
-        <to type="permanent-redirect" last="true">%{context-path}$1/dut/$2</to>
-    </rule>
-    <rule>
-        <from>^(.*)/fin/(.*)$</from>
-        <to type="permanent-redirect" last="true">%{context-path}$1/dut/$2</to>
-    </rule>
-    <rule>
-        <from>^(.*)/fr/(.*)$</from>
-        <to type="permanent-redirect" last="true">%{context-path}$1/dut/$2</to>
-    </rule>
-    <rule>
-        <from>^(.*)/fre/(.*)$</from>
-        <to type="permanent-redirect" last="true">%{context-path}$1/dut/$2</to>
-    </rule>
-    <rule>
-        <from>^(.*)/de/(.*)$</from>
-        <to type="permanent-redirect" last="true">%{context-path}$1/dut/$2</to>
-    </rule>
-     <rule>
-        <from>^(.*)/ger/(.*)$</from>
-        <to type="permanent-redirect" last="true">%{context-path}$1/dut/$2</to>
-    </rule>
-    <rule>
-        <from>^(.*)/no/(.*)$</from>
-        <to type="permanent-redirect" last="true">%{context-path}$1/dut/$2</to>
-    </rule>
-    <rule>
-        <from>^(.*)/nor/(.*)$</from>
-        <to type="permanent-redirect" last="true">%{context-path}$1/dut/$2</to>
-    </rule>
-    <rule>
-        <from>^(.*)/pt/(.*)$</from>
-        <to type="permanent-redirect" last="true">%{context-path}$1/dut/$2</to>
-    </rule>
-    <rule>
-        <from>^(.*)/por/(.*)$</from>
-        <to type="permanent-redirect" last="true">%{context-path}$1/dut/$2</to>
-    </rule>
-    <rule>
-        <from>^(.*)/ru/(.*)$</from>
-        <to type="permanent-redirect" last="true">%{context-path}$1/dut/$2</to>
-    </rule>
-    <rule>
-        <from>^(.*)/rus/(.*)$</from>
-        <to type="permanent-redirect" last="true">%{context-path}$1/dut/$2</to>
-    </rule>
-    <rule>
-        <from>^(.*)/es/(.*)$</from>
-        <to type="permanent-redirect" last="true">%{context-path}$1/dut/$2</to>
-    </rule>
-    <rule>
-        <from>^(.*)/spa/(.*)$</from>
-        <to type="permanent-redirect" last="true">%{context-path}$1/dut/$2</to>
-    </rule>
-    <rule>
-        <from>^(.*)/en/(.*)$</from>
-        <to type="permanent-redirect" last="true">%{context-path}$1/dut/$2</to>
-    </rule>
-    <rule>
-        <from>^(.*)/eng/(.*)$</from>
-        <to type="permanent-redirect" last="true">%{context-path}$1/dut/$2</to>
-    </rule>
-    <rule>
-        <from>^(.*)/tr/(.*)$</from>
-        <to type="permanent-redirect" last="true">%{context-path}$1/dut/$2</to>
-    </rule>
-     <rule>
-        <from>^(.*)/tur/(.*)$</from>
-        <to type="permanent-redirect" last="true">%{context-path}$1/dut/$2</to>
-    </rule>
-    <rule>
-        <from>^(.*)/it/(.*)$</from>
-        <to type="permanent-redirect" last="true">%{context-path}$1/dut/$2</to>
-    </rule>
-    <rule>
-        <from>^(.*)/ita/(.*)$</from>
-        <to type="permanent-redirect" last="true">%{context-path}$1/dut/$2</to>
-    </rule>
-    <rule>
-        <note>
-            Retrieves robots.txt filemap pointing to sitemaps for better indexing.
-        </note>
-        <from>^/robots.txt$</from>
-        <to type="forward" last="true">/web/eng/robots.txt</to>
-    </rule>
 
-    <!-- Use new home service because it performs a faster redirect -->
+       <rule>
+           <condition name="content-type" operator="notequal">multipart/form-data</condition>
+           <from>^(.+)@json(\?.*)$</from>
+           <to type="permanent-redirect">%{context-path}$1$2&amp;_content_type=json</to>
+       </rule>
+        <rule>
+           <from>^(.*)/ar/(.*)$</from>
+           <to type="permanent-redirect" last="true">%{context-path}$1/dut/$2</to>
+       </rule>
+       <rule>
+           <from>^(.*)/ara/(.*)$</from>
+           <to type="permanent-redirect" last="true">%{context-path}$1/dut/$2</to>
+       </rule>
+       <rule>
+           <from>^(.*)/ca/(.*)$</from>
+           <to type="permanent-redirect" last="true">%{context-path}$1/dut/$2</to>
+       </rule>
+       <rule>
+           <from>^(.*)/cat/(.*)$</from>
+           <to type="permanent-redirect" last="true">%{context-path}$1/dut/$2</to>
+       </rule>
+       <rule>
+           <from>^(.*)/cn/(.*)$</from>
+           <to type="permanent-redirect" last="true">%{context-path}$1/dut/$2</to>
+       </rule>
+       <rule>
+           <from>^(.*)/chi/(.*)$</from>
+           <to type="permanent-redirect" last="true">%{context-path}$1/dut/$2</to>
+       </rule>
+       <rule>
+           <from>^(.*)/nl/(.*)$</from>
+           <to type="permanent-redirect" last="true">%{context-path}$1/dut/$2</to>
+       </rule>
+       <rule>
+           <from>^(.*)/fi/(.*)$</from>
+           <to type="permanent-redirect" last="true">%{context-path}$1/dut/$2</to>
+       </rule>
+       <rule>
+           <from>^(.*)/fin/(.*)$</from>
+           <to type="permanent-redirect" last="true">%{context-path}$1/dut/$2</to>
+       </rule>
+       <rule>
+           <from>^(.*)/fr/(.*)$</from>
+           <to type="permanent-redirect" last="true">%{context-path}$1/dut/$2</to>
+       </rule>
+       <rule>
+           <from>^(.*)/fre/(.*)$</from>
+           <to type="permanent-redirect" last="true">%{context-path}$1/dut/$2</to>
+       </rule>
+       <rule>
+           <from>^(.*)/de/(.*)$</from>
+           <to type="permanent-redirect" last="true">%{context-path}$1/dut/$2</to>
+       </rule>
+        <rule>
+           <from>^(.*)/ger/(.*)$</from>
+           <to type="permanent-redirect" last="true">%{context-path}$1/dut/$2</to>
+       </rule>
+       <rule>
+           <from>^(.*)/no/(.*)$</from>
+           <to type="permanent-redirect" last="true">%{context-path}$1/dut/$2</to>
+       </rule>
+       <rule>
+           <from>^(.*)/nor/(.*)$</from>
+           <to type="permanent-redirect" last="true">%{context-path}$1/dut/$2</to>
+       </rule>
+       <rule>
+           <from>^(.*)/pt/(.*)$</from>
+           <to type="permanent-redirect" last="true">%{context-path}$1/dut/$2</to>
+       </rule>
+       <rule>
+           <from>^(.*)/por/(.*)$</from>
+           <to type="permanent-redirect" last="true">%{context-path}$1/dut/$2</to>
+       </rule>
+       <rule>
+           <from>^(.*)/ru/(.*)$</from>
+           <to type="permanent-redirect" last="true">%{context-path}$1/dut/$2</to>
+       </rule>
+       <rule>
+           <from>^(.*)/rus/(.*)$</from>
+           <to type="permanent-redirect" last="true">%{context-path}$1/dut/$2</to>
+       </rule>
+       <rule>
+           <from>^(.*)/es/(.*)$</from>
+           <to type="permanent-redirect" last="true">%{context-path}$1/dut/$2</to>
+       </rule>
+       <rule>
+           <from>^(.*)/spa/(.*)$</from>
+           <to type="permanent-redirect" last="true">%{context-path}$1/dut/$2</to>
+       </rule>
+       <rule>
+           <from>^(.*)/en/(.*)$</from>
+           <to type="permanent-redirect" last="true">%{context-path}$1/dut/$2</to>
+       </rule>
+       <rule>
+           <from>^(.*)/eng/(.*)$</from>
+           <to type="permanent-redirect" last="true">%{context-path}$1/dut/$2</to>
+       </rule>
+       <rule>
+           <from>^(.*)/tr/(.*)$</from>
+           <to type="permanent-redirect" last="true">%{context-path}$1/dut/$2</to>
+       </rule>
+        <rule>
+           <from>^(.*)/tur/(.*)$</from>
+           <to type="permanent-redirect" last="true">%{context-path}$1/dut/$2</to>
+       </rule>
+       <rule>
+           <from>^(.*)/it/(.*)$</from>
+           <to type="permanent-redirect" last="true">%{context-path}$1/dut/$2</to>
+       </rule>
+       <rule>
+           <from>^(.*)/ita/(.*)$</from>
+           <to type="permanent-redirect" last="true">%{context-path}$1/dut/$2</to>
+       </rule>
+       <rule>
+           <note>
+               Retrieves robots.txt filemap pointing to sitemaps for better indexing.
+           </note>
+           <from>^/robots.txt$</from>
+           <to type="forward" last="true">/web/eng/robots.txt</to>
+       </rule>
+
+       <!-- Use new home service because it performs a faster redirect -->
     <rule>
         <from>^/([^/]*)/(\w\w\w)/home$</from>
         <to type="permanent-redirect" last="true">%{context-path}/home?hl=$2&amp;node=$1</to>
@@ -250,6 +251,14 @@
     <rule>
         <from>^/doc/dataset/(.*)$</from>
         <to type="forward">/web/dut/xml.metadata.get?uuid=$1</to>
+    </rule>
+
+    <rule>
+        <note>
+            Geodatastore Registry
+        </note>
+        <from>^/registries</from>
+        <to type="forward">/web/dut/api/v1/registries</to>
     </rule>
 
     <rule>
@@ -425,6 +434,14 @@
         <from>^/geodatastore/api/dataset/(.+)</from>
         <to type="forward">/web/dut/md.delete?_content_type=json&amp;uuid=$1</to>
     </rule>-->
+<!--
+    <rule>
+        <note>
+            Geodatastore Registry
+        </note>
+        <from>^/registry/(.*)$</from>
+        <to type="forward">/web/dut/api/v1/registy/$1</to>
+    </rule>-->
 
     <rule>
         <note>
@@ -441,6 +458,23 @@
         <from>^/api/(v[0-9]+)/datasets(.*)$</from>
         <to type="forward" last="true">/web/dut/api/$1/datasets</to>
     </rule>
+
+    <rule>
+        <note>
+            Geodatastore registry rule
+        </note>
+        <from>^/api/(v[0-9]+)/registry/(.*)(\?.*)$</from>
+        <to type="forward" last="true">/web/dut/api/$1/registry/$2</to>
+    </rule>
+
+    <rule>
+        <note>
+            Geodatastore registry rule
+        </note>
+        <from>^/api/(v[0-9]+)/registry/(.*)$</from>
+        <to type="forward" last="true">/web/dut/api/$1/registry/$2</to>
+    </rule>
+
     <rule>
         <note>
             Geodatastore API general rule

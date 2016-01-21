@@ -749,9 +749,7 @@ public class GeodatastoreApi {
             registry.setUrl(new StringBuilder(100).append(siteUrl).append("/registry/").append(registryName).toString());
             registryList.add(registry);
         }
-/*
-        result.add("gmd:MD_TopicCategoryCode");
-        result.add("gmd:otherConstraints");*/
+
         return new RegistryResponse(registryList);
 
     }
@@ -786,36 +784,7 @@ public class GeodatastoreApi {
         }
 
         List<? extends CodelistElement> result = registryService.query(q, pageSize);
-        /*if (accept.toLowerCase().contains(MediaType.APPLICATION_XML_VALUE)) {
-            responseHeaders.setContentType(new MediaType("application", "xml", Charset.forName("UTF-8")));
-
-            return new ResponseEntity<Object>(result, responseHeaders, HttpStatus.OK);
-        } else {
-            ObjectMapper mapper = new ObjectMapper();
-            //String jsonString = mapper.writeValueAsString(result);
-
-            responseHeaders.setContentType(new MediaType("application", "json", Charset.forName("UTF-8")));
-            return new ResponseEntity<Object>(result, responseHeaders, HttpStatus.OK);
-        }*/
         return new ResponseEntity<Object>(new GenericArrayResponse(result), HttpStatus.OK);
-
-
-
-        /*Info info = new Info();
-        Element parameters = new Element("request");
-        Element codelist = new Element("codelist");
-        codelist.setAttribute("schema", ISO_19139);
-        codelist.setAttribute("name", name);
-        parameters.addContent(codelist.detach());
-        Element responseXML = info.exec(parameters, context);
-            if (accept.toLowerCase().contains(MediaType.APPLICATION_XML_VALUE)) {
-                responseHeaders.setContentType(new MediaType("application", "xml", Charset.forName("UTF-8")));
-
-                return new ResponseEntity<>(Xml.getString(responseXML), responseHeaders, HttpStatus.OK);
-            } else {
-                responseHeaders.setContentType(new MediaType("application", "json", Charset.forName("UTF-8")));
-                return new ResponseEntity<>(Xml.getJSON(responseXML), responseHeaders, HttpStatus.OK);
-            }*/
     }
 
     /**

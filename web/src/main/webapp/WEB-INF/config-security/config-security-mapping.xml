@@ -17,7 +17,7 @@ xsi:schemaLocation="http://www.springframework.org/schema/beans
               <sec:intercept-url pattern="/api/v[0-9]+/registry/*.*" access="permitAll"></sec:intercept-url>
               <sec:intercept-url pattern="/api/v[0-9]+/.*" access="permitAll"></sec:intercept-url>-->
 
-			        <sec:intercept-url pattern="/[a-zA-Z0-9_\-]+/[a-z]{2,3}/index!?.*" access="permitAll"></sec:intercept-url>
+              <sec:intercept-url pattern="/[a-zA-Z0-9_\-]+/[a-z]{2,3}/index!?.*" access="permitAll"></sec:intercept-url>
               <sec:intercept-url pattern="/id/thumbnail/*.*" access="permitAll"></sec:intercept-url>
               <sec:intercept-url pattern="/id/dataset/*.*" access="permitAll"></sec:intercept-url>
               <sec:intercept-url pattern="/doc/dataset/*.*" access="permitAll"></sec:intercept-url>
@@ -25,6 +25,11 @@ xsi:schemaLocation="http://www.springframework.org/schema/beans
               <sec:intercept-url pattern="/[a-zA-Z0-9_\-]+/id/thumbnail/*.*" access="permitAll"></sec:intercept-url>
               <sec:intercept-url pattern="/[a-zA-Z0-9_\-]+/[a-z]{2,3}/gdsRegister!?.*" access="permitAll"></sec:intercept-url>
               <sec:intercept-url pattern="/[a-zA-Z0-9_\-]+/[a-z]{2,3}/ajaxLogin!?.*" access="permitAll"/>
+
+
+              <sec:intercept-url pattern="/registries!?.*" access="permitAll"/>
+
+
 
 
               <sec:intercept-url pattern="/metadata/.*" access="permitAll"/>
@@ -517,7 +522,11 @@ xsi:schemaLocation="http://www.springframework.org/schema/beans
         <sec:intercept-url pattern="/api/v[0-9]+/dataset" access="hasRole('Reviewer')" />
         <sec:intercept-url pattern="/api/v[0-9]+/docs*.*" access="permitAll" />
         <sec:intercept-url pattern="/api/v[0-9]+/registry/*.*" access="permitAll" />
+        <sec:intercept-url pattern="/api/v[0-9]+/registry/[a-zA-Z0-9_\-]+!?.*" access="permitAll"/>
+        <sec:intercept-url pattern="/api/v[0-9]+/registries!?.*" access="permitAll"/>
         <sec:intercept-url pattern="/api/v[0-9]+/.*" access="permitAll" />
+
+
       </sec:filter-security-metadata-source>
     </property>
 
