@@ -42,8 +42,8 @@ public class Location implements CodelistElement {
     }
 
     @XmlElement
-    public String getCode() { return this.keywordBean.getUriCode(); }
+    public String getKey() { return this.keywordBean.getUriCode(); }
 
     @XmlElement
-    public String getValue () { return this.keywordBean.getDefaultValue();}
+    public String getLabel() { return this.keywordBean.getDefaultValue();}
 }

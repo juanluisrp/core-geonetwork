@@ -7,7 +7,6 @@ import nl.kadaster.pdok.bussiness.registryservices.bean.Location;
 import nl.kadaster.pdok.bussiness.registryservices.bean.TopicCategory;
 
 import javax.xml.bind.annotation.XmlAnyElement;
-import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlSeeAlso;
 import java.util.List;
@@ -18,21 +17,21 @@ import java.util.List;
 @XmlRootElement(name = "response")
 @XmlSeeAlso({Denominator.class, License.class, TopicCategory.class, Location.class})
 public class GenericArrayResponse {
-    private List<? extends CodelistElement> list;
+    private List<? extends CodelistElement> response;
 
-    public GenericArrayResponse(List<? extends CodelistElement> list) {
-        this.list = list;
+    public GenericArrayResponse(List<? extends CodelistElement> response) {
+        this.response = response;
     }
 
     public GenericArrayResponse() {
     }
 
     @XmlAnyElement
-    public List<? extends CodelistElement> getList() {
-        return list;
+    public List<? extends CodelistElement> getResponse() {
+        return response;
     }
 
-    public void setList(List<? extends CodelistElement> list) {
-        this.list = list;
+    public void setResponse(List<? extends CodelistElement> response) {
+        this.response = response;
     }
 }
