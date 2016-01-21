@@ -12,9 +12,16 @@
 </head>
 <body>
 
-<div class="container">
+ <div class="container">
     <h1>Geodatastore API v1 Documentation</h1>
-    <p><p>Geodatastore is a project of PDOK that facilitates governments to publish geospatial open datasets. A user is facilitated in uploading a dataset and provide some metadata, the metadata is then decorated serverside to meet national profile requirements. Typical api workflow; authentication using basic auth, retrieve datasets, to see which datasets are already uploaded by user. Upload dataset (and update dataset). If all properties are provided the dataset can be published. Remove dataset. After publication, it can take upto 24 hours before the dataset will be available in <a href="http://www.nationaalgeoregister.nl">http://www.nationaalgeoregister.nl</a> and <a href="http://data.overheid.nl">http://data.overheid.nl</a>. Visit the PDOK forum at <a href="https://www.pdok.nl/forum">https://www.pdok.nl/forum</a> for additional information about Geodatastore API development.</p>
+    <p><p>Geodatastore is a project of PDOK that facilitates governments to publish geospatial open datasets. 
+    A user is facilitated in uploading a dataset and provide some metadata, the metadata is then decorated 
+    serverside to meet national profile requirements. Typical api workflow; authentication using basic auth, 
+    retrieve datasets, to see which datasets are already uploaded by user. Upload dataset (and update dataset). 
+    If all properties are provided the dataset can be published. Remove dataset. After publication, it can take 
+    up to 24 hours before the dataset will be available in <a href="http://www.nationaalgeoregister.nl">http://www.nationaalgeoregister.nl</a> and up to 48 hours 
+    in <a href="http://data.overheid.nl">http://data.overheid.nl</a>. Visit the PDOK forum at <a href="https://www.pdok.nl/forum">https://www.pdok.nl/forum</a> for additional information 
+    about Geodatastore API development.</p>
     </p>
     
     
@@ -45,9 +52,17 @@
                         </td>
                     </tr>
                     <tr>
-                            <td class="swagger--summary-path" rowspan="1">
+                            <td class="swagger--summary-path" rowspan="3">
                                 <a href="#path--api-v1-dataset--id-">/api/v1/dataset/{id}</a>
                             </td>
+                        <td>
+                            <a href="#operation--api-v1-dataset--id--delete">DELETE</a>
+                        </td>
+                        <td>
+                            
+                        </td>
+                    </tr>
+                    <tr>
                         <td>
                             <a href="#operation--api-v1-dataset--id--get">GET</a>
                         </td>
@@ -56,11 +71,8 @@
                         </td>
                     </tr>
                     <tr>
-                            <td class="swagger--summary-path" rowspan="1">
-                                <a href="#path--api-v1-datasetp--id-">/api/v1/dataset/{id}</a>
-                            </td>
                         <td>
-                            <a href="#operation--api-v1-datasetp--id--post">POST</a>
+                            <a href="#operation--api-v1-dataset--id--post">POST</a>
                         </td>
                         <td>
                             
@@ -103,6 +115,23 @@
         </table>
     
     
+        <h2>Security</h2>
+    
+            <div id="security-definition-basicAuth" class="panel panel-security-definition panel-security-definition-basic">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><span class="security-name">basicAuth</span> <strong><span class="sw-security-definition-basic"></span></strong></h3>
+                </div>
+                <div class="panel-body">
+                    <section class="sw-security-properties">
+                            <dt>
+                            </dt>
+                            <dt>
+                                    <span class="security-property-name">description:</span>
+                                    <span class="security-property-type">Users can login with basic authentication using their nationaalgeoregister account</span>
+                            </dt>
+                    </section>
+                </div>
+            </div>
     
     <h2>Paths</h2>
     
@@ -323,10 +352,125 @@
                                             </div>                </dd>
                             </dl>
                         </section>
+                        <section class="sw-request-security">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th class="sw-request-security-schema"></th>
+                                    <th class="sw-request-security-scopes"></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                        <tr>
+                                            <td><a href="#security-definition-basicAuth">basicAuth</a></td>
+                                            <td>
+                                            </td>
+                                        </tr>
+                                </tbody>
+                            </table>
+                        </section>
                 </div>
             </div>    
         <span id="path--api-v1-dataset--id-"></span>
-            <div id="operation--api-v1-dataset--id--get" class="swagger--panel-operation-get panel">
+            <div id="operation--api-v1-dataset--id--delete" class="swagger--panel-operation-delete panel">
+                <div class="panel-heading">
+                    <div class="operation-summary"></div>
+                    <h3 class="panel-title"><span class="operation-name">DELETE</span> <strong>/api/v1/dataset/{id}</strong></h3>
+                </div>
+                <div class="panel-body">
+                    <section class="sw-operation-description">
+                        <p>delete a dataset</p>
+            
+                    </section>
+                    
+                        <section class="sw-request-params">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th class="sw-param-name"></th>
+                                    <th class="sw-param-description"></th>
+                                    <th class="sw-param-type"></th>
+                                    <th class="sw-param-data-type"></th>
+                                    <th class="sw-param-annotation"></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                        <tr>
+                                            <td>
+                                                id
+                                            <td><p>the id of the Dataset</p>
+                                        </td>
+                                            <td>path</td>
+                                            <td><span class="json-property-type">string</span>
+                                        <span class="json-property-range" title="Value limits"></span>
+                                        
+                                            </td>
+                                            <td>
+                                                    <span class="json-property-required"></span>
+                                            </td>
+                                        </tr>
+                                </tbody>
+                            </table>
+                        </section>
+                    
+                        <section class="sw-responses">
+                    
+                            <dl>
+                                    <dt class="sw-response-200">
+                                        200 OK
+                                    
+                                    </dt>
+                                    <dd class="sw-response-200">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <p>Successful response</p>
+                                            
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                
+                                                <div class="col-md-6 sw-response-model">
+                                            </div>
+                                            
+                                            </div>                </dd>
+                                    <dt class="sw-response-404">
+                                        404 Not Found
+                                    
+                                    </dt>
+                                    <dd class="sw-response-404">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <p>Dataset not found</p>
+                                            
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                
+                                                <div class="col-md-6 sw-response-model">
+                                            </div>
+                                            
+                                            </div>                </dd>
+                            </dl>
+                        </section>
+                        <section class="sw-request-security">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th class="sw-request-security-schema"></th>
+                                    <th class="sw-request-security-scopes"></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                        <tr>
+                                            <td><a href="#security-definition-basicAuth">basicAuth</a></td>
+                                            <td>
+                                            </td>
+                                        </tr>
+                                </tbody>
+                            </table>
+                        </section>
+                </div>
+            </div>    <div id="operation--api-v1-dataset--id--get" class="swagger--panel-operation-get panel">
                 <div class="panel-heading">
                     <div class="operation-summary"></div>
                     <h3 class="panel-title"><span class="operation-name">GET</span> <strong>/api/v1/dataset/{id}</strong></h3>
@@ -435,10 +579,25 @@
                                             </div>                </dd>
                             </dl>
                         </section>
+                        <section class="sw-request-security">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th class="sw-request-security-schema"></th>
+                                    <th class="sw-request-security-scopes"></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                        <tr>
+                                            <td><a href="#security-definition-basicAuth">basicAuth</a></td>
+                                            <td>
+                                            </td>
+                                        </tr>
+                                </tbody>
+                            </table>
+                        </section>
                 </div>
-            </div>    
-        <span id="path--api-v1-datasetp--id-"></span>
-            <div id="operation--api-v1-datasetp--id--post" class="swagger--panel-operation-post panel">
+            </div>    <div id="operation--api-v1-dataset--id--post" class="swagger--panel-operation-post panel">
                 <div class="panel-heading">
                     <div class="operation-summary"></div>
                     <h3 class="panel-title"><span class="operation-name">POST</span> <strong>/api/v1/dataset/{id}</strong></h3>
@@ -671,6 +830,23 @@
                                             </div>                </dd>
                             </dl>
                         </section>
+                        <section class="sw-request-security">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th class="sw-request-security-schema"></th>
+                                    <th class="sw-request-security-scopes"></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                        <tr>
+                                            <td><a href="#security-definition-basicAuth">basicAuth</a></td>
+                                            <td>
+                                            </td>
+                                        </tr>
+                                </tbody>
+                            </table>
+                        </section>
                 </div>
             </div>    
         <span id="path--api-v1-datasets"></span>
@@ -844,6 +1020,23 @@
                                             
                                             </div>                </dd>
                             </dl>
+                        </section>
+                        <section class="sw-request-security">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th class="sw-request-security-schema"></th>
+                                    <th class="sw-request-security-scopes"></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                        <tr>
+                                            <td><a href="#security-definition-basicAuth">basicAuth</a></td>
+                                            <td>
+                                            </td>
+                                        </tr>
+                                </tbody>
+                            </table>
                         </section>
                 </div>
             </div>    
@@ -1413,6 +1606,8 @@
                                     </section>
                     </div>
                 </div>
+</div>
+
 </div>
 
 </body>
