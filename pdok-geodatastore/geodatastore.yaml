@@ -63,10 +63,10 @@ paths:
         '200':
           description: Successful response
           schema:
-            title: ArrayOfDatasets
+            title: metadata
             type: array
             items:
-                $ref: "#/definitions/dataset"
+              $ref: "#/definitions/dataset"
         '405':
           description: Invalid input  
           schema: 
@@ -77,7 +77,7 @@ paths:
       description: |
         Create a new dataset
       security:
-       - basicAuth: []
+        - basicAuth: []
       operationId: addDataset
       produces:
         - application/json
@@ -263,10 +263,10 @@ paths:
         '200':
           description: Successful response
           schema:
-            title: ArrayOfRegistry
+            title: registries
             type: array
             items:
-              title: Registry
+              title: registry
               type: object
               properties:
                 name:
@@ -297,15 +297,15 @@ paths:
         '200':
           description: Successful response
           schema:
-            title: Array of location
+            title: response
             type: array
             items:
               title: location
               type: object
               properties:
-                code:
+                key:
                   type: string
-                value:
+                label:
                   type: string
                 coordEast:
                   type: number
@@ -337,22 +337,16 @@ paths:
         '200':
           description: Successful response
           schema:
-            title: Array of keywords
+            title: response
             type: array
             items:
               title: Keyword
               type: object
               properties:
-                uri:
+                key:
                   type: string
                 label:
                   type: string
-                bounds:
-                  type: array
-                  items: 
-                    type: number
-                  maxItems: 4
-                  minItems: 4
         '404':
           description: Registry does not exist
           schema: 
