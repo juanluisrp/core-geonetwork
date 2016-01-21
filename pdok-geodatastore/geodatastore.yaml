@@ -256,9 +256,9 @@ paths:
     get:
       description: |
         Gets `registry` objects.
-	  produces:	
-		- text/xml
-		- application/json
+      produces:
+        - text/xml
+        - application/json
       responses:
         '200':
           description: Successful response
@@ -279,9 +279,9 @@ paths:
         Gets `location` objects.
         Optional query param of **pageSize** and **q** determines
         size of returned array
-	  produces:
-	    - text/xml
-		- application/json
+      produces:
+        - text/xml
+        - application/json
       parameters:
         - name: q
           in: query
@@ -297,22 +297,24 @@ paths:
         '200':
           description: Successful response
           schema:
-            title: Array of keywords
+            title: Array of location
             type: array
             items:
-              title: Keyword
+              title: location
               type: object
               properties:
-                uri:
+                code:
                   type: string
-                label:
+                value:
                   type: string
-                bounds:
-                  type: array
-                  items: 
-                    type: number
-                  maxItems: 4
-                  minItems: 4
+                coordEast:
+                  type: number
+                coordWest:
+                  type: number
+                coordNorth:
+                  type: number
+                coordSouth:
+                  type: number
         '404':
           description: Registry does not exist
           schema: 
@@ -322,9 +324,9 @@ paths:
     get:
       description: |
         Gets `keyword` objects.
-	  produces:
-	    - text/xml
-		- application/json
+      produces:
+        - text/xml
+        - application/json
       parameters:
         - name: name
           in: path

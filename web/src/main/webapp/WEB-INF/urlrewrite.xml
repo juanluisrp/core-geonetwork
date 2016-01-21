@@ -459,6 +459,22 @@
         <to type="forward" last="true">/web/dut/api/$1/datasets</to>
     </rule>
 
+	<rule>
+        <note>
+            Geodatastore registry rule
+        </note>
+        <from>^/registry/(.*)(\?.*)$</from>
+        <to type="forward" last="true">/web/dut/api/v1/registry/$1</to>
+    </rule>
+
+    <rule>
+        <note>
+            Geodatastore registry rule
+        </note>
+        <from>^/registry/(.*)$</from>
+        <to type="forward" last="true">/web/dut/api/v1/registry/$1</to>
+    </rule>
+	
     <rule>
         <note>
             Geodatastore registry rule

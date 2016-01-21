@@ -24,7 +24,6 @@
     about Geodatastore API development.</p>
     </p>
     
-    
     <div id="sw-schemes" class="sw-default-value">
         <span class="sw-default-value-header">Schemes:</span>
         https
@@ -95,6 +94,17 @@
                             </td>
                         <td>
                             <a href="#operation--api-v1-registries-get">GET</a>
+                        </td>
+                        <td>
+                            
+                        </td>
+                    </tr>
+                    <tr>
+                            <td class="swagger--summary-path" rowspan="1">
+                                <a href="#path--api-v1-registry-location">/api/v1/registry/location</a>
+                            </td>
+                        <td>
+                            <a href="#operation--api-v1-registry-location-get">GET</a>
                         </td>
                         <td>
                             
@@ -689,7 +699,7 @@
                                         <tr>
                                             <td>
                                                 license
-                                            <td><p>License under which te dataset is made available. Should be a URI of one of /api/v1/registry/licenses.</p>
+                                            <td><p>License under which te dataset is made available. Should be a URI of one of /api/v1/registry/license.</p>
                                         </td>
                                             <td>formData</td>
                                             <td><span class="json-property-type">string</span>
@@ -702,7 +712,7 @@
                                         <tr>
                                             <td>
                                                 resolution
-                                            <td><p>The resolution (scale) in which this dataset is best used. Should be a URI of one of /api/v1/registry/resolutions.</p>
+                                            <td><p>The resolution (scale) in which this dataset is best used. Should be a URI of one of /api/v1/registry/denominator.</p>
                                         </td>
                                             <td>formData</td>
                                             <td><span class="json-property-type">string</span>
@@ -741,7 +751,7 @@
                                         <tr>
                                             <td>
                                                 topicCategory
-                                            <td><p>The topic of the dataset. Should be a URI of one of /api/v1/registry/topicCategories.</p>
+                                            <td><p>The topic of the dataset. Should be a URI of one of /api/v1/registry/topicCategory.</p>
                                         </td>
                                             <td>formData</td>
                                             <td><span class="json-property-type">string[]</span>
@@ -1054,6 +1064,8 @@
                     
                     
                         <section class="sw-responses">
+                                <p><span class="label label-default">text/xml</span> <span class="label label-default">application/json</span> 
+                    </p>
                     
                             <dl>
                                     <dt class="sw-response-200">
@@ -1116,16 +1128,16 @@
                         </section>
                 </div>
             </div>    
-        <span id="path--api-v1-registry--name-"></span>
-            <div id="operation--api-v1-registry--name--get" class="swagger--panel-operation-get panel">
+        <span id="path--api-v1-registry-location"></span>
+            <div id="operation--api-v1-registry-location-get" class="swagger--panel-operation-get panel">
                 <div class="panel-heading">
                     <div class="operation-summary"></div>
-                    <h3 class="panel-title"><span class="operation-name">GET</span> <strong>/api/v1/registry/{name}</strong></h3>
+                    <h3 class="panel-title"><span class="operation-name">GET</span> <strong>/api/v1/registry/location</strong></h3>
                 </div>
                 <div class="panel-body">
                     <section class="sw-operation-description">
-                        <p>Gets <code>registry</code> objects.
-            Optional query param of <strong>pageSize</strong> determines
+                        <p>Gets <code>location</code> objects.
+            Optional query param of <strong>pageSize</strong> and <strong>q</strong> determines
             size of returned array</p>
             
                     </section>
@@ -1142,20 +1154,6 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                        <tr>
-                                            <td>
-                                                name
-                                            <td><p>The name of the Registry</p>
-                                        </td>
-                                            <td>path</td>
-                                            <td><span class="json-property-type">string</span>
-                                        <span class="json-property-range" title="Value limits"></span>
-                                        
-                                            </td>
-                                            <td>
-                                                    <span class="json-property-required"></span>
-                                            </td>
-                                        </tr>
                                         <tr>
                                             <td>
                                                 q
@@ -1187,6 +1185,184 @@
                         </section>
                     
                         <section class="sw-responses">
+                                <p><span class="label label-default">text/xml</span> <span class="label label-default">application/json</span> 
+                    </p>
+                    
+                            <dl>
+                                    <dt class="sw-response-200">
+                                        200 OK
+                                    
+                                    </dt>
+                                    <dd class="sw-response-200">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <p>Successful response</p>
+                                            
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                
+                                                <div class="col-md-6 sw-response-model">
+                                                <div  class="panel panel-definition">
+                                                    <div class="panel-body">
+                                                            
+                                                                            <section class="json-schema-array-items">
+                                                                                <span class="json-property-type">object</span>
+                                                                                <span class="json-property-range" title="Value limits"></span>
+                                                                                
+                                                                                <div class="json-inner-schema">
+                                                                                    
+                                                                                            <section class="json-schema-properties">
+                                                                                                <dl>
+                                                                                                        <dt data-property-name="code">
+                                                                                                            <span class="json-property-name">code:</span>
+                                                                                                            <span class="json-property-type">string</span>
+                                                                                                            <span class="json-property-range" title="Value limits"></span>
+                                                                                                            
+                                                                                                        </dt>
+                                                                                                        <dd>
+                                                                                                            
+                                                                                                            <div class="json-inner-schema">
+                                                                                                                
+                                                                                                            </div>
+                                                                                                        </dd>
+                                                                                                        <dt data-property-name="value">
+                                                                                                            <span class="json-property-name">value:</span>
+                                                                                                            <span class="json-property-type">string</span>
+                                                                                                            <span class="json-property-range" title="Value limits"></span>
+                                                                                                            
+                                                                                                        </dt>
+                                                                                                        <dd>
+                                                                                                            
+                                                                                                            <div class="json-inner-schema">
+                                                                                                                
+                                                                                                            </div>
+                                                                                                        </dd>
+                                                                                                        <dt data-property-name="coordEast">
+                                                                                                            <span class="json-property-name">coordEast:</span>
+                                                                                                            <span class="json-property-type">number</span>
+                                                                                                            <span class="json-property-range" title="Value limits"></span>
+                                                                                                            
+                                                                                                        </dt>
+                                                                                                        <dd>
+                                                                                                            
+                                                                                                            <div class="json-inner-schema">
+                                                                                                                
+                                                                                                            </div>
+                                                                                                        </dd>
+                                                                                                        <dt data-property-name="coordWest">
+                                                                                                            <span class="json-property-name">coordWest:</span>
+                                                                                                            <span class="json-property-type">number</span>
+                                                                                                            <span class="json-property-range" title="Value limits"></span>
+                                                                                                            
+                                                                                                        </dt>
+                                                                                                        <dd>
+                                                                                                            
+                                                                                                            <div class="json-inner-schema">
+                                                                                                                
+                                                                                                            </div>
+                                                                                                        </dd>
+                                                                                                        <dt data-property-name="coordNorth">
+                                                                                                            <span class="json-property-name">coordNorth:</span>
+                                                                                                            <span class="json-property-type">number</span>
+                                                                                                            <span class="json-property-range" title="Value limits"></span>
+                                                                                                            
+                                                                                                        </dt>
+                                                                                                        <dd>
+                                                                                                            
+                                                                                                            <div class="json-inner-schema">
+                                                                                                                
+                                                                                                            </div>
+                                                                                                        </dd>
+                                                                                                        <dt data-property-name="coordSouth">
+                                                                                                            <span class="json-property-name">coordSouth:</span>
+                                                                                                            <span class="json-property-type">number</span>
+                                                                                                            <span class="json-property-range" title="Value limits"></span>
+                                                                                                            
+                                                                                                        </dt>
+                                                                                                        <dd>
+                                                                                                            
+                                                                                                            <div class="json-inner-schema">
+                                                                                                                
+                                                                                                            </div>
+                                                                                                        </dd>
+                                                                                                </dl>
+                                                                                            </section>
+                                                                                </div>
+                                                                            </section>    </div>
+                                                </div></div>
+                                            
+                                            </div>                </dd>
+                                    <dt class="sw-response-404">
+                                        404 Not Found
+                                    
+                                    </dt>
+                                    <dd class="sw-response-404">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <p>Registry does not exist</p>
+                                            
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                
+                                                <div class="col-md-6 sw-response-model">
+                                                <div  class="panel panel-definition">
+                                                    <div class="panel-body">
+                                                            
+                                                    </div>
+                                                </div></div>
+                                            
+                                            </div>                </dd>
+                            </dl>
+                        </section>
+                </div>
+            </div>    
+        <span id="path--api-v1-registry--name-"></span>
+            <div id="operation--api-v1-registry--name--get" class="swagger--panel-operation-get panel">
+                <div class="panel-heading">
+                    <div class="operation-summary"></div>
+                    <h3 class="panel-title"><span class="operation-name">GET</span> <strong>/api/v1/registry/{name}</strong></h3>
+                </div>
+                <div class="panel-body">
+                    <section class="sw-operation-description">
+                        <p>Gets <code>keyword</code> objects.</p>
+            
+                    </section>
+                    
+                        <section class="sw-request-params">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th class="sw-param-name"></th>
+                                    <th class="sw-param-description"></th>
+                                    <th class="sw-param-type"></th>
+                                    <th class="sw-param-data-type"></th>
+                                    <th class="sw-param-annotation"></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                        <tr>
+                                            <td>
+                                                name
+                                            <td><p>The name of the Registry</p>
+                                        </td>
+                                            <td>path</td>
+                                            <td><span class="json-property-type">string</span>
+                                        <span class="json-property-range" title="Value limits"></span>
+                                        
+                                            </td>
+                                            <td>
+                                                    <span class="json-property-required"></span>
+                                            </td>
+                                        </tr>
+                                </tbody>
+                            </table>
+                        </section>
+                    
+                        <section class="sw-responses">
+                                <p><span class="label label-default">text/xml</span> <span class="label label-default">application/json</span> 
+                    </p>
                     
                             <dl>
                                     <dt class="sw-response-200">
@@ -1606,8 +1782,6 @@
                                     </section>
                     </div>
                 </div>
-</div>
-
 </div>
 
 </body>
