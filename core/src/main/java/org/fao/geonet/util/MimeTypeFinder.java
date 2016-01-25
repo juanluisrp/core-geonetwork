@@ -55,13 +55,13 @@ public class MimeTypeFinder
 
 		// register anything required
 		if (isWindows) {
-			mimeUtil.registerMimeDetector("eu.medsea.mimeutil.detector.WindowsRegistryMimeDetector");
+			MimeUtil.registerMimeDetector("eu.medsea.mimeutil.detector.WindowsRegistryMimeDetector");
 		}
 		if (!notLocal) {
-			mimeUtil.registerMimeDetector("eu.medsea.mimeutil.detector.OpendesktopMimeDetector");
-			mimeUtil.registerMimeDetector("eu.medsea.mimeutil.detector.MagicMimeMimeDetector");
+			MimeUtil.registerMimeDetector("eu.medsea.mimeutil.detector.OpendesktopMimeDetector");
+			MimeUtil.registerMimeDetector("eu.medsea.mimeutil.detector.MagicMimeMimeDetector");
 		}
-		mimeUtil.registerMimeDetector("eu.medsea.mimeutil.detector.ExtensionMimeDetector");
+		MimeUtil.registerMimeDetector("eu.medsea.mimeutil.detector.ExtensionMimeDetector");
 	}
 
 	/* 
@@ -76,13 +76,13 @@ public class MimeTypeFinder
 			try {
 				File theFile = new File(dir, fName);
 				@SuppressWarnings("unchecked")
-                Collection<MimeType> types = mimeUtil.getMimeTypes(theFile);
+                Collection<MimeType> types = MimeUtil.getMimeTypes(theFile);
 				boolean specific = false;
 				for (MimeType mt : types) {
 					if (mt.getSpecificity()>1) specific = true;
 				}
 				if (specific) {
-					return mimeUtil.getMostSpecificMimeType(types).toString();
+					return MimeUtil.getMostSpecificMimeType(types).toString();
 				} else {
 					return types.iterator().next().toString();
 				}
