@@ -201,6 +201,8 @@
 				<xsl:with-param name="fname" select="$fname"/>
 			</xsl:call-template>
 		</xsl:variable>
+		<xsl:variable name="serverUrl" select="java:getBaseUrl()" />
+
 
 		<xsl:copy>
 			<xsl:copy-of select="@*"/>
@@ -208,10 +210,12 @@
 				<gmd:URL>
 					<xsl:choose>
 						<xsl:when test="/root/env/system/downloadservice/simple='true'">
-							<xsl:value-of select="concat($serviceUrl,'resources.get?uuid=',/root/env/uuid,'&amp;fname=',$fname,'&amp;access=public')"/>
+							<!--<xsl:value-of select="concat($serviceUrl,'resources.get?uuid=',/root/env/uuid,'&amp;fname=',$fname,'&amp;access=public&amp;gds=simple')"/>-->
+							<xsl:value-of select="concat($serverUrl, '/id/dataset/', /root/env/uuid)"/>
 						</xsl:when>
 						<xsl:when test="/root/env/system/downloadservice/withdisclaimer='true'">
-							<xsl:value-of select="concat($serviceUrl,'file.disclaimer?uuid=',/root/env/uuid,'&amp;fname=',$fname,'&amp;access=public')"/>
+							<!--<xsl:value-of select="concat($serviceUrl,'file.disclaimer?uuid=',/root/env/uuid,'&amp;fname=',$fname,'&amp;access=public&amp;gds=withdisclaimer')"/>-->
+							<xsl:value-of select="concat($serverUrl, '/id/dataset/', /root/env/uuid)"/>
 						</xsl:when>
 						<xsl:otherwise> <!-- /root/env/config/downloadservice/leave='true' -->
 							<xsl:value-of select="gmd:linkage/gmd:URL"/>

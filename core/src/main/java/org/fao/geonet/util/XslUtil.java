@@ -13,7 +13,9 @@ import jeeves.component.ProfileManager;
 import jeeves.server.ServiceConfig;
 import jeeves.server.context.ServiceContext;
 
+import org.fao.geonet.ApplicationContextHolder;
 import org.fao.geonet.GeonetContext;
+import org.fao.geonet.NodeInfo;
 import org.fao.geonet.constants.Geonet;
 import org.fao.geonet.kernel.SchemaManager;
 import org.fao.geonet.kernel.search.CodeListTranslator;
@@ -21,6 +23,7 @@ import org.fao.geonet.kernel.search.LuceneSearcher;
 import org.fao.geonet.kernel.search.Translator;
 import org.fao.geonet.kernel.setting.SettingManager;
 import org.fao.geonet.languages.IsoLanguagesMapper;
+import org.fao.geonet.repository.LanguageRepository;
 import org.fao.geonet.schema.iso19139.ISO19139Namespaces;
 import org.fao.geonet.utils.Log;
 import org.fao.geonet.utils.Xml;
@@ -490,4 +493,21 @@ public final class XslUtil
 
 		return ret;
 	}
+
+    public static String getBaseUrl() {
+        String baseUrl = "";
+        if (ServiceContext.get() != null) {
+            String protocol = getSettingValue(Geonet.Settings.SERVER_PROTOCOL);
+            String host    = getSettingValue(Geonet.Settings.SERVER_HOST);
+            String port    = getSettingValue(Geonet.Settings.SERVER_PORT);
+
+            if (("https".equalsIgnoreCase(protocol) && "443".equals(port)) || ("http".equalsIgnoreCase(protocol) && "80".equals(port))) {
+                port = "";
+            } else {
+                port = ":" + port;
+            }
+            baseUrl = protocol + "://" + host + port + ServiceContext.get().getBaseUrl();
+        }
+        return baseUrl;
+    }
 }
