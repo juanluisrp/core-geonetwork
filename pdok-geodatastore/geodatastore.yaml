@@ -83,45 +83,11 @@ paths:
         - application/json
       parameters:  
         - in: formData
-          name: title
-          description: Title of the dataset
-          type: string
-        - in: formData
-          name: summary
-          description: Summary describing the dataset
-          type: string
-        - in: formData
-          name: keywords
-          description: Keywords describing the dataset
-          type: array
-          items: 
-            type: string
-        - in: formData
-          name: lineage
-          description: Lineage information on how the dataset has been created/collected
-          type: string
-        - in: formData
-          name: license
-          description: License under which te dataset is made available. Should be a URI of one of /api/v1/registry/licenses.
-          type: string
-        - in: formData
-          name: resolution
-          description: The resolution (scale) in which this dataset is best used. Should be a URI of one of /api/v1/registry/resolutions.
-          type: string
-        - in: formData
-          name: locationUri
-          description: The location of the dataset. Should be a URI of one of /api/v1/registry/locations.
-          type: string
-        - in: formData
-          name: publish
-          type: boolean
-          description: This flag indicates if the dataset should be instantly published or saved as draft.
-        - in: formData
-          name: topicCategory
-          description: The topic of the dataset. Should be a URI of one of /api/v1/registry/topicCategories.
-          type: array
-          items: 
-            type: string
+          name: metadata
+          description: the metadata object
+          type: object
+          schema:
+            $ref: "#/definitions/dataset"
         - in: formData
           name: dataset
           description: The dataset file
@@ -130,6 +96,11 @@ paths:
           name: thumbnail
           description: A thumbnail file
           type: file
+        - in: formData
+          name: publish
+          type: boolean
+          description: Indicate if the metadata should be instantly published
+          default: false
       responses:
         '200':
           description: Successful response
@@ -138,32 +109,6 @@ paths:
         '405':
           description: Invalid input    
   /api/v1/dataset/{id}:
-    get:
-      description: |
-        Get `dataset` object.
-      security:
-       - basicAuth: []
-      parameters:
-        - name: id
-          in: path
-          description: the id of the Dataset
-          required: true
-          type: string
-      responses:
-        '200':
-          description: Successful response
-          schema:
-            $ref: "#/definitions/dataset"
-        '404':
-          description: Dataset does not exist or no privileges
-          schema: 
-            title: Message
-            type: string
-        '405':
-          description: Invalid input  
-          schema: 
-            title: Message
-            type: string
     post:
       description: |
         Update a dataset
@@ -173,51 +118,16 @@ paths:
       produces:
         - application/json
       parameters: 
-        - name: id
-          in: path
-          description: Identifier of the dataset
-          required: true
-          type: string
         - in: formData
-          name: title
-          description: Title of the dataset
-          type: string
-        - in: formData
-          name: summary
-          description: Summary describing the dataset
-          type: string
-        - in: formData
-          name: keywords
-          description: Keywords describing the dataset
-          type: array
-          items: 
-            type: string
-        - in: formData
-          name: lineage
-          description: Lineage information on how the dataset has been created/collected
-          type: string
-        - in: formData
-          name: license
-          description: License under which te dataset is made available. Should be a URI of one of /api/v1/registry/license.
-          type: string
-        - in: formData
-          name: resolution
-          description: The resolution (scale) in which this dataset is best used. Should be a URI of one of /api/v1/registry/denominator.
-          type: string
-        - in: formData
-          name: locationUri
-          description: The location of the dataset. Should be a URI of one of /api/v1/registry/locations.
-          type: string
+          name: metadata
+          description: the metadata object
+          type: object
+          schema:
+            $ref: "#/definitions/dataset"
         - in: formData
           name: publish
           type: boolean
           description: This flag indicates if the dataset should be instantly published or saved as draft.
-        - in: formData
-          name: topicCategory
-          description: The topic of the dataset. Should be a URI of one of /api/v1/registry/topicCategory.
-          type: array
-          items: 
-            type: string
         - in: formData
           name: dataset
           description: The dataset file

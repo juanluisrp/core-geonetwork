@@ -52,19 +52,11 @@
                         </td>
                     </tr>
                     <tr>
-                            <td class="swagger--summary-path" rowspan="3">
+                            <td class="swagger--summary-path" rowspan="2">
                                 <a href="#path--api-v1-dataset--id-">/api/v1/dataset/{id}</a>
                             </td>
                         <td>
                             <a href="#operation--api-v1-dataset--id--delete">DELETE</a>
-                        </td>
-                        <td>
-                            
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <a href="#operation--api-v1-dataset--id--get">GET</a>
                         </td>
                         <td>
                             
@@ -173,115 +165,11 @@
                                 <tbody>
                                         <tr>
                                             <td>
-                                                title
-                                            <td><p>Title of the dataset</p>
+                                                metadata
+                                            <td><p>the metadata object</p>
                                         </td>
                                             <td>formData</td>
-                                            <td><span class="json-property-type">string</span>
-                                        <span class="json-property-range" title="Value limits"></span>
-                                        
-                                            </td>
-                                            <td>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                summary
-                                            <td><p>Summary describing the dataset</p>
-                                        </td>
-                                            <td>formData</td>
-                                            <td><span class="json-property-type">string</span>
-                                        <span class="json-property-range" title="Value limits"></span>
-                                        
-                                            </td>
-                                            <td>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                keywords
-                                            <td><p>Keywords describing the dataset</p>
-                                        </td>
-                                            <td>formData</td>
-                                            <td><span class="json-property-type">string[]</span>
-                                        <span class="json-property-range" title="Value limits"></span>
-                                        
-                                            </td>
-                                            <td>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                lineage
-                                            <td><p>Lineage information on how the dataset has been created/collected</p>
-                                        </td>
-                                            <td>formData</td>
-                                            <td><span class="json-property-type">string</span>
-                                        <span class="json-property-range" title="Value limits"></span>
-                                        
-                                            </td>
-                                            <td>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                license
-                                            <td><p>License under which te dataset is made available. Should be a URI of one of /api/v1/registry/licenses.</p>
-                                        </td>
-                                            <td>formData</td>
-                                            <td><span class="json-property-type">string</span>
-                                        <span class="json-property-range" title="Value limits"></span>
-                                        
-                                            </td>
-                                            <td>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                resolution
-                                            <td><p>The resolution (scale) in which this dataset is best used. Should be a URI of one of /api/v1/registry/resolutions.</p>
-                                        </td>
-                                            <td>formData</td>
-                                            <td><span class="json-property-type">string</span>
-                                        <span class="json-property-range" title="Value limits"></span>
-                                        
-                                            </td>
-                                            <td>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                locationUri
-                                            <td><p>The location of the dataset. Should be a URI of one of /api/v1/registry/locations.</p>
-                                        </td>
-                                            <td>formData</td>
-                                            <td><span class="json-property-type">string</span>
-                                        <span class="json-property-range" title="Value limits"></span>
-                                        
-                                            </td>
-                                            <td>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                publish
-                                            <td><p>This flag indicates if the dataset should be instantly published or saved as draft.</p>
-                                        </td>
-                                            <td>formData</td>
-                                            <td><span class="json-property-type">boolean</span>
-                                        <span class="json-property-range" title="Value limits"></span>
-                                        
-                                            </td>
-                                            <td>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                topicCategory
-                                            <td><p>The topic of the dataset. Should be a URI of one of /api/v1/registry/topicCategories.</p>
-                                        </td>
-                                            <td>formData</td>
-                                            <td><span class="json-property-type">string[]</span>
+                                            <td><span class="json-property-type">object</span>
                                         <span class="json-property-range" title="Value limits"></span>
                                         
                                             </td>
@@ -308,6 +196,19 @@
                                         </td>
                                             <td>formData</td>
                                             <td><span class="json-property-type">file</span>
+                                        <span class="json-property-range" title="Value limits"></span>
+                                        
+                                            </td>
+                                            <td>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                publish
+                                            <td><p>Indicate if the metadata should be instantly published</p>
+                                        </td>
+                                            <td>formData</td>
+                                            <td><span class="json-property-type">boolean</span>
                                         <span class="json-property-range" title="Value limits"></span>
                                         
                                             </td>
@@ -481,133 +382,6 @@
                             </table>
                         </section>
                 </div>
-            </div>    <div id="operation--api-v1-dataset--id--get" class="swagger--panel-operation-get panel">
-                <div class="panel-heading">
-                    <div class="operation-summary"></div>
-                    <h3 class="panel-title"><span class="operation-name">GET</span> <strong>/api/v1/dataset/{id}</strong></h3>
-                </div>
-                <div class="panel-body">
-                    <section class="sw-operation-description">
-                        <p>Get <code>dataset</code> object.</p>
-            
-                    </section>
-                    
-                        <section class="sw-request-params">
-                            <table class="table">
-                                <thead>
-                                <tr>
-                                    <th class="sw-param-name"></th>
-                                    <th class="sw-param-description"></th>
-                                    <th class="sw-param-type"></th>
-                                    <th class="sw-param-data-type"></th>
-                                    <th class="sw-param-annotation"></th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                        <tr>
-                                            <td>
-                                                id
-                                            <td><p>the id of the Dataset</p>
-                                        </td>
-                                            <td>path</td>
-                                            <td><span class="json-property-type">string</span>
-                                        <span class="json-property-range" title="Value limits"></span>
-                                        
-                                            </td>
-                                            <td>
-                                                    <span class="json-property-required"></span>
-                                            </td>
-                                        </tr>
-                                </tbody>
-                            </table>
-                        </section>
-                    
-                        <section class="sw-responses">
-                    
-                            <dl>
-                                    <dt class="sw-response-200">
-                                        200 OK
-                                    
-                                    </dt>
-                                    <dd class="sw-response-200">
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    <p>Successful response</p>
-                                            
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                
-                                                <div class="col-md-6 sw-response-model">
-                                                <div  class="panel panel-definition">
-                                                    <div class="panel-body">
-                                                                <a class="json-schema-ref" href="#/definitions/dataset">dataset</a>
-                                                    </div>
-                                                </div></div>
-                                            
-                                            </div>                </dd>
-                                    <dt class="sw-response-404">
-                                        404 Not Found
-                                    
-                                    </dt>
-                                    <dd class="sw-response-404">
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    <p>Dataset does not exist or no privileges</p>
-                                            
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                
-                                                <div class="col-md-6 sw-response-model">
-                                                <div  class="panel panel-definition">
-                                                    <div class="panel-body">
-                                                            
-                                                    </div>
-                                                </div></div>
-                                            
-                                            </div>                </dd>
-                                    <dt class="sw-response-405">
-                                        405 Method Not Allowed
-                                    
-                                    </dt>
-                                    <dd class="sw-response-405">
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    <p>Invalid input</p>
-                                            
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                
-                                                <div class="col-md-6 sw-response-model">
-                                                <div  class="panel panel-definition">
-                                                    <div class="panel-body">
-                                                            
-                                                    </div>
-                                                </div></div>
-                                            
-                                            </div>                </dd>
-                            </dl>
-                        </section>
-                        <section class="sw-request-security">
-                            <table class="table">
-                                <thead>
-                                <tr>
-                                    <th class="sw-request-security-schema"></th>
-                                    <th class="sw-request-security-scopes"></th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                        <tr>
-                                            <td><a href="#security-definition-basicAuth">basicAuth</a></td>
-                                            <td>
-                                            </td>
-                                        </tr>
-                                </tbody>
-                            </table>
-                        </section>
-                </div>
             </div>    <div id="operation--api-v1-dataset--id--post" class="swagger--panel-operation-post panel">
                 <div class="panel-heading">
                     <div class="operation-summary"></div>
@@ -633,103 +407,11 @@
                                 <tbody>
                                         <tr>
                                             <td>
-                                                id
-                                            <td><p>Identifier of the dataset</p>
-                                        </td>
-                                            <td>path</td>
-                                            <td><span class="json-property-type">string</span>
-                                        <span class="json-property-range" title="Value limits"></span>
-                                        
-                                            </td>
-                                            <td>
-                                                    <span class="json-property-required"></span>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                title
-                                            <td><p>Title of the dataset</p>
+                                                metadata
+                                            <td><p>the metadata object</p>
                                         </td>
                                             <td>formData</td>
-                                            <td><span class="json-property-type">string</span>
-                                        <span class="json-property-range" title="Value limits"></span>
-                                        
-                                            </td>
-                                            <td>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                summary
-                                            <td><p>Summary describing the dataset</p>
-                                        </td>
-                                            <td>formData</td>
-                                            <td><span class="json-property-type">string</span>
-                                        <span class="json-property-range" title="Value limits"></span>
-                                        
-                                            </td>
-                                            <td>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                keywords
-                                            <td><p>Keywords describing the dataset</p>
-                                        </td>
-                                            <td>formData</td>
-                                            <td><span class="json-property-type">string[]</span>
-                                        <span class="json-property-range" title="Value limits"></span>
-                                        
-                                            </td>
-                                            <td>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                lineage
-                                            <td><p>Lineage information on how the dataset has been created/collected</p>
-                                        </td>
-                                            <td>formData</td>
-                                            <td><span class="json-property-type">string</span>
-                                        <span class="json-property-range" title="Value limits"></span>
-                                        
-                                            </td>
-                                            <td>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                license
-                                            <td><p>License under which te dataset is made available. Should be a URI of one of /api/v1/registry/license.</p>
-                                        </td>
-                                            <td>formData</td>
-                                            <td><span class="json-property-type">string</span>
-                                        <span class="json-property-range" title="Value limits"></span>
-                                        
-                                            </td>
-                                            <td>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                resolution
-                                            <td><p>The resolution (scale) in which this dataset is best used. Should be a URI of one of /api/v1/registry/denominator.</p>
-                                        </td>
-                                            <td>formData</td>
-                                            <td><span class="json-property-type">string</span>
-                                        <span class="json-property-range" title="Value limits"></span>
-                                        
-                                            </td>
-                                            <td>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                locationUri
-                                            <td><p>The location of the dataset. Should be a URI of one of /api/v1/registry/locations.</p>
-                                        </td>
-                                            <td>formData</td>
-                                            <td><span class="json-property-type">string</span>
+                                            <td><span class="json-property-type">object</span>
                                         <span class="json-property-range" title="Value limits"></span>
                                         
                                             </td>
@@ -743,19 +425,6 @@
                                         </td>
                                             <td>formData</td>
                                             <td><span class="json-property-type">boolean</span>
-                                        <span class="json-property-range" title="Value limits"></span>
-                                        
-                                            </td>
-                                            <td>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                topicCategory
-                                            <td><p>The topic of the dataset. Should be a URI of one of /api/v1/registry/topicCategory.</p>
-                                        </td>
-                                            <td>formData</td>
-                                            <td><span class="json-property-type">string[]</span>
                                         <span class="json-property-range" title="Value limits"></span>
                                         
                                             </td>
