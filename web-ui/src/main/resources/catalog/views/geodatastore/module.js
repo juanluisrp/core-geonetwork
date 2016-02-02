@@ -25,7 +25,7 @@
   module.factory('sessionInterceptor', ['$q', '$injector', '$log', '$rootScope', function($q, $injector, $log, $rootScope) {
     var sessionInterceptor = {
       'request': function(config) {
-        $log.debug('Request to ' + config.url);
+        // $log.debug('Request to ' + config.url);
         return config;
       },
       'responseError': function (rejection) {
