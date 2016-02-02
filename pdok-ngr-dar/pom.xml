@@ -69,7 +69,7 @@
                                     <https--proxyHost>www-proxy.cs.kadaster.nl</https--proxyHost>
                                     <https--proxyPort>8082</https--proxyPort>
                                     <https--nonProxyHosts>localhost|127.0.0.1|*nationaalgeoregister.nl|pdok-*|10.*|*.CS.kadaster.nl|*.FT4.kadaster.nl|*.FTO.kadaster.nl|*.IN.kadaster.nl|*.SO.kadaster.nl</https--nonProxyHosts>
-                                    <geonetwork--dir>/nfs_dply/pdok/geonetwork</geonetwork--dir>
+                                    <geonetwork--dir>/nfs_dply/pdok/ngr3</geonetwork--dir>
                                     <reloadable>false</reloadable>
                                 </map>
                             </properties>
