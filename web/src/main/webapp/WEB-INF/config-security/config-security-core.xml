@@ -118,7 +118,7 @@
 		<property name="authenticationDetailsSource" ref="authenticationDetailsSource" />
 		<property name="authenticationFailureHandler">
 			<bean class="org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler">
-				<constructor-arg value="${loginErrorForm}"></constructor-arg>
+				<constructor-arg value="{{geonetwork.url.onfailedauthentication}}"></constructor-arg>
                 <property name="redirectStrategy">
                     <bean class="jeeves.config.springutil.JeevesNodeAwareRedirectStrategy"/>
                 </property>
@@ -126,7 +126,7 @@
 		</property>
 		<property name="authenticationSuccessHandler">
 			<bean class="org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler">
-				<property name="defaultTargetUrl" value="/" />
+				<property name="defaultTargetUrl" value="{{geonetwork.url.afterlogin}}" />
 				<property name="targetUrlParameter" value="redirectUrl" />
 			</bean>
 		</property>
@@ -169,7 +169,7 @@
 	</bean>
 
     <bean id="logoutSuccessHandler" class="jeeves.config.springutil.JeevesNodeAwareLogoutSuccessHandler">
-    	<property name="defaultTargetUrl" value="${logout.success.url}"></property>
+    	<property name="defaultTargetUrl" value="{{geonetwork.url.afterlogout}}"></property>
     </bean>
     <bean id="requestCacheFilter" class="org.springframework.security.web.savedrequest.RequestCacheAwareFilter" />
 
@@ -186,7 +186,7 @@
 
 	<bean id="accessDeniedHandler"
 		class="jeeves.config.springutil.JeevesAccessDeniedHandler">
-		<property name="errorPage" value="/accessDenied.jsp" />
+		<property name="errorPage" value="{{geonetwork.url.onfailedauthentication}}" />
 	</bean>
 
 <!-- TODO remember me.  
