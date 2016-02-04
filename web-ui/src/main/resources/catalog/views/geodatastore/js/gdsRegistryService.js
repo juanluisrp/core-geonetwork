@@ -12,7 +12,8 @@
             function genericRegistryQuery(registry) {
                 var defer = $q.defer();
                 var url = GDS_REGISTRY_URL + "/"+ registry;
-                $http.get(url)
+                // Cache the first request. The following requests to the same URL will be retrieved from the cache.
+                $http.get(url, { cache: true})
                     .success(function (data, status) {
                         if (data && data.response) {
                             defer.resolve(data.response);

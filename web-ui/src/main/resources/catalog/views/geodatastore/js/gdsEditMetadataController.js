@@ -150,12 +150,10 @@
           $scope.editMdForm.$setUntouched();
           GdsUploadFactory.replace(GdsUploadFactory.list, data);
           GdsUploadFactory.replace($scope.searchResults.metadata, data);
-		  //a message in a div should not block workflow
-		  //$("#msg-success").children("span").html($translate('edit.success.title')).parent().show(500).delay(5000).hide(500);
-		  //gnPopup.createModal({
-          // title: '<strong>' + $translate('edit.success.title') + '</strong>',
-          //  content: '<div class="alert alert-success" role="alert">' + $translate('edit.success.content') + '</div>'
-          //}, $scope);
+          GdsUploadFactory.setDirty(false);
+          if ($scope.tab === 'published') {
+            $scope.editState.isEditing = false;
+          }
         } else {
           $scope.error = true;
           $scope.messages = data.messages;
