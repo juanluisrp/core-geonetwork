@@ -53,7 +53,6 @@
 				<sec:filter-chain pattern="/*.css" filters="" />
 				<sec:filter-chain pattern="/images/**" filters="" />
 				<sec:filter-chain pattern="/maps/**" filters="" />
-				<sec:filter-chain pattern="/map/**" filters="" />
 				<sec:filter-chain pattern="/wmc/**" filters="" />
 				<sec:filter-chain pattern="/htmlcache/**" filters="" />
 				<sec:filter-chain pattern="/scripts/**" filters="" />
@@ -141,7 +140,7 @@
 		<property name="authenticationDetailsSource" ref="authenticationDetailsSource" />
 		<property name="authenticationFailureHandler">
 			<bean class="org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler">
-				<constructor-arg value="{{geonetwork.url.onfailedauthentication}}"></constructor-arg>
+				<constructor-arg value="${loginErrorForm}"></constructor-arg>
                 <property name="redirectStrategy">
                     <bean class="jeeves.config.springutil.JeevesNodeAwareRedirectStrategy"/>
                 </property>
@@ -149,7 +148,7 @@
 		</property>
 		<property name="authenticationSuccessHandler">
 			<bean class="org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler">
-				<property name="defaultTargetUrl" value="{{geonetwork.url.afterlogin}}" />
+				<property name="defaultTargetUrl" value="/" />
 				<property name="targetUrlParameter" value="redirectUrl" />
 			</bean>
 		</property>
@@ -192,7 +191,7 @@
 	</bean>
 
     <bean id="logoutSuccessHandler" class="jeeves.config.springutil.JeevesNodeAwareLogoutSuccessHandler">
-    	<property name="defaultTargetUrl" value="{{geonetwork.url.afterlogout}}"></property>
+    	<property name="defaultTargetUrl" value="${logout.success.url}"></property>
     </bean>
     <bean id="requestCacheFilter" class="org.springframework.security.web.savedrequest.RequestCacheAwareFilter" />
 
@@ -209,7 +208,7 @@
 
 	<bean id="accessDeniedHandler"
 		class="jeeves.config.springutil.JeevesAccessDeniedHandler">
-		<property name="errorPage" value="{{geonetwork.url.onfailedauthentication}}" />
+		<property name="errorPage" value="/accessDenied.jsp" />
 	</bean>
 
 <!-- TODO remember me.  
