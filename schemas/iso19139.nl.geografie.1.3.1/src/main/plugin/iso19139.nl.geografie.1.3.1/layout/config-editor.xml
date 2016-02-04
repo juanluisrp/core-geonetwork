@@ -1331,7 +1331,7 @@
                  in="/gmd:MD_Metadata"/>
       </tab>
     </view>
-    <view name="dutch-profile" upAndDownControlHidden="true">
+    <view name="dutchprofile" upAndDownControlHidden="true">
       <tab id="dutch-default" default="true" mode="flat">
  
         <section name="Required">

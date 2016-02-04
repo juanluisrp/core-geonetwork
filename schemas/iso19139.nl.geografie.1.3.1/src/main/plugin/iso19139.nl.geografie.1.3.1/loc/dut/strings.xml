@@ -13,9 +13,29 @@
   <!-- View and tabs -->
   <advanced>Volledig</advanced>
   <default>Standaard</default>
-  <dutch-default>Standaard</dutch-default>
+  <dutchprofile>Nederlands profiel</dutchprofile>
   <simple>Eenvoudig</simple>
   <inspire>INSPIRE</inspire>
   <resource>Bron</resource>
   <xml>XML</xml>
+
+  <Optional>Optionele elementen</Optional>
+  <Required>Verplichte elementen</Required>
+  <INSPIRE>INSPIRE elementen</INSPIRE>
+  
+  <metadataPointOfContact>Contactgegevens metadata</metadataPointOfContact>
+  <pointOfContact>Contactgegevens dataset</pointOfContact>
+ 
+	<organisationName>Organisatie</organisationName>
+	<electronicMailAddress>Email</electronicMailAddress>
+	<role>Rol</role>
+	<temporalRangeSection>Tijdsspanne</temporalRangeSection>
+	<beginPosition>Van</beginPosition>
+	<endPosition>Tot</endPosition>
+	<INSPIRE_theme>INSPIRE Thema 2</INSPIRE_theme>
+	<inspireTheme>INSPIRE Thema</inspireTheme>
+	<conformity>Conformiteitindicatie</conformity>
+	
+
+  
 </strings>
