@@ -1,18 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <strings>
-  <understandResource>Information about the dataset</understandResource>
+  <understandResource>Informatie over de dataset</understandResource>
   <relatedResources>Related services and linked data</relatedResources>
-  <techInfo>Technical information</techInfo>
-  <contactInfo>Contact information</contactInfo>
+  <techInfo>Technische informatie</techInfo>
+  <contactInfo>Contact informatie</contactInfo>
   <mdContactInfo>Metadata contact</mdContactInfo>
-  <refDate>Reference date</refDate>
-  <temporalRef>Temporal information</temporalRef>
+  <refDate>Referentie datum</refDate>
+  <temporalRef>Temporele informatie</temporalRef>
   <constraintInfo>Access constraint information</constraintInfo>
 
   <!-- New strings added for the AngularJS editor -->
   <!-- View and tabs -->
   <advanced>Volledig</advanced>
   <default>Standaard</default>
+  <dutch-default>Standaard</dutch-default>
   <simple>Eenvoudig</simple>
   <inspire>INSPIRE</inspire>
   <resource>Bron</resource>

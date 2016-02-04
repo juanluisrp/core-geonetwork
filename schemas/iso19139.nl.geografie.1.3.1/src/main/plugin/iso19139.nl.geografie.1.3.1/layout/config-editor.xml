@@ -1376,13 +1376,13 @@
             if="count(gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification) > 0">
             <template>
               <values readonlyIf="count(@xlink:href) > 0">
-                <key label="organisationName"
+                <key label="organisationName" 
                   xpath="gmd:CI_ResponsibleParty/gmd:organisationName/gco:CharacterString"/>
-                <key label="electronicMailAddress"
+                <key label="electronicMailAddress" 
                   xpath="gmd:CI_ResponsibleParty/gmd:contactInfo/
                     gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:electronicMailAddress/gco:CharacterString"
                   use="email"/>
-                <key label="role"
+                <key label="role" 
                   xpath="gmd:CI_ResponsibleParty/gmd:role/gmd:CI_RoleCode/@codeListValue">
                   <codelist name="gmd:CI_RoleCode"/>
                 </key>
@@ -1540,7 +1540,7 @@
         <section name="INSPIRE">
         
         <!-- INSPIRE Themes -->
-          <field
+          <field name="INSPIRE_theme"
             xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/
             gmd:descriptiveKeywords
             [contains(gmd:MD_Keywords/gmd:thesaurusName/gmd:CI_Citation/gmd:title/gco:CharacterString, 'INSPIRE themes')]"/>
