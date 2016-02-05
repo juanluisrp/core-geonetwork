@@ -212,10 +212,12 @@
 						<xsl:when test="/root/env/system/downloadservice/simple='true'">
 							<!--<xsl:value-of select="concat($serviceUrl,'resources.get?uuid=',/root/env/uuid,'&amp;fname=',$fname,'&amp;access=public&amp;gds=simple')"/>-->
 							<xsl:value-of select="concat($serverUrl, '/id/dataset/', /root/env/uuid)"/>
+                            <xsl:message>Fixing dataset download URL</xsl:message>
 						</xsl:when>
 						<xsl:when test="/root/env/system/downloadservice/withdisclaimer='true'">
 							<!--<xsl:value-of select="concat($serviceUrl,'file.disclaimer?uuid=',/root/env/uuid,'&amp;fname=',$fname,'&amp;access=public&amp;gds=withdisclaimer')"/>-->
 							<xsl:value-of select="concat($serverUrl, '/id/dataset/', /root/env/uuid)"/>
+                            <xsl:message>Fixing dataset download URL</xsl:message>
 						</xsl:when>
 						<xsl:otherwise> <!-- /root/env/config/downloadservice/leave='true' -->
 							<xsl:value-of select="gmd:linkage/gmd:URL"/>
@@ -311,13 +313,18 @@
 	<xsl:template match="gmd:MD_BrowseGraphic[
 					gmd:fileDescription/gco:CharacterString = 'thumbnail' or
 					gmd:fileDescription/gco:CharacterString = 'large_thumbnail']/
-						gmd:fileName[gco:CharacterString != '' and not(starts-with(gco:CharacterString, 'http'))]">
-			<gmd:fileName>
+						gmd:fileName[gco:CharacterString != '' and not(starts-with(gco:CharacterString, 'http')
+						or starts-with(gco:CharacterString, 'https'))]">
+		<xsl:variable name="serverUrl" select="java:getBaseUrl()" />
+		<xsl:message>
+			Fixing thumbnailURI from <xsl:value-of select="gco:CharacterString"/> to <xsl:value-of select="concat(
+					    $serverUrl, '/id/thumbnail/', /root/env/uuid)"/>
+		</xsl:message>
+
+		<gmd:fileName>
 				<gco:CharacterString>
 					<xsl:value-of select="concat(
-					    $serviceUrl, 'resources.get?',
-					    'uuid=', /root/env/uuid,
-					    '&amp;fname=', gco:CharacterString)"/>
+					    $serverUrl, '/id/thumbnail/', /root/env/uuid)"/>
 				</gco:CharacterString>
 			</gmd:fileName>
 	</xsl:template>
