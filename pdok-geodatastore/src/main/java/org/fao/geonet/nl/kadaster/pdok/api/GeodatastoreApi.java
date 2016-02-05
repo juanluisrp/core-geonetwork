@@ -16,7 +16,6 @@ import nl.kadaster.pdok.bussiness.registryservices.ErrorResponse;
 import nl.kadaster.pdok.bussiness.registryservices.Registry;
 import nl.kadaster.pdok.bussiness.registryservices.RegistryService;
 import nl.kadaster.pdok.bussiness.registryservices.bean.TopicCategory;
-import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.fileupload.FileUploadBase;
 import org.apache.commons.lang.StringUtils;
 import org.fao.geonet.ApplicationContextHolder;
@@ -85,7 +84,7 @@ public class GeodatastoreApi {
     public static final String RESOLUTION_KEY = "resolution";
     public static final String ABSTRACT_KEY = "abstract";
     public static final String FORMAT_KEY = "format";
-    public static final String UUID_KEY_ = "uuid";
+    public static final String UUID_KEY = "uuid";
     public static final String PUBLICATION_DATE_KEY = "publicationDate";
     public static final String METADATA_MODIFIED_DATE_KEY = "metadataModifiedDate";
     public static final String REVISION_DATE_KEY = "revisionDate";
@@ -249,6 +248,7 @@ public class GeodatastoreApi {
                         dataset.getContentType(), "http://example.com/geonetwork/id/dataset/" + uuid.toString(), dataset.getOriginalFilename(),
                         uuid.toString(), creationDate, "http://creativecommons.org/publicdomain/mark/1.0/deed.nl", "");*/
             }
+            metadataParametersBean.setIdentifier(uuid.toString());
             templateParameters = prepareTemplateParameters(metadataParametersBean, organisation, organisationEmail, creationDate.getDateAsString(), true);
             Map<String, Object> filePropertiesMaps = getParametersFromDataset(dataset);
             templateParameters.putAll(filePropertiesMaps);
@@ -361,6 +361,9 @@ public class GeodatastoreApi {
         parametersMap.put(ORGANISATION_NAME_KEY, organisation);
         parametersMap.put(ORGANISATION_EMAIL_KEY, organisationEmail);
         parametersMap.put(METADATA_MODIFIED_DATE_KEY, changeDate);
+        if (StringUtils.isNotBlank(metadataParameter.getIdentifier())) {
+            parametersMap.put(UUID_KEY, metadataParameter.getIdentifier());
+        }
         if (updatePublicationDate) {
             parametersMap.put(PUBLICATION_DATE_KEY, changeDate);
         }
@@ -445,7 +448,7 @@ public class GeodatastoreApi {
         parameters.put(TITLE_KEY, title);
         parameters.put(REVISION_DATE_KEY, creationDate.getDateAsString());
 
-        parameters.put(UUID_KEY_, uuid);
+        parameters.put(UUID_KEY, uuid);
         parameters.put(ABSTRACT_KEY, "");
         parameters.put(THUMBNAIL_URI_KEY, "");
 
