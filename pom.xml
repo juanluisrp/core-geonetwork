@@ -267,11 +267,11 @@
               <!--              <deployable>
                 <location>${project.build.directory}/../intermap/target/intermap.war</location>
                 <type>war</type>
-              </deployable> -->
+              </deployable>
               <deployable>
                 <location>${project.build.directory}/../geoserver/target/geoserver.war</location>
                 <type>war</type>
-              </deployable>
+              </deployable>-->
             </deployables>
           </configuration>
         </configuration>
@@ -286,7 +286,7 @@
             <descriptor>release/zip-war.xml</descriptor>
             <descriptor>release/bin.xml</descriptor>
           </descriptors>
-          <finalName>geonetwork-${project.version}</finalName>
+          <finalName>ngr-${project.version}</finalName>
           <outputDirectory>${project.build.directory}/release</outputDirectory>
         </configuration>
       </plugin>
@@ -1059,7 +1059,7 @@
       <url>http://maven.k-int.com/content/repositories/releases/</url>
     </repository>
 
-    
+
     <repository>
       <snapshots>
         <enabled>true</enabled>
@@ -1071,7 +1071,7 @@
       <name>GeoNetwork remote repository</name>
       <url>https://raw.githubusercontent.com/geonetwork/core-maven-repo/master</url>
     </repository>
-    
+
     <repository>
       <id>mvnrepository.com</id>
       <name>Repository that has juniversalchardet</name>
@@ -1132,6 +1132,7 @@
         <module>web</module>
         <module>e2e-tests</module>
         <module>geoserver</module>
+	<module>pdok-ngr-dar</module>
       </modules>
     </profile>
     <profile>
