@@ -125,8 +125,7 @@
 
           /* Custom templates for search result views */
           searchSettings.resultViewTpls = [{
-                  tplUrl: '../../catalog/components/search/resultsview/' +
-                  'partials/viewtemplates/grid.html',
+                  tplUrl: '../../catalog/views/ngr/templates/card.html',
                   tooltip: 'Grid',
                   icon: 'fa-th'
                 }];
