@@ -9,7 +9,7 @@
 
 
 .navbar {
-  margin-bottom: 14px;
+  margin-bottom: 0px;
   .navbar-brand {
     padding-top: 0;
     padding-bottom: 0;
@@ -62,6 +62,10 @@
   }
 }
 
+#ngr-search-form {
+background-color:#F6D4B1;
+
+}
 
 
 .gn-sort-by {
@@ -71,7 +75,6 @@
 }
 .gn-search-page {
   clear: both;
-  padding-bottom:40px;
   .gn-md-view {
     padding: 0 20px;
   }
@@ -278,7 +281,6 @@ ul.gn-resultview {
 }
 [data-ng-search-form] {
   .gn-top-search {
-    border-bottom: 1px solid @panel-default-border;
     padding-bottom: 10px;
     margin-bottom: 10px;
     position: relative;
@@ -480,6 +482,9 @@ ul.gn-resultview {
 
 html, body {
   height:100%;
+   background-image: url(../catalog/views/ngr/images/bg.jpg);
+   background-position: center top;
+   background-size: 100% auto;
 }
 
 .navbar-form {
@@ -522,21 +527,23 @@ html, body {
 }
 
 .page {
-  background-color: white;
-  margin-top: 25px;
-  box-shadow: 0px 0px 10px darkgray ;
+  background: white;
+  padding-top: 25px;
+
 }
 
 header {
     height: 90px;
-    padding: 15px 25px;
+    margin-top: 15px;
+	padding-top:10px;
+	background-color:white;
 }
 
 div.navbar {
     background-color: #E26F02;
     min-height: 56px;
     padding-top: 20px;
-    border-bottom: 8px solid #F6D4B1;
+	border:0px;
     position: relative;
 }
 
@@ -578,6 +585,12 @@ nav.verytop a {
 .verytop ul {
     list-style: none;
     padding: 0px;
+}
+
+.btn-primary {
+    color: #fff;
+    background-color: #E26F02;
+    border-color: #d15e01;
 }
 
 @import "gn_view_ngr.less";

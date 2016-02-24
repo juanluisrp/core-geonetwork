@@ -4,26 +4,32 @@
 		
 <nav class="verytop" data-ng-include="'../../catalog/views/geodatastore/templates/verytop.html'"></nav>
 
-<div class="page">
-	<header data-ng-include="'../../catalog/views/ngr/templates/header.html'"></header>
+<header data-ng-include="'../../catalog/views/ngr/templates/header.html'"></header>
 		
-            
-
 <div class="navbar navbar-default gn-top-bar" role="navigation"
      data-ng-include="'../../catalog/templates/top-toolbar.html'"
      xmlns="http://www.w3.org/1999/html">
 </div>
 
 <div data-gn-alert-manager=""></div>
+<div class="gn-search-page" data-ng-controller="GnSearchController">
 
-<div class="gn-search-page"
-     data-ng-controller="GnSearchController">
+
+
+
+
   <cookiewarning></cookiewarning>
-  <div class=""
-       data-ng-controller="gnsNGR">
-    <div data-ng-include="'../../catalog/views/default/templates/home.html'"
+  <div class="" data-ng-controller="gnsNGR">
+  
+ <div class="container" style="margin-top:100px;margin-bottom:100px;background:none;color:white;text-align:center" data-ng-show="activeTab == '/home'">
+        <h1>dé vindplaats van geo informatie van heel Nederland</h1>
+		<p data-translate="" data-translate-values="{records: '{{searchInfo.count}}'}">searchOver</p>
+ </div>
+
+  <div class="page">
+    <div data-ng-include="'../../catalog/views/ngr/templates/home.html'"
          data-ng-show="activeTab == '/home'"/>
-    <div data-ng-include="'../../catalog/views/default/templates/results.html'"
+    <div data-ng-include="'../../catalog/views/ngr/templates/results.html'"
          data-ng-show="activeTab == '/search'"/>
     <div data-ng-if="isMapViewerEnabled" 
          data-ng-include="'../../catalog/views/default/templates/map.html'"
@@ -31,6 +37,8 @@
     <div data-ng-include="'../../catalog/views/ngr/templates/recordView.html'"
          data-ng-show="activeTab == '/metadata'"/>
   </div>
+  </div>
+  
 </div>
 
 
