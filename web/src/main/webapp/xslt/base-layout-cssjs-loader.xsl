@@ -229,4 +229,19 @@
       </script>
     </xsl:if>
   </xsl:template>
+
+  <xsl:template name="tracking-code">
+    <xsl:if test="$env/system/tracking/enabled = 'true'">
+      <xsl:if test="$angularApp = 'gn_search'">
+        <xsl:if test="normalize-space($env/system/tracking/code)!=''">
+          <xsl:comment>Tracking code</xsl:comment>
+          <script type="text/javascript">
+            <xsl:value-of select="$env/system/tracking/code" />
+          </script>
+          <xsl:comment>End tracking code</xsl:comment>
+        </xsl:if>
+      </xsl:if>
+    </xsl:if>
+
+  </xsl:template>
 </xsl:stylesheet>
