@@ -671,6 +671,10 @@ INSERT INTO Settings (name, value, datatype, position, internal) VALUES ('metada
 
 INSERT INTO Settings (name, value, datatype, position, internal) VALUES ('system/ui/defaultView', 'default', 0, 10100, 'n');
 
+INSERT INTO Settings (name, value, datatype, position, internal) VALUES ('system/tracking/enabled','false', 2, 10200, 'n');
+INSERT INTO Settings (name, value, datatype, position, internal) VALUES ('system/tracking/code', '', 0, 10210, 'n');
+
+
 INSERT INTO HarvesterSettings (id, parentid, name, value) VALUES  (1,NULL,'harvesting',NULL);
 
 -- ======================================================================
