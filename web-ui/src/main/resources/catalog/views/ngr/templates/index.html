@@ -1,13 +1,11 @@
 <html lang="en" xmlns="http://www.w3.org/1999/html">
 
 <div class="container">
-		
-<nav class="verytop" data-ng-include="'../../catalog/views/geodatastore/templates/verytop.html'"></nav>
 
 <header data-ng-include="'../../catalog/views/ngr/templates/header.html'"></header>
 		
 <div class="navbar navbar-default gn-top-bar" role="navigation"
-     data-ng-include="'../../catalog/templates/top-toolbar.html'"
+     data-ng-include="'../../catalog/views/ngr/templates/top-toolbar.html'"
      xmlns="http://www.w3.org/1999/html">
 </div>
 
@@ -36,6 +34,15 @@
          data-ng-show="activeTab == '/map'"/>
     <div data-ng-include="'../../catalog/views/ngr/templates/recordView.html'"
          data-ng-show="activeTab == '/metadata'"/>
+    <div data-ng-include="'../../catalog/views/ngr/templates/about.html'"
+         data-ng-show="activeTab == '/about'"/>
+	<div data-ng-include="'../../catalog/views/ngr/templates/devel.html'"
+         data-ng-show="activeTab == '/devel'"/>
+    <div data-ng-include="'../../catalog/views/ngr/templates/latest.html'"
+         data-ng-show="activeTab == '/latest'"/>     
+    <div data-ng-include="'../../catalog/views/ngr/templates/signin.html'"
+         data-ng-show="activeTab == '/signin'"/>     
+         
   </div>
   </div>
   

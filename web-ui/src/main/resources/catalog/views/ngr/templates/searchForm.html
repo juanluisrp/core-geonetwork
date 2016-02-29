@@ -1,14 +1,12 @@
-<form class="form-horizontal" id="ngr-search-form"
+<form id="ngr-search-form"
       role="form" style="margin-right:-15px;margin-left:-15px;margin-top:-25px;padding:20px">
   <!--ANY full text search input-->
-  <div class="row gn-top-search">
-    <div class="col-md-12">
-      <div class="row">
-        <div class="col-md-offset-1 col-md-10 relative">
-          <div>
+  <div class="row">
 
-	<div class="row form-inline" style="text-align:center;padding-bottom:5px;">
-		<div class="form-group" class="text-align:left">
+	<div class="col-md-1"></div>
+	<div class="col-md-3">
+		<div class="form-group">
+		<label for="any">Wat voor soort data zoekt u?</label>
 		<input type="text"
                class="form-control input-lg"
                autofocus=""
@@ -20,37 +18,45 @@
                data-typeahead-loading="anyLoading"
                data-typeahead-min-length="1"/>
 	    </div>
+	    </div>
+	<div class="col-md-3">
 	    <div class="form-group has-feedback">
-		
+		<label for="loc">Op welke locatie?</label>
 		  <input type="text" class="form-control input-lg">
 		  <span class="form-control-feedback">
 			<i class="fa fa-map-marker fa-2x"></i>
 		  </span>
 		</div>
+		</div>
+	<div class="col-md-4">
+	 <div class="form-group" style="margin-top:25px">
+	 	<label for="">&nbsp;</label>
          <button type="button"
                       data-ng-click="triggerSearch()"
                       class="btn btn-primary btn-lg">
-                &nbsp;&nbsp;
-                <i class="fa fa-search"></i> Zoeken
-                &nbsp;&nbsp;
+                Toon resultaten
               </button>
               <button type="button"
                       data-ng-click="resetSearch(searchObj.defaultParams);"
                       title="{{'ClearTitle' | translate}}"
-                      class="btn btn-link btn-lg">
-                <i class="fa fa-times"></i> Reset
+                      class="btn btn-default btn-lg"> Reset
               </button>
+        </div>
+      </div>
     </div>
 		  
        <div class="row">
+       <div class="col-md-1"></div>
+       <div class="col-md-4">
 		    <button type="button"
                       class="btn btn-link"
                       data-ng-model="searchObj.advancedMode"
                       btn-checkbox=""
                       btn-checkbox-true="1"
                       btn-checkbox-false="0">
-                 Uitgebreid zoeken &nbsp; v
+                 Uitgebreid zoeken <i class="fa fa-arrow-down"></i>
               </button>
+              </div>
 			  </div>
           </div>
         </div>
@@ -120,7 +126,5 @@
             </div>
           </div>
         </div>
-      </div>
-    </div>
-  </div>
+     
 </form>
