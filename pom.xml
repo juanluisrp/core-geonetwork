@@ -277,6 +277,7 @@
                 <argLine>-Dfile.encoding=UTF-8 -Xmx512M</argLine>
                 <!--<rerunFailingTestsCount>5</rerunFailingTestsCount>-->
                 <runOrder>alphabetical</runOrder>
+				<skip>true</skip>
                 <redirectTestOutputToFile>true</redirectTestOutputToFile>
                 <forkCount>4</forkCount>
                 <excludes>
