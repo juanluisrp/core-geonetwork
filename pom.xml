@@ -34,10 +34,13 @@
     resources through the web.</description>
   <url>http://geonetwork-opensource.org</url>
   <scm>
+	<url>http://github.so.kadaster.nl/NGR/core-geonetwork</url>
     <connection>
-      scm:git:https://github.com/geonetwork/core-geonetwork
+    scm:git:http://github.so.kadaster.nl/NGR/core-geonetwork.git
     </connection>
-    <url>https://github.com/geonetwork/core-geonetwork</url>
+    <developerConnection>
+    scm:git:git@github.so.kadaster.nl:NGR/core-geonetwork.git
+    </developerConnection>
   </scm>
   <inceptionYear>2003</inceptionYear>
   <issueManagement>
