@@ -28,7 +28,7 @@
   <parent>
     <groupId>org.geonetwork-opensource</groupId>
     <artifactId>geonetwork</artifactId>
-    <version>3.1.0-SNAPSHOT</version>
+    <version>3.1.0</version>
   </parent>
 
 
@@ -830,8 +830,8 @@
     <minify.verbose>false</minify.verbose>
     <build.webapp.resources>${project.build.directory}/webapp</build.webapp.resources>
     <web.xml.main.config.overrides>/WEB-INF/config-overrides-${env}.xml</web.xml.main.config.overrides>
-    <web.xml.widget.config.overrides></web.xml.widget.config.overrides>
-    <system.specific.overrides></system.specific.overrides>
+    <web.xml.widget.config.overrides />
+    <system.specific.overrides />
     <rootProjectDir>${basedir}/..</rootProjectDir>
     <wro4jOutput>${project.build.directory}/wro4j-output/</wro4jOutput>
   </properties>
