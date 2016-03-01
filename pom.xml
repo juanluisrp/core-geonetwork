@@ -1138,6 +1138,16 @@
       <url>scpexe://TO DEFINED</url>
     </snapshotRepository>
   </distributionManagement>-->
+  
+    <distributionManagement>
+    <repository>
+      <id>releases-repo</id>
+      <name>Nexus Releases Repo</name>
+      <url>
+      http://mvnrepository.so.kadaster.nl:8081/nexus/content/repositories/releases/
+      </url>
+    </repository>
+  </distributionManagement>
 
   <properties>
     <jetty.version>8.1.9.v20130131</jetty.version>
