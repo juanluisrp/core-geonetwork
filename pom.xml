@@ -1131,13 +1131,13 @@
     </profile>
   </profiles>
 
-  <distributionManagement>
+  <!--<distributionManagement>
     <snapshotRepository>
       <id>scp-repository.geonetwork-opensource.org</id>
       <name>GeoNetwork opensource repositories</name>
       <url>scpexe://TO DEFINED</url>
     </snapshotRepository>
-  </distributionManagement>
+  </distributionManagement>-->
 
   <properties>
     <jetty.version>8.1.9.v20130131</jetty.version>
