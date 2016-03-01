@@ -1120,7 +1120,7 @@
     <profile>
       <id>with-doc</id>
       <modules>
-        <module>docs/manuals</module>
+        <module>docs</module>
       </modules>
     </profile>
     <profile>
