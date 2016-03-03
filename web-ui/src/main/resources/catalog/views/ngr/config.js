@@ -57,16 +57,16 @@
           /*******************************************************************
              * Define maps
              */
-          proj4.defs(“EPSG:28992″,”+proj=sterea +lat_0=52.15616055555555 +lon_0=5.38763888888889 +k=0.9999079 +x_0=155000 +y_0=463000 +ellps=bessel +towgs84=565.417,50.3319,465.552,-0.398957,0.343988,-1.8774,4.0725 +units=m +no_defs”);
+          proj4.defs("EPSG:28992","+proj=sterea +lat_0=52.15616055555555 +lon_0=5.38763888888889 +k=0.9999079 +x_0=155000 +y_0=463000 +ellps=bessel +towgs84=565.417,50.3319,465.552,-0.398957,0.343988,-1.8774,4.0725 +units=m +no_defs");
 			ol.proj.get('EPSG:28992').setExtent([-285401.92,22598.08,595401.92,903401.92]);
 			ol.proj.get('EPSG:28992').setWorldExtent([ -1.65729160235431,48.0405018704265,11.2902578747914,55.9136415748388]);
 			var matrixIds=[];
 			var matrixIds2=[];
 			for(var i=0;i<=12;++i){if(i<10){
-			matrixIds[i]=”0″+i;
-			matrixIds2[i]=”EPSG:28992:”+i
-			}else{matrixIds[i]=””+i;
-			matrixIds2[i]=”EPSG:28992:”+i
+			matrixIds[i]="0"+i;
+			matrixIds2[i]="EPSG:28992:"+i
+			}else{matrixIds[i]=""+i;
+			matrixIds2[i]="EPSG:28992:"+i
 			}}
 			var resolutions=[3440.64,1720.32,860.16,430.08,215.04,107.52,53.76,26.88,13.44,6.72,3.36,1.68,0.84];
 			var tileLayers= [new ol.layer.Tile({
