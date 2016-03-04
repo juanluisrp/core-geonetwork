@@ -14,7 +14,8 @@ ALTER TABLE UserGroups ADD PRIMARY KEY (userid, profile, groupid);
 
 ALTER TABLE Metadata ALTER harvestUri TYPE varchar(512);
 
-ALTER TABLE HarvestHistory ADD elapsedTime int;
+-- NGR 2 has already this field
+-- ALTER TABLE HarvestHistory ADD elapsedTime int;
 
 CREATE TABLE Services
   (
