@@ -42,6 +42,7 @@ UPDATE Settings SET name = 'system/csw/enable', datatype = 2 WHERE id = 121;
 UPDATE Settings SET name = 'system/csw/contactId', datatype = 0 WHERE id = 122;
 UPDATE Settings SET name = 'system/csw/metadataPublic', datatype = 2 WHERE id = 131;
 
+UPDATE Settings SET name = 'system/hidewithheldelements/enable', datatype = 2 WHERE id = 961;
 
 UPDATE Settings SET name = 'system/shib/use', datatype = 2 WHERE id = 171;
 UPDATE Settings SET name = 'system/shib/path', datatype = 0 WHERE id = 172;
@@ -83,6 +84,14 @@ UPDATE Settings SET name = 'system/autodetect/enable', datatype = 2 WHERE id = 9
 UPDATE Settings SET name = 'system/requestedLanguage/only', datatype = 0 WHERE id = 953;
 UPDATE Settings SET name = 'system/requestedLanguage/sorted', datatype = 2 WHERE id = 954;
 
+-- Seem specific to NGR
+UPDATE Settings SET name = 'system/metadata/enableAdvancedView', datatype = 2 WHERE id = 916;
+
+-- Seem specific to NGR, monitoring settings. Should be added if the feature is migrated
+DELETE FROM Settings WHERE id = 1026;
+DELETE FROM Settings WHERE id = 1027;
+DELETE FROM Settings WHERE id = 9010;
+DELETE FROM Settings WHERE id = 1025;
 
 DELETE FROM Settings WHERE id = 957;
 DELETE FROM Settings WHERE id = 958;
@@ -135,11 +144,19 @@ DELETE FROM Settings WHERE id = 90;
 DELETE FROM Settings WHERE id = 0;
 DELETE FROM Settings WHERE id = 1;
 
--- NGR specific
--- requestedLanguage - ignored (boolean) is no longer available
+-- Remove harvesting entry
+DELETE FROM Settings WHERE id = 2;
+
+-- requestedLanguage - ignored (boolean) is no longer available in GN 3.0
 DELETE FROM Settings WHERE id = 955;
 
 ALTER TABLE Settings DROP COLUMN parentId;
+
+-- hidewithheldelements related settings, not used in GN 3.0
+DELETE FROM Settings WHERE id = 960;
+DELETE FROM Settings WHERE id = 962;
+DELETE FROM Settings WHERE id = 963;
+
 ALTER TABLE Settings DROP COLUMN id;
 ALTER TABLE Settings ADD PRIMARY KEY (name);
 

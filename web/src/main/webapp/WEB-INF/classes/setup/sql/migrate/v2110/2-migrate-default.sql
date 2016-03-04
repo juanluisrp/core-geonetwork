@@ -42,6 +42,7 @@ UPDATE Settings SET name = 'system/csw/enable', datatype = 2 WHERE id = 121;
 UPDATE Settings SET name = 'system/csw/contactId', datatype = 0 WHERE id = 122;
 UPDATE Settings SET name = 'system/csw/metadataPublic', datatype = 2 WHERE id = 131;
 
+UPDATE Settings SET name = 'system/hidewithheldelements/enable', datatype = 2 WHERE id = 961;
 
 UPDATE Settings SET name = 'system/shib/use', datatype = 2 WHERE id = 171;
 UPDATE Settings SET name = 'system/shib/path', datatype = 0 WHERE id = 172;
@@ -136,6 +137,12 @@ DELETE FROM Settings WHERE id = 0;
 DELETE FROM Settings WHERE id = 1;
 
 ALTER TABLE Settings DROP COLUMN parentId;
+
+-- hidewithheldelements related settings, not used in GN 3.0
+DELETE FROM Settings WHERE id = 960;
+DELETE FROM Settings WHERE id = 962;
+DELETE FROM Settings WHERE id = 963;
+
 ALTER TABLE Settings DROP COLUMN id;
 ALTER TABLE Settings ADD PRIMARY KEY (name);
 
