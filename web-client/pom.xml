@@ -5,7 +5,7 @@
   <parent>
     <groupId>org.geonetwork-opensource</groupId>
     <artifactId>geonetwork</artifactId>
-    <version>3.1.34</version>
+    <version>3.1.35-SNAPSHOT</version>
   </parent>
 
   <artifactId>geonetwork-client</artifactId>
