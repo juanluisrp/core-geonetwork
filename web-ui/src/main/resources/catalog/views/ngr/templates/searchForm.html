@@ -1,7 +1,6 @@
-<form id="ngr-search-form"
-      role="form">
+<form id="ngr-search-form" role="form">
   <!--ANY full text search input-->
-  <div class="row">
+  <div class="row" style="margin-right:-15px;margin-left:-15px;margin-top:-25px;padding:20px">
 	<div class="col-md-3 col-md-offset-1">
 		<div class="form-group">
             <label for="any">Wat voor soort data zoekt u?</label>
@@ -51,7 +50,6 @@
     </div>
 		  
     <div class="row">
-
        <div class="col-md-4 col-md-offset-1" style="margin-top:-15px;">
 		    <button type="button"
                       class="btn btn-link"
@@ -61,61 +59,41 @@
                       btn-checkbox-false="0">
                  Uitgebreid zoeken <i class="fa fa-arrow-down"></i>
               </button>
-              </div>
-			  </div>
-          </div>
-        </div>
-        <div class="col-lg-3">
-        </div>
-      </div>
-      <div class="row">
+		</div>
+    </div>
+    <div class="row"  style="background-color:#FAE2CB;margin-right:-20px;margin-left:-20px;margin-top:0px;padding:15px 10px 15px 10px;margin-bottom:-20px" data-ng-show="searchObj.advancedMode">
         <!--Advanced search form-->
-        <div data-ng-show="searchObj.advancedMode"
-             class="gn-search-filter col-lg-12">
+        <div class="gn-search-filter">
 
-
-          <div class="row">
-            <div class="col-md-4">
-              <h3 data-translate="">what</h3>
-              <div class="form-group">
-                <label for="categoriesF"
-                       class="col-md-4 col-sm-12 control-label"
-                       data-translate="">categories</label>
-
-                <div class="col-sm-8">
-                  <input type="text" id="categoriesF" value=""
-                         class="form-control"
-                         gn-typeahead="categoriesOptions"
-                         gn-values="searchObj.params._cat"/>
+			<div class="col-md-4">
+              
+			  <div class="form-group">
+                <label
+                       data-translate="">Data beschikbaarheid</label>
+				
+				<div class="checkbox">
+				  <label>
+					<input type="checkbox" value="">
+					Visualisatie
+				  </label>
+				</div>
+				<div class="checkbox ">
+				  <label>
+					<input type="checkbox" value="" >
+					Downloadbare data
+				  </label>
+				</div>
+				<div class="checkbox ">
+				  <label>
+					<input type="checkbox" value="" >
+					Data op aanvraag
+				  </label>
                 </div>
               </div>
-              <div class="form-group">
-                <label for="keywordsF"
-                       class="col-md-4 col-sm-12 control-label"
-                       data-translate="">keywords</label>
-
-                <div class="col-sm-8">
-                  <input type="text" id="keywordsF" value=""
-                         class="form-control"
-                         gn-values="searchObj.params.keyword"
-                         gn-typeahead="keywordsOptions"/>
-                </div>
-              </div>
-              <div class="form-group">
-                <label for="orgNameF"
-                       class="col-md-4 col-sm-12 control-label"
-                       data-translate="">orgName</label>
-
-                <div class="col-sm-8">
-                  <input type="text" id="orgNameF" value=""
-                         class="form-control"
-                         gn-values="searchObj.params.orgName"
-                         gn-typeahead="orgNameOptions"/>
-                </div>
-              </div>
+			  
+              
             </div>
-            <div class="col-md-5">
-              <h3 data-translate="">when</h3>
+            <div class="col-md-4">
               <div data-gn-period-chooser="resourcesCreatedTheLast"
                    data-date-from="searchObj.params.creationDateFrom"
                    data-date-to="searchObj.params.creationDateTo">
@@ -125,11 +103,32 @@
                    data-date-from="searchObj.params.dateFrom"
                    data-date-to="searchObj.params.dateTo">
               </div>
+			  
+				
+			<!-- todo: add here the search on temporal extent -->
+			
             </div>
-            <div class="col-md-5">
+            <div class="col-md-4">
+				<div class="form-group">
+                <label for="orgNameF"
+                       data-translate="">INSPIRE thema</label>
 
+         
+                  <input type="text" id="" value=""
+                         class="form-control"
+                         />
+              </div>
+			  
+              <div class="form-group">
+                <label for="orgNameF"
+                       data-translate="">orgName</label>
+                  <input type="text" id="orgNameF" value=""
+                         class="form-control"
+                         gn-values="searchObj.params.orgName"
+                         gn-typeahead="orgNameOptions"/>
+              </div>
             </div>
           </div>
         </div>
-     
+    </div> 
 </form>
