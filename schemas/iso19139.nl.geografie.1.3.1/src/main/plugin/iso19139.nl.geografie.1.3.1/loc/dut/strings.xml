@@ -49,4 +49,6 @@
 	<isINSPIREConform></isINSPIREConform>
 	<isNotINSPIREConform></isNotINSPIREConform>
 	<descriptiveKeywords>Trefwoord</descriptiveKeywords>
+	
+	<datasetcode>Unieke Identifier van de bron</datasetcode>
 </strings>
