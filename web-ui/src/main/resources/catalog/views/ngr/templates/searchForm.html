@@ -1,51 +1,56 @@
 <form id="ngr-search-form"
-      role="form" style="margin-right:-15px;margin-left:-15px;margin-top:-25px;padding:20px">
+      role="form">
   <!--ANY full text search input-->
   <div class="row">
-
-
 	<div class="col-md-3 col-md-offset-1">
 		<div class="form-group">
-		<label for="any">Wat voor soort data zoekt u?</label>
-		<input type="text"
-               class="form-control input-lg"
-               autofocus=""
-               data-ng-model="homeAnyField"
-               data-ng-model-options="modelOptions"
-               placeholder="{{'anyPlaceHolder' | translate}}"
-               data-ng-keyup="$event.keyCode == 13 && goToSearch(homeAnyField)"
-               data-typeahead="address for address in getAnySuggestions($viewValue)"
-               data-typeahead-loading="anyLoading"
-               data-typeahead-min-length="1"/>
+            <label for="any">Wat voor soort data zoekt u?</label>
+            <input type="text"
+                   id="any"
+                   class="form-control input-lg"
+                   autofocus=""
+                   data-ng-model="searchObj.params.any"
+                   data-ng-model-options="modelOptionsForm"
+                   placeholder="{{'anyPlaceHolder' | translate}}"
+                   data-ng-keyup="$event.keyCode == 13 && triggerSearch()"
+                   data-typeahead="address for address in getAnySuggestions($viewValue)"
+                   data-typeahead-loading="anyLoading"
+                   data-typeahead-min-length="1"
+                   data-typeahead-focus-first="false" />
 	    </div>
-	    </div>
+     </div>
 	<div class="col-md-3">
 	    <div class="form-group has-feedback">
-		<label for="loc">Op welke locatie?</label>
-		  <input type="text" class="form-control input-lg">
-		  <span class="form-control-feedback">
-			<i class="fa fa-map-marker fa-2x"></i>
-		  </span>
-		</div>
-		</div>
+		    <label for="location">Op welke locatie?</label>
+              <input type="text"
+                     id="location"
+                     class="form-control input-lg">
+		    <span class="form-control-feedback">
+			    <i class="fa fa-map-marker fa-2x"></i>
+		    </span>
+        </div>
+    </div>
 	<div class="col-md-4">
 	 <div class="form-group" style="margin-top:25px">
-	 	<label for="">&nbsp;</label>
+         <label for="">&nbsp;</label>
          <button type="button"
                       data-ng-click="triggerSearch()"
                       class="btn btn-primary btn-lg">
+                <i class="fa fa-search"></i>
                 Toon resultaten
               </button>
               <button type="button"
                       data-ng-click="resetSearch(searchObj.defaultParams);"
                       title="{{'ClearTitle' | translate}}"
-                      class="btn btn-default btn-lg"> Reset
+                      class="btn btn-default btn-lg">
+                  <i class="fa fa-times"></i>
+                  Reset
               </button>
         </div>
       </div>
     </div>
 		  
-       <div class="row">
+    <div class="row">
 
        <div class="col-md-4 col-md-offset-1">
 		    <button type="button"
