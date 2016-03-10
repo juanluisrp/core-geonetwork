@@ -231,6 +231,14 @@
         searchMap: searchMap,
         mapfieldOption: {
           relations: ['within']
+        },
+        defaultParams: {
+          'facet.q': '',
+          resultType: gnSearchSettings.facetsSummaryType || 'details'
+        },
+        params: {
+          'facet.q': '',
+          resultType: gnSearchSettings.facetsSummaryType || 'details'
         }
       }, gnSearchSettings.sortbyDefault);
 
