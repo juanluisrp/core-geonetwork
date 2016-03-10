@@ -4,6 +4,9 @@
 
   var module = angular.module('gn_search_ngr_config', []);
 
+  module.value('gnTplResultlistLinksbtn',
+        '../../catalog/views/default/directives/partials/linksbtn.html');
+
   module
       .run([
         'gnSearchSettings',
@@ -22,8 +25,14 @@
             gnMap.createLayerForType('osm')
           ];
 
+          viewerSettings.bingKey = 'AnElW2Zqi4fI-9cYx1LHiQfokQ9GrNzcjOh_' +
+              'p_0hkO1yo78ba8zTLARcLBIf8H6D';
+
           viewerSettings.servicesUrl =
             viewerSettings.mapConfig.listOfServices || {};
+
+          // WMS settings
+          viewerSettings.singleTileWMS = true;
 
           var bboxStyle = new ol.style.Style({
             stroke: new ol.style.Stroke({
@@ -53,6 +62,9 @@
             })
 
           };
+
+          // Object to store the current Map context
+          viewerSettings.storage = 'sessionStorage';
 
           /*******************************************************************
              * Define maps
@@ -129,7 +141,7 @@
 
 
           /** Facets configuration */
-          searchSettings.facetsSummaryType = 'hits';
+          searchSettings.facetsSummaryType = 'details';
 
           /*
              * Hits per page combo values configuration. The first one is the
@@ -199,7 +211,21 @@
             //}, {
               label: 'full',
               url: 'md.format.xml?xsl=full_view&uuid='
+              /*
+              // You can use a function to choose formatter
+              url : function(md) {
+                return 'md.format.xml?xsl=full_view&uuid=' + md.getUuid();
+              }*/
             }]
+          };
+
+          // Mapping for md links in search result list.
+          searchSettings.linkTypes = {
+            links: ['LINK', 'kml'],
+            downloads: ['DOWNLOAD'],
+            //layers:['OGC', 'kml'],
+            layers:['OGC'],
+            maps: ['ows']
           };
 
           // Set the default template to use
