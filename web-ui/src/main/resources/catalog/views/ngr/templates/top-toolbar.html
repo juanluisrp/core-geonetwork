@@ -26,27 +26,7 @@
           <span  data-translate="">menu_search</span>
         </a>
       </li>
-      <li>
-        <a data-gn-active-tb-item="catalog.search#/about"
-           title="{{'about' | translate}}">
-        
-          <span  data-translate="">menu_about</span>
-        </a>
-      </li>
       
-      <li>
-        <a data-gn-active-tb-item="catalog.search#/devel"
-           title="{{'developers' | translate}}">
-          <span  data-translate="">menu_developers</span>
-        </a>
-      </li>
-      
-      <li>
-        <a data-gn-active-tb-item="catalog.search#/latest"
-           title="{{'latest' | translate}}">
-          <span  data-translate="">menu_latest</span>
-        </a>
-      </li>
       
       <li data-ng-if="isMapViewerEnabled">
         <a data-gn-active-tb-item="catalog.search#/map"
@@ -90,6 +70,29 @@
           </li>
         </ul>
       </li>
+	  
+	  <li>
+        <a data-gn-active-tb-item="catalog.search#/about"
+           title="{{'about' | translate}}">
+        
+          <span  data-translate="">menu_about</span>
+        </a>
+      </li>
+      
+      <li>
+        <a data-gn-active-tb-item="catalog.search#/devel"
+           title="{{'developers' | translate}}">
+          <span  data-translate="">menu_developers</span>
+        </a>
+      </li>
+      
+      <li>
+        <a data-gn-active-tb-item="catalog.search#/latest"
+           title="{{'latest' | translate}}">
+          <span  data-translate="">menu_latest</span>
+        </a>
+      </li>
+	  
       <li data-ng-show="user.isReviewerOrMore()">
         <a data-gn-active-tb-item="admin.console"
            title="{{'adminConsole' | translate}}">
@@ -116,9 +119,7 @@
           <li>
         <a href="admin.console#/organization/users?userOrGroup={{user.username}}"
            title="{{'userDetails' | translate}}"
-           data-ng-disabled="!user.isUserAdminOrMore()">
-               Preferences
-        </a>
+           data-ng-disabled="!user.isUserAdminOrMore()">{{'Preferences' | translate}}</a>
       </li>
       <li data-ng-show="authenticated">
         <a href="../../j_spring_security_logout"
@@ -133,10 +134,7 @@
       <li data-ng-show="!authenticated && service !== 'catalog.signin'">
         <a data-gn-active-tb-item="catalog.signin"
            title="{{'signIn'|translate}}"
-           data-ng-keypress="$event">
-           
-           {{'signIn' | translate}}
-        </a>
+           data-ng-keypress="$event">{{'signIn' | translate}}</a>
       </li>
     </ul>
   </div>
