@@ -1373,11 +1373,15 @@
               </template>
             </action>
 
+		  <field
+            xpath="/gmd:MD_Metadata/gmd:hierarchyLevel/gmd:MD_ScopeCode" />	
+			
           <field
             xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:title" />
 
 		  <field name="datasetcode"
             xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:identifier/gmd:MD_Identifier/gmd:code" />
+			
 		  <action type="add"
                   if="count(gmd:MD_Metadata/gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:identifier) = 0"
                   name="identifier" or="identifier"
@@ -1411,6 +1415,34 @@
             </template>
           </action>
 
+		  <field name="md-language" xpath="/gmd:MD_Metadata/gmd:language" or="language" in="/gmd:MD_Metadata"/>
+		  <action type="add"
+                  if="count(gmd:MD_Metadata/gmd:language) = 0"
+                  name="md-language" or="language"
+                  in="/gmd:MD_Metadata">
+            <template>
+              <snippet>
+                <gmd:language>
+				  <gmd:LanguageCode codeList="http://www.loc.gov/standards/iso639-2/" codeListValue="dut">Nederlands</gmd:LanguageCode>
+			   </gmd:language>
+              </snippet>
+            </template>
+          </action>
+		  
+		  <field name="ds-language" xpath="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:language" or="language" in="/gmd:MD_Metadata"/>
+		  <action type="add"
+                  if="count(gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:language) = 0"
+                  name="ds-language" or="language"
+                  in="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:language">
+            <template>
+              <snippet>
+                <gmd:language>
+				  <gmd:LanguageCode codeList="http://www.loc.gov/standards/iso639-2/" codeListValue="dut">Nederlands</gmd:LanguageCode>
+			   </gmd:language>
+              </snippet>
+            </template>
+          </action>
+		  
    		  <field xpath="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:topicCategory/gmd:MD_TopicCategoryCode"/>
 		  <action type="add"
                   if="count(gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:topicCategory/gmd:MD_TopicCategoryCode) = 0"
