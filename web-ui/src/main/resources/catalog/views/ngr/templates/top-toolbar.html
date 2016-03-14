@@ -1,0 +1,151 @@
+<div class="container-fluid">
+  <div class="navbar-header">
+    <button type="button"
+            class="navbar-toggle collapsed"
+            data-toggle="collapse"
+            data-target="#navbar"
+            aria-expanded="false"
+            aria-controls="navbar">
+      <span class="sr-only">Toggle navigation</span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </button>
+  </div>
+  <div id="navbar" class="navbar-collapse collapse">
+    <ul class="nav navbar-nav">
+      <li>
+        <a data-gn-active-tb-item="catalog.search#/home">
+          <span  data-translate="">Home</span>
+        </a>
+      </li>
+      <li>
+        <a data-gn-active-tb-item="catalog.search#/search"
+           title="{{'search' | translate}}">
+        
+          <span  data-translate="">menu_search</span>
+        </a>
+      </li>
+      <li>
+        <a data-gn-active-tb-item="catalog.search#/about"
+           title="{{'about' | translate}}">
+        
+          <span  data-translate="">menu_about</span>
+        </a>
+      </li>
+      
+      <li>
+        <a data-gn-active-tb-item="catalog.search#/devel"
+           title="{{'developers' | translate}}">
+          <span  data-translate="">menu_developers</span>
+        </a>
+      </li>
+      
+      <li>
+        <a data-gn-active-tb-item="catalog.search#/latest"
+           title="{{'latest' | translate}}">
+          <span  data-translate="">menu_latest</span>
+        </a>
+      </li>
+      
+      <li data-ng-if="isMapViewerEnabled">
+        <a data-gn-active-tb-item="catalog.search#/map"
+           title="{{'map' | translate}}">
+         
+          <span  data-translate="">map</span>
+
+          <span data-gnv-layer-indicator=""/>
+        </a>
+      </li>
+      <li data-ng-show="authenticated && user.isEditorOrMore()" class="dropdown" data-ng-show="authenticated && user.isEditorOrMore()">
+        <a data-gn-active-tb-item="catalog.edit" class="dropdown-toggle" data-toggle="dropdown"
+           role="button" aria-expanded="false"
+           title="{{'contribute' | translate}}">
+         
+          <span  data-translate="">contribute</span><span class="caret"></span>
+        </a>
+      
+        <ul class="dropdown-menu" role="menu">
+        <li>
+        <a data-gn-active-tb-item="catalog.edit"
+           title="{{'dashBoard' | translate}}">
+          <span  data-translate="">Dashboard</span>
+        </a>
+      </li>
+          <li>
+            <a data-gn-active-tb-item="catalog.edit#/create">
+            <span data-translate="">addRecord</span>
+            </a>
+          </li>
+          <li>
+            <a data-gn-active-tb-item="catalog.edit#/import">
+              <span data-translate="">ImportRecord</span>
+            </a>
+          </li>
+          <li>
+            <a data-gn-active-tb-item="catalog.edit#/directory"
+               data-ng-if="user.isReviewerOrMore()">
+            <span data-translate="">directoryManager</span>
+            </a>
+          </li>
+        </ul>
+      </li>
+      <li data-ng-show="user.isReviewerOrMore()">
+        <a data-gn-active-tb-item="admin.console"
+           title="{{'adminConsole' | translate}}">
+         
+          <span  data-translate="">adminConsole</span>
+        </a>
+      </li>
+    </ul>
+
+
+  <!--  <form class="navbar-form navbar-right" role="language">
+      <div class="form-group pull-right"
+           data-gn-language-switcher="lang"
+           data-langs="langs"
+           data-lang-labels="langLabels"/>
+    </form>-->
+
+    <ul class="nav navbar-nav navbar-right">
+     <li class="dropdown" data-ng-show="authenticated">
+        <a href="" class="dropdown-toggle" data-toggle="dropdown"
+           role="button" aria-expanded="false">
+           <i span="fa fa-user"></i> {{user.name}} {{user.surname}} <span class="caret"></span></a>
+        <ul class="dropdown-menu" role="menu">
+          <li>
+        <a href="admin.console#/organization/users?userOrGroup={{user.username}}"
+           title="{{'userDetails' | translate}}"
+           data-ng-disabled="!user.isUserAdminOrMore()">
+               Preferences
+        </a>
+      </li>
+      <li data-ng-show="authenticated">
+        <a href="../../j_spring_security_logout"
+           title="{{'signout' | translate}}">
+          
+          {{'signout' | translate}}
+        </a>
+      </li>
+        </ul>
+      </li>
+     
+      <li data-ng-show="!authenticated && service !== 'catalog.signin'">
+        <a data-gn-active-tb-item="catalog.signin"
+           title="{{'signIn'|translate}}"
+           data-ng-keypress="$event">
+           
+           {{'signIn' | translate}}
+        </a>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<span class="alert alert-danger ng-hide"
+                data-ng-show="session.remainingTime > 0 &&
+                    session.remainingTime < session.alertInTitleWhen"
+                data-translate=""
+                data-translate-values="{remainingTime: '{{session.remainingTime}}'}">
+            sessionWillExpireIn
+          </span>

@@ -1,0 +1,52 @@
+<div class="container-fluid">
+	<div class="row" style="padding-bottom:20px;padding-top:20px;margin:-25px -25px 25px -15px;background-color:#F6D4B1">
+
+	<div class="col-md-3 col-md-offset-2">
+		<div class="form-group" class="text-align:left">
+		<label for="any">Over welk onderwerp zoekt u data?</label>
+		<input type="text" id="any"
+               class="form-control input-lg"
+               autofocus=""
+               data-ng-model="homeAnyField"
+               data-ng-model-options="modelOptions"
+               placeholder="{{'anyPlaceHolder' | translate}}"
+               data-ng-keyup="$event.keyCode == 13 && goToSearch(homeAnyField)"
+               data-typeahead="address for address in getAnySuggestions($viewValue)"
+               data-typeahead-loading="anyLoading"
+               data-typeahead-min-length="1"/>
+	    </div>
+		</div>
+	<div class="col-md-3">
+	    <div class="form-group has-feedback">
+		  <label for="loc">Op welke locatie?</label>
+		  <input type="text" class="form-control input-lg" id="loc">
+		  <span class="form-control-feedback">
+			<i class="fa fa-map-marker fa-2x"></i>
+		  </span>
+		</div>
+		</div>
+		<div class="col-md-2">
+			<div class="form-group" style="margin-top:25px">
+          <a class="btn btn-primary btn-lg"
+                  type="button" data-ng-href="#/search?any={{homeAnyField}}">
+            <i class="fa fa-search"></i> Zoeken
+          </a>
+          </div>
+		  </div>
+    </div>
+  
+
+    <div class="row" style="padding-top:20px">
+	<div class="col-sm-12" style="text-align:center"><h3 style="padding-bottom:20px;">Bekijk één van de categorieën</h3></div>
+            <div data-ng-repeat="(key, facet) in searchInfo.facet['topicCats']"
+                 class="col-xs-12 col-sm-6 col-md-4">
+				 
+              <a data-ng-href="#/search?topicCat={{facet['@name']}}" style="color:black;margin:8px" >
+                <i class="fa gn-icon gn-icon-{{facet['@name']}} fa-2x fa-fw" style="vertical-align: middle"></i>
+                <span class="gn-icon-label">{{facet['@label']}}</span>
+                <span>({{facet['@count']}})</span>
+              </a>
+            </div>  
+    </div>
+ <div style="padding-bottom:80px"></div>
+</div>

@@ -241,7 +241,7 @@
     "uuidAction": "Record identifier verwerking",
     "validate": "Valideren",
     "validate-help": "Controleer metadata met de standaard validatieregels",
-    "validationReport": "Validatie",
+    "validationReport": "Validatie rapport",
     "runValidation": "Start validatieproces",
     "whoCanAccess": "Wie heeft toegang",
     "wmsServiceUrl": "URL van de dienst ,",

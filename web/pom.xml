@@ -5,7 +5,7 @@
   <parent>
     <groupId>org.geonetwork-opensource</groupId>
     <artifactId>geonetwork</artifactId>
-    <version>3.1.0-SNAPSHOT</version>
+    <version>3.1.35-SNAPSHOT</version>
   </parent>
 
 
@@ -467,7 +467,16 @@
       <artifactId>schema-dublin-core</artifactId>
       <version>${project.version}</version>
     </dependency>
-
+    <dependency>
+      <groupId>${project.groupId}</groupId>
+      <artifactId>schema-iso19139.nl.services.1.2.1</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>${project.groupId}</groupId>
+      <artifactId>schema-iso19139.nl.geografie.1.3.1</artifactId>
+      <version>${project.version}</version>
+    </dependency>
   </dependencies>
 
   
@@ -551,6 +560,14 @@
                   <directory>${project.basedir}/../schemas/csw-record/src/main/plugin</directory>
                   <targetPath>${basedir}/src/main/webapp/WEB-INF/data/config/schema_plugins</targetPath>
                 </resource>
+		<resource>
+                  <directory>${project.basedir}/../schemas/iso19139.nl.geografie.1.3.1/src/main/plugin</directory>
+                  <targetPath>${basedir}/src/main/webapp/WEB-INF/data/config/schema_plugins</targetPath>
+                </resource>
+		<resource>
+		  <directory>${project.basedir}/../schemas/iso19139.nl.services.1.2.1/src/main/plugin</directory>
+		  <targetPath>${basedir}/src/main/webapp/WEB-INF/data/config/schema_plugins</targetPath>
+		</resource>
               </resources>
             </configuration>
           </execution>
@@ -790,8 +807,8 @@
     <minify.verbose>false</minify.verbose>
     <build.webapp.resources>${project.build.directory}/webapp</build.webapp.resources>
     <web.xml.main.config.overrides>/WEB-INF/config-overrides-${env}.xml</web.xml.main.config.overrides>
-    <web.xml.widget.config.overrides></web.xml.widget.config.overrides>
-    <system.specific.overrides></system.specific.overrides>
+    <web.xml.widget.config.overrides />
+    <system.specific.overrides />
     <rootProjectDir>${basedir}/..</rootProjectDir>
     <wro4jOutput>${project.build.directory}/wro4j-output/</wro4jOutput>
   </properties>

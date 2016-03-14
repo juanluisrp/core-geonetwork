@@ -55,6 +55,8 @@
     function(gnMap, gnOwsCapabilities, $http, gnViewerSettings,
              $translate, $q, $filter, $timeout) {
 
+      var firstLoad = true;
+
       /**
        * @ngdoc method
        * @name gnOwsContextService#loadContext
@@ -71,7 +73,9 @@
         var layersToRemove = [];
         map.getLayers().forEach(function(layer) {
           if (layer.displayInLayerManager) {
-            layersToRemove.push(layer);
+            if (!(layer.get('fromUrlParams') && firstLoad)) {
+              layersToRemove.push(layer);
+            }
           }
         });
         for (var i = 0; i < layersToRemove.length; i++) {
@@ -137,6 +141,7 @@
               }
             }
           }
+          firstLoad = false;
         }
 
         // if there's at least one valid bg layer in the context use them for
@@ -322,7 +327,7 @@
        */
       this.saveToLocalStorage = function(map) {
         var storage = gnViewerSettings.storage ?
-          window[gnViewerSettings.storage] : window.localStorage;
+            window[gnViewerSettings.storage] : window.localStorage;
         if (map.getSize()[0] == 0 || map.getSize()[1] == 0) {
           // don't save a map which has not been rendered yet
           return;

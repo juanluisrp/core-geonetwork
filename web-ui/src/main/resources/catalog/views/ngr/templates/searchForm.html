@@ -1,0 +1,134 @@
+<form id="ngr-search-form" role="form">
+  <!--ANY full text search input-->
+  <div class="row" style="margin-right:-15px;margin-left:-15px;margin-top:-25px;padding:20px">
+	<div class="col-md-3 col-md-offset-1">
+		<div class="form-group">
+            <label for="any">Wat voor soort data zoekt u?</label>
+            <input type="text"
+                   id="any"
+                   class="form-control input-lg"
+                   autofocus=""
+                   data-ng-model="searchObj.params.any"
+                   data-ng-model-options="modelOptionsForm"
+                   placeholder="{{'anyPlaceHolder' | translate}}"
+                   data-ng-keyup="$event.keyCode == 13 && triggerSearch()"
+                   data-typeahead="address for address in getAnySuggestions($viewValue)"
+                   data-typeahead-loading="anyLoading"
+                   data-typeahead-min-length="1"
+                   data-typeahead-focus-first="false" />
+	    </div>
+     </div>
+	<div class="col-md-3">
+	    <div class="form-group has-feedback">
+		    <label for="location">Op welke locatie?</label>
+              <input type="text"
+                     id="location"
+                     class="form-control input-lg">
+		    <span class="form-control-feedback">
+			    <i class="fa fa-map-marker fa-2x"></i>
+		    </span>
+        </div>
+    </div>
+	<div class="col-md-4">
+	 <div class="form-group" style="margin-top:25px">
+         <label for="">&nbsp;</label>
+         <button type="button"
+                      data-ng-click="triggerSearch()"
+                      class="btn btn-primary btn-lg">
+                <i class="fa fa-search"></i>
+                Toon resultaten
+              </button>
+              <button type="button"
+                      data-ng-click="resetSearch(searchObj.defaultParams);"
+                      title="{{'ClearTitle' | translate}}"
+                      class="btn btn-default btn-lg">
+                  <i class="fa fa-times"></i>
+                  Reset
+              </button>
+        </div>
+      </div>
+    </div>
+		  
+    <div class="row">
+       <div class="col-md-4 col-md-offset-1" style="margin-top:-15px;">
+		    <button type="button"
+                      class="btn btn-link"
+                      data-ng-model="searchObj.advancedMode"
+                      btn-checkbox=""
+                      btn-checkbox-true="1"
+                      btn-checkbox-false="0">
+                 Uitgebreid zoeken <i class="fa fa-arrow-down"></i>
+              </button>
+		</div>
+    </div>
+    <div class="row"  style="background-color:#FAE2CB;margin-right:-20px;margin-left:-20px;margin-top:0px;padding:15px 10px 15px 10px;margin-bottom:-20px" data-ng-show="searchObj.advancedMode">
+        <!--Advanced search form-->
+        <div class="gn-search-filter">
+
+			<div class="col-md-4">
+              
+			  <div class="form-group">
+                <label
+                       data-translate="">Data beschikbaarheid</label>
+				
+				<div class="checkbox">
+				  <label>
+					<input type="checkbox" value="">
+					Visualisatie
+				  </label>
+				</div>
+				<div class="checkbox ">
+				  <label>
+					<input type="checkbox" value="" >
+					Downloadbare data
+				  </label>
+				</div>
+				<div class="checkbox ">
+				  <label>
+					<input type="checkbox" value="" >
+					Data op aanvraag
+				  </label>
+                </div>
+              </div>
+			  
+              
+            </div>
+            <div class="col-md-4">
+              <div data-gn-period-chooser="resourcesCreatedTheLast"
+                   data-date-from="searchObj.params.creationDateFrom"
+                   data-date-to="searchObj.params.creationDateTo">
+              </div>
+
+              <div data-gn-period-chooser="recordsCreatedTheLast"
+                   data-date-from="searchObj.params.dateFrom"
+                   data-date-to="searchObj.params.dateTo">
+              </div>
+			  
+				
+			<!-- todo: add here the search on temporal extent -->
+			
+            </div>
+            <div class="col-md-4">
+				<div class="form-group">
+                <label for="orgNameF"
+                       data-translate="">INSPIRE thema</label>
+
+         
+                  <input type="text" id="" value=""
+                         class="form-control"
+                         />
+              </div>
+			  
+              <div class="form-group">
+                <label for="orgNameF"
+                       data-translate="">orgName</label>
+                  <input type="text" id="orgNameF" value=""
+                         class="form-control"
+                         gn-values="searchObj.params.orgName"
+                         gn-typeahead="orgNameOptions"/>
+              </div>
+            </div>
+          </div>
+        </div>
+    </div> 
+</form>

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<strings>
+  <understandResource>Informatie over de dataset</understandResource>
+  <relatedResources>Related services and linked data</relatedResources>
+  <techInfo>Technische informatie</techInfo>
+  <contactInfo>Contact informatie</contactInfo>
+  <mdContactInfo>Metadata contact</mdContactInfo>
+  <refDate>Referentie datum</refDate>
+  <temporalRef>Temporele informatie</temporalRef>
+  <constraintInfo>Access constraint information</constraintInfo>
+
+  <!-- New strings added for the AngularJS editor -->
+  <!-- View and tabs -->
+  <advanced>Volledig</advanced>
+  <default>Standaard</default>
+  <dutchprofile>Nederlands profiel</dutchprofile>
+  <simple>Eenvoudig</simple>
+  <inspire>INSPIRE</inspire>
+  <resource>Bron</resource>
+  <xml>XML</xml>
+
+  <Optional>Optionele elementen</Optional>
+  <Required>Verplichte elementen</Required>
+  <INSPIRE>INSPIRE elementen</INSPIRE>
+
+  <metadataPointOfContact>Contactgegevens metadata</metadataPointOfContact>
+  <pointOfContact>Contactgegevens dataset</pointOfContact>
+  <lineage>Herkomst</lineage>
+	<role>Rol</role>
+	<temporalRangeSection>Tijdsrange</temporalRangeSection>
+	<beginPosition>Van</beginPosition>
+	<endPosition>Tot</endPosition>
+	<inspireTheme>INSPIRE Thema</inspireTheme>
+	<topicCategory>Thema</topicCategory>
+	<conformity>Conformiteitindicatie</conformity>
+	<thisIsASeries>Series</thisIsASeries>
+	<thisIsADataset>Dataset</thisIsADataset>
+
+	<organisationName>Organisatie</organisationName>
+	<electronicMailAddress>Email</electronicMailAddress>
+	<deliveryPoint>Adres</deliveryPoint>
+	<postalCode>Postcode</postalCode>
+	<city>Plaats</city>
+	<country>Land</country>
+	<telephone>Telefoon</telephone>
+	<website>Website</website>
+	
+	<report>Conformiteit</report>
+	<isINSPIREConform></isINSPIREConform>
+	<isNotINSPIREConform></isNotINSPIREConform>
+	<descriptiveKeywords>Trefwoord</descriptiveKeywords>
+	
+	<datasetcode>Unieke Identifier van de bron</datasetcode>
+</strings>

@@ -4,7 +4,7 @@
     <parent>
         <groupId>org.geonetwork-opensource</groupId>
         <artifactId>geonetwork</artifactId>
-        <version>3.1.0-SNAPSHOT</version>
+        <version>3.1.35-SNAPSHOT</version>
     </parent>
     <artifactId>e2e-tests</artifactId>
     <packaging>pom</packaging>
@@ -151,7 +151,7 @@
                                     <goal>copy-resources</goal>
                                 </goals>
                                 <configuration>
-                                    <delimiters/>
+                                    <delimiters />
                                     <outputDirectory>${protractorConfig}</outputDirectory>
                                     <resources>
                                         <resource>
@@ -237,19 +237,7 @@
                                           def jarsFound = []
                                           base.eachFileRecurse FILES, { file ->
                                               if (file.name.startsWith("selenium-server-standalone")) {
-                                                  jarsFound << file
-                                              }
-                                          }
-
-                                          if (jarsFound.isEmpty()) {
-                                              throw new AssertionError("No selenium jar found in $base")
-                                          }
-
-                                          project.properties['seleniumJar'] = jarsFound[0].absolutePath
-                                          log.info("\n\tUsing selenium jar: "+jarsFound[0])
-
-
-                        ]]></source>
+                                                  jarsFound << file } } if (jarsFound.isEmpty()) { throw new AssertionError("No selenium jar found in $base") } project.properties['seleniumJar'] = jarsFound[0].absolutePath log.info("\n\tUsing selenium jar: "+jarsFound[0]) ]]></source>
                               </configuration>
                             </execution>
                             <execution>
