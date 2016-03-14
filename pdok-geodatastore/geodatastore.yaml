@@ -124,9 +124,7 @@ paths:
           description: 
             A JSON string representation of an object of type Metadata.
           required: false
-          type: object
-          schema:
-            $ref: "#/definitions/Metadata"
+          type: "string"
         - in: formData
           name: dataset
           description: The dataset file.
@@ -167,41 +165,43 @@ paths:
           schema:
             $ref: "#/definitions/ErrorResponse"
         403:
-          description: |
-            Forbidden. There are some causes for this error for example:
-            * The user is not a Reviewer in the group. Contact with support to 
-              check this case.
-            * The email for the user's group is not set. Contact with support to 
-              check this case.
-            * The description for the user's group is not set. Contact with support 
-              to check this case.
+          description: "Forbidden. There are some causes for this error for example: \
+            \ * The user is not a Reviewer in the group. Contact with support to \
+            \  check this case. \
+            \ * The email for the user's group is not set. Contact with support to \
+            \  check this case. \
+            \ * The description for the user's group is not set. Contact with support \
+            \  to check this case."
         500:
           description: error response caused by an internal server error.
-          
-            
-          
   /api/v1/dataset/{id}:
     post:
       description: |
         Update an existing dataset.
       security:
-       - basicAuth: []
+        - basicAuth: []
       operationId: updateDataset
+      consumes: 
+        - multipart/form-data
       produces:
         - application/json
-      parameters: 
+      parameters:
+        - in: path
+          name: id
+          description: |
+            Param indicates which object to update
+          required: true
+          type: string
         - in: formData
           name: metadata
-          description: the metadata object. It must be the string of a JSON object of type metadata.
-          type: object
-          schema:
-            $ref: "#/definitions/Dataset"
-          
+          description: |
+            A JSON string representation of an object of type Metadata.
+          type: string
         - in: formData
           name: publish
           type: boolean
           required: false
-          description: 
+          description: |
             Indicate if the metadata should be instantly published. Defaults to 
             `false`. The metadata only will be published if it is valid (all 
             metadata fields are filled with valid values and it has a dataset 
