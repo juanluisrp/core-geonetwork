@@ -42,7 +42,7 @@
 					<deletePreviouslyDeployedDar>true</deletePreviouslyDeployedDar>
 					<generateDeployedOnUpgrade>true</generateDeployedOnUpgrade>
 					<applicationName>pdok/${project.artifactId}</applicationName>
-					<environmentId>Environments/pdok-int/environment/pdok-ngr_int</environmentId>
+					<environmentId>Environments/pdok-ont/environment/pdok-ngr_ont</environmentId>
 			<deployables>
 				<deployable>
                                         <name>DNS-ngr-{{application}}-{{werkomgeving}}</name>
