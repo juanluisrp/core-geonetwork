@@ -8,9 +8,9 @@
 
   <div class="row gn-md-view"
        data-ng-show="mdView.current.record">
-    <button class="btn btn-primary"
+    <button class="btn btn-link"
             data-ng-click="closeRecord(mdView.current.record)">
-      <i class="fa fa-search"></i>
+      <i class="fa fa-angle-left"></i>
       <span><span>{{'backTo' + (fromView || 'search') | translate}}</span></span>
     </button>
 
@@ -81,49 +81,63 @@
 </style>
 
     <div data-ng-show="!usingFormatter" class="gn-metadata-display">
-
+		
+	<div class="row">
+		<div class="col-xs-12">
+			<h1 style="margin-top:32px;margin-bottom:32px;font-size:42px;font-weight:bold">
+			  <i class="fa gn-icon-{{mdView.current.record.type[0]}}"/>
+			  {{mdView.current.record.title || mdView.current.record.defaultTitle}}
+			</h1>
+		</div>
+	</div>
+	<div class="row">
       <div class="col-md-8 gn-record">
         
 		<div class="row">
-		<h1>
-          <i class="fa gn-icon-{{mdView.current.record.type[0]}}"/>
-          {{mdView.current.record.title || mdView.current.record.defaultTitle}}
-        </h1>
+		
 
-        <div class="pull-right">
+		<script>
+			$('#myTabs a').click(function (e) {
+			  e.preventDefault()
+			  $(this).tab('show')
+			})
+		</script>
+		
+        <!--<div class="pull-right">
           <i class="fa fa-calendar"></i>&nbsp;
           <span data-translate="">updatedOn</span>
           <span data-gn-humanize-time="{{mdView.current.record['geonet:info'].changeDate}}"
                 data-from-now=""></span>
         </div>
-        <div style="clear:both"></div>
+        <div style="clear:both"></div>-->
 
-        <div data-ng-bind-html="mdView.current.record.abstract | newlines"/>
-			<h2 data-translate="">aboutThisResource</h2>
-        </div>
+        <div data-ng-bind-html="mdView.current.record.abstract | newlines" style="margin-bottom:32px"></div>
 
-        <div data-ng-if="mdView.current.record.inspirethemewithac.length > 0 ||
-                          mdView.current.record.inspirethemewithac.length > 0" class="row">
-			<div class="col-md-4" data-translate="">inspireThemes</div>
-			<div class="col-md-8">
-				<a data-ng-repeat="cat in mdView.current.record.inspirethemewithac"
-                     class="iti-box full {{cat.split('|')[0]}} {{cat.split('|')[0]}}-{{langs[lang]}}"
-                     title="{{cat.split('|')[1]}}">
-                  <div class="icon"><span class="iti-{{cat.split('|')[0]}}"></span> {{cat.split('|')[1]}}</a></div>
-			</div>
-		</div>
-		
-		<div class="row" data-ng-if="mdView.current.record.category.length > 0 ||
+  <!-- Nav tabs -->
+  <ul class="nav nav-tabs" role="tablist">
+    <li role="presentation" class="active"><a href="#/metadata/{{mdView.current.record['geonet:info'].uuid}}?tab=general" aria-controls="general" role="tab" data-toggle="tab">Algemeen</a></li>
+    <li role="presentation"><a href="#/metadata/{{mdView.current.record['geonet:info'].uuid}}?tab=metadata" aria-controls="metadata" role="tab" data-toggle="tab">Metadata</a></li>
+    <li role="presentation"><a href="#/metadata/{{mdView.current.record['geonet:info'].uuid}}?tab=relations" aria-controls="relations" role="tab" data-toggle="tab">Downloads & links <!-- todo: add the number of downloads here --></a></li>
+    <li role="presentation"><a href="#/metadata/{{mdView.current.record['geonet:info'].uuid}}?tab=inspire" aria-controls="inspire" role="tab" data-toggle="tab">INSPIRE</a></li>
+  </ul>
+
+  <!-- Tab panes -->
+  <div class="tab-content" style="margin-top:15px">
+    <div role="tabpanel" class="tab-pane active" id="general">
+	
+	<h2 data-translate="">aboutThisResource</h2>
+	
+	<div class="row" data-ng-if="mdView.current.record.category.length > 0 ||
                       mdView.current.record.topicCat.length > 0">
 			<div class="col-md-4" data-translate="">listOfCategories</div>
 			<div class="col-md-8">
-				<a class="btn btn-default btn-xs" style="margin-right:3px" data-ng-repeat="cat in mdView.current.record.category"
+				<a style="margin-right:3px" data-ng-repeat="cat in mdView.current.record.category"
                    data-ng-href="#/search?_cat={{cat}}">
-					<i class="fa gn-icon-{{cat}}"></i>
+					
 					{{cat | translate}}
                 </a>
 
-                <a class="btn btn-default btn-xs" style="margin-right:3px" data-ng-repeat="t in mdView.current.record.topicCat"
+                <a  style="margin-right:3px" data-ng-repeat="t in mdView.current.record.topicCat"
                    data-ng-href="#/search?topicCat={{t}}">
                   <i class="fa gn-icon-{{t}}"></i>
                     {{t | translate}}
@@ -131,10 +145,11 @@
                 </a></div>
 		</div>
 		
+		
 		<div class="row" data-ng-if="mdView.current.record.keyword">
 			<div class="col-md-4" data-translate="">keywords</div>
 			<div class="col-md-8">
-				<a class="btn btn-default btn-xs" style="margin-right:3px" data-ng-repeat="k in mdView.current.record.keyword track by $index" href="#/search?any={{k}}">
+				<a style="margin-right:3px" data-ng-repeat="k in mdView.current.record.keyword track by $index" href="#/search?any={{k}}">
                     {{k}}</a></div>
 		</div>
 		
@@ -160,24 +175,52 @@
 			<div class="col-md-8"><span data-ng-repeat="c in mdView.current.record.legalConstraints track by $index">{{c}}<br/></span></div>
 		</div>
 		
-
 		
 		<div class="row" data-ng-if="mdView.current.record.status_text.length > 0">
 			<div class="col-md-4" data-translate="">resourceStatus</div>
 			<div class="col-md-8"><span data-ng-repeat="s in mdView.current.record.status_text">{{s}}</span></div>
 		</div>
 		
-		<div class="row">
-			<div class="col-md-4"></div>
-			<div class="col-md-8"></div>
-		</div>
+		<section data-ng-if="mdView.current.record.creationDate ||
+                             mdView.current.record.publicationDate ||
+                             mdView.current.record.revisionDate ||
+                             mdView.current.record.tempExtentBegin ||
+                             mdView.current.record.tempExtentEnd">
+          <h4>
+            <i class="fa fa-fw fa-clock-o"></i>
+            <span data-translate="">tempExtent</span>
+          </h4>
+
+          <p>
+            <dl data-ng-show="mdView.current.record.creationDate">
+                <dt data-translate>creationDate</dt>
+                <dd data-gn-humanize-time="{{mdView.current.record.creationDate}}"
+                    data-format="YYYY-MM-DD"/>
+            </dl>
+            <dl data-ng-show="mdView.current.record.publicationDate">
+              <dt data-translate>publicationDate</dt>
+              <dd data-gn-humanize-time="{{mdView.current.record.publicationDate}}"
+                  data-format="YYYY-MM-DD"/>
+            </dl>
+            <dl data-ng-show="mdView.current.record.revisionDate">
+              <dt data-translate>revisionDate</dt>
+              <dd data-gn-humanize-time="{{mdView.current.record.revisionDate}}"
+                  data-format="YYYY-MM-DD"/>
+            </dl>
+            <dl data-ng-show="mdView.current.record.tempExtentBegin ||
+                              mdView.current.record.tempExtentEnd">
+              <dt data-translate>tempExtentBegin</dt>
+              <dd>
+                <span data-gn-humanize-time="{{mdView.current.record.tempExtentBegin}}"/>
+                &nbsp;<i class="fa fa-forward"></i>&nbsp;
+                <span data-gn-humanize-time="{{mdView.current.record.tempExtentEnd}}"/>
+              </dd>
+            </dl>
+          </p>
+        </section></br>
 		
- 
+	
         <h2 data-translate="">technicalInformation</h2>
-
-
-		
-		
 		
         <div data-ng-if="mdView.current.record['geonet:info'].schema === 'iso19110'"
              data-gn-attribute-table-renderer="mdView.current.record.attributeTable">
@@ -228,15 +271,17 @@
              data-title="{{'siblings' | translate}}">
         </div>
 
-        <h2 data-translate="">metadataInformation</h2>
-		
+       
+	</div>
+    <div role="tabpanel" class="tab-pane" id="metadata">
 
         <a class="btn btn-default btn-sm"
            data-ng-href="xml.metadata.get?id={{mdView.current.record.getId()}}">
           <i class="fa fa-file-code-o"/>
           <span data-translate="">metadataInXML</span>
         </a>
-	<div class="row">
+		
+		<div class="row">
 			<div class="col-md-4" data-translate="">contact</div>
 			<div class="col-md-8"><div data-ng-if="mdView.current.record.getContacts().metadata">
                 {{mdView.current.record.getContacts().metadata}}</div>
@@ -252,25 +297,11 @@
 			<div class="col-md-4" data-translate="">uuid</div>
 			<div class="col-md-8">{{mdView.current.record['geonet:info'].uuid}}</div>
 		</div>
-         
-      </div>
-
-      <div class="col-md-4 gn-md-side">
-        <section data-ng-if="mdView.current.record.overviews.length > 0">
-          <h4>
-            <i class="fa fa-fw fa-image"></i>
-            <span data-translate="">thumbnail</span>
-          </h4>
-
-          <span data-ng-repeat="img in mdView.current.record.overviews">
-          <img data-gn-img-modal="md" style="max-height:150px;"
-               class="img-thumbnail"
-               alt="{{img.label}}"
-               data-ng-src="{{img.url}}"/>
-          </span>
-        </section></br>
-
-		
+	
+	</div>
+    <div role="tabpanel" class="tab-pane" id="relations">
+	
+	
 		<div data-gn-related="mdView.current.record" style="border:none"
              data-types="online"
              data-title="{{'downloadsAndResources' | translate}}">
@@ -290,72 +321,58 @@
             {{mdView.current.record.contacts.resource}}
           
         </section></br>
+	
+	</div>
+    <div role="tabpanel" class="tab-pane" id="inspire">
+		
+		<div data-ng-if="mdView.current.record.inspirethemewithac.length > 0 ||
+                          mdView.current.record.inspirethemewithac.length > 0" class="row">
+			<div class="col-md-4" data-translate="">inspireThemes</div>
+			<div class="col-md-8">
+				<a data-ng-repeat="cat in mdView.current.record.inspirethemewithac"
+                     class="iti-box full {{cat.split('|')[0]}} {{cat.split('|')[0]}}-{{langs[lang]}}"
+                     title="{{cat.split('|')[1]}}">
+                  <div class="icon"><span class="iti-{{cat.split('|')[0]}}"></span> {{cat.split('|')[1]}}</a></div>
+			</div>
+		</div>
+		
+	</div>
+  </div>
+
+</div>
+		
+	
+         
+      </div>
+
+      <div class="col-md-4 gn-md-side">
+        <section data-ng-if="mdView.current.record.overviews.length > 0">
+          <!-- todo: show only the small thumbnail and link to the large thumbnail -->
+
+          <span data-ng-repeat="img in mdView.current.record.overviews">
+          <img data-gn-img-modal="md" style="max-height:150px;"
+               class="img-thumbnail"
+               alt="{{img.label}}"
+               data-ng-src="{{img.url}}"/>
+          </span><br/>
+        </section>
 
         <section data-ng-if="mdView.current.record.geoBox.length > 0">
-          <h4>
-            <i class="fa fa-fw fa-map-marker"></i>
-            <span data-translate="">extent</span>
-          </h4>
+          
           <p data-ng-if="mdView.current.record.geoDesc">
           <ul>
             <li data-ng-repeat="d in mdView.current.record.geoDesc">{{d}}</li>
           </ul>
           </p>
-          <!-- TODO: use map config -->
+          <!-- TODO: add a dynamic map -->
           <p data-ng-repeat="bbox in mdView.current.record.geoBox">
             <img class="gn-img-thumbnail img-thumbnail gn-img-extent" 
                data-ng-src="region.getmap.png?mapsrs=EPSG:3857&width=250&background=osm&geomsrs=EPSG:4326&geom={{mdView.current.record.getBoxAsPolygon($index)}}"/>
-          </p>
-        </section></br>
+          </p></br>
+        </section>
 
-        <section data-ng-if="mdView.current.record.creationDate ||
-                             mdView.current.record.publicationDate ||
-                             mdView.current.record.revisionDate ||
-                             mdView.current.record.tempExtentBegin ||
-                             mdView.current.record.tempExtentEnd">
-          <h4>
-            <i class="fa fa-fw fa-clock-o"></i>
-            <span data-translate="">tempExtent</span>
-          </h4>
 
-          <p>
-            <dl data-ng-show="mdView.current.record.creationDate">
-                <dt data-translate>creationDate</dt>
-                <dd data-gn-humanize-time="{{mdView.current.record.creationDate}}"
-                    data-format="YYYY-MM-DD"/>
-            </dl>
-            <dl data-ng-show="mdView.current.record.publicationDate">
-              <dt data-translate>publicationDate</dt>
-              <dd data-gn-humanize-time="{{mdView.current.record.publicationDate}}"
-                  data-format="YYYY-MM-DD"/>
-            </dl>
-            <dl data-ng-show="mdView.current.record.revisionDate">
-              <dt data-translate>revisionDate</dt>
-              <dd data-gn-humanize-time="{{mdView.current.record.revisionDate}}"
-                  data-format="YYYY-MM-DD"/>
-            </dl>
-            <dl data-ng-show="mdView.current.record.tempExtentBegin ||
-                              mdView.current.record.tempExtentEnd">
-              <dt data-translate>tempExtentBegin</dt>
-              <dd>
-                <span data-gn-humanize-time="{{mdView.current.record.tempExtentBegin}}"/>
-                &nbsp;<i class="fa fa-forward"></i>&nbsp;
-                <span data-gn-humanize-time="{{mdView.current.record.tempExtentEnd}}"/>
-              </dd>
-            </dl>
-          </p>
-        </section></br>
-
-        <!--<section>
-          <h4>
-            <i class="fa fa-fw fa-cog"></i>
-            <span data-translate="">sourceCatalog</span>
-          </h4>
-          <img ng-src="../../images/logos/{{mdView.current.record.source}}.png"
-               class="gn-source-logo"/>
-        </section></br>-->
-
-        <section>
+        <section style="padding-top:100px">
           <h4>
             <i class="fa fa-fw fa-share-square-o"></i>
             <span data-translate="">shareOn</span>
@@ -368,8 +385,8 @@
              class="btn btn-lg btn-default"><i class="fa fa-fw fa-twitter"></i></a>
           <a data-ng-href="https://www.facebook.com/sharer.php?u={{mdView.current.record.encodedUrl}}"
              target="_blank"
-             class="btn btn-lg btn-default"><i class="fa fa-fw fa-facebook"></i></a>
-        </section></br>
+             class="btn btn-lg btn-default"><i class="fa fa-fw fa-facebook"></i></a></br>
+        </section>
 
         <section>
           <h4>
