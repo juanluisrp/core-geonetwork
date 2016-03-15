@@ -604,8 +604,14 @@ nav.verytop a {
     border-color: #d15e01;
 }
 
-.gn-search-map {
-	display:none;
+.gn-search-map [ngeo-map] {
+	display:block;
+	position:absolute !important;
+	right: inherit;
+	height:400px;
+	width:inherit;
+	bottom: inherit;
+	margin: inherit;
 }
 
 .contact-links {
@@ -627,6 +633,10 @@ background-color:#F6D4B1;
 
 body,p,h1,h2,h3,h4,h5,h6,div,span,a,blockquote {
     font-family: rijksoverheidsanstext-regular, sans, arial !important;
+}
+
+.fa {
+	font-family: FontAwesome !important;
 }
 
 .form-control { 
