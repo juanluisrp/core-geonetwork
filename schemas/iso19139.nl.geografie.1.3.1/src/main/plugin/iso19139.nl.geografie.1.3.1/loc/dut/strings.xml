@@ -51,4 +51,10 @@
 	<descriptiveKeywords>Trefwoord</descriptiveKeywords>
 	
 	<datasetcode>Unieke Identifier van de bron</datasetcode>
+	<ds_language>Taal dataset</ds_language>
+	<md_language>Taal dataset</md_language>
+	<metadataStandardName>Standaard</metadataStandardName>
+	<metadataStandardVersion>Standaard versie</metadataStandardVersion>
+	
+	
 </strings>
