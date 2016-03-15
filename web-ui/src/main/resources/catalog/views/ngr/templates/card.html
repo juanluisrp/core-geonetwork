@@ -1,42 +1,52 @@
 <ul class="list-group gn-resultview">
-  <li class="list-group-item" data-ng-repeat="md in searchResults.records" gn-displayextent-onhover="" gn-zoomto-onclick
-          gn-fix-mdlinks="">
+  <li class="list-group-item" data-ng-repeat="md in searchResults.records" gn-displayextent-onhover="" gn-zoomto-onclick gn-fix-mdlinks="" style="border-bottom:1px solid gray">
     <div class="media">
 
-      <!--Edit button-->
-      <a class="pull-right gn-md-edit-btn" ng-href="catalog.edit#/metadata/{{md['geonet:info'].id}}" data-ng-show="isAdmin"
-         class="btn btn-link pull-right">
-        <i class="fa fa-pencil"></i>
-      </a>
+     
 
-      <!-- Thumbnail -->
+      <!-- Thumbnail 
       <div class="pull-right gn-md-thumbnail" ng-if="md.getThumbnails().small">
         <img ng-src="{{md.getThumbnails().small}}" class="img-thumbnail" ng-if="md.getThumbnails().small"/>
-      </div>
+      </div>-->
 
-      <!--Catalog Logo-->
+      <!--Catalog Logo
         <a class="pull-left" ng-if="md.groupWebsite" href="{{md.groupWebsite}}" target="_blank">
             <img ng-src="../..{{md.logo}}" class="media-object"/>
         </a>
         <a class="pull-left" ng-if="!md.groupWebsite">
             <img ng-src="../..{{md.logo}}" class="media-object"/>
-        </a>
+        </a>-->
 
-      <div class="media-body">
+      <div class="media-body"> 
+	  <!--Edit button-->
+	  <div class="pull-right ">
+      <a class="gn-md-edit-btn" ng-href="catalog.edit#/metadata/{{md['geonet:info'].id}}" data-ng-show="isAdmin"
+         class="btn btn-link pull-right">
+        <i class="fa fa-pencil"></i>
+      </a><div ng-if="md.getContacts().resource"><img src="../../images/harvesting/{{md.getContacts().resource}}.png" alt="{{md.getContacts().resource}}" style="max-width:100px;max-height:60px;"/></div>
+	  
+	  </div>
         <h4>
           <input gn-selection-md type="checkbox" ng-model="md['geonet:info'].selected" ng-change="change()" data-ng-show="isAdmin"/>
 
-          <!-- Icon for types -->
+          
 		  <a href="" gn-metadata-open="md" gn-metadata-open-selector=".gn-resultview" title="{{md.title || md.defaultTitle}}">
-		  <span class="fa gn-icon-{{md.type[0]}}"></span>
+		  <!-- Icon for types <span class="fa gn-icon-{{md.type[0]}}"></span>-->
           {{md.title || md.defaultTitle}}</a>
         </h4>
-        <p class="text-justify" dd-text-collapse dd-text-collapse-max-length="350" dd-text-collapse-text="{{md.abstract || md.defaultAbstract}}"></p>
-        <blockquote ng-if="md.getContacts().resource">{{::md.getContacts().resource}}</blockquote>
+        
+        <div ng-if="md.getContacts().resource"><b>Organisatie</b>: {{md.getContacts().resource}}<br/></div>
+		<b data-translate="">updatedOn</b> <span data-gn-humanize-time="{{md['geonet:info'].changeDate}}" data-from-now=""></span><br/>
+		<div data-ng-if="md.topicCat.length > 0">
+			<b data-translate="">listOfCategories</b>:
+            <a class="btn btn-link " data-ng-repeat="t in md.topicCat"
+               data-ng-href="#/search?topicCat={{t}}">{{t | translate}}</a>
+		</div>
+		<p class="text-justify" dd-text-collapse dd-text-collapse-max-length="350" dd-text-collapse-text="{{md.abstract || md.defaultAbstract}}"></p>
       </div>
     </div>
 
-    <div class="gn-md-links clearfix">
+    <!--<div class="gn-md-links clearfix">
 
       <div class="btn-group" ng-if="::links.length > 0">
         <button type="button" class="btn btn-success dropdown-toggle btn-xs" data-toggle="dropdown">
@@ -86,6 +96,6 @@
       <div class="pull-right" ng-if="::md.category.length > 0">
         <i data-ng-repeat="cat in ::md.category" class="fa" data-ng-class="catIcons[cat]" title="{{cat}}">&nbsp;</i>
       </div>
-    </div>
+    </div>-->
   </li>
 </ul>

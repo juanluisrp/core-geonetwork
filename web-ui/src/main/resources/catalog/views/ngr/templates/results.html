@@ -34,7 +34,7 @@
            data-current-facets="currentFacets">
       </div>
     </div>
-    <div class="col-md-9">
+    <div class="col-md-6">
       <!-- Flat facet mode (deprecated)
       <div class="gn-results-heading">
         <div data-gn-facet-breadcrumb="currentFacets"></div>
@@ -55,17 +55,12 @@
            data-map="searchObj.searchMap"></div>
 
     </div>
+	<div class="col-md-3">
+		<div data-gn-map-field="searchObj.searchMap"
+		   data-gn-map-field-geom="searchObj.params.geometry"
+		   data-gn-map-field-opt="searchObj.mapfieldOption"
+		   class="gn-search-map" style="height:200px;"></div>
+	</div>
   </div>
 
-  <div data-gn-map-field="searchObj.searchMap"
-       data-gn-map-field-geom="searchObj.params.geometry"
-       data-gn-map-field-opt="searchObj.mapfieldOption"
-       class="gn-search-map">
-  </div>
-
-  <button data-ng-click="toggleMap()"
-          title="{{'toggleMiniMap' | translate}}"
-          class="gn-minimap-toggle btn btn-link">
-    <i class="fa fa-angle-double-right"></i>
-  </button>
 </div>
