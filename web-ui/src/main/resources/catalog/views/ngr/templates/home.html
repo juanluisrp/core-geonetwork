@@ -39,13 +39,13 @@
     <div class="row" style="padding-top:20px">
 	<div class="col-sm-12" style="text-align:center"><h3 style="padding-bottom:20px;">Bekijk één van de categorieën</h3></div>
             <div data-ng-repeat="(key, facet) in searchInfo.facet['topicCats']"
-                 class="col-xs-12 col-sm-6 col-md-4">
-				 
-              <a data-ng-href="#/search?topicCat={{facet['@name']}}" style="color:black;margin:8px" >
-                <i class="fa gn-icon gn-icon-{{facet['@name']}} fa-2x fa-fw" style="vertical-align: middle"></i>
-                <span class="gn-icon-label">{{facet['@label']}}</span>
-                <span>({{facet['@count']}})</span>
-              </a>
+                 class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+				 <div style="height:40px">
+              <a data-ng-href="#/search?topicCat={{facet['@name']}}" style="color:black;font-size:12px" >
+                <div class="pull-left"><i class="fa gn-icon gn-icon-{{facet['@name']}} fa-2x fa-fw" style="vertical-align: middle"></i></div>
+                <span class="gn-icon-label"><b>{{facet['@label']}}</b></span>
+                ({{facet['@count']}})
+              </a></div>
             </div>  
     </div>
  <div style="padding-bottom:80px"></div>
