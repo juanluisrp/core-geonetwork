@@ -697,17 +697,7 @@
             xpath="/gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:lineage/gmd:LI_Lineage/gmd:statement"/>
 
           <action type="add" name="lineage" or="statement"
-                  in="/gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:lineage/gmd:LI_Lineage">
-            <template>
-              <snippet>
-                <gmd:statement>
-                  <gco:CharacterString></gco:CharacterString>
-                </gmd:statement>
-              </snippet>
-            </template>
-          </action>
-          <action type="add" name="lineage" or="lineage"
-                  in="/gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality">
+                  in="/gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:lineage">
             <template>
               <snippet>
                 <gmd:lineage>
@@ -717,6 +707,23 @@
                     </gmd:statement>
                   </gmd:LI_Lineage>
                 </gmd:lineage>
+              </snippet>
+            </template>
+          </action>
+		  
+		  <field name="DataqualityScope"
+            xpath="/gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:scope/gmd:DQ_Scope/gmd:level/gmd:MD_ScopeCode"/>
+          <action type="add" name="DataqualityScope" or="DataqualityScope"
+                  in="/gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:scope">
+            <template>
+              <snippet>
+                <gmd:scope>
+				<gmd:DQ_Scope>
+				<gmd:level>
+				<gmd:MD_ScopeCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#MD_ScopeCode" codeListValue=		"dataset" codeSpace="dut"/>
+				</gmd:level>
+				</gmd:DQ_Scope>
+				</gmd:scope>
               </snippet>
             </template>
           </action>
@@ -1415,21 +1422,7 @@
             </template>
           </action>
 
-		  <field name="md-language" xpath="/gmd:MD_Metadata/gmd:language" or="language" in="/gmd:MD_Metadata"/>
-		  <action type="add"
-                  if="count(gmd:MD_Metadata/gmd:language) = 0"
-                  name="md-language" or="language"
-                  in="/gmd:MD_Metadata">
-            <template>
-              <snippet>
-                <gmd:language>
-				  <gmd:LanguageCode codeList="http://www.loc.gov/standards/iso639-2/" codeListValue="dut">Nederlands</gmd:LanguageCode>
-			   </gmd:language>
-              </snippet>
-            </template>
-          </action>
-		  
-		  <field name="ds-language" xpath="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:language" or="language" in="/gmd:MD_Metadata"/>
+		  <field name="ds_language" xpath="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:language" or="language" in="/gmd:MD_Metadata"/>
 		  <action type="add"
                   if="count(gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:language) = 0"
                   name="ds-language" or="language"
@@ -1585,10 +1578,41 @@
 				</template>
 			  </action>
 
+			  <field name="url" templateModeOnly="true" notDisplayedIfMissing="true"
+            xpath="/gmd:MD_Metadata/gmd:distributionInfo/gmd:MD_Distribution/gmd:transferOptions
+            /gmd:MD_DigitalTransferOptions/gmd:onLine/gmd:CI_OnlineResource/gmd:linkage"
+            del="../..">
+            <template>
+              <values>
+                <key label="url" xpath="gmd:URL" tooltip="gmd:linkage"/>
+              </values>
+              <snippet>
+                <gmd:linkage>
+                  <gmd:URL>{{url}}</gmd:URL>
+                </gmd:linkage>
+              </snippet>
+            </template>
+          </field>
+
+          <action type="add" name="url" or="onLine"
+            in="/gmd:MD_Metadata/gmd:distributionInfo/gmd:MD_Distribution/gmd:transferOptions/gmd:MD_DigitalTransferOptions">
+            <template>
+              <snippet>
+                <gmd:onLine>
+                  <gmd:CI_OnlineResource>
+                    <gmd:linkage>
+                      <gmd:URL/>
+                    </gmd:linkage>
+                  </gmd:CI_OnlineResource>
+                </gmd:onLine>
+              </snippet>
+            </template>
+          </action>
+			  
           <field name="pointOfContact" templateModeOnly="true" notDisplayedIfMissing="true"
             xpath="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:pointOfContact"
             del="."
-            if="count(gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification) > 0">
+            if="count(gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:pointOfContact) > 0">
             <template>
               <values readonlyIf="count(@xlink:href) > 0">
                 <key label="organisationName"
@@ -1651,7 +1675,59 @@
             </template>
           </field>
 
-
+		  <action type="add" name="pointOfContact" addDirective="data-gn-directory-entry-selector"
+            or="pointOfContact"
+            in="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:pointOfContact">
+            <directiveAttributes
+                    data-template-add-action="true"
+                    data-template-type="contact"
+                    data-variables="gmd:role/gmd:CI_RoleCode/@codeListValue~{role}"/>
+          </action>
+		  
+		  <!-- header metadata -->
+		  
+		<field name="md_language" xpath="/gmd:MD_Metadata/gmd:language" or="language" in="/gmd:MD_Metadata"/>
+		  <action type="add"
+                  if="count(gmd:MD_Metadata/gmd:language) = 0"
+                  name="md_language" or="language"
+                  in="/gmd:MD_Metadata">
+            <template>
+              <snippet>
+                <gmd:language>
+				  <gmd:LanguageCode codeList="http://www.loc.gov/standards/iso639-2/" codeListValue="dut">Nederlands</gmd:LanguageCode>
+			   </gmd:language>
+              </snippet>
+            </template>
+          </action>
+		  
+		  <field xpath="/gmd:MD_Metadata/gmd:metadataStandardName"/>
+		  <action type="add"
+                  if="count(gmd:MD_Metadata/gmd:metadataStandardName) = 0"
+                  name="metadataStandardName" or="metadataStandardName"
+                  in="/gmd:MD_Metadata">
+            <template>
+              <snippet>
+                <gmd:metadataStandardName>
+					<gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">ISO 19115</gco:CharacterString>
+				</gmd:metadataStandardName>
+              </snippet>
+            </template>
+          </action>
+		 
+          <field xpath="/gmd:MD_Metadata/gmd:metadataStandardVersion"/>
+		  <action type="add"
+                  if="count(gmd:MD_Metadata/gmd:metadataStandardVersion) = 0"
+                  name="metadataStandardVersion" or="metadataStandardVersion"
+                  in="/gmd:MD_Metadata">
+            <template>
+              <snippet>
+                <gmd:metadataStandardVersion>
+					<gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Nederlandse metadata profiel op ISO 19115 voor geografie 1.3.1</gco:CharacterString>
+				</gmd:metadataStandardVersion>
+              </snippet>
+            </template>
+          </action>
+		  
           <field name="metadataPointOfContact" templateModeOnly="true"
             notDisplayedIfMissing="true"
             xpath="/gmd:MD_Metadata/gmd:contact" del=".">
@@ -1717,6 +1793,15 @@
             </template>
           </field>
 
+		  <action type="add" name="pointOfContact" addDirective="data-gn-directory-entry-selector"
+            or="pointOfContact"
+            in="/gmd:MD_Metadata/gmd:contact">
+            <directiveAttributes
+                    data-template-add-action="true"
+                    data-template-type="contact"
+                    data-variables="gmd:role/gmd:CI_RoleCode/@codeListValue~{role}"/>
+          </action>
+		  
       <field
               xpath="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:spatialResolution[gmd:MD_Resolution/gmd:equivalentScale]"/>
 
@@ -1873,6 +1958,49 @@
               </template>
             </action>
 
+			<action type="add"
+                    btnLabel="Conform"
+                    btnClass=""
+                    or="report"
+                    in="/gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality">
+              <template>
+                <snippet>
+                  <gmd:report>
+					<gmd:DQ_DomainConsistency>
+					   <gmd:result>
+						  <gmd:DQ_ConformanceResult>
+							 <gmd:specification>
+								<gmd:CI_Citation>
+								   <gmd:title>
+									  <gco:CharacterString></gco:CharacterString>
+								   </gmd:title>
+								   <gmd:date>
+									  <gmd:CI_Date>
+										 <gmd:date>
+											<gco:Date></gco:Date>
+										 </gmd:date>
+										 <gmd:dateType>
+											<gmd:CI_DateTypeCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#CI_DateTypeCode"
+																 codeListValue="publication"/>
+										 </gmd:dateType>
+									  </gmd:CI_Date>
+								   </gmd:date>
+								</gmd:CI_Citation>
+							 </gmd:specification>
+							 <gmd:explanation>
+								<gco:CharacterString>Nadere uitleg bij het al dan niet volledig voldoen aan de specificatie</gco:CharacterString>
+							 </gmd:explanation>
+							 <gmd:pass>
+								<gco:Boolean></gco:Boolean>
+							 </gmd:pass>
+						  </gmd:DQ_ConformanceResult>
+					   </gmd:result>
+					</gmd:DQ_DomainConsistency>
+				 </gmd:report>
+                </snippet>
+              </template>
+            </action>
+			
 
         </section>
 		
