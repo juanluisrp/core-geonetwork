@@ -5,7 +5,7 @@
   <groupId>org.geonetwork-opensource</groupId>
   <artifactId>geonetwork</artifactId>
   <packaging>pom</packaging>
-  <version>3.1.38</version>
+  <version>3.1.40-SNAPSHOT</version>
   <name>GeoNetwork opensource</name>
   <description>GeoNetwork opensource is a standards based, Free and
     Open Source catalog application to manage spatially referenced
@@ -1138,7 +1138,7 @@
         <module>web</module>
         <module>e2e-tests</module>
         <!--<module>geoserver</module>-->
-	<module>pdok-ngr-dar</module>
+	    <module>pdok-ngr-dar</module>
       </modules>
     </profile>
     <profile>
