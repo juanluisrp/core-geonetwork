@@ -13,8 +13,8 @@
         If the XmlSerializer is the SvnSerializer then subversion versioning will be enabled
         otherwiser it will be disabled
     -->
-    <bean id="xmlSerializer" class="org.fao.geonet.kernel.XmlSerializerSvn"/>
-    <!-- <bean id="xmlSerializer" class="org.fao.geonet.kernel.XmlSerializerDb"/> -->
+    <!--<bean id="xmlSerializer" class="org.fao.geonet.kernel.XmlSerializerSvn"/>-->
+    <bean id="xmlSerializer" class="org.fao.geonet.kernel.XmlSerializerDb"/>
 
     <bean id="svnManager" class="org.fao.geonet.kernel.SvnManager"/>
 
