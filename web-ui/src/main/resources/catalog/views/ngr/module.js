@@ -8,11 +8,13 @@
   goog.require('gn_search');
   goog.require('gn_search_ngr_config');
   goog.require('gn_search_default_directive');
+  goog.require('ngr_search_controller');
+  goog.require('ngr_multi_location_directive');
 
   var module = angular.module('gn_search_ngr',
       ['gn_search', 'gn_search_ngr_config',
        'gn_search_default_directive', 'gn_related_directive',
-       'cookie_warning', 'gn_mdactions_directive']);
+       'cookie_warning', 'gn_mdactions_directive', 'ngr_search_controller', 'ngr_multi_location_directive']);
 
 
   module.controller('gnsSearchPopularController', [

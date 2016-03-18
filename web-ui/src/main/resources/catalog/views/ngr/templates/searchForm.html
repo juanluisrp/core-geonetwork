@@ -21,9 +21,13 @@
 	<div class="col-md-3">
 	    <div class="form-group has-feedback">
 		    <label for="location">Op welke locatie?</label>
-              <input type="text"
+              <select multiple
                      id="location"
-                     class="form-control input-lg">
+                     class="form-control input-lg"
+                     data-bboxes="searchObj.params.bboxes"
+                     data-ngr-multi-location
+                     data-thesaurus-key="external.place.administrativeAreas"
+              ></select>
 		    <span class="form-control-feedback">
 			    <i class="fa fa-map-marker fa-2x"></i>
 		    </span>
