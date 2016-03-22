@@ -27,7 +27,7 @@
   <pointOfContact>Contactgegevens dataset</pointOfContact>
   <lineage>Herkomst</lineage>
 	<role>Rol</role>
-	<temporalRangeSection>Tijdsrange</temporalRangeSection>
+	<temporalRangeSection>Inhoudelijke geldigheid</temporalRangeSection>
 	<beginPosition>Van</beginPosition>
 	<endPosition>Tot</endPosition>
 	<inspireTheme>INSPIRE Thema</inspireTheme>
@@ -52,9 +52,12 @@
 	
 	<datasetcode>Unieke Identifier van de bron</datasetcode>
 	<ds_language>Taal dataset</ds_language>
-	<md_language>Taal dataset</md_language>
+	<md_language>Taal metadata</md_language>
 	<metadataStandardName>Standaard</metadataStandardName>
 	<metadataStandardVersion>Standaard versie</metadataStandardVersion>
 	
-	
+	<CompletenessOmission>Compleetheid</CompletenessOmission>
+	<spatialRepresentationType>Ruimtelijk schema</spatialRepresentationType>
+	<extentDescription>Beschrijving temporeledekking</extentDescription>
+	<qualityScope>Niveau kwaliteitsbeschrijving</qualityScope>
 </strings>

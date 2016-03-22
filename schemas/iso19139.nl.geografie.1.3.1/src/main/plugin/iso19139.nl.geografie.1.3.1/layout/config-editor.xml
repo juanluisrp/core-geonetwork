@@ -37,7 +37,8 @@
     <for name="gco:Boolean" use="checkbox"/>
 
 
-    <for name="gco:Date" use="data-gn-date-picker"/>
+    <for name="gco:Date" use="data-gn-date-picker">
+		<directiveAttributes data-hide-time="true"/></for>
     <for name="gco:DateTime" use="data-gn-date-picker"/>
 
 
@@ -1344,19 +1345,8 @@
       </tab>
     </view>
     <view name="dutchprofile" upAndDownControlHidden="true">
-      <flatModeExceptions>
-        <for name="gmd:descriptiveKeywords" />
-        <for name="gmd:keyword"/>
-        <for name="gmd:spatialResolution"/>
-        <for name="gmd:pointOfContact"/>
-        <for name="gmd:distributor"/>
-        <for name="gmd:contact"/>
-        <for name="gmd:topicCategory"/>
-      </flatModeExceptions>
-
+      
 	  <tab id="dutch-default" default="true" mode="flat">
-
-
 
         <section name="Required">
 
@@ -1863,7 +1853,7 @@
           <action type="add"
                     btnLabel="isINSPIREConform"
                     btnClass="fa fa-thumbs-o-up text-success"
-                    or="report"
+                    or="Conform"
                     in="/gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality"
                     if="count(gmd:MD_Metadata/gmd:dataQualityInfo//gmd:DQ_DomainConsistency[
                               .//gmd:specification/*/gmd:title/gco:CharacterString[contains(text(), '1089/2010')]
@@ -1909,7 +1899,7 @@
             <action type="add"
                     btnLabel="isNotINSPIREConform"
                     btnClass="fa fa-thumbs-o-down text-danger"
-                    or="report"
+                    or="Conform"
                     in="/gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality"
                     if="count(gmd:MD_Metadata/gmd:dataQualityInfo//gmd:DQ_DomainConsistency[
                               .//gmd:specification/*/gmd:title/gco:CharacterString[contains(text(), '1089/2010')]
@@ -1953,9 +1943,9 @@
             </action>
 
 			<action type="add"
-                    btnLabel="Conform"
+                    btnLabel="add"
                     btnClass=""
-                    or="report"
+                    or="Conform"
                     in="/gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality">
               <template>
                 <snippet>
@@ -1995,11 +1985,25 @@
               </template>
             </action>
 			
+			  <!-- Ruimtelijk schema		  -->
+		  <field name="spatialRepresentationType"
+            xpath="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:spatialRepresentationType"> </field>
+		<action type="add" if="count(gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:spatialRepresentationType) = 0" name="spatialRepresentationType" or="spatialRepresentationType" 
+			in="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification">
+            <template>
+			  <snippet>
+               <gmd:spatialRepresentationType>
+				<gmd:MD_SpatialRepresentationTypeCode codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#MD_SpatialRepresentationTypeCode" codeListValue="vector" codeSpace="dut">vector</gmd:MD_SpatialRepresentationTypeCode>
+			  </gmd:spatialRepresentationType>
+              </snippet>
+			</template>
+          </action>
 
         </section>
 		
 
         <section name="Optional">
+		
          <field name="alternateTitle"
             xpath="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:citation/gmd:CI_Citation/gmd:alternateTitle"></field>
 		  <action type="add" if="count(gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:citation/gmd:CI_Citation/gmd:alternateTitle) = 0" name="alternateTitle" or="alternateTitle" 
@@ -2052,29 +2056,6 @@
 		    </template>
           </action>
 		  
-		<!-- MD_Metadata.dataQualityInfo>DQ_DataQuality.report> DQ_CompletenessOmission.result>DQ_QuantitativeResult.value -->
-		<field name="CompletenessOmission"
-            xpath="/gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_CompletenessOmission/gmd:result/gmd:DQ_QuantitativeResult/gmd:value/gco:Record"></field>
-		<action type="add" if="count(gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_CompletenessOmission/gmd:result/gmd:DQ_QuantitativeResult/gmd:value/gco:Record) = 0" name="CompletenessOmission" or="CompletenessOmission" 
-			in="/gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality">
-            <template>
-			  <snippet>
-                  <gmd:report>
-					<gmd:DQ_CompletenessOmission>
-					  <gmd:result>
-						<gmd:DQ_QuantitativeResult>
-						  <gmd:valueUnit gco:nilReason="missing" />
-						  <gmd:value>
-							<gco:Record>Compleetheidsindicatie</gco:Record>
-						  </gmd:value>
-						</gmd:DQ_QuantitativeResult>
-					  </gmd:result>
-					</gmd:DQ_CompletenessOmission>
-				  </gmd:report>
-              </snippet>
-			</template>
-          </action>
-		  
 		<field
             xpath="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:characterSet"> </field>
 		<action type="add" if="count(gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:characterSet) = 0" name="characterSet" or="characterSet" 
@@ -2087,23 +2068,7 @@
               </snippet>
 			</template>
           </action>
-
-		  
-		  <!-- Ruimtelijk schema		  -->
-		  <field name="spatialRepresentationType"
-            xpath="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:spatialRepresentationType"> </field>
-		<action type="add" if="count(gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:characterSet) = 0" name="spatialRepresentationType" or="spatialRepresentationType" 
-			in="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification">
-            <template>
-			  <snippet>
-               <gmd:spatialRepresentationType>
-				<gmd:MD_SpatialRepresentationTypeCode codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#MD_SpatialRepresentationTypeCode" codeListValue="vector" codeSpace="dut">vector</gmd:MD_SpatialRepresentationTypeCode>
-			  </gmd:spatialRepresentationType>
-              </snippet>
-			</template>
-          </action>
-		  
-		  
+  
           <field name="temporalRangeSection" templateModeOnly="true"
             xpath="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:extent/gmd:EX_Extent/gmd:temporalElement"
             if="count(gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification) > 0">
@@ -2114,7 +2079,7 @@
                   xpath="gmd:EX_TemporalExtent/gmd:extent/gml:TimePeriod/*/gml:beginPosition"
                   use="gn-date-picker"
                   tooltip="gmd:extent|gmd:EX_TemporalExtent">
-                  <directiveAttributes data-tag-name="gml:beginPosition"/>
+                  <directiveAttributes data-tag-name="gml:beginPosition" data-hide-time="true"/>
                 </key>
                 <key label="endPosition"
                   xpath="gmd:EX_TemporalExtent/gmd:extent/gml:TimePeriod/*/gml:endPosition"
@@ -2122,8 +2087,8 @@
                   tooltip="gmd:extent|gmd:EX_TemporalExtent"
                 >
                   <directiveAttributes
-                      data-tag-name="gml:endPosition"
-                      data-indeterminate-position="eval#gmd:EX_TemporalExtent/gmd:extent/gml:TimePeriod/*/gml:endPosition/@indeterminatePosition"/>
+                      data-tag-name="gml:endPosition" data-hide-time="true"/>
+<!--                      data-indeterminate-position="eval#gmd:EX_TemporalExtent/gmd:extent/gml:TimePeriod/*/gml:endPosition/@indeterminatePosition"/>-->
                 </key>
               </values>
               <snippet>
@@ -2144,8 +2109,48 @@
 		  Beschrijving temporeledekking
 MD_Metadata.identificationInfo>MD_DataIdentification.extent>EX_Extent.description
 		  -->
-		  
+		  <field name="extentDescription"
+            xpath="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:extent/gmd:EX_Extent/gmd:description"></field>
+		<action type="add" if="count(gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:extent/gmd:EX_Extent/gmd:description) = 0" name="extentDescription" or="extentDescription" 
+			in="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:extent/gmd:EX_Extent">
+            <template>
+			  <snippet>
+               <gmd:description>
+				<gco:CharacterString />
+			  </gmd:description>
+              </snippet>
+			</template>
+          </action>
 
+		  
+	<field name="qualityScope"
+            xpath="/gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:scope/gmd:DQ_Scope"/>
+            
+		    
+		<!-- MD_Metadata.dataQualityInfo>DQ_DataQuality.report> DQ_CompletenessOmission.result>DQ_QuantitativeResult.value -->
+		<field name="CompletenessOmission"
+            xpath="/gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_CompletenessOmission/gmd:result/gmd:DQ_QuantitativeResult"></field>
+		<action type="add" if="count(gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_CompletenessOmission/gmd:result/gmd:DQ_QuantitativeResult) = 0" name="CompletenessOmission" or="DQ_CompletenessOmission" 
+			in="/gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality">
+            <template>
+			  <snippet>
+                  <gmd:report>
+					<gmd:DQ_CompletenessOmission>
+					  <gmd:result>
+						<gmd:DQ_QuantitativeResult>
+						  <gmd:valueUnit gco:nilReason="missing" />
+						  <gmd:value>
+							<gco:Record>Compleetheidsindicatie</gco:Record>
+						  </gmd:value>
+						</gmd:DQ_QuantitativeResult>
+					  </gmd:result>
+					</gmd:DQ_CompletenessOmission>
+				  </gmd:report>
+              </snippet>
+			</template>
+          </action>
+		
+		  
 		  <!--
 Titel van de featurecatalogMD_Metadata. contentInfo>MD_FeatureCatalogueDescription. includedWithDataset
 
