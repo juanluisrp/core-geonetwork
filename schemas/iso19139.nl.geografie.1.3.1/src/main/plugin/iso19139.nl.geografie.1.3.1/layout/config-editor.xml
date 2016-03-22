@@ -58,31 +58,41 @@
     <for name="gmd:contact" addDirective="data-gn-directory-entry-selector">
       <directiveAttributes
               data-template-add-action="true"
+              data-search-action="true"
+              data-popup-action="true"
               data-template-type="contact"
               data-variables="gmd:role/gmd:CI_RoleCode/@codeListValue~{role}"/>
     </for>
     <for name="gmd:pointOfContact" addDirective="data-gn-directory-entry-selector">
       <directiveAttributes
               data-template-add-action="true"
+              data-search-action="true"
+              data-popup-action="true"
               data-template-type="contact"
               data-variables="gmd:role/gmd:CI_RoleCode/@codeListValue~{role}"/>
     </for>
     <for name="gmd:distributorContact" addDirective="data-gn-directory-entry-selector">
       <directiveAttributes
               data-template-add-action="true"
+              data-search-action="true"
+              data-popup-action="true"
               data-template-type="contact"
               data-variables="gmd:role/gmd:CI_RoleCode/@codeListValue~{role}"/>
     </for>
     <for name="gmd:processor" addDirective="data-gn-directory-entry-selector">
       <directiveAttributes
               data-template-add-action="true"
+              data-search-action="true"
+              data-popup-action="true"
               data-template-type="contact"
               data-variables="gmd:role/gmd:CI_RoleCode/@codeListValue~{role}"/>
     </for>
     <for name="gmd:citedResponsibleParty" addDirective="data-gn-directory-entry-selector">
       <directiveAttributes
               data-template-add-action="true"
-              data-template-type="contact"
+              data-search-action="true"
+              ddata-popup-action="true"
+              ata-template-type="contact"
               data-variables="gmd:role/gmd:CI_RoleCode/@codeListValue~{role}"/>
     </for>
 
@@ -1608,29 +1618,19 @@
               </snippet>
             </template>
           </action>
-			  
+		
           <field name="pointOfContact" templateModeOnly="true" notDisplayedIfMissing="true"
             xpath="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:pointOfContact"
             del="."
-            if="count(gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:pointOfContact) > 0">
+            if="count(gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification) > 0">
             <template>
               <values readonlyIf="count(@xlink:href) > 0">
                 <key label="organisationName"
                   xpath="gmd:CI_ResponsibleParty/gmd:organisationName/gco:CharacterString"/>
-				<key label="deliveryPoint"
-                  xpath="gmd:CI_ResponsibleParty/gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:deliveryPoint/gco:CharacterString" />
-				<key label="postalCode"
-                  xpath="gmd:CI_ResponsibleParty/gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:postalCode/gco:CharacterString" />
-				<key label="city"
-                  xpath="gmd:CI_ResponsibleParty/gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:city/gco:CharacterString" />
-                <key label="country"
-                  xpath="gmd:CI_ResponsibleParty/gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:country/gco:CharacterString" />
-				<key label="electronicMailAddress"
-                  xpath="gmd:CI_ResponsibleParty/gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:electronicMailAddress/gco:CharacterString" use="email"/>
-				<key label="telephone"
-                  xpath="gmd:CI_ResponsibleParty/gmd:contactInfo/gmd:CI_Contact/gmd:phone/gmd:CI_Telephone/gmd:voice/gco:CharacterString" />
-				  <key label="website"
-                  xpath="gmd:CI_ResponsibleParty/gmd:contactInfo/gmd:CI_Contact/gmd:onlineResource/gmd:CI_OnlineResource/gmd:linkage/gmd:URL" />
+                <key label="electronicMailAddress"
+                  xpath="gmd:CI_ResponsibleParty/gmd:contactInfo/
+                    gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:electronicMailAddress/gco:CharacterString"
+                  use="email"/>
                 <key label="role"
                   xpath="gmd:CI_ResponsibleParty/gmd:role/gmd:CI_RoleCode/@codeListValue">
                   <codelist name="gmd:CI_RoleCode"/>
@@ -1642,6 +1642,7 @@
                     <gn:copy select="gmd:individualName"/>
                     <gmd:organisationName>
                       <gco:CharacterString>{{organisationName}}</gco:CharacterString>
+                      <gn:copy select="gmd:PT_FreeText"/>
                     </gmd:organisationName>
                     <gn:copy select="gmd:positionName"/>
                     <gmd:contactInfo>
@@ -1656,6 +1657,7 @@
                             <gn:copy select="gmd:country"/>
                             <gmd:electronicMailAddress>
                               <gco:CharacterString>{{electronicMailAddress}}</gco:CharacterString>
+                              <gn:copy select="gmd:PT_FreeText"/>
                             </gmd:electronicMailAddress>
                           </gmd:CI_Address>
                         </gmd:address>
@@ -1675,9 +1677,10 @@
             </template>
           </field>
 
-		  <action type="add" name="pointOfContact" addDirective="data-gn-directory-entry-selector"
+
+          <action type="add" name="pointOfContact" addDirective="data-gn-directory-entry-selector"
             or="pointOfContact"
-            in="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:pointOfContact">
+            in="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification">
             <directiveAttributes
                     data-template-add-action="true"
                     data-template-type="contact"
@@ -1728,27 +1731,17 @@
             </template>
           </action>
 		  
-          <field name="metadataPointOfContact" templateModeOnly="true"
+           <field name="metadataPointOfContact" templateModeOnly="true"
             notDisplayedIfMissing="true"
             xpath="/gmd:MD_Metadata/gmd:contact" del=".">
             <template>
               <values readonlyIf="count(@xlink:href) > 0">
                 <key label="organisationName"
                   xpath="gmd:CI_ResponsibleParty/gmd:organisationName/gco:CharacterString"/>
-                <key label="deliveryPoint"
-                  xpath="gmd:CI_ResponsibleParty/gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:deliveryPoint/gco:CharacterString" />
-				<key label="postalCode"
-                  xpath="gmd:CI_ResponsibleParty/gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:postalCode/gco:CharacterString" />
-				<key label="city"
-                  xpath="gmd:CI_ResponsibleParty/gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:city/gco:CharacterString" />
-                <key label="country"
-                  xpath="gmd:CI_ResponsibleParty/gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:country/gco:CharacterString" />
-				<key label="electronicMailAddress"
-                  xpath="gmd:CI_ResponsibleParty/gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:electronicMailAddress/gco:CharacterString" use="email"/>
-				<key label="telephone"
-                  xpath="gmd:CI_ResponsibleParty/gmd:contactInfo/gmd:CI_Contact/gmd:phone/gmd:CI_Telephone/gmd:voice/gco:CharacterString" />
-				  <key label="website"
-                  xpath="gmd:CI_ResponsibleParty/gmd:contactInfo/gmd:CI_Contact/gmd:onlineResource/gmd:CI_OnlineResource/gmd:linkage/gmd:URL" />
+                <key label="electronicMailAddress"
+                  xpath="gmd:CI_ResponsibleParty/gmd:contactInfo/
+                  gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:electronicMailAddress/gco:CharacterString"
+                  use="email"/>
                 <key label="role"
                      xpath="gmd:CI_ResponsibleParty/gmd:role/gmd:CI_RoleCode/@codeListValue">
                   <codelist name="gmd:CI_RoleCode"/>
@@ -1760,6 +1753,7 @@
                     <gn:copy select="gmd:individualName"/>
                     <gmd:organisationName>
                       <gco:CharacterString>{{organisationName}}</gco:CharacterString>
+                      <gn:copy select="gmd:PT_FreeText"/>
                     </gmd:organisationName>
                     <gn:copy select="gmd:positionName"/>
                     <gmd:contactInfo>
@@ -1774,6 +1768,7 @@
                             <gn:copy select="gmd:country"/>
                             <gmd:electronicMailAddress>
                               <gco:CharacterString>{{electronicMailAddress}}</gco:CharacterString>
+                              <gn:copy select="gmd:PT_FreeText"/>
                             </gmd:electronicMailAddress>
                           </gmd:CI_Address>
                         </gmd:address>
@@ -1793,9 +1788,8 @@
             </template>
           </field>
 
-		  <action type="add" name="pointOfContact" addDirective="data-gn-directory-entry-selector"
-            or="pointOfContact"
-            in="/gmd:MD_Metadata/gmd:contact">
+          <action type="add" name="metadataPointOfContact"
+            addDirective="data-gn-directory-entry-selector" or="contact" in="/gmd:MD_Metadata">
             <directiveAttributes
                     data-template-add-action="true"
                     data-template-type="contact"
