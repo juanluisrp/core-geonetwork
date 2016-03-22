@@ -2000,16 +2000,110 @@
 		
 
         <section name="Optional">
-         <field
-            xpath="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:purpose"> </field>
+         <field name="alternateTitle"
+            xpath="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:citation/gmd:CI_Citation/gmd:alternateTitle"></field>
+		  <action type="add" if="count(gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:citation/gmd:CI_Citation/gmd:alternateTitle) = 0" name="alternateTitle" or="alternateTitle" 
+			in="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:citation/gmd:CI_Citation">
+            <template>
+			  <snippet>
+                <gmd:alternateTitle gco:nilReason="missing">
+					<gco:CharacterString/>
+				 </gmd:alternateTitle>
+              </snippet>
+			</template>
+          </action>
+		  
+		<field name="purpose"
+            xpath="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:purpose"></field>
+		<action type="add" if="count(gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:purpose) = 0" name="purpose" or="purpose" 
+			in="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification">
+            <template>
+			  <snippet>
+                <gmd:purpose gco:nilReason="missing">
+					<gco:CharacterString/>
+				 </gmd:purpose>
+              </snippet>
+			</template>
+          </action>
+		  
+		<field name="supplementalInformation"
+            xpath="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:supplementalInformation"></field>
+		<action type="add" if="count(gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:supplementalInformation) = 0" name="supplementalInformation" or="supplementalInformation" 
+			in="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification">
+            <template>
+			  <snippet>
+                <gmd:supplementalInformation gco:nilReason="missing">
+					<gco:CharacterString/>
+				 </gmd:supplementalInformation>
+              </snippet>
+			</template>
+          </action>
+		  
+		  <field name="edition"
+            xpath="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:citation/gmd:CI_Citation/gmd:edition"></field>
+		<action type="add" if="count(gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:citation/gmd:CI_Citation/gmd:edition) = 0" name="edition" or="edition" 
+			in="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:citation/gmd:CI_Citation">
+            <template>
+			  <snippet>
+				  <gmd:edition gco:nilReason="missing">
+					<gco:CharacterString />
+				  </gmd:edition>
+			  </snippet>
+		    </template>
+          </action>
+		  
+		<!-- MD_Metadata.dataQualityInfo>DQ_DataQuality.report> DQ_CompletenessOmission.result>DQ_QuantitativeResult.value -->
+		<field name="CompletenessOmission"
+            xpath="/gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_CompletenessOmission/gmd:result/gmd:DQ_QuantitativeResult/gmd:value/gco:Record"></field>
+		<action type="add" if="count(gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_CompletenessOmission/gmd:result/gmd:DQ_QuantitativeResult/gmd:value/gco:Record) = 0" name="CompletenessOmission" or="CompletenessOmission" 
+			in="/gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality">
+            <template>
+			  <snippet>
+                  <gmd:report>
+					<gmd:DQ_CompletenessOmission>
+					  <gmd:result>
+						<gmd:DQ_QuantitativeResult>
+						  <gmd:valueUnit gco:nilReason="missing" />
+						  <gmd:value>
+							<gco:Record>Compleetheidsindicatie</gco:Record>
+						  </gmd:value>
+						</gmd:DQ_QuantitativeResult>
+					  </gmd:result>
+					</gmd:DQ_CompletenessOmission>
+				  </gmd:report>
+              </snippet>
+			</template>
+          </action>
+		  
 		<field
-            xpath="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:alternateTitle"> </field>
-
-
-		 <field
             xpath="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:characterSet"> </field>
+		<action type="add" if="count(gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:characterSet) = 0" name="characterSet" or="characterSet" 
+			in="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification">
+            <template>
+			  <snippet>
+               <gmd:characterSet>
+				<gmd:MD_CharacterSetCode codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#MD_CharacterSetCode" codeListValue="utf8">utf8</gmd:MD_CharacterSetCode>
+		 	   </gmd:characterSet>
+              </snippet>
+			</template>
+          </action>
 
-
+		  
+		  <!-- Ruimtelijk schema		  -->
+		  <field name="spatialRepresentationType"
+            xpath="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:spatialRepresentationType"> </field>
+		<action type="add" if="count(gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:characterSet) = 0" name="spatialRepresentationType" or="spatialRepresentationType" 
+			in="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification">
+            <template>
+			  <snippet>
+               <gmd:spatialRepresentationType>
+				<gmd:MD_SpatialRepresentationTypeCode codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#MD_SpatialRepresentationTypeCode" codeListValue="vector" codeSpace="dut">vector</gmd:MD_SpatialRepresentationTypeCode>
+			  </gmd:spatialRepresentationType>
+              </snippet>
+			</template>
+          </action>
+		  
+		  
           <field name="temporalRangeSection" templateModeOnly="true"
             xpath="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:extent/gmd:EX_Extent/gmd:temporalElement"
             if="count(gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification) > 0">
@@ -2046,7 +2140,21 @@
               </snippet>
             </template>
           </field>
+		  <!--
+		  Beschrijving temporeledekking
+MD_Metadata.identificationInfo>MD_DataIdentification.extent>EX_Extent.description
+		  -->
+		  
 
+		  <!--
+Titel van de featurecatalogMD_Metadata. contentInfo>MD_FeatureCatalogueDescription. includedWithDataset
+
+FeatureTypes MD_Metadata. contentInfo>MD_FeatureCatalogueDescription.featureTypes
+
+Datum van de featurecatalog
+Datum type van de featurecatalog
+		  -->
+		  
         </section>
 
        
