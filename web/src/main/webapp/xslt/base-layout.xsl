@@ -55,22 +55,38 @@
           </xsl:when>
           <xsl:otherwise>
 
-              <!-- AngularJS application -->
-              <xsl:if test="$angularApp != 'gn_search' and $angularApp != 'gn_viewer'">
-                <div class="navbar navbar-default gn-top-bar"
-                     data-ng-hide="layout.hideTopToolBar"
-                     data-ng-include="'{$uiResourcesPath}templates/top-toolbar.html'"></div>              </xsl:if>
-
-              <xsl:apply-templates mode="content" select="."/>
-
-              <xsl:if test="$isJsEnabled">
-                <xsl:call-template name="javascript-load"/>
-              </xsl:if>
-            <xsl:if test="$isJsEnabled">
-              <xsl:call-template name="no-js-alert"/>
-            </xsl:if>
+			
+				<!-- AngularJS application -->
+				<xsl:choose>
+				<xsl:when test="$angularApp != 'gn_search' and $angularApp != 'gn_viewer'">
+				<div class="container">
+					<header data-ng-include="'{$uiResourcesPath}views/ngr/templates/header.html'"></header>
+							
+					<div class="navbar navbar-default gn-top-bar" role="navigation" data-ng-hide="layout.hideTopToolBar"
+						 data-ng-include="'{$uiResourcesPath}views/ngr/templates/top-toolbar.html'"
+						 xmlns="http://www.w3.org/1999/html">
+					</div>
+					<div class="page">
+						<xsl:apply-templates mode="content" select="."/>
+						<div class="bottom-bar" data-ng-include="'../../catalog/views/ngr/templates/footer.html'"></div>
+					</div>
+					</div>
+				</xsl:when>
+				<xsl:otherwise>
+					<xsl:apply-templates mode="content" select="."/>
+				</xsl:otherwise>
+				</xsl:choose>
+			
+				<xsl:if test="$isJsEnabled">
+				  <xsl:call-template name="javascript-load"/>
+				</xsl:if>
+				<xsl:if test="$isJsEnabled">
+				  <xsl:call-template name="no-js-alert"/>
+				</xsl:if>
+				
           </xsl:otherwise>
         </xsl:choose>
+		
       </body>
     </html>
   </xsl:template>

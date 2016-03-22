@@ -4,7 +4,7 @@
   <xsl:include href="../base-layout.xsl"/>
 
   <xsl:template mode="content" match="/">
-    <div class="container" data-ng-controller="GnAdminController" data-ng-show="authenticated" data-ng-view="">
+    <div data-ng-controller="GnAdminController" data-ng-show="authenticated" data-ng-view="" class="row">
     </div>
     
     <!-- Make this a directive TODO -->
