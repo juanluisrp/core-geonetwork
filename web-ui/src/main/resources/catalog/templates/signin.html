@@ -1,4 +1,13 @@
 <div class="container" data-ng-controller="GnLoginController">
+
+<div class="row">
+	<div class="col-12-md">
+	<h1>Inloggen</h1>
+	<p>Om de mogelijkheid te krijgen datasets toe te voegen of te beheren, dient u in te loggen. 
+	U kunt een account aanvragen bij <a href="mailto:info@pdok.nl">PDOK Klant Contact Centrum</a></p>
+	</div>
+</div>
+<div class="row">
   <div class="col-lg-6">
       <form class="form-horizontal" name="gnSigninForm" action="{{formAction}}"
             method="post" role="form" data-ng-if="user['@authenticated'] != 'true'">
@@ -46,6 +55,7 @@
     </p>
   </div>
   <div class="col-lg-6">
+ 
     <div class="panel panel-default" data-ng-show="gnConfig[gnConfig.key.isSelfRegisterEnabled]">
       <div class="panel-heading" data-translate="">needAnAccount</div>
       <div class="panel-body">
@@ -90,4 +100,6 @@
       </div>
     </div>
   </div>
+</div>
+
 </div>
