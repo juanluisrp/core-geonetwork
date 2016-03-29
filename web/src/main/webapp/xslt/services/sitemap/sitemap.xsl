@@ -117,7 +117,7 @@
 						<xsl:value-of select="$env/system/server/port"/>
 					</xsl:if>
 					<xsl:value-of select="/root/gui/url"/>
-					<xsl:text>/doc/dataset/</xsl:text>
+					<xsl:text>/metadata/</xsl:text>
 					<xsl:value-of select="uuid"/>
               </xsl:otherwise>
             </xsl:choose></loc>
