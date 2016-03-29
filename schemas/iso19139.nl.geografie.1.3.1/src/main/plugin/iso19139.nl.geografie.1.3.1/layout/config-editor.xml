@@ -1367,7 +1367,7 @@
 
 			<action type="add"
                     btnLabel="thisIsASeries"
-                    btnClass="fa gn-icon-copy"
+                    btnClass="fa fa-link"
                     or="hierarchyLevel"
                     in="/gmd:MD_Metadata"
                     if="count(gmd:MD_Metadata/gmd:hierarchyLevel/gmd:MD_ScopeCode) = 0">
@@ -1376,13 +1376,19 @@
                   <gmd:hierarchyLevel>
 					<gmd:MD_ScopeCode codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#MD_ScopeCode" codeListValue="series"/>
 				  </gmd:hierarchyLevel>
+				  <gmd:hierarchyLevelName>
+					<gco:CharacterString>Naam van de serie</gco:CharacterString>
+				  </gmd:hierarchyLevelName>
                 </snippet>
               </template>
             </action>
 
 		  <field
-            xpath="/gmd:MD_Metadata/gmd:hierarchyLevel/gmd:MD_ScopeCode" />	
-			
+            xpath="/gmd:MD_Metadata/gmd:hierarchyLevel" />	
+		  
+		  <field
+            xpath="/gmd:MD_Metadata/gmd:hierarchyLevelName" />	
+		  
           <field
             xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:title" />
 

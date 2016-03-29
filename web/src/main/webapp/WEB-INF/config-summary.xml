@@ -58,14 +58,14 @@
     <facets>
         <facet name="keyword" indexKey="keyword" label="keywords" localized="true"/>
         <facet name="topicCat" indexKey="topicCat" label="topicCats" localized="true"/>
-		<!--<facet name="license" indexKey="license" label="license" localized="true"/>-->
         <facet name="category" indexKey="_cat" label="categories" localized="true"/>
         <facet name="inspireTheme" indexKey="inspiretheme" label="inspireThemes"/>
         <facet name="inspireThemeWithAc" indexKey="inspirethemewithac" label="inspireThemesWithAc"/>
         <facet name="inspireThemeURI" indexKey="inspirethemeuri" label="inspireThemesURI"/>
         <facet name="denominator" indexKey="denominator" label="denominators"/>
         <facet name="resolution" indexKey="resolution" label="resolutions"/>
-        <facet name="spatialRepresentationType" indexKey="cl_spatialRepresentationType" label="spatialRepresentationTypes"/>
+        <facet name="spatialRepresentationType" indexKey="cl_spatialRepresentationType"
+            label="spatialRepresentationTypes"/>
         <facet name="orgName" indexKey="orgName" label="orgNames" localized="true"/>
         <facet name="orgNameTree" indexKey="orgNameTree" label="orgNamesTree" classifier="slashSplitClassifier"/>
         <facet name="metadataPOC" indexKey="metadataPOC" label="metadataPOCs"/>
@@ -104,38 +104,32 @@
       </facets>
 
       <summaryTypes>
-        <summaryType name="details" format="hits">
-		
-	<!--
-	Organisaties
-	Trefwoorden
-	Licenties
-	Brontype
-	Categorieën
-	Servicetype
-	Online Bronnen
-	Jaar
-	--> 
-		<item facet="orgName" max="25"/>
-		<item facet="keyword" max="15"/>
-		<item facet="license" max="5"/>
-        <item facet="type" translator="codelist:gmd:MD_ScopeCode"/>
-		<item facet="topicCat" translator="codelist:gmd:MD_TopicCategoryCode" max="20"/>
-		<item facet="serviceType"/>
-		<item facet="format" max="15" sortBy="value" sortOrder="asc"/>
-		<item facet="createDateYear" sortBy="value" sortOrder="desc" max="40"/>
+        <summaryType name="details" format="DIMENSION">
+			<item facet="orgName" max="25"/>
+			<item facet="keyword" max="15"/>
+			<!--<item facet="license" max="5"/>-->
+			<item facet="type" translator="codelist:gmd:MD_ScopeCode"/>
+			<item facet="topicCat" translator="codelist:gmd:MD_TopicCategoryCode" max="20"/>
+			<item facet="serviceType"/>
+			<item facet="format" max="15" sortBy="value" sortOrder="asc"/>
+			<item facet="createDateYear" sortBy="value" sortOrder="desc" max="40"/>
          
-		 <!-- <item facet="inspireThemeURI" sortBy="value" sortOrder="asc" max="35" translator="term:http://geonetwork-opensource.org/inspire-theme"/>
+		<!--
+		
+          <item facet="type" translator="codelist:gmd:MD_ScopeCode"/>
+          <item facet="topicCat" translator="codelist:gmd:MD_TopicCategoryCode" max="20"/>
+          <item facet="inspireThemeURI" sortBy="value" sortOrder="asc" max="35" translator="term:http://geonetwork-opensource.org/inspire-theme"/>
           <item facet="inspireTheme" sortBy="value" sortOrder="asc" max="35"/>-->
           <!--<item facet="inspireThemeWithAc" sortBy="value" sortOrder="asc" max="35"/>
-          
-         
+          <item facet="keyword" max="15"/>
+          <item facet="orgName" max="25"/>
           <item facet="sourceCatalog" translator="db:org.fao.geonet.repository.SourceRepository:findOneByUuid"/>
-          
-          
+          <item facet="createDateYear" sortBy="value" sortOrder="desc" max="40"/>
+          <item facet="format" max="15" sortBy="value" sortOrder="asc"/>
           <item facet="spatialRepresentationType" translator="codelist:gmd:MD_SpatialRepresentationTypeCode"/>
           <item facet="maintenanceAndUpdateFrequency" translator="codelist:gmd:MD_MaintenanceFrequencyCode"/>
           <item facet="status" translator="codelist:gmd:MD_ProgressCode"/>
+          <item facet="serviceType"/>
           <item facet="denominator" sortBy="numValue" sortOrder="desc"/>
           <item facet="resolution" sortBy="numValue" sortOrder="desc"/>-->
           <!--

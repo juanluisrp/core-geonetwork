@@ -94,7 +94,6 @@
       <field name="_featured" tagName="featured"/>
       <field name="_owner" tagName="owner"/>
       <field name="_userinfo" tagName="userinfo"/>
-      <field name="isPublishedToAll" tagName="isPublishedToAll"/>
       <field name="_ownername" tagName="ownername"/>
       <field name="_cat" tagName="category"/>
       <field name="topicCat" tagName="topicCat"/>
@@ -142,7 +141,6 @@
       <field name="cl_spatialRepresentationType_text" tagName="spatialRepresentationType_text"/>
       <field name="datasetLang" tagName="datasetLang"/>
       <field name="mdLanguage" tagName="mdLanguage"/>
-      <field name="spatialRepresentationType" tagName="spatialRepresentationType"/>
       <field name="serviceType" tagName="serviceType"/>
       <field name="tempExtentBegin" tagName="tempExtentBegin"/>
       <field name="tempExtentEnd" tagName="tempExtentEnd"/>
@@ -151,9 +149,6 @@
       <field name="geoDescCode" tagName="geoDescCode"/>
       <field name="_indexingError" tagName="idxError"/>
       <field name="_indexingErrorMsg" tagName="idxMsg"/>
-      <field name="license" tagName="license"/>
-      <field name="licenseLink" tagName="licenseLink"/>
-      <field name="payment" tagName="payment"/>      
       <field name="_op0" tagName="publishedForGroup"/>
       <field name="_groupOwner" tagName="groupOwner"/>
       <field name="_logo" tagName="logo"/>
@@ -274,9 +269,6 @@
     <Field name="_dummy" boost="0.0F"/>
     <Field name="_isTemplate" boost="0.0F"/>
     <Field name="_owner" boost="0.0F"/>
-<!-- heikki: specific fields boosted for NGR -->
-    <Field name="keyword" boost="10.0F"/>
-    <Field name="title" boost="25.0F"/>
   </fieldBoosting>
   
   
