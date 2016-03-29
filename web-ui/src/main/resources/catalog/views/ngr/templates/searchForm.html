@@ -3,7 +3,7 @@
   <div class="row" style="margin-right:-15px;margin-left:-15px;margin-top:-25px;padding:20px">
 	<div class="col-md-3 col-md-offset-1">
 		<div class="form-group">
-            <label for="any">Wat voor soort data zoekt u?</label>
+            <label for="any">Over welk onderwerp zoekt u data?</label>
             <input type="text"
                    id="any"
                    class="form-control input-lg"
@@ -91,16 +91,61 @@
               
             </div>
             <div class="col-md-4">
-              <div data-gn-period-chooser="resourcesCreatedTheLast"
-                   data-date-from="searchObj.params.creationDateFrom"
-                   data-date-to="searchObj.params.creationDateTo">
-              </div>
-
-              <div data-gn-period-chooser="recordsCreatedTheLast"
-                   data-date-from="searchObj.params.dateFrom"
-                   data-date-to="searchObj.params.dateTo">
-              </div>
-			  
+              <div class="row">
+				<div class="col-md-12">
+					<b>Aanmaak, laatste aanpassing of publicatie</b>
+				</div>
+			  </div>
+			
+			  <div class="row">
+				<div class="col-md-6">
+					<div class="form-group">
+					  <label translate>from</label>
+					  <div class="input-group date" data-date="" data-date-format="yyyy-mm-dd"
+						gn-bootstrap-datepicker="searchObj.params.creationDateFrom" lang="lang">
+						<input class="form-control" type="text">
+						<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+					  </div>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="form-group">
+					  <label  translate>to</label>
+					  <div class="input-group date" data-date="" data-date-format="yyyy-mm-dd"
+						gn-bootstrap-datepicker="searchObj.params.creationDateTo" lang="lang">
+						<input class="form-control" type="text">
+						<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+					  </div>
+					</div>
+				</div>
+			  </div>
+			  <div class="row">
+				<div class="col-md-12">
+					<b>Inhoudelijke geldigheid</b>
+				</div>
+			  </div>
+			  <div class="row">
+				<div class="col-md-6">
+					<div class="form-group">
+					  <label translate>from</label>
+					  <div class="input-group date" data-date="" data-date-format="yyyy-mm-dd"
+						gn-bootstrap-datepicker="searchObj.params.extFrom" lang="lang">
+						<input class="form-control" type="text">
+						<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+					  </div>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="form-group">
+					  <label translate>to</label>
+					  <div class="input-group date" data-date="" data-date-format="yyyy-mm-dd"
+						gn-bootstrap-datepicker="searchObj.params.extTo" lang="lang">
+						<input class="form-control" type="text">
+						<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+					  </div>
+					</div>
+				</div>
+			  </div>  
 				
 			<!-- todo: add here the search on temporal extent -->
 			
@@ -108,11 +153,11 @@
             <div class="col-md-4">
 				<div class="form-group">
                 <label for="orgNameF"
-                       data-translate="">INSPIRE thema</label>
-
-         
-                  <input type="text" id="" value=""
+                       data-translate="">INSPIREtheme</label>
+                  <input type="text" id="inspireThemeF" value=""
                          class="form-control"
+						 gn-values="searchObj.params.inspiretheme"
+						 gn-typeahead="inspirethemeOptions"
                          />
               </div>
 			  
