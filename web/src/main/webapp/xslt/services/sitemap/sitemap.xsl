@@ -29,18 +29,13 @@
   </xsl:template>
 
   <xsl:template name="indexDoc">
-    <sitemapindex
-      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-      xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-      xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/siteindex.xsd">
-
+    <sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
       <xsl:call-template name="displayIndexDocs">
         <xsl:with-param name="pStart" select="1"/>
         <xsl:with-param name="pEnd" select="$indexDocs"/>
       </xsl:call-template>
     </sitemapindex>
   </xsl:template>
-
 
   <xsl:template name="displayIndexDocs">
     <xsl:param name="pStart"/>
@@ -49,11 +44,20 @@
     <xsl:if test="not($pStart > $pEnd)">
       <xsl:choose>
         <xsl:when test="$pStart = $pEnd">
-          <sitemap xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
             <xsl:variable name="formatParam">
               <xsl:if test="string($format)"><xsl:value-of select="$format" />/</xsl:if>
             </xsl:variable>
-            <loc><xsl:value-of select="/root/gui/env/server/protocol"/>://<xsl:value-of select="/root/gui/env/server/host"/>:<xsl:value-of select="/root/gui/env/server/port"/><xsl:value-of select="/root/gui/url"/>/sitemap/<xsl:value-of select="$formatParam" /><xsl:value-of select="$pStart" />/<xsl:value-of select="/root/gui/language" /></loc>
+            <sitemap><loc><xsl:value-of select="$env/system/server/protocol"/>
+					<xsl:text>://</xsl:text>
+					<xsl:value-of select="$env/system/server/host"/>
+					<xsl:if test="$env/system/server/port != '80' and $env/system/server/port != '443'">
+						<xsl:text>:</xsl:text>
+						<xsl:value-of select="$env/system/server/port"/>
+					</xsl:if><xsl:value-of select="/root/gui/url"/>
+			<xsl:text>/sitemap/</xsl:text>
+			<xsl:value-of select="$formatParam" /><xsl:value-of select="$pStart" />
+			<xsl:text>/</xsl:text>
+			<xsl:value-of select="/root/gui/language" /></loc>
             <lastmod><xsl:value-of select="$changeDate" /></lastmod>
           </sitemap>
         </xsl:when>
@@ -86,8 +90,7 @@
         <xsl:variable name="changedate" select="datainfo/changedate"/>
         
         <url>
-          <loc>
-            <xsl:choose>
+			<loc><xsl:choose>
               <xsl:when test="$format='xml'">
                 <xsl:variable name="metadataUrlValue">
                   <xsl:call-template name="metadataXmlDocUrl">
@@ -95,20 +98,39 @@
                     <xsl:with-param name="uuid" select="$uuid"/>
                   </xsl:call-template>
                 </xsl:variable>
-                <xsl:value-of select="$env/system/server/protocol"/>://<xsl:value-of select="$env/system/server/host"/>:<xsl:value-of select="$env/system/server/port"/><xsl:value-of select="/root/gui/locService"/>/<xsl:value-of select="$metadataUrlValue"/>
+                <xsl:value-of select="$env/system/server/protocol"/>
+					<xsl:text>://</xsl:text>
+					<xsl:value-of select="$env/system/server/host"/>
+					<xsl:if test="$env/system/server/port != '80' and $env/system/server/port != '443'">
+						<xsl:text>:</xsl:text>
+						<xsl:value-of select="$env/system/server/port"/>
+					</xsl:if>
+				<xsl:value-of select="$env/system/server/port"/><xsl:value-of select="/root/gui/locService"/>
+				<xsl:text>/</xsl:text><xsl:value-of select="$metadataUrlValue"/>
               </xsl:when>
-              
               <xsl:otherwise>
-                <xsl:value-of select="$env/system/server/protocol"/>://<xsl:value-of select="$env/system/server/host"/>:<xsl:value-of select="$env/system/server/port"/><xsl:value-of select="/root/gui/url"/>/?uuid=<xsl:value-of select="$uuid"/>
+					<xsl:value-of select="$env/system/server/protocol"/>
+					<xsl:text>://</xsl:text>
+					<xsl:value-of select="$env/system/server/host"/>
+					<xsl:if test="$env/system/server/port != '80' and $env/system/server/port != '443'">
+						<xsl:text>:</xsl:text>
+						<xsl:value-of select="$env/system/server/port"/>
+					</xsl:if>
+					<xsl:value-of select="/root/gui/url"/>
+					<xsl:text>/doc/dataset/</xsl:text>
+					<xsl:value-of select="uuid"/>
               </xsl:otherwise>
-            </xsl:choose>
-          </loc>
-          <lastmod><xsl:value-of select="$changedate"/></lastmod>
-          <geo:geo>
-            <geo:format><xsl:value-of select="$schemaid"/></geo:format>
-          </geo:geo>
-        </url>
-      </xsl:for-each>
+            </xsl:choose></loc>
+			<xsl:choose>
+			<xsl:when test="datainfo/changedate=''"></xsl:when>
+			<xsl:when test="contains(datainfo/changedate,'T')">
+				<lastmod><xsl:value-of select="tokenize(datainfo/changedate,'Z')[1]" />Z</lastmod>
+			</xsl:when>
+			<xsl:otherwise>
+				<lastmod><xsl:value-of select="datainfo/changedate" /></lastmod>
+			</xsl:otherwise>
+			</xsl:choose>
+        </url></xsl:for-each>
     </urlset>
   </xsl:template>
     
@@ -118,7 +140,14 @@
       <sc:dataset>
         <sc:datasetLabel><xsl:value-of select="$env/system/site/name"/> content catalogue for Linked Data spiders (RDF)</sc:datasetLabel>
         <xsl:for-each select="metadata/record">
-          <sc:dataDumpLocation><xsl:value-of select="$env/system/server/protocol"/>://<xsl:value-of select="$env/system/server/host"/>:<xsl:value-of select="$env/system/server/port"/><xsl:value-of select="/root/gui/url"/>/srv/eng/rdf.metadata.get?uuid=<xsl:value-of select="uuid"/></sc:dataDumpLocation>
+          <sc:dataDumpLocation><xsl:value-of select="$env/system/server/protocol"/>
+					<xsl:text>://</xsl:text>
+					<xsl:value-of select="$env/system/server/host"/>
+					<xsl:if test="$env/system/server/port != '80' and $env/system/server/port != '443'">
+						<xsl:text>:</xsl:text>
+						<xsl:value-of select="$env/system/server/port"/>
+					</xsl:if><xsl:value-of select="/root/gui/url"/>
+					<xsl:text>/srv/eng/rdf.metadata.get?uuid=</xsl:text><xsl:value-of select="uuid"/></sc:dataDumpLocation>
         </xsl:for-each>
         <!--For 5 latests update:
         <sc:sampleURI>http://<server_host>:<server_port>/<catalogue>/metadata/<uuid>.rdf</sc:sampleURI>
