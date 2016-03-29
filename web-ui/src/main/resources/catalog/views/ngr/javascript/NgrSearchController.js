@@ -66,6 +66,15 @@
                 }
             };
 
+			$scope.inspirethemeOptions = {
+                mode: 'remote',
+                remote: {
+                    url: suggestService.getUrl('QUERY', 'inspireTheme', 'STARTSWITHFIRST'),
+                    filter: suggestService.bhFilter,
+                    wildcard: 'QUERY'
+                }
+            };
+			
             $scope.categoriesOptions = {
                 mode: 'prefetch',
                 promise: (function() {
