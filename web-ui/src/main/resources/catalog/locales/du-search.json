@@ -307,5 +307,15 @@
     "wpsDescribeProcessFailed": "Proces beschrijven faalde",
     "wpsExecute": "Uitvoeren",
     "wpsExecuteFailed": "Uitvoeren faalde",
-    "wpsErrorCodeReturned": "De server gaf een status code "
+    "wpsErrorCodeReturned": "De server gaf een status code ",
+	"AdvancedSearch":"Geavanceerd zoeken",
+	"DataAvailability":"Data beschikbaarheid",
+	"Visualisation":"Visualisatie",
+	"DownloadData":"Downloadbare data",
+	"DataOnRequest":"Data op aanvraag",
+	"ShowResultats":"Toon resultaten",
+	"AtLocation":"Op welke locatie?",
+	"SearchAny":"Over welk onderwerp zoekt u data?",
+	"ByDate":"Aanmaak, laatste aanpassing of publicatie",
+	"ByDateExtent":"Inhoudelijke geldigheid"
 }

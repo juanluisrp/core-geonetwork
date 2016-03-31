@@ -3,7 +3,7 @@
   <div class="row" style="margin-right:-15px;margin-left:-15px;margin-top:-25px;padding:20px">
 	<div class="col-md-3 col-md-offset-1">
 		<div class="form-group">
-            <label for="inp-any">Over welk onderwerp zoekt u data?</label>
+            <label for="inp-any" data_translate="">SearchAny</label>
             <input type="text"
                    id="inp-any"
                    class="form-control input-lg"
@@ -20,7 +20,7 @@
      </div>
 	<div class="col-md-3">
 	    <div class="form-group has-feedback">
-		    <label for="sel-location">Op welke locatie?</label>
+		    <label for="sel-location" data-translate="">AtLocation</label>
               <select multiple
                      id="sel-location"
                      class="form-control input-lg"
@@ -40,7 +40,7 @@
                       data-ng-click="triggerSearch()"
                       class="btn btn-primary btn-lg">
                 <i class="fa fa-search"></i>
-                Toon resultaten
+                {{'ShowResultats'|translate}}
               </button>
         </div>
       </div>
@@ -54,7 +54,7 @@
                       btn-checkbox=""
                       btn-checkbox-true="1"
                       btn-checkbox-false="0">
-                 Uitgebreid zoeken <i class="fa fa-arrow-down"></i>
+                 {{'AdvancedSearch'|translate}} <i class="fa fa-arrow-down"></i>
               </button>
 		</div>
     </div>
@@ -66,41 +66,39 @@
               
 			  <div class="form-group">
                 <label
-                       data-translate="">Data beschikbaarheid</label>
+                       data-translate="">DataAvailability</label>
 				
 				<div class="checkbox">
 				  <label>
-					<input type="checkbox" value="">
-					Visualisatie
+					<input type="checkbox" value="true" checked="{searchObj.params.dynamic}" data-ng-model="searchObj.params.dynamic">
+					{{'Visualisation'|translate}}
 				  </label>
 				</div>
 				<div class="checkbox ">
 				  <label>
-					<input type="checkbox" value="" >
-					Downloadbare data
+					<input type="checkbox" value="true" data-ng-model="searchObj.params.download"/>
+					{{'DownloadData'|translate}}
 				  </label>
 				</div>
 				<div class="checkbox ">
 				  <label>
-					<input type="checkbox" value="" >
-					Data op aanvraag
+					<input type="checkbox" value="true" data-ng-model="searchObj.params.nodynamicdownload"/>
+					{{'DataOnRequest'|translate}}
 				  </label>
                 </div>
               </div>
-			  
-              
             </div>
             <div class="col-md-4">
               <div class="row">
 				<div class="col-md-12">
-					<b>Aanmaak, laatste aanpassing of publicatie</b>
+					<b data_translate="">ByDate</b>
 				</div>
 			  </div>
 			
 			  <div class="row">
 				<div class="col-md-6">
 					<div class="form-group">
-					  <label translate>from</label>
+					  <label data_translate="">from</label>
 					  <div class="input-group date" data-date="" data-date-format="yyyy-mm-dd"
 						gn-bootstrap-datepicker="searchObj.params.creationDateFrom" lang="lang">
 						<input class="form-control" type="text">
@@ -110,7 +108,7 @@
 				</div>
 				<div class="col-md-6">
 					<div class="form-group">
-					  <label  translate>to</label>
+					  <label data_translate="">to</label>
 					  <div class="input-group date" data-date="" data-date-format="yyyy-mm-dd"
 						gn-bootstrap-datepicker="searchObj.params.creationDateTo" lang="lang">
 						<input class="form-control" type="text">
@@ -121,13 +119,13 @@
 			  </div>
 			  <div class="row">
 				<div class="col-md-12">
-					<b>Inhoudelijke geldigheid</b>
+					<b data_translate="">ByDateExtent</b>
 				</div>
 			  </div>
 			  <div class="row">
 				<div class="col-md-6">
 					<div class="form-group">
-					  <label translate>from</label>
+					  <label data_translate="">from</label>
 					  <div class="input-group date" data-date="" data-date-format="yyyy-mm-dd"
 						gn-bootstrap-datepicker="searchObj.params.extFrom" lang="lang">
 						<input class="form-control" type="text">
@@ -137,7 +135,7 @@
 				</div>
 				<div class="col-md-6">
 					<div class="form-group">
-					  <label translate>to</label>
+					  <label data_translate="">to</label>
 					  <div class="input-group date" data-date="" data-date-format="yyyy-mm-dd"
 						gn-bootstrap-datepicker="searchObj.params.extTo" lang="lang">
 						<input class="form-control" type="text">
