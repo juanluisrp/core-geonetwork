@@ -75,36 +75,24 @@
          class="gn-metadata-display">
     </div>
 
-<style>
-.gn-record .row {padding-bottom:3px;}
-.gn-record h1{font-size:20px;}
-.gn-record h2{font-size:16px;font-weight:bold;}
-.gn-record h3{font-size:16px;font-weight:bold;}
-.gn-record h4{font-size:14px;font-weight:bold;}
-</style>
-
     <div data-ng-show="!usingFormatter" class="gn-metadata-display">
 		
 	<div class="row">
 		<div class="col-xs-12">
 			<h1 style="margin-top:32px;margin-bottom:32px;font-size:42px;font-weight:bold">
 			  <i class="fa gn-icon-{{mdView.current.record.type[0]}}"/>
-			  {{mdView.current.record.title || mdView.current.record.defaultTitle}}
+			  {{mdView.current.record.title || mdView.current.record.defaultTitle}} 
+			  <span data-gn-metadata-rate="mdView.current.record" style="font-size:24px;"/>
 			</h1>
 		</div>
 	</div>
+
+	
+
 	<div class="row">
       <div class="col-md-8 gn-record">
         
 		<div class="row">
-		
-
-		<script>
-			$('#myTabs a').click(function (e) {
-			  e.preventDefault()
-			  $(this).tab('show')
-			})
-		</script>
 		
         <!--<div class="pull-right">
           <i class="fa fa-calendar"></i>&nbsp;
@@ -116,6 +104,32 @@
 
         <div data-ng-bind-html="mdView.current.record.abstract | newlines" style="margin-bottom:32px"></div>
 
+		</div>
+		
+		<div class="row share-banner">
+  		  <div class="col-xs-12">
+			
+			<div class="pull-right"><a href data-ng-click="onlinesrcService.onOpenPopup('feedback')" class="btn btn-link btn-sm"><i class="fa fa-fw fa-comments-o"></i> Terugmelden</a></div>
+            
+            <b data-translate="">shareOn</b>:
+          
+          <a data-ng-href="https://plus.google.com/share?url=//{{$location.host()}}/geonetwork/metadata/{{mdView.current.record['geonet:info'].uuid}}"
+             target="_blank"
+             class="btn btn-link btn-sm"><i class="fa fa-fw fa-google-plus"></i> Google plus</a>
+          <a data-ng-href="https://twitter.com/share?url=//{{$location.host()}}/geonetwork/metadata/{{mdView.current.record['geonet:info'].uuid}}"
+             target="_blank"
+             class="btn btn-link btn-sm"><i class="fa fa-fw fa-twitter"></i> Twitter</a>
+          <a data-ng-href="https://www.facebook.com/sharer.php?u=//{{$location.host()}}/metadata/{{mdView.current.record['geonet:info'].uuid}}"
+             target="_blank"
+             class="btn btn-link btn-sm"><i class="fa fa-fw fa-facebook"></i> Facebook</a></br>
+        
+
+		  </div>
+	    </div>
+		
+		<div class="row">
+		
+		
   <!-- Nav tabs -->
   <ul class="nav nav-tabs" role="tablist">
     <li role="presentation" class="active"><a href="#/metadata/{{mdView.current.record['geonet:info'].uuid}}?tab=general" aria-controls="general" role="tab" data-toggle="tab">Algemeen</a></li>
@@ -374,33 +388,25 @@
           </p></br>
         </section>
 
-
-        <section style="padding-top:100px">
-          <h4>
-            <i class="fa fa-fw fa-share-square-o"></i>
-            <span data-translate="">shareOn</span>
-          </h4>
-          <a data-ng-href="https://plus.google.com/share?url={{mdView.current.record.encodedUrl}}"
-             target="_blank"
-             class="btn btn-lg btn-default"><i class="fa fa-fw fa-google-plus"></i></a>
-          <a data-ng-href="https://twitter.com/share?url={{mdView.current.record.encodedUrl}}"
-             target="_blank"
-             class="btn btn-lg btn-default"><i class="fa fa-fw fa-twitter"></i></a>
-          <a data-ng-href="https://www.facebook.com/sharer.php?u={{mdView.current.record.encodedUrl}}"
-             target="_blank"
-             class="btn btn-lg btn-default"><i class="fa fa-fw fa-facebook"></i></a></br>
-        </section>
-
-        <section>
-          <h4>
-            <i class="fa fa-fw"></i>
-            <span data-translate="">rate</span>
-          </h4>
-          <div data-gn-metadata-rate="mdView.current.record"/>
-
-        </section>
       </div>
 
     </div>
   </div>
+</div>
+
+<div data-gn-modal="" class="onlinesrc-popup"
+  data-gn-popup-options="{title:'feedbackTitle'}"
+  id="feedback-popup">
+  <h2>Een terugmelding maken richting data provider</h2>
+  Naam: <input type="text"><br/>
+  Functie: <input type="text"><br/>
+  Organisatie: <input type="text"><br/>
+  Email: <input type="text"><br/>
+  Telefoon: <input type="text"><br/>
+  Type: <select><option>Vraag</option><option>Fout</option><option>Opmerking</option><option>Contact</option></select><br/>
+   Type: <select><option>Metadata inhoud</option><option>Data</option><option>Service</option><option>Support</option></select><br/>
+  Opmerking:<br/> <textarea rows=6 cols=40></textarea><br/>
+  <input type=submit value="Verzenden">
+  <input type=reset value="Annuleren">
+  
 </div>
