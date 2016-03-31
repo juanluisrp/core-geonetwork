@@ -1155,6 +1155,12 @@
 
   <profiles>
     <profile>
+      <id>with-doc</id>
+      <modules>
+        <module>docs</module>
+      </modules>
+    </profile>
+    <profile>
       <id>all</id>
       <activation>
         <file>
