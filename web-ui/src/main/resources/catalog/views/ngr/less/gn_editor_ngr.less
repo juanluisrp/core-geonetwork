@@ -5,4 +5,29 @@
 .gn-editor-board { background-color:white;padding-top:20px; }
 #gn-new-metadata-container { background-color:white;padding-top:20px; }
 
+form.gn-editor .gn-required > label:after {
+    content: "";
+    font-size: inherit;
+    margin: 0;
+    position: inherit;
+    color: inherit;
+    font-weight: normal;
+}
+[data-gn-slide-toggle]:before {
+    content: "\f0d7";
+	font-size:24px;
+    position: inherit;
+    float: right;
+    margin-left: inherit;
+}
+
+form.gn-editor fieldset {
+	border: none;
+}
+
+form.gn-editor .control-label {
+font-weight: bold;
+text-align:left;
+}
+
 @import "gn_view_ngr.less";
