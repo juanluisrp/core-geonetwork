@@ -317,5 +317,6 @@
 	"AtLocation":"Op welke locatie?",
 	"SearchAny":"Over welk onderwerp zoekt u data?",
 	"ByDate":"Aanmaak, laatste aanpassing of publicatie",
-	"ByDateExtent":"Inhoudelijke geldigheid"
+	"ByDateExtent":"Inhoudelijke geldigheid",
+	"INSPIREtheme":"INSPIRE thema"
 }
