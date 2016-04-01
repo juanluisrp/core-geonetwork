@@ -21,13 +21,13 @@
 	<div class="col-md-3">
 	    <div class="form-group has-feedback">
 		    <label for="location">Op welke locatie?</label>
-              <select multiple
-                     id="location"
-                     class="form-control input-lg"
-                     data-bboxes="searchObj.params.bboxes"
-                     data-ngr-multi-location
-                     data-thesaurus-key="external.place.administrativeAreas"
-              ></select>
+            <select multiple
+                    class="form-control input-lg"
+                    id="location"
+                    data-ngr-multi-location
+                    data-thesaurus-key="external.place.administrativeAreas"
+                    data-bboxes="searchObj.params.bboxes"
+                    data-geometry="searchObj.params.geometry"></select>
 		    <span class="form-control-feedback">
 			    <i class="fa fa-map-marker fa-2x"></i>
 		    </span>
@@ -45,7 +45,6 @@
         </div>
       </div>
     </div>
-		  
     <div class="row">
        <div class="col-md-4 col-md-offset-1" style="margin-top:-15px;">
 		    <button type="button"

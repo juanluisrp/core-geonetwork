@@ -14,7 +14,8 @@
   var module = angular.module('gn_search_ngr',
       ['gn_search', 'gn_search_ngr_config',
        'gn_search_default_directive', 'gn_related_directive',
-       'cookie_warning', 'gn_mdactions_directive', 'ngr_search_controller', 'ngr_multi_location_directive']);
+       'cookie_warning', 'gn_mdactions_directive', 'ngr_search_controller', 'ngr_multi_location_directive',
+       'ngr_search_home_controller']);
 
 
   module.controller('gnsSearchPopularController', [

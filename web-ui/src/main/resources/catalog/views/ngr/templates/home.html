@@ -1,4 +1,4 @@
-<div class="container-fluid">
+<div class="container-fluid" data-ng-controller="NgrSearchHomeController">
 	<div class="row" style="padding-bottom:20px;padding-top:20px;margin:-25px -25px 25px -15px;background-color:#F6D4B1">
 
 		<div class="col-md-3 col-md-offset-2">
@@ -7,7 +7,7 @@
 				<input type="text" id="any"
 					   class="form-control input-lg"
 					   autofocus=""
-					   data-ng-model="homeAnyField"
+					   data-ng-model="searchHomeParams.anyParameter"
 					   data-ng-model-options="modelOptions"
 					   placeholder="{{'anyPlaceHolder' | translate}}"
 					   data-ng-keyup="$event.keyCode == 13 && goToSearch(homeAnyField)"
@@ -24,7 +24,8 @@
 						id="loc"
 						data-ngr-multi-location
 						data-thesaurus-key="external.place.administrativeAreas"
-						data-bboxes="searchObj.params.bboxes"></select>
+						data-bboxes="searchObj.params.bboxes"
+						data-geometry="searchHomeParams.geometry"></select>
 				<span class="form-control-feedback">
 					<i class="fa fa-map-marker fa-2x"></i>
 				</span>
@@ -32,12 +33,17 @@
 		</div>
 		<div class="col-md-2">
 			<div class="form-group" style="margin-top:25px">
-				  <a class="btn btn-primary btn-lg"
-						  type="button" data-ng-href="#/search?any={{homeAnyField}}">
+				  <button class="btn btn-primary btn-lg"
+						  type="button" data-ng-click="performSearchHome()">
 					<i class="fa fa-search"></i> Zoeken
-				  </a>
+				  </button>
 			</div>
 		</div>
+	</div>
+	<div class="row">
+		<pre>
+			{{searchHomeParams | json}}
+		</pre>
 	</div>
 
     <div class="row" style="padding-top:20px">

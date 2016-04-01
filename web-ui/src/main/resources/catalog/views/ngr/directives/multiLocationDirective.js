@@ -10,33 +10,100 @@
             return {
                 restrict: 'A',
                 scope: {
-                    model: "=bboxes"
+                    model: "=bboxes",
+                    geometry: "="
                 },
                 link: function (scope, element, attrs) {
+                    console.log("Linking ngrMultiLocation id=" + attrs["id"]);
                     scope.thesaurusKey = attrs.thesaurusKey || '';
                     scope.max = gnThesaurusService.DEFAULT_NUMBER_OF_RESULTS;
+
+                    // overwrite with accessor
+                    Object.defineProperty(scope, 'model', {
+                        get: function () {
+                            return scope._model;
+                        },
+
+                        set: function (value) {
+                            debugger; // sets breakpoint
+                            scope._model = value;
+                        }
+                    });
                     if (!angular.isArray(scope.model)) {
                         scope.model = [];
                     }
 
+                    var updateBoundingBox = function() {
+                        if (!scope.model || scope.model.length == 0) {
+                            scope.geometry = null;
+                            return null;
+                        }
+                        var multiPolygon = null;
+
+                        angular.forEach(scope.model, function(value){
+                            if (value && value.props && value.props.geo) {
+                                // Get geometry and add it to the multipolygon.
+                                var coordinates = new Array();
+                                var geo = value.props.geo;
+                                var north = parseFloat(geo.north);
+                                var south = parseFloat(geo.south);
+                                var west = parseFloat(geo.west);
+                                var east = parseFloat(geo.east);
+
+                                coordinates.push([west, south]);
+                                coordinates.push([west, north]);
+                                coordinates.push([east, north]);
+                                coordinates.push([east, south]);
+                                coordinates.push([west, south]);
+                                if (!multiPolygon) {
+                                    multiPolygon = new ol.geom.MultiPolygon([[coordinates]], 'XY');
+                                } else {
+                                    var poly = new ol.geom.Polygon([coordinates], 'XY');
+                                    multiPolygon.appendPolygon(poly);
+                                }
+                            }
+                        });
+                        if (multiPolygon) {
+                            var extent = multiPolygon.getExtent()
+                            var calculatedBbox = [
+                                [extent[0], extent[1]],
+                                [extent[2], extent[1]],
+                                [extent[2], extent[3]],
+                                [extent[0], extent[3]],
+                                [extent[0], extent[1]]
+                            ];
+                            var calculatedBboxGeometry = new ol.geom.Polygon([calculatedBbox], 'XY');
+                            var wktFormat = new ol.format.WKT();
+                            var wktString = wktFormat.writeGeometry(calculatedBboxGeometry);
+                            scope.geometry = wktString;
+                        } else {
+                            scope.geometry = null;
+                        }
+                    };
+
+                    scope.$watchCollection('model', updateBoundingBox);
                     var keywordsAutocompleter = gnThesaurusService.getKeywordAutocompleter({
                         thesaurusKey: scope.thesaurusKey
                     });
-                    var source = keywordsAutocompleter.ttAdapter();
 
+                    var source = keywordsAutocompleter.ttAdapter();
                     // Init tagsinput object
                     var tagsinput = $(element).tagsinput({
 
                     });
+
                     $(element).bind('itemRemoved', function(itemRemoved) {
                        console.log("Item removed", itemRemoved);
                         scope.$apply(function() {
+                            if (!angular.isArray(scope.model)) {
+                                scope.model = [];
+                            }
                             removeFromModelByLabel(itemRemoved.item);
                         });
                     });
-
                     // init typeahead
                     var internalInput =  tagsinput[0].$input;
+
                     internalInput.typeahead({
                         minLenght: 0,
                         highlight: true,
@@ -51,6 +118,9 @@
                         //this.tagsinput('input').val('');
                         this.tagsinput('input').typeahead('val', '');
                         scope.$apply(function(){
+                            if (!angular.isArray(scope.model)) {
+                                scope.model = [];
+                            }
                             addItemToModel(datum);
                         });
                     }, element)).bind('typeahead:selected', function(e, suggestion) {

@@ -3,6 +3,8 @@
 
     goog.require('gn_searchsuggestion_service');
     goog.require('gn_thesaurus_service');
+    goog.require('abc');
+
 
 
     var module = angular.module('ngr_search_controller', [
