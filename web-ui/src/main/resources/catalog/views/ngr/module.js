@@ -244,7 +244,7 @@
           resultType: gnSearchSettings.facetsSummaryType || 'details'
         }
       }, gnSearchSettings.sortbyDefault);
-
+      
 
     }]);
 })();

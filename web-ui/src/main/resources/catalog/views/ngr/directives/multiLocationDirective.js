@@ -102,7 +102,16 @@
                         });
                     });
                     // init typeahead
-                    var internalInput =  tagsinput[0].$input;
+                    var internalInput =  tagsinput[0].input();
+                    var container = tagsinput[0].$container;
+                    if (container) {
+                        internalInput.on('focus', function() {
+                            container.addClass('focused');
+                        });
+                        internalInput.on('blur', function() {
+                            container.removeClass('focused');
+                        })
+                    }
 
                     internalInput.typeahead({
                         minLenght: 0,

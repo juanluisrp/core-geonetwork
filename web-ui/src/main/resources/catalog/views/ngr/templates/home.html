@@ -1,4 +1,4 @@
-<div class="container-fluid" data-ng-controller="NgrSearchHomeController">
+<div class="container-fluid ngr-search" data-ng-controller="NgrSearchHomeController">
 	<div class="row" style="padding-bottom:20px;padding-top:20px;margin:-25px -25px 25px -15px;background-color:#F6D4B1">
 
 		<div class="col-md-3 col-md-offset-2">
@@ -10,7 +10,7 @@
 					   data-ng-model="searchHomeParams.anyParameter"
 					   data-ng-model-options="modelOptions"
 					   placeholder="{{'anyPlaceHolder' | translate}}"
-					   data-ng-keyup="$event.keyCode == 13 && goToSearch(homeAnyField)"
+					   data-ng-keyup="$event.keyCode == 13 && performSearchHome()"
 					   data-typeahead="address for address in getAnySuggestions($viewValue)"
 					   data-typeahead-loading="anyLoading"
 					   data-typeahead-min-length="1"/>
@@ -24,7 +24,7 @@
 						id="loc"
 						data-ngr-multi-location
 						data-thesaurus-key="external.place.administrativeAreas"
-						data-bboxes="searchObj.params.bboxes"
+						data-bboxes="searchHomeParams.bboxes"
 						data-geometry="searchHomeParams.geometry"></select>
 				<span class="form-control-feedback">
 					<i class="fa fa-map-marker fa-2x"></i>

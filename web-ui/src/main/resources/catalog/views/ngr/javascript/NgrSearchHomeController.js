@@ -6,7 +6,9 @@
     module.controller('NgrSearchHomeController', ['$scope', '$location', '$log',
         function ($scope, $location, $log) {
 
-        $scope.searchHomeParams = {};
+        $scope.searchHomeParams = {
+            bboxes: null
+        };
 
         $scope.performSearchHome = function() {
             $log.debug('NgrSearchHomeController -> performSearchHome()');
@@ -24,6 +26,11 @@
 
         };
 
+        // watch for changes in home search parameters
+        $scope.$watch('searchHomeParams.bboxes', function(newValue, oldValue) {
+            $log.info("searchHomeParams.bboxes changed");
+        });
+
         $scope.$on('$locationChangeSuccess', function(event, newUrl) {
             var activeTab = $location.path().
                 match(/^(\/[a-zA-Z0-9]*)($|\/.*)/)[1];
@@ -31,8 +38,9 @@
             // reset search paramameters
             if (activeTab === '/home') {
                 $scope.searchHomeParams = {
-                    any: null,
-                    geometry: null
+                    anyParameter: null,
+                    geometry: null,
+                    bboxes: null
                 };
             }
         });
