@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<CT_CodelistCatalogue xmlns="http://www.isotc211.org/2005/gmx" xmlns:gco="http://www.isotc211.org/2005/gco" xmlns:gmd="http://www.isotc211.org/2005/gmd" xmlns:gml="http://www.opengis.net/gml" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.isotc211.org/2005/gmx ../../gmx/gmx.xsd http://www.isotc211.org/2005/gmd ../../gmd/gmd.xsd http://www.isotc211.org/2005/gco ../../gco/gco.xsd http://www.w3.org/1999/xlink ../../xlink/xlinks.xsd">
+<CT_CodelistCatalogue xmlns="http://www.isotc211.org/2005/gmx" xmlns:gco="http://www.isotc211.org/2005/gco" xmlns:gmd="http://www.isotc211.org/2005/gmd" xmlns:gml="http://www.opengis.net/gml" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.isotc211.org/2005/gmx ../../gmx/gmx.xsd http://www.isotc211.org/2005/gmd ../../gmd/gmd.xsd http://www.isotc211.org/2005/gco ../../gco/gco.xsd http://www.w3.org/1999/xlink http://www.w3.org/1999/xlinks.xsd">
 	<!--=====Catalogue description=====-->
 	<name>
 		<gco:CharacterString>ML_gmxCodelists</gco:CharacterString>
@@ -776,21 +776,6 @@
 		<ML_CodeListDictionary gml:id="Country">
 			<gml:description>Country : ISO 3166-2 (2 characters)</gml:description>
 			<gml:identifier codeSpace="ISO 3166-2">Country</gml:identifier>
-			<codeEntry>
-				<ML_CodeDefinition gml:id="Country_CAN">
-					<gml:description>Canada</gml:description>
-					<gml:identifier codeSpace="ISO 3166-2">CAN</gml:identifier>
-					<gml:name>Canada</gml:name>
-					<alternativeExpression>
-						<CodeAlternativeExpression gml:id="Country_CAN_fr" codeSpace="fra">
-							<gml:description>Canada</gml:description>
-							<gml:identifier codeSpace="ISO 3166-2">CAN</gml:identifier>
-							<gml:name>CAN</gml:name>
-							<locale xlink:href="#xpointer(//*[@id='fra'])"/>
-						</CodeAlternativeExpression>
-					</alternativeExpression>
-				</ML_CodeDefinition>
-			</codeEntry>
 			<codeEntry>
 				<ML_CodeDefinition gml:id="Country_UK">
 					<gml:description>United Kingdom</gml:description>
