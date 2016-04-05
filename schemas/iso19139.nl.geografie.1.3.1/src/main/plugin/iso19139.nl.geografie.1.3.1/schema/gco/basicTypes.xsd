@@ -390,7 +390,7 @@
 	<xs:complexType name="RecordType_Type">
 		<xs:simpleContent>
 			<xs:extension base="xs:string">
-				<xs:attributeGroup ref="xlink:simpleLink"/>
+				<xs:attributeGroup ref="xlink:simpleAttrs"/>
 			</xs:extension>
 		</xs:simpleContent>
 	</xs:complexType>

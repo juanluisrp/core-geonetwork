@@ -24,7 +24,7 @@
 	<!-- ====================== Reference of a resource =============================== -->
 	<!--The following attributeGroup 'extends' the GML  gml:AssociationAttributeGroup-->
 	<xs:attributeGroup name="ObjectReference">
-		<xs:attributeGroup ref="xlink:simpleLink"/>
+		<xs:attributeGroup ref="xlink:simpleAttrs"/>
 		<xs:attribute name="uuidref" type="xs:string"/>
 	</xs:attributeGroup>
 	<!--================== NULL ====================-->

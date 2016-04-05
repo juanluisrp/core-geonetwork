@@ -4,7 +4,7 @@
 	<id>feeedcb0-21cf-11e2-81c1-0800200c9a66</id>
 	<version>1.0</version>
 	<depends>iso19139</depends>
-	<schemaLocation>http://www.isotc211.org/2005/gmd http://www.isotc211.org/2005/gmd/gmd.xsd http://www.isotc211.org/2005/srv http://schemas.opengis.net/iso/19139/20060504/srv/srv.xsd</schemaLocation>
+	<schemaLocation>http://www.isotc211.org/2005/gmd http://schemas.opengis.net/iso/19139/20060504/gmd/gmd.xsd http://www.isotc211.org/2005/srv http://schemas.opengis.net/iso/19139/20060504/srv/srv.xsd</schemaLocation>
 	<autodetect xmlns:gmd="http://www.isotc211.org/2005/gmd" xmlns:gco="http://www.isotc211.org/2005/gco">
 		<elements>
 			<gmd:metadataStandardName>
