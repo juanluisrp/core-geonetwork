@@ -1905,7 +1905,7 @@
           <action type="add"
                     btnLabel="isINSPIREConform"
                     btnClass="fa fa-thumbs-o-up text-success"
-                    or="Conform"
+                    or="report"
                     in="/gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality"
                     if="count(gmd:MD_Metadata/gmd:dataQualityInfo//gmd:DQ_DomainConsistency[
                               .//gmd:specification/*/gmd:title/gco:CharacterString[contains(text(), '1089/2010')]
@@ -1950,9 +1950,9 @@
 
 
 			<action type="add"
-                    btnLabel="add"
-                    btnClass=""
-                    or="Conform"
+                    btnLabel="isConform"
+                    btnClass="fa fa-thumbs-o-up"
+                    or="report"
                     in="/gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality">
               <template>
                 <snippet>

@@ -1,27 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-  ~ Copyright (C) 2001-2016 Food and Agriculture Organization of the
-  ~ United Nations (FAO-UN), United Nations World Food Programme (WFP)
-  ~ and United Nations Environment Programme (UNEP)
-  ~
-  ~ This program is free software; you can redistribute it and/or modify
-  ~ it under the terms of the GNU General Public License as published by
-  ~ the Free Software Foundation; either version 2 of the License, or (at
-  ~ your option) any later version.
-  ~
-  ~ This program is distributed in the hope that it will be useful, but
-  ~ WITHOUT ANY WARRANTY; without even the implied warranty of
-  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
-  ~ General Public License for more details.
-  ~
-  ~ You should have received a copy of the GNU General Public License
-  ~ along with this program; if not, write to the Free Software
-  ~ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA
-  ~
-  ~ Contact: Jeroen Ticheler - FAO - Viale delle Terme di Caracalla 2,
-  ~ Rome - Italy. email: geonetwork@osgeo.org
-  -->
-
 <xsl:stylesheet version="2.0" xmlns:xs="http://www.w3.org/2001/XMLSchema"
   xmlns:xlink="http://www.w3.org/1999/xlink" 
   xmlns:gn="http://www.fao.org/geonetwork"
@@ -145,11 +122,11 @@
              data-gn-field-highlight="">
           <label
               for="gn-field-{$editInfo/@ref}"
-              class="col-sm-2 control-label">
+              class="col-sm-3 control-label">
             <xsl:value-of select="$label"/>
           </label>
 
-          <div class="col-sm-9 gn-value">
+          <div class="col-sm-8 gn-value">
             <xsl:if test="$isMultilingual">
               <xsl:attribute name="data-gn-multilingual-field" select="$metadataOtherLanguagesAsJson"/>
               <xsl:attribute name="data-main-language" select="$metadataLanguage"/>
@@ -399,10 +376,10 @@
          id="gn-el-{if ($refToDelete) then $refToDelete/@ref else generate-id()}"
          data-gn-field-highlight="">
 
-      <label class="col-sm-2 control-label">
+      <label class="col-sm-3 control-label">
         <xsl:value-of select="$name"/>&#160;
       </label>
-      <div class="col-sm-9">
+      <div class="col-sm-8">
         <!-- Create an empty input to contain the data-gn-field-tooltip
         key which is used to check if an element
         is the first element of its kind in the form. The key for a template
@@ -655,21 +632,19 @@
     <xsl:if test="not($isDisabled)">
       <xsl:variable name="id" select="generate-id()"/>
       <xsl:variable name="qualifiedName" select="concat($childEditInfo/@prefix, ':', $childEditInfo/@name)"/>
-      <xsl:variable name="parentName"
-                    select="name(ancestor::*[not(contains(name(), 'CHOICE_ELEMENT'))][1])"/>
       <xsl:variable name="isRequired" select="$childEditInfo/@min = 1 and $childEditInfo/@max = 1"/>
 
       <!-- This element is replaced by the content received when clicking add -->
       <div class="form-group gn-field {if ($isRequired) then 'gn-required' else ''} {if ($isFirst) then '' else 'gn-extra-field gn-add-field'} "
            id="gn-el-{$id}"
            data-gn-field-highlight="">
-        <label class="col-sm-2 control-label"
-               data-gn-field-tooltip="{$schema}|{$qualifiedName}|{$parentName}|">
+        <label class="col-sm-3 control-label"
+               data-gn-field-tooltip="{$schema}|{$qualifiedName}|{name(..)}|">
           <xsl:if test="normalize-space($label) != ''">
             <xsl:value-of select="$label"/>
           </xsl:if>&#160;
         </label>
-        <div class="col-sm-9">
+        <div class="col-sm-8">
 
           <xsl:variable name="addActionDom">
             <xsl:choose>
@@ -684,7 +659,7 @@
               -->
               <xsl:when test="count($childEditInfo/gn:choose) = 1">
                 <xsl:for-each select="$childEditInfo/gn:choose">
-                  <xsl:variable name="label" select="gn-fn-metadata:getLabel($schema, @name, $labels, $parentName, '', '')"/>
+                  <xsl:variable name="label" select="gn-fn-metadata:getLabel($schema, @name, $labels)"/>
 
                   <a class="btn btn-default"
                      title="{$i18n/addA} {$label/label}"
@@ -710,8 +685,8 @@
                   </button>
                   <ul class="dropdown-menu">
                     <xsl:for-each select="$childEditInfo/gn:choose">
-                      <xsl:sort select="gn-fn-metadata:getLabel($schema, @name, $labels, $parentName, '', '')"/>
-                      <xsl:variable name="label" select="gn-fn-metadata:getLabel($schema, @name, $labels, $parentName, '', '')"/>
+                      <xsl:sort select="gn-fn-metadata:getLabel($schema, @name, $labels)"/>
+                      <xsl:variable name="label" select="gn-fn-metadata:getLabel($schema, @name, $labels)"/>
 
                       <li title="{$label/description}">
                         <a
