@@ -60,13 +60,4 @@
 	<spatialRepresentationType>Ruimtelijk schema</spatialRepresentationType>
 	<extentDescription>Beschrijving temporeledekking</extentDescription>
 	<qualityScope>Niveau kwaliteitsbeschrijving</qualityScope>
-	
-	<useLimitation>Gebruiksbeperking</useLimitation>
-	<accessConstraints>Toegangs beperkingen</accessConstraints>
-	<DataQuality>Datakwaliteit</DataQuality>
-	<alternateTitle>Alternatieve titel</alternateTitle>
-	<purpose>Doel van vervaardiging</purpose>
-	<supplementalInformation>Aanvullende informatie</supplementalInformation>
-
-	
 </strings>

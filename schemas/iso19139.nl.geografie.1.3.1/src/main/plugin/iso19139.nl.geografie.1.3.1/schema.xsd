@@ -3,12 +3,8 @@
 			  xmlns:xs="http://www.w3.org/2001/XMLSchema" 
 			  xmlns:gmd="http://www.isotc211.org/2005/gmd"
 			  xmlns:gmx="http://www.isotc211.org/2005/gmx"
-			  xmlns:gco="http://www.isotc211.org/2005/gco"
-			  xmlns:gml="http://www.opengis.net/gml"
-			  xmlns:srv="http://www.isotc211.org/2005/srv">
-	<xs:include schemaLocation="schema/gmd/metadataApplication.xsd"/>
-	<xs:import namespace="http://www.isotc211.org/2005/srv" schemaLocation="schema/srv/srv.xsd"/>
-	<xs:import namespace="http://www.isotc211.org/2005/gmx" schemaLocation="schema/gmx/gmx.xsd"/>
-	<xs:import namespace="http://www.isotc211.org/2005/gco" schemaLocation="schema/gco/gco.xsd"/>
-	<xs:import namespace="http://www.opengis.net/gml" schemaLocation="schema/gml/gml.xsd"/>
+				xmlns:srv="http://www.isotc211.org/2005/srv">
+	<xs:include schemaLocation="../iso19139/schema/gmd/metadataApplication.xsd"/>
+	<xs:import namespace="http://www.isotc211.org/2005/srv" schemaLocation="../iso19139/schema/srv/srv.xsd"/>
+	<xs:import namespace="http://www.isotc211.org/2005/gmx" schemaLocation="../iso19139/schema/gmx/gmx.xsd"/>
 </xs:schema>
