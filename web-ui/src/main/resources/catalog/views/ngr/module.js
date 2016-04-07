@@ -206,12 +206,21 @@
       $scope.activeTab = $location.path().
           match(/^(\/[a-zA-Z0-9]*)($|\/.*)/)[1];
 
+      var availableTabs = ['general', 'metadata', 'relations', 'inspire'];
+      $scope.changeTabMdView =function(newTab) {
+        if (availableTabs.indexOf(newTab) == -1) {
+          newTab = availableTabs[0];
+        }
+        $location.search('tab', newTab);
+      };
+
       $scope.$on('$locationChangeSuccess', function(next, current) {
         $scope.activeTab = $location.path().
             match(/^(\/[a-zA-Z0-9]*)($|\/.*)/)[1];
 
         var search = $location.search();
-        if (search.tab) {
+
+        if (search.tab && availableTabs.indexOf(search.tab) != -1) {
           $scope.currentTabMdView = search.tab;
         } else {
           $scope.currentTabMdView = 'general';

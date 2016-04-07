@@ -77,7 +77,11 @@
         }
       };
       this.removeParams = function() {
+        var search = $location.search();
         $location.search('');
+        if (search.tab) {
+          $location.search('tab', search.tab);
+        }
       };
       this.getParams = function() {
         return $location.search();
