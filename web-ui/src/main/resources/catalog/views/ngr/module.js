@@ -17,6 +17,10 @@
        'cookie_warning', 'gn_mdactions_directive', 'ngr_search_controller', 'ngr_multi_location_directive']);
 
 
+  module.filter('escape', function() {
+    return window.encodeURIComponent;
+  });
+
   module.controller('gnsSearchPopularController', [
     '$scope', 'gnSearchSettings',
     function($scope, gnSearchSettings) {
@@ -76,6 +80,7 @@
       $scope.gnWmsQueue = gnWmsQueue;
       $scope.$location = $location;
       $scope.activeTab = '/home';
+      $scope.currentTabMdView = 'general';
       $scope.resultTemplate = gnSearchSettings.resultTemplate;
       $scope.location = gnSearchLocation;
 
@@ -204,6 +209,14 @@
       $scope.$on('$locationChangeSuccess', function(next, current) {
         $scope.activeTab = $location.path().
             match(/^(\/[a-zA-Z0-9]*)($|\/.*)/)[1];
+
+        var search = $location.search();
+        if (search.tab) {
+          $scope.currentTabMdView = search.tab;
+          console.log("CurrentTabMdView: " + $scope.currentTabMdView);
+        } else {
+          $scope.currentTabMdView = 'general';
+        }
 
         if (gnSearchLocation.isSearch() && (!angular.isArray(
             searchMap.getSize()) || searchMap.getSize().indexOf(0) >= 0)) {

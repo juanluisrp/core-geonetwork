@@ -1,4 +1,4 @@
-<div data-ng-controller="GnMdViewController">
+<div data-ng-controller="GnMdViewController" class="ngr-md-view">
 
 <div style="padding:20px;margin:-25px -10px 25px 0px;background-color:#F6D4B1;font-weight:bold">/ Home / Catalogus / {{mdView.current.record.title || mdView.current.record.defaultTitle}}</div>
 
@@ -79,10 +79,10 @@
 		
 	<div class="row">
 		<div class="col-xs-12">
-			<h1 style="margin-top:32px;margin-bottom:32px;font-size:42px;font-weight:bold">
-			  <i class="fa gn-icon-{{mdView.current.record.type[0]}}"/>
+			<h1 class="md-title-header">
+			  <i class="fa" data-ng-class="'gn-icon-' + mdView.current.record.type[0]"/>
 			  {{mdView.current.record.title || mdView.current.record.defaultTitle}} 
-			  <span data-gn-metadata-rate="mdView.current.record" style="font-size:24px;"/>
+			  <span data-gn-metadata-rate="mdView.current.record" class="rate-control"/>
 			</h1>
 		</div>
 	</div>
@@ -93,23 +93,20 @@
       <div class="col-md-8 gn-record">
         
 		<div class="row">
-		
-        <!--<div class="pull-right">
-          <i class="fa fa-calendar"></i>&nbsp;
-          <span data-translate="">updatedOn</span>
-          <span data-gn-humanize-time="{{mdView.current.record['geonet:info'].changeDate}}"
-                data-from-now=""></span>
-        </div>
-        <div style="clear:both"></div>-->
 
-        <div data-ng-bind-html="mdView.current.record.abstract | newlines" style="margin-bottom:32px"></div>
+        <div data-ng-bind-html="mdView.current.record.abstract | newlines" class="abstract"></div>
 
 		</div>
 		
 		<div class="row share-banner">
   		  <div class="col-xs-12">
 			
-			<div class="pull-right"><a href data-ng-click="onlinesrcService.onOpenPopup('feedback')" class="btn btn-link btn-sm"><i class="fa fa-fw fa-comments-o"></i> Terugmelden</a></div>
+			<div class="pull-right">
+                <a href data-ng-click="onlinesrcService.onOpenPopup('feedback')" class="btn btn-link btn-sm">
+                    <i class="fa fa-fw fa-comments-o"></i>
+                    Terugmelden
+                </a>
+            </div>
             
             <b data-translate="">shareOn</b>:
           
@@ -131,26 +128,30 @@
 		
 		
   <!-- Nav tabs -->
-  <ul class="nav nav-tabs" role="tablist">
-    <li role="presentation" class="active"><a href="#/metadata/{{mdView.current.record['geonet:info'].uuid}}?tab=general" aria-controls="general" role="tab" data-toggle="tab">Algemeen</a></li>
-    <li role="presentation"><a href="#/metadata/{{mdView.current.record['geonet:info'].uuid}}?tab=metadata" aria-controls="metadata" role="tab" data-toggle="tab">Metadata</a></li>
-    <li role="presentation"><a href="#/metadata/{{mdView.current.record['geonet:info'].uuid}}?tab=relations" aria-controls="relations" role="tab" data-toggle="tab">Downloads & links <!-- todo: add the number of downloads here --></a></li>
-    <li role="presentation"><a href="#/metadata/{{mdView.current.record['geonet:info'].uuid}}?tab=inspire" aria-controls="inspire" role="tab" data-toggle="tab">INSPIRE</a></li>
+  <ul class="nav nav-tabs">
+    <li data-ng-class="{active: currentTabMdView === 'general'}"><a ng-href="#/metadata/{{mdView.current.record['geonet:info'].uuid}}?tab=general"
+                          aria-controls="general">Algemeen</a></li>
+    <li data-ng-class="{active: currentTabMdView === 'metadata'}"><a ng-href="#/metadata/{{mdView.current.record['geonet:info'].uuid}}?tab=metadata"
+           aria-controls="metadata">Metadata</a></li>
+    <li data-ng-class="{active: currentTabMdView === 'relations'}"><a ng-href="#/metadata/{{mdView.current.record['geonet:info'].uuid}}?tab=relations"
+           aria-controls="relations">Downloads & links <!-- todo: add the number of downloads here --></a></li>
+    <li data-ng-class="{active: currentTabMdView === 'inspire'}"><a ng-href="#/metadata/{{mdView.current.record['geonet:info'].uuid}}?tab=inspire"
+           aria-controls="inspire" >INSPIRE</a></li>
   </ul>
 
   <!-- Tab panes -->
   <div class="tab-content" style="margin-top:15px">
-    <div role="tabpanel" class="tab-pane active" id="general">
-	
+    <div role="tabpanel" class="tab-pane" id="general"data-ng-class="{active: currentTabMdView === 'general'}" data-ng-show="currentTabMdView === 'general'">
+
 	<h2 data-translate="">aboutThisResource</h2>
-	
+
 	<div class="row" data-ng-if="mdView.current.record.category.length > 0 ||
                       mdView.current.record.topicCat.length > 0">
 			<div class="col-md-4" data-translate="">listOfCategories</div>
 			<div class="col-md-8">
 				<a style="margin-right:3px" data-ng-repeat="cat in mdView.current.record.category"
                    data-ng-href="#/search?_cat={{cat}}">
-					
+
 					{{cat | translate}}
                 </a>
 
@@ -158,46 +159,46 @@
                    data-ng-href="#/search?topicCat={{t}}">
                   <i class="fa gn-icon-{{t}}"></i>
                     {{t | translate}}
-                 
+
                 </a></div>
 		</div>
-		
-		
+
+
 		<div class="row" data-ng-if="mdView.current.record.keyword">
 			<div class="col-md-4" data-translate="">keywords</div>
 			<div class="col-md-8">
 				<a style="margin-right:3px" data-ng-repeat="k in mdView.current.record.keyword track by $index" href="#/search?any={{k}}">
                     {{k}}</a></div>
 		</div>
-		
+
 		<div class="row" data-ng-if="mdView.current.record.datasetLang">
 			<div class="col-md-4" data-translate="">language</div>
 			<div class="col-md-8"><span data-ng-repeat="l in mdView.current.record.datasetLang">
                     {{l | translate}}
                   </span></div>
 		</div>
-		
+
 		<div class="row" data-ng-if="mdView.current.record.classification_text">
 			<div class="col-md-4" data-translate="">classification</div>
 			<div class="col-md-8">{{mdView.current.record.classification_text}}</div>
 		</div>
-		
+
 		<div class="row" data-ng-if="mdView.current.record.resourceConstraints">
 			<div class="col-md-4" data-translate="">resourceConstraints</div>
 			<div class="col-md-8"> <span data-ng-repeat="c in mdView.current.record.resourceConstraints track by $index">{{c}}<br/></span></div>
 		</div>
-		
+
 		<div class="row" data-ng-if="mdView.current.record.legalConstraints">
 			<div class="col-md-4" data-translate="">legalConstraints</div>
 			<div class="col-md-8"><span data-ng-repeat="c in mdView.current.record.legalConstraints track by $index">{{c}}<br/></span></div>
 		</div>
-		
-		
+
+
 		<div class="row" data-ng-if="mdView.current.record.status_text.length > 0">
 			<div class="col-md-4" data-translate="">resourceStatus</div>
 			<div class="col-md-8"><span data-ng-repeat="s in mdView.current.record.status_text">{{s}}</span></div>
 		</div>
-		
+
 		<section data-ng-if="mdView.current.record.creationDate ||
                              mdView.current.record.publicationDate ||
                              mdView.current.record.revisionDate ||
@@ -235,10 +236,10 @@
             </dl>
           </p>
         </section></br>
-		
-	
+
+
         <h2 data-translate="">technicalInformation</h2>
-		
+
         <div data-ng-if="mdView.current.record['geonet:info'].schema === 'iso19110'"
              data-gn-attribute-table-renderer="mdView.current.record.attributeTable">
         </div>
@@ -247,7 +248,7 @@
 			<div class="col-md-4" data-translate="">updateFrequency</div>
 			<div class="col-md-8">{{mdView.current.record.maintenanceAndUpdateFrequency_text}}</div>
 		</div>
-		
+
 		<div class="row" data-ng-if="mdView.current.record.spatialRepresentationType">
 			<div class="col-md-4" data-translate="">spatialRepresentationType</div>
 			<div class="col-md-8">{{mdView.current.record.spatialRepresentationType_text}}</div>
@@ -273,12 +274,12 @@
 			<div class="col-md-4" data-translate="">lineage</div>
 			<div class="col-md-8"><span data-ng-bind-html="mdView.current.record.lineage | newlines"/></div>
 		</div>
-		
+
 		<div data-gn-related="mdView.current.record"
                      data-types="source"
                      data-title="{{'sourceDatasets' | translate}}">
                 </div>
-				
+
         <div data-gn-related="mdView.current.record"
              data-types="fcat"
              data-title="{{'featureCatalog' | translate}}">
@@ -288,16 +289,16 @@
              data-title="{{'siblings' | translate}}">
         </div>
 
-       
+
 	</div>
-    <div role="tabpanel" class="tab-pane" id="metadata">
+    <div role="tabpanel" class="tab-pane" id="metadata" data-ng-class="{active: currentTabMdView === 'metadata'}" data-ng-show="currentTabMdView === 'metadata'">
 
         <a class="btn btn-default btn-sm"
            data-ng-href="xml.metadata.get?id={{mdView.current.record.getId()}}">
           <i class="fa fa-file-code-o"/>
           <span data-translate="">metadataInXML</span>
         </a>
-		
+
 		<div class="row">
 			<div class="col-md-4" data-translate="">contact</div>
 			<div class="col-md-8"><div data-ng-if="mdView.current.record.getContacts().metadata">
@@ -314,11 +315,11 @@
 			<div class="col-md-4" data-translate="">uuid</div>
 			<div class="col-md-8">{{mdView.current.record['geonet:info'].uuid}}</div>
 		</div>
-	
+
 	</div>
-    <div role="tabpanel" class="tab-pane" id="relations">
-	
-	
+    <div role="tabpanel" class="tab-pane" id="relations" data-ng-class="{active: currentTabMdView === 'relations'}" data-ng-show="currentTabMdView === 'relations'">
+
+
 		<div data-gn-related="mdView.current.record" style="border:none"
              data-types="online"
              data-title="{{'downloadsAndResources' | translate}}">
@@ -328,22 +329,22 @@
              data-types="parent|children|service|dataset"
              data-title="{{'associatedResources' | translate}}">
         </div>
-		
+
         <section data-ng-if="mdView.current.record.contacts.resource">
           <h4>
             <i class="fa fa-fw fa-envelope"></i>
             <span data-translate="">contact</span>
           </h4>
-       
+
             {{mdView.current.record.contacts.resource}}
-          
+
         </section></br>
-	
+
 	</div>
-    <div role="tabpanel" class="tab-pane" id="inspire">
-		
+    <div role="tabpanel" class="tab-pane" id="inspire" data-ng-class="{active: currentTabMdView === 'inspire'}" data-ng-show="currentTabMdView === 'inspire'">
+
 		<div data-ng-if="mdView.current.record.inspirethemewithac.length > 0 ||
-                          mdView.current.record.inspirethemewithac.length > 0" class="row">
+                         mdView.current.record.inspirethemewithac.length > 0" class="row">
 			<div class="col-md-4" data-translate="">inspireThemes</div>
 			<div class="col-md-8">
 				<a data-ng-repeat="cat in mdView.current.record.inspirethemewithac"
@@ -352,7 +353,7 @@
                   <div class="icon"><span class="iti-{{cat.split('|')[0]}}"></span> {{cat.split('|')[1]}}</a></div>
 			</div>
 		</div>
-		
+
 	</div>
   </div>
 
