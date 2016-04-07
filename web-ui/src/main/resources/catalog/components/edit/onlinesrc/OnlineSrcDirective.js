@@ -1,3 +1,26 @@
+/*
+ * Copyright (C) 2001-2016 Food and Agriculture Organization of the
+ * United Nations (FAO-UN), United Nations World Food Programme (WFP)
+ * and United Nations Environment Programme (UNEP)
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or (at
+ * your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA
+ *
+ * Contact: Jeroen Ticheler - FAO - Viale delle Terme di Caracalla 2,
+ * Rome - Italy. email: geonetwork@osgeo.org
+ */
+
 (function() {
   goog.provide('gn_onlinesrc_directive');
 
@@ -110,29 +133,30 @@
         }])
 
       /**
-   * @ngdoc directive
-   * @name gn_onlinesrc.directive:gnAddOnlinesrc
-   * @restrict A
-   * @requires gnOnlinesrc
-   * @requires gnOwsCapabilities
-   * @requires gnEditor
-   * @requires gnCurrentEdit
-   *
-   * @description
-   * The `gnAddOnlinesrc` directive provides a form to add a new online resource
-   * to the currend metadata. Depending on the protocol :
-   * <ul>
-   *  <li>DOWNLOAD : we upload a data from the disk.</li>
-   *  <li>OGC:WMS : we call a capabilities on the given url,
-   *  then the user can add
-   *    several resources (layers) at the same time.</li>
-   *  <li>Others : we just fill the form and call a batch processing.</li>
-   * </ul>
-   *
-   * On submit, the metadata is saved, the thumbnail is added, then the form
-   * and online resource list are refreshed.
-   */
-  .directive('gnAddOnlinesrc', [
+     * @ngdoc directive
+     * @name gn_onlinesrc.directive:gnAddOnlinesrc
+     * @restrict A
+     * @requires gnOnlinesrc
+     * @requires gnOwsCapabilities
+     * @requires gnEditor
+     * @requires gnCurrentEdit
+     *
+     * @description
+     * The `gnAddOnlinesrc` directive provides a form to add a
+     * new online resource
+     * to the currend metadata. Depending on the protocol :
+     * <ul>
+     *  <li>DOWNLOAD : we upload a data from the disk.</li>
+     *  <li>OGC:WMS : we call a capabilities on the given url,
+     *  then the user can add
+     *    several resources (layers) at the same time.</li>
+     *  <li>Others : we just fill the form and call a batch processing.</li>
+     * </ul>
+     *
+     * On submit, the metadata is saved, the thumbnail is added, then the form
+     * and online resource list are refreshed.
+     */
+    .directive('gnAddOnlinesrc', [
         'gnOnlinesrc',
         'gnOwsCapabilities',
         'gnWfsService',
@@ -146,8 +170,8 @@
         '$timeout',
         '$http',
         function(gnOnlinesrc, gnOwsCapabilities, gnWfsService,
-                 gnEditor, gnCurrentEdit, gnMap, gnGlobalSettings, Metadata,
-                 $rootScope, $translate, $timeout, $http) {
+            gnEditor, gnCurrentEdit, gnMap, gnGlobalSettings, Metadata,
+            $rootScope, $translate, $timeout, $http) {
           return {
             restrict: 'A',
             templateUrl: '../../catalog/components/edit/onlinesrc/' +
@@ -758,9 +782,9 @@
                 };
 
                 scope.generateThumbnail = function() {
-                  return $http.put('../api/0.1/metadata/' +
+                  return $http.put('../api/0.1/records/' +
                       scope.gnCurrentEdit.uuid +
-                      '/resources/actions/save-thumbnail', null, {
+                      '/attachments/actions/save-thumbnail', null, {
                         params: {
                           jsonConfig: angular.fromJson(scope.jsonSpec)
                         }
@@ -944,7 +968,7 @@
                     if (scope.OGCProtocol == 'WMS') {
                       return gnOwsCapabilities.getWMSCapabilities(
                           scope.params.url)
-                        .then(function(capabilities) {
+                      .then(function(capabilities) {
                             scope.layers = [];
                             scope.isUrlOk = true;
                             angular.forEach(capabilities.layers, function(l) {
@@ -958,7 +982,7 @@
                     } else if (scope.OGCProtocol == 'WFS') {
                       return gnWfsService.getCapabilities(
                           scope.params.url)
-                        .then(function(capabilities) {
+                      .then(function(capabilities) {
                             scope.layers = [];
                             scope.isUrlOk = true;
                             angular.forEach(
@@ -1107,27 +1131,27 @@
         }])
 
       /**
-   * @ngdoc directive
-   * @name gn_onlinesrc.directive:gnLinkServiceToDataset
-   * @restrict A
-   * @requires gnOnlinesrc
-   * @requires gnOwsCapabilities
-   * @requires Metadata
-   * @requires gnCurrentEdit
-   *
-   * @description
-   * The `gnLinkServiceToDataset` directive provides a
-   * form to either add a service
-   * to a metadata of type dataset, or to add a dataset to a
-   * metadata of service.
-   * The process will update both of the metadatas, the current
-   * one and the one it
-   * is linked to.
-   *
-   * On submit, the metadata is saved, the thumbnail is added, then the form
-   * and online resource list are refreshed.
-   */
-  .directive('gnLinkServiceToDataset', [
+     * @ngdoc directive
+     * @name gn_onlinesrc.directive:gnLinkServiceToDataset
+     * @restrict A
+     * @requires gnOnlinesrc
+     * @requires gnOwsCapabilities
+     * @requires Metadata
+     * @requires gnCurrentEdit
+     *
+     * @description
+     * The `gnLinkServiceToDataset` directive provides a
+     * form to either add a service
+     * to a metadata of type dataset, or to add a dataset to a
+     * metadata of service.
+     * The process will update both of the metadatas, the current
+     * one and the one it
+     * is linked to.
+     *
+     * On submit, the metadata is saved, the thumbnail is added, then the form
+     * and online resource list are refreshed.
+     */
+    .directive('gnLinkServiceToDataset', [
         'gnOnlinesrc',
         'Metadata',
         'gnOwsCapabilities',
@@ -1136,7 +1160,7 @@
         '$translate',
         'gnGlobalSettings',
         function(gnOnlinesrc, Metadata, gnOwsCapabilities,
-                 gnCurrentEdit, $rootScope, $translate, gnGlobalSettings) {
+            gnCurrentEdit, $rootScope, $translate, gnGlobalSettings) {
           return {
             restrict: 'A',
             scope: {},
@@ -1167,12 +1191,35 @@
                     };
                     scope.$broadcast('resetSearch', searchParams);
                     scope.layers = [];
+                    // Load service layers on load
+                    if (scope.mode !== 'service') {
+                      // TODO: Check the appropriate WMS service
+                      // or list URLs if many
+                      // TODO: If service URL is added, user need to reload
+                      // editor to get URL or current record.
+                      var links = [];
+                      links = links.concat(
+                          gnCurrentEdit.metadata.getLinksByType('OGC:WMS'));
+                      links = links.concat(
+                          gnCurrentEdit.metadata.getLinksByType('wms'));
+                      if (angular.isArray(links) && links.length == 1) {
+                        var serviceUrl = links[0].url;
+                        scope.loadCurrentLink(serviceUrl);
+                        scope.srcParams.url = serviceUrl;
+                        scope.srcParams.protocol = links[0].protocol || '';
+                        scope.srcParams.uuidSrv = gnCurrentEdit.uuid;
+                      } else {
+                        scope.alertMsg =
+                            $translate('linkToServiceWithoutURLError');
+                      }
+                    }
                   });
 
                   // This object is used to share value between this
                   // directive and the SearchFormController scope that
                   // is contained by the directive
                   scope.stateObj = {};
+                  scope.currentMdTitle = null;
 
                   /**
                    * loadCurrentLink
@@ -1184,7 +1231,7 @@
                   scope.loadCurrentLink = function(url) {
                     scope.alertMsg = null;
                     return gnOwsCapabilities.getWMSCapabilities(url)
-                        .then(function(capabilities) {
+                    .then(function(capabilities) {
                           scope.layers = [];
                           scope.srcParams.selectedLayers = [];
                           scope.layers.push(capabilities.Layer[0]);
@@ -1203,13 +1250,15 @@
                    * layers grid).
                    */
                   scope.$watchCollection('stateObj.selectRecords', function() {
+                    scope.currentMdTitle = null;
                     if (!angular.isUndefined(scope.stateObj.selectRecords) &&
                         scope.stateObj.selectRecords.length > 0) {
                       var md = new Metadata(scope.stateObj.selectRecords[0]);
-                      var links = [];
-                      scope.layers = [];
-                      scope.srcParams.selectedLayers = [];
+                      scope.currentMdTitle = md.title || md.defaultTitle;
                       if (scope.mode == 'service') {
+                        var links = [];
+                        scope.layers = [];
+                        scope.srcParams.selectedLayers = [];
                         // TODO: WFS ?
                         links = links.concat(md.getLinksByType('OGC:WMS'));
                         links = links.concat(md.getLinksByType('wms'));
@@ -1224,27 +1273,8 @@
                           scope.alertMsg =
                               $translate('linkToServiceWithoutURLError');
                         }
-                      }
-                      else {
-                        // TODO: Check the appropriate WMS service
-                        // or list URLs if many
-                        // TODO: If service URL is added, user need to reload
-                        // editor to get URL or current record.
-                        links = links.concat(
-                            gnCurrentEdit.metadata.getLinksByType('OGC:WMS'));
-                        links = links.concat(
-                            gnCurrentEdit.metadata.getLinksByType('wms'));
-                        if (angular.isArray(links) && links.length == 1) {
-                          var serviceUrl = links[0].url;
-                          scope.loadCurrentLink(serviceUrl);
-                          scope.srcParams.url = serviceUrl;
-                          scope.srcParams.protocol = links[0].protocol || '';
-                          scope.srcParams.uuidDS = md.getUuid();
-                          scope.srcParams.uuidSrv = gnCurrentEdit.uuid;
-                        } else {
-                          scope.alertMsg =
-                              $translate('linkToServiceWithoutURLError');
-                        }
+                      } else {
+                        scope.srcParams.uuidDS = md.getUuid();
                       }
                     }
                   });
@@ -1271,27 +1301,27 @@
         }])
 
       /**
-   * @ngdoc directive
-   * @name gn_onlinesrc.directive:gnLinkToMetadata
-   * @restrict A
-   * @requires gnOnlinesrc
-   * @requires $translate
-   *
-   * @description
-   * The `gnLinkServiceToDataset` directive provides
-   * a form to link one metadata to
-   * another as :
-   * <ul>
-   *  <li>parent</li>
-   *  <li>feature catalog</li>
-   *  <li>source dataset</li>
-   * </ul>
-   * The directive contains a search form allowing one local selection.
-   *
-   * On submit, the metadata is saved, the link is added,
-   * then the form and online resource list are refreshed.
-   */
-  .directive('gnLinkToMetadata', [
+     * @ngdoc directive
+     * @name gn_onlinesrc.directive:gnLinkToMetadata
+     * @restrict A
+     * @requires gnOnlinesrc
+     * @requires $translate
+     *
+     * @description
+     * The `gnLinkServiceToDataset` directive provides
+     * a form to link one metadata to
+     * another as :
+     * <ul>
+     *  <li>parent</li>
+     *  <li>feature catalog</li>
+     *  <li>source dataset</li>
+     * </ul>
+     * The directive contains a search form allowing one local selection.
+     *
+     * On submit, the metadata is saved, the link is added,
+     * then the form and online resource list are refreshed.
+     */
+    .directive('gnLinkToMetadata', [
         'gnOnlinesrc', '$translate', 'gnGlobalSettings',
         function(gnOnlinesrc, $translate, gnGlobalSettings) {
           return {
@@ -1355,22 +1385,23 @@
         }])
 
       /**
-   * @ngdoc directive
-   * @name gn_onlinesrc.directive:gnLinkToSibling
-   * @restrict A
-   * @requires gnOnlinesrc
-   *
-   * @description
-   * The `gnLinkToSibling` directive provides a form to link siblings to the
-   * current metdata. The user need to specify Association type and
-   * Initiative type
-   * to be able to add a metadata to his selection. The process alow a multiple
-   * selection.
-   *
-   * On submit, the metadata is saved, the resource is associated, then the form
-   * and online resource list are refreshed.
-   */
-  .directive('gnLinkToSibling', ['gnOnlinesrc', 'gnGlobalSettings',
+     * @ngdoc directive
+     * @name gn_onlinesrc.directive:gnLinkToSibling
+     * @restrict A
+     * @requires gnOnlinesrc
+     *
+     * @description
+     * The `gnLinkToSibling` directive provides a form to link siblings to the
+     * current metadata. The user need to specify Association type and
+     * Initiative type
+     * to be able to add a metadata to his selection. The process allow
+     * a multiple selection.
+     *
+     * On submit, the metadata is saved, the resource is associated,
+     * then the form
+     * and online resource list are refreshed.
+     */
+    .directive('gnLinkToSibling', ['gnOnlinesrc', 'gnGlobalSettings',
         function(gnOnlinesrc, gnGlobalSettings) {
           return {
             restrict: 'A',
@@ -1421,23 +1452,23 @@
                    */
                   scope.addToSelection =
                       function(md, associationType, initiativeType) {
-                        if (associationType) {
-                          var idx = findObj(md);
-                          if (idx < 0) {
-                            scope.selection.push({
-                              md: md,
-                              associationType: associationType,
-                              initiativeType: initiativeType || ''
-                            });
-                          }
-                          else {
-                            angular.extend(scope.selection[idx], {
-                              associationType: associationType,
-                              initiativeType: initiativeType || ''
-                            });
-                          }
-                        }
-                      };
+                    if (associationType) {
+                      var idx = findObj(md);
+                      if (idx < 0) {
+                        scope.selection.push({
+                          md: md,
+                          associationType: associationType,
+                          initiativeType: initiativeType || ''
+                        });
+                      }
+                      else {
+                        angular.extend(scope.selection[idx], {
+                          associationType: associationType,
+                          initiativeType: initiativeType || ''
+                        });
+                      }
+                    }
+                  };
 
                   /**
                    * Remove a record from the selection
