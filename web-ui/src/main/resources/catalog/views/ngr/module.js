@@ -213,7 +213,6 @@
         var search = $location.search();
         if (search.tab) {
           $scope.currentTabMdView = search.tab;
-          console.log("CurrentTabMdView: " + $scope.currentTabMdView);
         } else {
           $scope.currentTabMdView = 'general';
         }
