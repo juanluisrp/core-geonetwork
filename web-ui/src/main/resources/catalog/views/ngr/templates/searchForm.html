@@ -20,14 +20,17 @@
      </div>
 	<div class="col-md-3">
 	    <div class="form-group has-feedback">
-		    <label for="location">Op welke locatie?</label>
-              <input type="text"
-                     id="location"
-                     class="form-control input-lg">
-		    <span class="form-control-feedback">
-			    <i class="fa fa-map-marker fa-2x"></i>
-		    </span>
-        </div>
+				<label for="loc" data-translate="">AtLocation</label>
+				<select multiple
+						class="form-control input-lg"
+						id="loc"
+						data-ngr-multi-location
+						data-thesaurus-key="external.place.administrativeAreas"
+						data-bboxes="searchObj.params.bboxes"></select>
+				<span class="form-control-feedback">
+					<i class="fa fa-map-marker fa-2x"></i>
+				</span>
+		</div>
     </div>
 	<div class="col-md-4">
 	 <div class="form-group" style="margin-top:25px">
