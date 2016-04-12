@@ -1,4 +1,5 @@
 @import "../../../style/gn_search.less";
+@import "../../../style/gn_search.less";
 @import "../../../style/gn_metadata.less";
 
 /* Hide the tabset selector because tab
@@ -513,7 +514,6 @@ ul.gn-resultview {
   }
 }
 
-
 .gn-search-map [ngeo-map] {
 	display:block;
 	position:absolute !important;
@@ -524,37 +524,78 @@ ul.gn-resultview {
 	margin: inherit;
 }
 
-.has-feedback .fa-2x {
-    padding-top: 7px;
-}
-
-.bootstrap-tagsinput{
-    padding-right: 42.5px;
-    border: 1px solid #E26F02 !important;
-    min-height: 46px !important;
+.bootstrap-tagsinput {
+	border: 1px solid #E26F02 !important;
+	min-height: 46px !important;
     padding: 10px 16px;
-    font-size: 18px;
-    line-height: 1.33;
     border-radius: 6px;
-
-    display: block;
-    width: 100%;
-    height: 34px;
-    padding: 6px 12px;
-    font-size: 14px;
-    line-height: 1.428571429;
-    color: #555555;
-    background-color: #fff;
-    background-image: none;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-    -webkit-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
-    transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
-
+}
+.footer a {
+	color:white;
+    text-decoration: none;
 }
 
+.has-feedback .fa-2x {
+	padding-top:7px;
+}
+
+
+
+.gn-scroll-spy { display:none; }
+
+.gn-facet-label {
+	text-transform:capitalize
+}
+
+#btn-advanced-search.active {
+	background-color: #FAE2CB;
+	-webkit-box-shadow: none; 
+	box-shadow: none; 
+}
+#pnl-advanced-search {
+	background-color:#FAE2CB;
+	margin-right:-20px;
+	margin-left:-20px;
+	margin-top:0px;
+	padding:15px 10px 15px 10px;
+	margin-bottom:-20px;
+}
+
+.ngr-md-view {
+	.md-title-header {
+		margin-top: 32px;
+		margin-bottom: 32px;
+		font-size: 42px;
+		font-weight: bold;
+	}
+
+	.rate-control {
+		font-size: 24px;
+	}
+	.abstract {
+		margin-bottom: 32px;
+	}
+
+	.gn-record .row {padding-bottom:3px;}
+	.gn-record h1{font-size:20px;}
+	.gn-record h2{font-size:16px;font-weight:bold;}
+	.gn-record h3{font-size:16px;font-weight:bold;}
+	.gn-record h4{font-size:14px;font-weight:bold;}
+
+	.share-banner {
+    color: white;
+    background-color: #0075A3;
+    margin: 20px 0px;
+    font-size:12px;
+  a {
+    color:white;
+    :hover {
+      color:eef;
+    }
+  }
+}
+	
+}
 
 @import "gn_view_ngr.less";
 
