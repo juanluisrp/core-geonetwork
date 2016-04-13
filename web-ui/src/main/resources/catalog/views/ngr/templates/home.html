@@ -43,7 +43,7 @@
     <div class="row" style="padding-top:20px">
 	<div class="col-sm-12" style="text-align:center"><h3 style="padding-bottom:20px;">Bekijk één van de categorieën</h3></div>
             <div data-ng-repeat="(key, facet) in searchInfo.facet['topicCats']"
-                 class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                 class="col-xs-12 col-sm-6 col-md-4 col-lg-3" data-ng-show="facet['@label'].length>0">
 				 <div style="height:40px">
               <a data-ng-href="#/search?topicCat={{facet['@name']}}" style="color:black;font-size:12px" >
                 <div class="pull-left"><i class="fa gn-icon gn-icon-{{facet['@name']}} fa-2x fa-fw" style="vertical-align: middle"></i></div>
