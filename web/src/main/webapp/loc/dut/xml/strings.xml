@@ -1420,13 +1420,6 @@
 	<tag_label>Tags</tag_label>
 	<map_label>Map</map_label>
     <unknown>Unknown</unknown>
-	
-	<useLimitation>Gebruiksbeperkingen</useLimitation>
-	<accessConstraints>Toegangsbeperkingen</accessConstraints>
-	<DataQuality>Data kwaliteit</DataQuality>
-	<alternateTitle>Alternatieve titel</alternateTitle>
-	<purpose>Doel van vervaardiging</purpose>
-	<supplementalInformation>Extra informatie</supplementalInformation>
-	<edition>Versie</edition>
+
 	
 </strings>
