@@ -1244,16 +1244,14 @@
       </modules>
     </profile>
   </profiles>
-  <distributionManagement>
-    <repository>
-      <id>releases-repo</id>
-      <name>Nexus Releases Repo</name>
-      <url>
-      http://mvnrepository.so.kadaster.nl:8081/nexus/content/repositories/releases/
-      </url>
-    </repository>
-  </distributionManagement>
-  <!--distributionManagement>
+	<distributionManagement>
+        <repository>
+            <id>releases-repo</id>
+            <name>Artifactory Releases Repo</name>
+            <url>http://ota-portal.so.kadaster.nl/artifactory/mvn-release-local/</url>
+        </repository>
+   </distributionManagement> 
+   <!--distributionManagement>
     <snapshotRepository>
       <id>scp-repository.geonetwork-opensource.org</id>
       <name>GeoNetwork opensource repositories</name>
