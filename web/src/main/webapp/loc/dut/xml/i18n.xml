@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<i18n>
+  <viewInGE>Bekijk in Google Earth</viewInGE>
+  <warning>Waarschuwing!</warning>
+  <addA>Toevoegen </addA>
+  <nojs>Javascript is niet actief. Klik <a
+    href="catalog.search.nojs">hier</a>.</nojs>
+  <selectView>Kies weergave</selectView>
+  <moreTabs>Meer informatie</moreTabs>
+  <nodeChangeWarning>Node Change Warning</nodeChangeWarning>
+  <nodeChangeInfo>Warning: You are no longer in the same node that you logged into.</nodeChangeInfo>
+  <nodeChangeBack>If you would like to return to the node you logged into click:</nodeChangeBack>
+  <nodeChangeForward>If you would like to logout and return to the previous url click:</nodeChangeForward>
+  <serviceNotAllowedTitle>Pagina niet beschikbaar</serviceNotAllowedTitle>
+  <serviceNotAllowed>Pagina {1} bestaat niet, of u heeft geen rechten deze te bekijken.</serviceNotAllowed>
+  <linkToHome><span>Open de <a href="../..">home pagina</a>.</span></linkToHome>
+</i18n>
