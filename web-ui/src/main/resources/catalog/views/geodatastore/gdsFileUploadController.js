@@ -57,7 +57,7 @@
         autoUpload: true,
         done: successfulUpload,
         fail: failedUpload,
-        maxFileSize: 524300000,
+        maxFileSize: 5243000000,
         minFileSize: 1,
         messages: {
           maxFileSize: $translate('maxFileSizeError'),
