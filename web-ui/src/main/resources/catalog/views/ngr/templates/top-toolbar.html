@@ -33,7 +33,7 @@
           <span  data-translate="">map</span>
         </a>
       </li>
-      <li data-ng-show="authenticated && user.isEditorOrMore()" class="dropdown" data-ng-show="authenticated && user.isEditorOrMore()">
+      <li id="bijdrageLnk" data-ng-show="authenticated && user.isEditorOrMore()" class="dropdown" data-ng-show="authenticated && user.isEditorOrMore()">
         <a data-gn-active-tb-item="catalog.edit" class="dropdown-toggle" data-toggle="dropdown"
            role="button" aria-expanded="false"
            title="{{'contribute' | translate}}">
@@ -49,7 +49,7 @@
         </a>
       </li>
           <li>
-            <a data-gn-active-tb-item="catalog.edit#/create">
+            <a id="addMetaData" data-gn-active-tb-item="catalog.edit#/create">
             <span data-translate="">addRecord</span>
             </a>
           </li>
@@ -108,7 +108,7 @@
 
     <ul class="nav navbar-nav navbar-right">
      <li class="dropdown" data-ng-show="authenticated">
-        <a href="" class="dropdown-toggle" data-toggle="dropdown"
+        <a id="userLnk" href="" class="dropdown-toggle" data-toggle="dropdown"
            role="button" aria-expanded="false">
            <i span="fa fa-user"></i> {{user.name}} {{user.surname}} <span class="caret"></span></a>
         <ul class="dropdown-menu" role="menu">
@@ -120,7 +120,7 @@
         </a>
       </li>
       <li data-ng-show="authenticated">
-        <a href="../../j_spring_security_logout"
+        <a id="signInLnk" href="../../j_spring_security_logout"
            title="{{'signout' | translate}}">
           
           {{'signout' | translate}}
