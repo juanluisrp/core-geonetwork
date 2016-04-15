@@ -1,6 +1,6 @@
 <div data-ng-controller="GnMdViewController" class="ngr-md-view">
 
-<div style="padding:20px;margin:-25px -10px 25px 0px;background-color:#F6D4B1;font-weight:bold">/ Home / Catalogus / {{mdView.current.record.title || mdView.current.record.defaultTitle}}</div>
+<div class="crumb"> <a href="#/home">Home</a> / <a href data-ng-click="closeRecord(mdView.current.record)">Zoeken</a> / {{mdView.current.record.title || mdView.current.record.defaultTitle}}</div>
 
   <div class="alert alert-warning"
        data-ng-hide="mdView.current.record"
