@@ -551,7 +551,7 @@
       <dependency>
         <groupId>log4j</groupId>
         <artifactId>log4j</artifactId>
-        <version>1.2.13</version>
+        <version>1.2.17</version>
       </dependency>
       <dependency>
         <groupId>org.apache.httpcomponents</groupId>
@@ -1146,6 +1146,12 @@
 
   <profiles>
     <profile>
+      <id>with-doc</id>
+      <modules>
+        <module>docs</module>
+      </modules>
+    </profile>
+    <profile>
       <id>all</id>
       <activation>
         <file>
@@ -1161,12 +1167,6 @@
         <module>e2e-tests</module>
         <!--<module>geoserver</module>-->
 	    <module>pdok-ngr-dar</module>
-      </modules>
-    </profile>
-    <profile>
-      <id>with-doc</id>
-      <modules>
-        <module>docs</module>
       </modules>
     </profile>
     <profile>
