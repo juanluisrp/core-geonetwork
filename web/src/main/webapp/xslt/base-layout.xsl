@@ -85,7 +85,7 @@
 				<div class="container">
 					<header data-ng-include="'{$uiResourcesPath}views/ngr/templates/header.html'"></header>
 							
-					<div class="navbar navbar-default gn-top-bar" role="navigation"
+					<div class="navbar navbar-default gn-top-bar" role="navigation" data-ng-hide="layout.hideTopToolBar"
 						 data-ng-include="'{$uiResourcesPath}views/ngr/templates/top-toolbar.html'"
 						 xmlns="http://www.w3.org/1999/html">
 					</div>

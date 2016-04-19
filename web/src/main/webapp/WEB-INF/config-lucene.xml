@@ -117,9 +117,11 @@
       <field name="_featured" tagName="featured"/>
       <field name="_owner" tagName="owner"/>
       <field name="_userinfo" tagName="userinfo"/>
+	  <field name="isPublishedToAll" tagName="isPublishedToAll"/>
       <field name="_ownername" tagName="ownername"/>
       <field name="_cat" tagName="category"/>
       <field name="topicCat" tagName="topicCat"/>
+	  <field name="inspiretheme" tagName="inspiretheme"/>
       <field name="inspirethemewithac" tagName="inspirethemewithac"/>
       <field name="_valid" tagName="valid"/>
       <field name="_valid_schematron-rules-geonetwork" tagName="valid_schematron-rules-geonetwork"/>
@@ -179,6 +181,10 @@
       <field name="standardName" tagName="standardName"/>
       <field name="_groupWebsite" tagName="groupWebsite"/>
       <field name="attributeTable" tagName="attributeTable"/>
+	  <field name="license" tagName="license"/>
+      <field name="licenseLink" tagName="licenseLink"/>
+      <field name="payment" tagName="payment"/>
+	  <field name="protocol" tagName="protocol"/>
     </dumpFields>
   </search>
 
