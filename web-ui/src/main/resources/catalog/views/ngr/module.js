@@ -82,8 +82,11 @@
       $scope.activeTab = '/home';
       $scope.currentTabMdView = 'general';
       $scope.resultTemplate = gnSearchSettings.resultTemplate;
+      $scope.facetsSummaryType = gnSearchSettings.facetsSummaryType;
       $scope.location = gnSearchLocation;
-
+      $scope.toggleMap = function () {
+        $(searchMap.getTargetElement()).toggle();
+      };
       hotkeys.bindTo($scope)
         .add({
             combo: 'h',
@@ -227,7 +230,7 @@
         }
 
         if (gnSearchLocation.isSearch() && (!angular.isArray(
-            searchMap.getSize()) || searchMap.getSize().indexOf(0) >= 0)) {
+            searchMap.getSize()) || searchMap.getSize()[0] < 0)) {
           setTimeout(function() {
             searchMap.updateSize();
 
