@@ -206,7 +206,7 @@
       $scope.activeTab = $location.path().
           match(/^(\/[a-zA-Z0-9]*)($|\/.*)/)[1];
 
-      var availableTabs = ['general', 'metadata', 'relations', 'inspire'];
+      var availableTabs = ['general', 'contact', 'relations', 'inspire'];
       $scope.changeTabMdView =function(newTab) {
         if (availableTabs.indexOf(newTab) == -1) {
           newTab = availableTabs[0];
