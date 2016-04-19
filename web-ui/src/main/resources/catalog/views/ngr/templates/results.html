@@ -2,6 +2,12 @@
      data-ng-search-form=""
      data-runSearch="true">
   <div data-ng-include="'../../catalog/views/ngr/templates/searchForm.html'"></div>
+  <div class="row">
+    Search parameters:
+    <pre>
+	  {{searchObj.params}}
+    </pre>
+  </div>
 
   <div style="padding:15px"></div>
   <div class="row"
