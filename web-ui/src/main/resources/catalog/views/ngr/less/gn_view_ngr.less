@@ -8,10 +8,6 @@
 
 html, body {
   height:100%;
-  background-image: url(../catalog/views/ngr/images/bg.jpg);
-   background-position: center top;
-   background-size: cover;
-   background-repeat: no-repeat;
 }
 
 .footer a {
@@ -43,15 +39,25 @@ background-color:#F6D4B1;
 }
 
 @font-face {
+    font-family: rijksoverheidsanstext-bold;
+    src: url(../catalog/views/ngr/images/rijksoverheidsanstext-bold.woff);
+}
+
+h1,h2,h3,h4,h5,h6 {
+    font-family: rijksoverheidsanstext-bold, sans, arial !important;
+	font-weight: bold;
+}
+
+@font-face {
     font-family: rijksoverheidsanstext-regular;
     src: url(../catalog/views/ngr/images/rijksoverheidsanstext-regular.woff);
 }
 
-body,p,h1,h2,h3,h4,h5,h6,div,span,a,blockquote {
+body,p,div,span,a,blockquote {
     font-family: rijksoverheidsanstext-regular, sans, arial !important;
 }
 
-.fa {
+.fa, .fa span, .fa div, .fa a {
 	font-family: FontAwesome !important;
 }
 
