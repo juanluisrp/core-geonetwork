@@ -35,13 +35,12 @@
 			<div class="form-group" style="margin-top:25px">
 				  <button class="btn btn-primary btn-lg"
 						  type="button" data-ng-click="performSearchHome()">
-					<i class="fa fa-search"></i> {{'search'|translate}			  </button>
+					<i class="fa fa-search"></i> {{'search'|translate}}</button>
 			</div>
 		</div>
-	</di>
+	</div>
 	<div class="row">
-		<pre>
-			{{searchHomeParams | j	<div class="col-sm-12" style="text-align:center"><h3 style="padding-bottom:20px;">Bekijk één van de categorieën</h3></div>
+		<div class="col-sm-12" style="text-align:center"><h3 style="padding-bottom:20px;">Bekijk één van de categorieën</h3></div>
             <div data-ng-repeat="(key, facet) in searchInfo.facet['topicCats']"
                  class="col-xs-12 col-sm-6 col-md-4 col-lg-3" data-ng-show="facet['@label'].length>0">
 				 <div style="height:40px">
@@ -51,14 +50,9 @@
                 ({{facet['@count']}})
               </a></div>
             </div>  
-    </div>t['@count']}})
-              </a></div>
-            </div>  
     </div>
- <div style="padding-bottom:80px"></div>
-</div>
-              </a></div>
-            </div>  
-    </div>
+             
+  
+ 
  <div style="padding-bottom:80px"></div>
 </div>
