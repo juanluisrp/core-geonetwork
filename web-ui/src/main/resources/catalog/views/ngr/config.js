@@ -15,9 +15,10 @@
         'gnMap',
         function(searchSettings, viewerSettings, gnOwsContextService, gnMap) {
           // Load the context defined in the configuration
-          viewerSettings.defaultContext =
+          /*viewerSettings.defaultContext =
             viewerSettings.mapConfig.viewerMap ||
-            '../../map/config-viewer.xml';
+            '../../map/config-viewer.xml';*/
+          viewerSettings.defaultContext = null;
 
           // Keep one layer in the background
           // while the context is not yet loaded.

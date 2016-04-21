@@ -27,7 +27,7 @@
   <groupId>org.geonetwork-opensource</groupId>
   <artifactId>geonetwork</artifactId>
   <packaging>pom</packaging>
-  <version>3.1.49-SNAPSHOT</version>
+  <version>3.1.62-SNAPSHOT</version>
   <name>GeoNetwork opensource</name>
   <description>GeoNetwork opensource is a standards based, Free and
     Open Source catalog application to manage spatially referenced
@@ -1185,15 +1185,14 @@
     </snapshotRepository>
   </distributionManagement>-->
 
-    <distributionManagement>
-    <repository>
-      <id>releases-repo</id>
-      <name>Nexus Releases Repo</name>
-      <url>
-      http://mvnrepository.so.kadaster.nl:8081/nexus/content/repositories/releases/
-      </url>
-    </repository>
-  </distributionManagement>
+	<distributionManagement>
+        <repository>
+            <id>releases-repo</id>
+            <name>Artifactory Releases Repo</name>
+            <url>http://ota-portal.so.kadaster.nl/artifactory/mvn-release-local/</url>
+        </repository>
+   </distributionManagement> 
+
 
   <properties>
     <jetty.version>8.1.9.v20130131</jetty.version>

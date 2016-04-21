@@ -1,12 +1,13 @@
 @import "../../../style/gn_search.less";
 @import "../../../style/gn_metadata.less";
 
+@ngrOrange: #E26F02;
+
 /* Hide the tabset selector because tab
    switch is available in the top tool bar */
 #main-tabset > ul:nth-child(1) {
   display: none;
 }
-
 
 
 .jumbotron {
@@ -513,7 +514,72 @@ ul.gn-resultview {
   }
 }
 
-.share-banner {
+.gn-search-map [ngeo-map] {
+	display:block;
+	position:absolute !important;
+	right: inherit;
+	height:400px;
+	width:inherit;
+	bottom: inherit;
+	margin: inherit;
+}
+
+.footer a {
+	color:white;
+    text-decoration: none;
+}
+
+.has-feedback .fa-2x {
+	padding-top:7px;
+}
+
+.gn-search-filter .tagsinput-trigger {
+	top: 2.1em;
+}
+
+
+.gn-scroll-spy { display:none; }
+
+.gn-facet-label {
+	text-transform:capitalize
+}
+
+#btn-advanced-search.active {
+	background-color: #FAE2CB;
+	-webkit-box-shadow: none; 
+	box-shadow: none; 
+}
+#pnl-advanced-search {
+	background-color:#FAE2CB;
+	margin-right:-20px;
+	margin-left:-20px;
+	margin-top:0px;
+	padding:15px 10px 15px 10px;
+	margin-bottom:-20px;
+}
+
+.ngr-md-view {
+	.md-title-header {
+		margin-top: 32px;
+		margin-bottom: 32px;
+		font-size: 42px;
+		font-weight: bold;
+	}
+
+	.rate-control {
+		font-size: 24px;
+	}
+	.abstract {
+		margin-bottom: 32px;
+	}
+
+	.gn-record .row {padding-bottom:3px;}
+	.gn-record h1{font-size:20px;}
+	.gn-record h2{font-size:16px;font-weight:bold;}
+	.gn-record h3{font-size:16px;font-weight:bold;}
+	.gn-record h4{font-size:14px;font-weight:bold;}
+
+	.share-banner {
     color: white;
     background-color: #0075A3;
     margin: 20px 0px;
@@ -525,22 +591,29 @@ ul.gn-resultview {
     }
   }
 }
-
-.gn-search-map [ngeo-map] {
-	display:block;
-	position:absolute !important;
-	right: inherit;
-	height:400px;
-	width:inherit;
-	bottom: inherit;
-	margin: inherit;
 }
 
-.gn-record .row {padding-bottom:3px;}
-.gn-record h1{font-size:20px;}
-.gn-record h2{font-size:16px;font-weight:bold;}
-.gn-record h3{font-size:16px;font-weight:bold;}
-.gn-record h4{font-size:14px;font-weight:bold;}
+.form-control { 
+border: 1px solid @ngrOrange;
+}
+
+.ngr-search {
+  .bootstrap-tagsinput {
+    min-height: 46px;
+    font-size: 18px;
+    line-height: 1.33;
+    border-radius: 6px;
+    border: 1px solid @ngrOrange;
+  }
+  .bootstrap-tagsinput.focused {
+      border-color: @input-border-focus;
+      outline: 0;
+      @shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 6px lighten(@input-border-focus, 20%);
+      .box-shadow(@shadow);
+
+
+  }
+}
 
 @import "gn_view_ngr.less";
 

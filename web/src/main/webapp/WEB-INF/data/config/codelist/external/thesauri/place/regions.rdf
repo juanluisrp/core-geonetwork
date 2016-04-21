@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:fn="http://www.w3.org/2005/02/xpath-functions" xmlns:foaf="http://xmlns.com/foaf/0.1/" xmlns:gml="http://www.opengis.net/gml#" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" xmlns:skos="http://www.w3.org/2004/02/skos/core#" xmlns:xdt="http://www.w3.org/2005/02/xpath-datatypes" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:fme="http://www.safe.com/xml/xmltables">
+
 <skos:ConceptScheme rdf:about="http://geodatastore.pdok.nl/registry/location">
 <dc:title>Region</dc:title>
 <dc:description>Dutch Regions.</dc:description>
@@ -11,7 +12,10 @@
 <dc:rights>Free to all for non commercial use.</dc:rights>
 <dcterms:issued>2015-07-15 07:57:15</dcterms:issued>
 <dcterms:modified>2015-07-15 07:57:15</dcterms:modified>
+<skos:hasTopConcept rdf:resource="http://geodatastore.pdok.nl/registry/location#Nederland_country"/>
 </skos:ConceptScheme>
+
+
 <skos:Concept rdf:about="http://geodatastore.pdok.nl/registry/location#Hoogerheide_residence">
 <skos:inScheme rdf:resource="http://geodatastore.pdok.nl/registry/location"/>
 <skos:prefLabel xml:lang="nl">Hoogerheide (woonplaats)</skos:prefLabel>

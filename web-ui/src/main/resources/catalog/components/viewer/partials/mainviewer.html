@@ -9,34 +9,34 @@
   <div gn-localisation-input map="map"></div>
 
   <!--Top right buttons - Tools-->
-  <div class="tools" gi-btn-group gnv-close-panel data-ng-controller="toolsController">
+  <div class="tools map-tools" gi-btn-group gnv-close-panel data-ng-controller="toolsController">
     <button class="btn btn-default" ng-model="activeTools.addLayers" type="submit"
             rel="#addLayers" gi-btn gnv-tools-btn>
       <span class="fa fa-plus"></span>
       <span role="tooltip" data-translate="">addLayers</span>
-    </button>
+    </button><br/>
     <button class="btn btn-default" ng-model="activeTools.layers" type="submit"
             rel="#layers" gi-btn gnv-tools-btn>
       <span class="fa fa-tasks"></span>
       <span role="tooltip" data-translate="">Layers</span>
-    </button>
+    </button><br/>
     <button class="btn btn-default" ng-model="activeTools.contexts" type="submit"
             rel="#contexts" gi-btn gnv-tools-btn>
       <span class="fa fa-book"></span>
       <span role="tooltip" data-translate="">Contexts</span>
-    </button>
+    </button><br/>
     <button class="btn btn-default" ng-model="activeTools.print" type="submit"
             data-ng-hide="is3dEnabled"
             rel="#print" gi-btn gnv-tools-btn>
       <span class="fa fa-print"></span>
       <span role="tooltip" data-translate="">Print</span>
-    </button>
+    </button><br/>
     <button gi-btn class="btn btn-default" type="submit" ng-model="mInteraction.active"
             data-ng-hide="is3dEnabled"
             rel="#measures" gnv-tools-btn>
       <span class="fa fa-expand"></span>
       <span role="tooltip" data-translate="">Measure</span>
-    </button>
+    </button><br/>
     <button gi-btn class="btn btn-default" type="submit"
             data-ng-hide="is3dEnabled"
             rel="#draw" ng-model="drawVector.inmap" gnv-tools-btn>

@@ -16,7 +16,8 @@
       ['gn_search', 'gn_search_ngr_config',
        'gn_search_default_directive', 'gn_related_directive',
        'cookie_warning', 'gn_mdactions_directive', 'ngr_search_controller', 
-       'ngr_multi_location_directive', 'ngr_pdok_load_controller']);
+       'ngr_multi_location_directive', 'ngr_search_home_controller', 
+       'ngr_pdok_load_controller']);
 
 
   module.filter('escape', function() {
@@ -84,8 +85,11 @@
       $scope.activeTab = '/home';
       $scope.currentTabMdView = 'general';
       $scope.resultTemplate = gnSearchSettings.resultTemplate;
+      $scope.facetsSummaryType = gnSearchSettings.facetsSummaryType;
       $scope.location = gnSearchLocation;
-
+      $scope.toggleMap = function () {
+        $(searchMap.getTargetElement()).toggle();
+      };
       hotkeys.bindTo($scope)
         .add({
             combo: 'h',
@@ -229,7 +233,7 @@
         }
 
         if (gnSearchLocation.isSearch() && (!angular.isArray(
-            searchMap.getSize()) || searchMap.getSize().indexOf(0) >= 0)) {
+            searchMap.getSize()) || searchMap.getSize()[0] < 0)) {
           setTimeout(function() {
             searchMap.updateSize();
 
@@ -266,7 +270,7 @@
           resultType: gnSearchSettings.facetsSummaryType || 'details'
         }
       }, gnSearchSettings.sortbyDefault);
-
+      
 
     }]);
 })();
