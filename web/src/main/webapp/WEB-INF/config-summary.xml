@@ -132,15 +132,17 @@
         <summaryType name="details" format="DIMENSION">
 			<item facet="orgName" max="25"/>
 			<item facet="keyword" max="15"/>
+			<item facet="license" sortBy="value" sortOrder="desc" max="5"/>
 			<item facet="type" translator="codelist:gmd:MD_ScopeCode"/>
-			<item facet="topicCat" translator="codelist:gmd:MD_TopicCategoryCode" max="20"/>
+			<item facet="category" max="3" />
+			<!--<item facet="topicCat" translator="codelist:gmd:MD_TopicCategoryCode" max="20"/>-->
 			<item facet="serviceType"/>
-			<item facet="format" max="15" sortBy="value" sortOrder="asc"/>
+			<facet name="protocol" indexKey="protocol" label="protocol"/>
+			<!--<item facet="format" max="15" sortBy="value" sortOrder="asc"/>-->
 			<item facet="createDateYear" sortBy="value" sortOrder="desc" max="40"/>
             <item facet="spatialRepresentationType" sortBy="value" sortOrder="desc" max="10"/>
 			<item facet="denominator" sortBy="value" sortOrder="desc" max="10"/>
-			<item facet="protocol" sortBy="value" sortOrder="desc" max="10"/>
-			<item facet="license" sortBy="value" sortOrder="desc" max="5"/>
+			
 		<!--
 		
           <item facet="type" translator="codelist:gmd:MD_ScopeCode"/>

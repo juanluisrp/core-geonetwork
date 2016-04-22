@@ -2,14 +2,18 @@
      data-ng-search-form=""
      data-runSearch="true">
   <div data-ng-include="'../../catalog/views/ngr/templates/searchForm.html'"></div>
-  <div class="row">
-    Search parameters:
-    <pre>
-	  {{searchObj.params}}
-    </pre>
-  </div>
+  
+  
 
   <div style="padding:15px"></div>
+  <div class="row">
+   <div class="col-md-offset-3 col-md-3 relative">
+	  <a class="btn btn-sm btn-primary" href="#/search?{{key}}="
+		data-ng-repeat="(key, value) in searchObj.params" 
+		ng-hide="['bboxes','fast','from','geometry','resultType','sortBy','sortOrder','from','to','_content_type'].indexOf(key)>0||value==''">
+		{{ value }} <i class="fa fa-times" ></i></a>
+	  </div>
+  </div>
   <div class="row"
        data-ng-show="searchResults.records.length > 0">
     <div class="col-md-offset-3 col-md-3 relative">
@@ -28,7 +32,7 @@
            data-gn-sortby-values="searchObj.sortbyValues"></div>
     </div>
   </div>
-
+<div style="padding:15px"></div>
   <div class="row">
     <div class="col-md-3 gn-search-facet hidden-sm">
 
