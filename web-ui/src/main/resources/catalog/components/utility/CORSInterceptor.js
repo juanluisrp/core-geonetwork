@@ -93,7 +93,7 @@
                 var defer = $q.defer();
 
                 if (config.url.indexOf('http', 0) === 0) {
-                  
+
                   // get current service hostname
                   var gnHostname = $location.protocol() + "://" + $location.host() + ":" + $location.port();
                   var targetHostName = getTargetHostname(config.url);
@@ -122,7 +122,7 @@
                         defer.reject(resp);
                       });
                     }]);
-
+                  }
                 } else {
                   return $q.reject(response);
                 }
