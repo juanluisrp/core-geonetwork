@@ -41,7 +41,30 @@
         '$injector',
         'gnGlobalSettings',
         'gnLangs',
-        function($q, $injector, gnGlobalSettings, gnLangs) {
+        '$location',
+        function($q, $injector, gnGlobalSettings, gnLangs, $location) {
+
+          /**
+           * Return the target hostname with protocol and port. For example https://www.example.com:80
+           * @param targetUrl the url to check
+           * @returns {string} a URL string with protocol, hostname and port
+           */
+          var getTargetHostname = function(targetUrl) {
+            var parser = document.createElement('a');
+            parser.href = targetUrl;
+            var targetHostname = parser.protocol + "//" + parser.hostname + ":";
+            if (!parser.port) {
+              if (parser.protocol === 'http') {
+                targetHostname += '80';
+              } else if (parser.protocol === 'https') {
+                targetHostname += '443';
+              }
+            } else {
+              targetHostname += parser.port;
+            }
+            return targetHostname;
+          };
+
           return {
             request: function(config) {
               if (gnLangs.current) {
@@ -70,26 +93,35 @@
                 var defer = $q.defer();
 
                 if (config.url.indexOf('http', 0) === 0) {
-                  var url = config.url.split('/');
-                  url = url[0] + '/' + url[1] + '/' + url[2] + '/';
+                  
+                  // get current service hostname
+                  var gnHostname = $location.protocol() + "://" + $location.host() + ":" + $location.port();
+                  var targetHostName = getTargetHostname(config.url);
+                  if (targetHostName === gnHostname) {
+                    // if the target URL is in the GN host, don't use proxy and reject the promise.
+                    return $q.reject(response);
+                  } else {
+                    // if the target URL is in other site/protocol/port that GN, use the proxy to make the request.
+                    var url = config.url.split('/');
+                    url = url[0] + '/' + url[1] + '/' + url[2] + '/';
 
-                  if ($.inArray(url, gnGlobalSettings.requireProxy) == -1) {
-                    gnGlobalSettings.requireProxy.push(url);
-                  }
+                    if ($.inArray(url, gnGlobalSettings.requireProxy) == -1) {
+                      gnGlobalSettings.requireProxy.push(url);
+                    }
 
-                  $injector.invoke(['$http', function($http) {
-                    // This modification prevents interception (infinite
-                    // loop):
+                    $injector.invoke(['$http', function($http) {
+                      // This modification prevents interception (infinite
+                      // loop):
 
-                    config.nointercept = true;
+                      config.nointercept = true;
 
-                    // retry again
-                    $http(config).then(function(resp) {
-                      defer.resolve(resp);
-                    }, function(resp) {
-                      defer.reject(resp);
-                    });
-                  }]);
+                      // retry again
+                      $http(config).then(function(resp) {
+                        defer.resolve(resp);
+                      }, function(resp) {
+                        defer.reject(resp);
+                      });
+                    }]);
 
                 } else {
                   return $q.reject(response);
