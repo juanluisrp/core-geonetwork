@@ -442,8 +442,8 @@
                      xpath="gmd:CI_ResponsibleParty/gmd:organisationName"/>
                 <key label="electronicMailAddress"
                      tooltip="gmd:electronicMailAddress"
-                     xpath="gmd:CI_ResponsibleParty/gmd:contactInfo/
-                    gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:electronicMailAddress/gco:CharacterString"
+                     xpath="gmd:CI_ResponsibleParty/gmd:contactInfo/gmd:CI_Contact
+                      /gmd:address/gmd:CI_Address/gmd:electronicMailAddress/gco:CharacterString"
                      use="email"/>
                 <key label="role"
                      tooltip="gmd:role"
@@ -456,8 +456,7 @@
                   <gmd:CI_ResponsibleParty>
                     <gn:copy select="gmd:individualName"/>
                     <gmd:organisationName>
-                      <gco:CharacterString> {{organisationName}}</gco:CharacterString>
-                      <gn:copy select="gmd:PT_FreeText"/>
+                      {{organisationName}}>
                     </gmd:organisationName>
                     <gn:copy select="gmd:positionName"/>
                     <gmd:contactInfo>
@@ -472,7 +471,6 @@
                             <gn:copy select="gmd:country"/>
                             <gmd:electronicMailAddress>
                               <gco:CharacterString>{{electronicMailAddress}}</gco:CharacterString>
-                              <gn:copy select="gmd:PT_FreeText"/>
                             </gmd:electronicMailAddress>
                           </gmd:CI_Address>
                         </gmd:address>

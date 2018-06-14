@@ -98,6 +98,7 @@
    * form fields. eg. a date of creation where only the date field
    * is displayed to the end user and the creation codelist value
    * is in the XML template for the field.
+   * Require underscore.js to be available.
    */
   module.directive('gnTemplateField', ['$http', '$rootScope', '$timeout',
     function($http, $rootScope, $timeout) {
@@ -110,19 +111,36 @@
           id: '@gnTemplateField',
           keys: '@',
           values: '@',
-          notSetCheck: '@'
+          notSetCheck: '@',
+          mainLanguage: '@'
         },
         link: function(scope, element, attrs) {
           var xmlSnippetTemplate = element[0].innerHTML;
           var separator = '$$$';
+          var multilingualSeparator = ':::';
           var fields = scope.keys && scope.keys.split(separator);
           var values = scope.values && scope.values.split(separator);
+          var multilingualPattern = /(?:(\d+):::(.*):::(.*))(?:@@@(\d+):::(.*):::(.*))+/;
+          var mlTemplate =
+            '<gco:CharacterString><%= mainLanguageValue %></gco:CharacterString>'
+            + '<gmd:PT_FreeText>'
+            + '<% for(var i = 0; i < langValuesArray.length; i++) { %>'
+            + '<gmd:textGroup>'
+            + '<gmd:LocalisedCharacterString locale="#<%= langValuesArray[i].lang%>">'
+            + '<%= langValuesArray[i].value .replace(/\\&/g, \"&amp;amp;\").replace(/\\"/g, \"&quot;\")%>'
+            + '</gmd:LocalisedCharacterString>'
+            + '</gmd:textGroup>'
+            + '<% } %>'
+            + '</gmd:PT_FreeText>';
+          var mlCompiled = _.template(mlTemplate);
+
 
           // Replace all occurence of {{fieldname}} by its value
           var generateSnippet = function() {
             var xmlSnippet = xmlSnippetTemplate, isOneFieldDefined = false;
 
-            angular.forEach(fields, function(fieldName) {
+            angular.forEach(fields, function (fieldName) {
+
               var field = $('#' + scope.id + '_' + fieldName);
               var value = '';
               if (field.attr('type') === 'checkbox') {
@@ -131,19 +149,52 @@
                 value = field.val() || '';
               }
 
-              if (value !== '') {
-                xmlSnippet = xmlSnippet.replace(
+              var isMultilingualTemplateField = value && value.match(multilingualPattern);
+              console.log("MainLanguage is " + scope.mainLanguage);
+
+              if (isMultilingualTemplateField) {
+                console.info(scope.id + " is multilingual");
+                var multilingualFields = {
+                  "mainLanguage": scope.mainLanguage,
+                  languageValues: []
+                };
+                var mainLanguageValue = "";
+                for (var i = 1; i < isMultilingualTemplateField.length; i = i + 3) {
+                  multilingualFields.languageValues.push({
+                    "id": isMultilingualTemplateField[i],
+                    "lang": isMultilingualTemplateField[i + 1],
+                    "value": isMultilingualTemplateField[i + 2].replace(/\&/g, '&amp;amp;')
+                      .replace(/\"/g, '&quot;')
+                  });
+                  if (isMultilingualTemplateField[i + 1].toLowerCase() === scope.mainLanguage.toLowerCase()) {
+                    mainLanguageValue = isMultilingualTemplateField[i + 2];
+                  }
+                }
+                console.info('Multilingual field ' + fieldName, value);
+
+                var processedField = mlCompiled({
+                  mainLanguageValue: mainLanguageValue,
+                  langValuesArray: multilingualFields.languageValues
+                });
+                xmlSnippet = xmlSnippet.replace('{{' + fieldName + '}}', processedField);
+                console.info("Snippet value: ", xmlSnippet);
+              } else {
+                // non-multilingual field
+                console.info("Non-multilingual field " + fieldName, value)
+                if (value !== '') {
+                  xmlSnippet = xmlSnippet.replace(
                     '{{' + fieldName + '}}',
                     value.replace(/\&/g, '&amp;amp;')
-                    .replace(/\"/g, '&quot;'));
+                      .replace(/\"/g, '&quot;'));
 
-                // If one value is defined the field
-                // is defined
-                isOneFieldDefined = true;
-              } else {
-                xmlSnippet = xmlSnippet.replace(
+                  // If one value is defined the field
+                  // is defined
+                  isOneFieldDefined = true;
+                } else {
+                  xmlSnippet = xmlSnippet.replace(
                     '{{' + fieldName + '}}',
                     '');
+                }
               }
             });
 
