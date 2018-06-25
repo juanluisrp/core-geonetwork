@@ -23,6 +23,17 @@
   -->
 
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="2.0"
->
+                xmlns:gn="http://www.fao.org/geonetwork">
+
+
+  <xsl:template name="get-dublin-core-key-value-configuration">
+    <xsl:param name="base" as="node()"/>
+
+    <xsl:variable name="parentRef" select="$base/*[1]/gn:element/@ref" />
+
+    <value parentRef="{$parentRef}">
+      <xsl:value-of select="normalize-space($base)"/>
+    </value>
+  </xsl:template>
 
 </xsl:stylesheet>

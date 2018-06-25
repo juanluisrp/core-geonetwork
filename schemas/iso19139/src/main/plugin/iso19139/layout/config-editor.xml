@@ -329,7 +329,7 @@
   </multilingualFields>
 
   <tableFields>
-    <table for="gmd:CI_ResponsibleParty">
+    <table for="gmd:CI_ResponsibleParty111">
       <header>
         <!-- TODO: Add label from strings.xml / label with context-->
         <col label="gmd:organisationName"/>
@@ -399,6 +399,7 @@
       <row>
         <col xpath="gmd:name"/>
         <col xpath="gmd:version"/>
+
         <col del=".."/>
       </row>
     </table>
@@ -418,7 +419,7 @@
 
   <!-- View configuration -->
   <views>
-    <view name="inspire" upAndDownControlHidden="true" displayIfServiceInfo="/settings/system/inspire/enable='true'">
+    <view name="inspireDISABLED" upAndDownControlHidden="true">
       <sidePanel>
         <directive data-gn-onlinesrc-list=""/>
         <directive gn-geo-publisher=""
@@ -430,7 +431,7 @@
         <directive data-gn-need-help="user-guide/describing-information/creating-metadata.html"/>
       </sidePanel>
 
-      <tab id="inspire" default="true" mode="flat">
+      <tab id="inspireDISABLED" default="true" mode="flat">
         <section name="metadataSection">
           <field name="metadataPointOfContact" templateModeOnly="true"
                  notDisplayedIfMissing="true"
@@ -470,7 +471,7 @@
                             <gn:copy select="gmd:postalCode"/>
                             <gn:copy select="gmd:country"/>
                             <gmd:electronicMailAddress>
-                              <gco:CharacterString>{{electronicMailAddress}}</gco:CharacterString>
+                              {{electronicMailAddress}}
                             </gmd:electronicMailAddress>
                           </gmd:CI_Address>
                         </gmd:address>
@@ -529,7 +530,7 @@
 
     </view>
     <!--Turn on INSPIRE according to system settings -->
-    <view name="inspireDISABLED" upAndDownControlHidden="true" displayIfServiceInfo="/settings/system/inspire/enable='true'">
+    <view name="inspire" upAndDownControlHidden="true" displayIfServiceInfo="/settings/system/inspire/enable='true'">
       <sidePanel>
         <directive data-gn-onlinesrc-list=""/>
         <directive gn-geo-publisher=""
@@ -541,7 +542,7 @@
         <directive data-gn-need-help="user-guide/describing-information/creating-metadata.html"/>
       </sidePanel>
 
-      <tab id="inspireDISABLED" default="true" mode="flat">
+      <tab id="inspire" default="true" mode="flat">
         <section name="identificationInfo">
           <!-- Metadata ID -->
           <field
@@ -2179,7 +2180,7 @@
               <values readonlyIf="count(@xlink:href) > 0">
                 <key label="organisationName"
                      tooltip="gmd:organisationName"
-                     xpath="gmd:CI_ResponsibleParty/gmd:organisationName/gco:CharacterString"/>
+                     xpath="gmd:CI_ResponsibleParty/gmd:organisationName"/>
                 <key label="electronicMailAddress"
                      tooltip="gmd:electronicMailAddress"
                      xpath="gmd:CI_ResponsibleParty/gmd:contactInfo/
@@ -2196,8 +2197,7 @@
                   <gmd:CI_ResponsibleParty>
                     <gn:copy select="gmd:individualName"/>
                     <gmd:organisationName>
-                      <gco:CharacterString>{{organisationName}}</gco:CharacterString>
-                      <gn:copy select="gmd:PT_FreeText"/>
+                      {{organisationName}}
                     </gmd:organisationName>
                     <gn:copy select="gmd:positionName"/>
                     <gmd:contactInfo>
@@ -2276,7 +2276,7 @@
               <values readonlyIf="count(@xlink:href) > 0">
                 <key label="organisationName"
                      tooltip="gmd:organisationName"
-                     xpath="gmd:CI_ResponsibleParty/gmd:organisationName/gco:CharacterString"/>
+                     xpath="gmd:CI_ResponsibleParty/gmd:organisationName"/>
                 <key label="electronicMailAddress"
                      tooltip="gmd:electronicMailAddress"
                      xpath="gmd:CI_ResponsibleParty/gmd:contactInfo/
@@ -2293,8 +2293,7 @@
                   <gmd:CI_ResponsibleParty>
                     <gn:copy select="gmd:individualName"/>
                     <gmd:organisationName>
-                      <gco:CharacterString>{{organisationName}}</gco:CharacterString>
-                      <gn:copy select="gmd:PT_FreeText"/>
+                      {{organisationName}}
                     </gmd:organisationName>
                     <gn:copy select="gmd:positionName"/>
                     <gmd:contactInfo>
@@ -2372,11 +2371,11 @@
               <values readonlyIf="count(@xlink:href) > 0">
                 <key label="organisationName"
                      tooltip="gmd:organisationName"
-                     xpath="gmd:CI_ResponsibleParty/gmd:organisationName/gco:CharacterString"/>
+                     xpath="gmd:CI_ResponsibleParty/gmd:organisationName"/>
                 <key label="electronicMailAddress"
                      tooltip="gmd:electronicMailAddress"
-                     xpath="gmd:CI_ResponsibleParty/gmd:contactInfo/
-                  gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:electronicMailAddress/gco:CharacterString"
+                     xpath="gmd:CI_ResponsibleParty/gmd:contactInfo/gmd:CI_Contact
+                      /gmd:address/gmd:CI_Address/gmd:electronicMailAddress/gco:CharacterString"
                      use="email"/>
                 <key label="role"
                      tooltip="gmd:role"
@@ -2389,8 +2388,7 @@
                   <gmd:CI_ResponsibleParty>
                     <gn:copy select="gmd:individualName"/>
                     <gmd:organisationName>
-                      <gco:CharacterString>{{organisationName}}</gco:CharacterString>
-                      <gn:copy select="gmd:PT_FreeText"/>
+                      {{organisationName}}>
                     </gmd:organisationName>
                     <gn:copy select="gmd:positionName"/>
                     <gmd:contactInfo>
@@ -2405,7 +2403,6 @@
                             <gn:copy select="gmd:country"/>
                             <gmd:electronicMailAddress>
                               <gco:CharacterString>{{electronicMailAddress}}</gco:CharacterString>
-                              <gn:copy select="gmd:PT_FreeText"/>
                             </gmd:electronicMailAddress>
                           </gmd:CI_Address>
                         </gmd:address>

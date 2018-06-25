@@ -681,73 +681,83 @@
                           <p>Value(s):</p>
                           <ul>
                             <xsl:for-each select="value">
-                              <li>Element ref: <xsl:value-of select="@ref" />, lang: <xsl:value-of select="@lang" />, value: <xsl:value-of select="." /></li>
+                              <li>Element ref: <xsl:value-of select="@ref" />, lang: <xsl:value-of select="@lang" />, value: <xsl:value-of select="." />, parentRef:  <xsl:value-of select="@parentRef" /></li>
                             </xsl:for-each>
                           </ul>
                         </xsl:for-each>
 
                         <div data-gn-multilingual-template-field="">
                           <xsl:for-each select="$keyValues/field[$keyIndex]">
-                            <div >
+
+                            <xsl:variable name="parentRefMultilingualEl" select="value[1]/@parentRef" />
+                            <div>
                               <xsl:attribute name="data-gn-multilingual-field"
                                              select="$metadataOtherLanguagesAsJson"/>
                               <xsl:attribute name="data-main-language" select="$metadataLanguage"/>
                               <xsl:attribute name="data-expanded" select="false()"/>
 
+                              <!-- Metadata languages present in the snippet -->
                               <xsl:for-each select="value">
                                 <xsl:sort select="@lang"/>
                                 <xsl:if test="@lang != ''">
                                   <input class="form-control"
                                          type="text"
                                          id="gn-field-{@ref}"
-                                         name="_lang_FR_{@ref}"
+                                         name="_{@ref}"
                                          lang="{@lang}"
                                          value="{.}"/>
+                                </xsl:if>
+                              </xsl:for-each>
 
-                                  <!-- TODO: Review use this template, so textarea can be supported ... -->
-                                  <!--<xsl:call-template name="render-form-field">
-                                    <xsl:with-param name="name" select="@ref"/>
-                                    <xsl:with-param name="lang" select="@lang"/>
-                                    <xsl:with-param name="value" select="."/>
-                                    <xsl:with-param name="type" select="$type"/>
-                                    <xsl:with-param name="tooltip" select="$tooltip"/>
-                                    <xsl:with-param name="isRequired" select="$isRequired"/>
-                                    <xsl:with-param name="isReadOnly" select="$isReadOnly"/>
-                                    <xsl:with-param name="isDisabled" select="$isDisabled"/>
-                                    <xsl:with-param name="editInfo" select="$editInfo"/>
-                                    <xsl:with-param name="parentEditInfo" select="$parentEditInfo"/>
-                                    &lt;!&ndash;  Helpers can't be provided for all languages
-                                    <xsl:with-param name="listOfValues" select="$listOfValues"/>
-                                    &ndash;&gt;
-                                    <xsl:with-param name="checkDirective"
-                                                    select="upper-case(@lang) = $mainLangCode or normalize-space(@lang) = ''"/>
-                                  </xsl:call-template>-->
+                              <!-- Metadata languages not present in the snippet -->
+                              <xsl:variable name="currentLangValues" select="value" />
+                              <xsl:for-each select="$metadataOtherLanguages/lang">
+                                <xsl:sort select="@id"/>
+
+                                <xsl:variable name="metadataOtherLanguagesLangId" select="@id" />
+                                <xsl:if test="count($currentLangValues[@lang = $metadataOtherLanguagesLangId]) = 0">
+                                  <input class="form-control"
+                                         type="text"
+                                         name="_lang_{@id}_{$parentRefMultilingualEl}"
+                                         lang="{@id}"
+                                         value="{.}"/>
                                 </xsl:if>
                               </xsl:for-each>
                             </div>
                           </xsl:for-each>
 
                           <!-- Field used by gnTemplateField to replace the template content {{}} -->
-                          <!-- TODO: Should be filled with multilingual snippet -->
+                          <xsl:variable name="multilingualValues">
+                            <xsl:for-each select="$keyValues/field[$keyIndex]">
+                              <xsl:variable name="parentRefMultilingualEl" select="value[1]/@parentRef" />
 
-                            <xsl:variable name="multilingualValues">
-                              <xsl:for-each select="$keyValues/field[$keyIndex]">
-                                <xsl:for-each select="value[@lang]">
-                                  <xsl:value-of select="@ref" />:::<xsl:value-of select="@lang" />:::<xsl:value-of select="." />
-                                  <xsl:if test="position() != last()">,</xsl:if>
-                                </xsl:for-each>
+                              <!-- Metadata languages present in the snippet -->
+                              <xsl:for-each select="value[@lang]">
+                                <xsl:value-of select="@ref" />:::<xsl:value-of select="@lang" />:::<xsl:value-of select="." />
+                                <xsl:if test="position() != last()">,</xsl:if>
                               </xsl:for-each>
-                            </xsl:variable>
-                            <input class="form-control multilingual-control"
-                                   type="text"
-                                   value="{$multilingualValues}"
-                                   id="{$id}_{@label}" />
-                        </div>
 
-                        <!--<xsl:message>MULTILINGUAL TEMPLATE DIRECTIVE: <xsl:copy-of select="$keyValues" /></xsl:message>-->
+                              <!-- Metadata languages not present in the snippet -->
+                              <xsl:variable name="currentLangValues" select="value" />
+                              <xsl:for-each select="$metadataOtherLanguages/lang">
+                                <xsl:sort select="@id"/>
+
+                                <xsl:variable name="metadataOtherLanguagesLangId" select="@id" />
+                                <xsl:if test="count($currentLangValues[@lang = $metadataOtherLanguagesLangId]) = 0">
+                                  ,<xsl:value-of select="concat('_lang_', @id, '_', $parentRefMultilingualEl)" />:::<xsl:value-of select="@id" />:::<xsl:value-of select="''" />
+                                </xsl:if>
+                              </xsl:for-each>
+                            </xsl:for-each>
+                          </xsl:variable>
+
+                          <input class="form-control multilingual-control"
+                                 type="text"
+                                 value="{normalize-space($multilingualValues)}"
+                                 id="{$id}_{@label}" />
+                        </div>
                       </xsl:when>
                       <xsl:otherwise>
-                        <p>NO MULTILINGUAL TEMPLATE FIELD</p>
+                        <p>NO MULTILINGUAL TEMPLATE FIELD DIRECTIVE</p>
 
                         <input class="form-control"
                                type="{if (@use) then @use else 'text'}"
@@ -812,10 +822,23 @@
                   <xsl:variable name="fieldValue">
                     <xsl:choose>
                       <xsl:when test="$isMultilingual">
+                        <!-- Metadata languages present in the snippet -->
                         <xsl:for-each select="$keyValues/field[$keyIndex]">
+                          <xsl:variable name="parentRefMultilingualEl" select="value[1]/@parentRef" />
                           <xsl:for-each select="value[@lang]">
                             <xsl:value-of select="@ref" />:::<xsl:value-of select="@lang" />:::<xsl:value-of select="." />
                             <xsl:if test="position() != last()">@@@</xsl:if>
+                          </xsl:for-each>
+
+                          <!-- Metadata languages not present in the snippet -->
+                          <xsl:variable name="currentLangValues" select="value" />
+                          <xsl:for-each select="$metadataOtherLanguages/lang">
+                            <xsl:sort select="@id"/>
+
+                            <xsl:variable name="metadataOtherLanguagesLangId" select="@id" />
+                            <xsl:if test="count($currentLangValues[@lang = $metadataOtherLanguagesLangId]) = 0">
+                              @@@<xsl:value-of select="concat('_lang_', @id, '_', $parentRefMultilingualEl)" />:::<xsl:value-of select="@id" />:::<xsl:value-of select="''" />
+                            </xsl:if>
                           </xsl:for-each>
                         </xsl:for-each>
                       </xsl:when>
@@ -828,7 +851,7 @@
                     </xsl:choose>
                   </xsl:variable>
 
-                  <xsl:value-of select="$fieldValue" /><xsl:if test="position() != last()">$$$</xsl:if>
+                  <xsl:value-of select="normalize-space($fieldValue)" /><xsl:if test="position() != last()">$$$</xsl:if>
                 </xsl:for-each>
               </xsl:variable>
               <xsl:variable name="mainLangCode"
@@ -837,6 +860,7 @@
               <textarea class="form-control gn-debug"
                         name="{$id}"
                         data-gn-template-field="{$id}"
+                        data-metadata-schema="{$schema}"
                         data-keys="{string-join($template/values/key/@label, '$$$')}"
                         data-values="{if ($keyValues and count($keyValues/*) > 0)
                           then $dataValues else ''}"
@@ -848,12 +872,6 @@
                 <xsl:value-of select="saxon:serialize($template/snippet[1]/*,
                                       'default-serialize-mode')"/>
               </textarea>
-
-              <xsl:message>
-                ======== SNIPPET ========
-                <xsl:value-of select="saxon:serialize($template/snippet[1]/*,
-                                      'default-serialize-mode')"/>
-              </xsl:message>
             </div>
           </xsl:if>
         </div>

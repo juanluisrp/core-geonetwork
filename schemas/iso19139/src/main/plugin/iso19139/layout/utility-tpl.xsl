@@ -121,4 +121,33 @@
       </xsl:for-each>
     </config>
   </xsl:template>
+
+
+  <xsl:template name="get-iso19139-key-value-configuration">
+    <xsl:param name="base" as="node()"/>
+
+    <xsl:variable name="parentRef" select="$base/*[1]/gn:element/@ref" />
+
+    <xsl:choose>
+      <xsl:when test="not($base//gmd:PT_FreeText)">
+        <value>
+          <xsl:value-of select="normalize-space($base)"/>
+        </value>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:for-each select="$base//gco:CharacterString">
+          <value ref="{gn:element/@ref}" parentRef="{$parentRef}">
+            <xsl:value-of select="normalize-space(.)"/>
+          </value>
+        </xsl:for-each>
+
+        <xsl:for-each select="$base//gmd:PT_FreeText/gmd:textGroup/gmd:LocalisedCharacterString">
+          <value ref="{gn:element/@ref}" lang="{substring-after(@locale, '#')}" parentRef="{$parentRef}">
+            <xsl:value-of select="normalize-space(.)"/>
+          </value>
+        </xsl:for-each>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+
 </xsl:stylesheet>

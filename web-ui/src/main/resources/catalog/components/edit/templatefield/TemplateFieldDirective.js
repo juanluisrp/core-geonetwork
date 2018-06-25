@@ -112,7 +112,8 @@
           keys: '@',
           values: '@',
           notSetCheck: '@',
-          mainLanguage: '@'
+          mainLanguage: '@',
+          metadataSchema: '@',
         },
         link: function(scope, element, attrs) {
           var xmlSnippetTemplate = element[0].innerHTML;
@@ -120,19 +121,34 @@
           var multilingualSeparator = ':::';
           var fields = scope.keys && scope.keys.split(separator);
           var values = scope.values && scope.values.split(separator);
-          var multilingualPattern = /(?:(\d+):::(.*):::(.*))(?:@@@(\d+):::(.*):::(.*))+/;
-          var mlTemplate =
-            '<gco:CharacterString><%= mainLanguageValue %></gco:CharacterString>'
-            + '<gmd:PT_FreeText>'
-            + '<% for(var i = 0; i < langValuesArray.length; i++) { %>'
-            + '<gmd:textGroup>'
-            + '<gmd:LocalisedCharacterString locale="#<%= langValuesArray[i].lang%>">'
-            + '<%= langValuesArray[i].value .replace(/\\&/g, \"&amp;amp;\").replace(/\\"/g, \"&quot;\")%>'
-            + '</gmd:LocalisedCharacterString>'
-            + '</gmd:textGroup>'
-            + '<% } %>'
-            + '</gmd:PT_FreeText>';
-          var mlCompiled = _.template(mlTemplate);
+          var multilingualPattern = /(?:(.+):::(.*):::(.*))(?:@@@(.+):::(.*):::(.*))+/;
+
+          var templatesBySchema = {
+            'iso19139': {
+              multilingualTemplate:  '<gco:CharacterString><%= mainLanguageValue %></gco:CharacterString>'
+              + '<gmd:PT_FreeText>'
+              + '<% for(var i = 0; i < langValuesArray.length; i++) { %>'
+              + '<gmd:textGroup>'
+              + '<gmd:LocalisedCharacterString locale="#<%= langValuesArray[i].lang%>">'
+              + '<%= langValuesArray[i].value .replace(/\\&/g, \"&amp;amp;\").replace(/\\"/g, \"&quot;\")%>'
+              + '</gmd:LocalisedCharacterString>'
+              + '</gmd:textGroup>'
+              + '<% } %>'
+              + '</gmd:PT_FreeText>',
+              noMultilingualTemplate: '<gco:CharacterString><%= mainLanguageValue %></gco:CharacterString>'
+            }
+          };
+
+          var multilingualTemplateCompiled;
+          var noMultilingualTemplateCompiled;
+
+          if (templatesBySchema[scope.metadataSchema].multilingualTemplate) {
+            multilingualTemplateCompiled = _.template(templatesBySchema[scope.metadataSchema].multilingualTemplate);
+          }
+
+          if (templatesBySchema[scope.metadataSchema].noMultilingualTemplate) {
+            noMultilingualTemplateCompiled = _.template(templatesBySchema[scope.metadataSchema].noMultilingualTemplate);
+          }
 
 
           // Replace all occurence of {{fieldname}} by its value
@@ -152,7 +168,8 @@
               var isMultilingualTemplateField = value && value.match(multilingualPattern);
               console.log("MainLanguage is " + scope.mainLanguage);
 
-              if (isMultilingualTemplateField) {
+              if (isMultilingualTemplateField && multilingualTemplateCompiled) {
+
                 console.info(scope.id + " is multilingual");
                 var multilingualFields = {
                   "mainLanguage": scope.mainLanguage,
@@ -172,15 +189,24 @@
                 }
                 console.info('Multilingual field ' + fieldName, value);
 
-                var processedField = mlCompiled({
+                var processedField = multilingualTemplateCompiled({
                   mainLanguageValue: mainLanguageValue,
                   langValuesArray: multilingualFields.languageValues
                 });
                 xmlSnippet = xmlSnippet.replace('{{' + fieldName + '}}', processedField);
                 console.info("Snippet value: ", xmlSnippet);
-              } else {
+              } else if (!isMultilingualTemplateField && noMultilingualTemplateCompiled) {
                 // non-multilingual field
                 console.info("Non-multilingual field " + fieldName, value)
+
+                var processedField = noMultilingualTemplateCompiled({
+                  mainLanguageValue: value
+                });
+                xmlSnippet = xmlSnippet.replace('{{' + fieldName + '}}', processedField);
+                console.info("Snippet value: ", xmlSnippet);
+
+
+              } else {
                 if (value !== '') {
                   xmlSnippet = xmlSnippet.replace(
                     '{{' + fieldName + '}}',

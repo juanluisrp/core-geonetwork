@@ -25,6 +25,7 @@
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xs="http://www.w3.org/2001/XMLSchema"
                 xmlns:gn-fn-iso19110="http://geonetwork-opensource.org/xsl/functions/profiles/iso19110"
                 xmlns:gn-fn-metadata="http://geonetwork-opensource.org/xsl/functions/metadata"
+                xmlns:gn="http://www.fao.org/geonetwork"
                 version="2.0"
                 exclude-result-prefixes="#all">
 
@@ -56,4 +57,14 @@
     </xsl:choose>
   </xsl:function>
 
+
+  <xsl:template name="get-iso19110-key-value-configuration">
+    <xsl:param name="base" as="node()"/>
+
+    <xsl:variable name="parentRef" select="$base/*[1]/gn:element/@ref" />
+
+    <value parentRef="{$parentRef}">
+      <xsl:value-of select="normalize-space($base)"/>
+    </value>
+  </xsl:template>
 </xsl:stylesheet>

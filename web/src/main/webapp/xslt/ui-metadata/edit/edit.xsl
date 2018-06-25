@@ -73,6 +73,9 @@
 
       <div class="col-md-{if ($hasSidePanel) then '8' else '12'}">
 
+
+
+
         <!--
               The main editor form.
         -->

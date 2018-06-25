@@ -488,6 +488,10 @@
               </xsl:call-template>
             </xsl:variable>
 
+            <xsl:message>
+              build-key-value-configuration result 1, keyValues: <xsl:copy-of select="$keyValues" />
+            </xsl:message>
+
             <!-- Node does not exist, stripped gn:copy element from template. -->
             <xsl:variable name="templateWithoutGnCopyElement" as="node()">
               <template>
@@ -554,18 +558,8 @@
     <xsl:param name="currentNode" as="node()?"/>
     <xsl:param name="readonly"/>
 
-    <xsl:message>
-      build-key-value-configuration currentNode: <xsl:copy-of select="name($currentNode)" />
-    </xsl:message>
 
     <xsl:for-each select="$template/values/key">
-     <!--<xsl:message>
-        build-key-value-configuration key: <xsl:copy-of select="@label" />
-      </xsl:message>
-      <xsl:message>
-        build-key-value-configuration key: <xsl:copy-of select="@xpath" />
-      </xsl:message>-->
-
       <field name="{@label}">
         <xsl:if test="$readonly = 'true'">
           <readonly>true</readonly>
@@ -579,35 +573,11 @@
         </xsl:variable>
 
 
-        <xsl:message>
-          $matchingNodeValue: <xsl:copy-of select="$matchingNodeValue" />
-        </xsl:message>
 
-        <xsl:choose>
-          <xsl:when test="not($matchingNodeValue//gmd:PT_FreeText)">
-            <value>
-              <xsl:value-of select="normalize-space($matchingNodeValue)"/>
-            </value>
-          </xsl:when>
-          <xsl:otherwise>
-            <xsl:for-each select="$matchingNodeValue//gco:CharacterString">
-              <value ref="{gn:element/@ref}">
-                <xsl:value-of select="normalize-space(.)"/>
-              </value>
-            </xsl:for-each>
-
-            <xsl:for-each select="$matchingNodeValue//gmd:PT_FreeText/gmd:textGroup/gmd:LocalisedCharacterString">
-              <value ref="{gn:element/@ref}" lang="{substring-after(@locale, '#')}">
-                <xsl:value-of select="normalize-space(.)"/>
-              </value>
-            </xsl:for-each>
-          </xsl:otherwise>
-
-        </xsl:choose>
-
-        <!--<value>
-          <xsl:value-of select="normalize-space($matchingNodeValue)"/>
-        </value>-->
+        <!-- Get the values, defined in each schema to handle multilingual elements -->
+        <saxon:call-template name="{concat('get-', $schema, '-key-value-configuration')}">
+          <xsl:with-param name="base" select="$matchingNodeValue"/>
+        </saxon:call-template>
 
         <!--
         Directive attribute are usually string but could be an XPath
