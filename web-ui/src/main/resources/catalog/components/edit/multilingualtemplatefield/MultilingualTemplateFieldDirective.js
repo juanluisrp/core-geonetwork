@@ -67,7 +67,7 @@
           multilingualInputs.each(function() {
             var currentField = $(this);
             $log.info(currentField.attr('id') + ' - ' + currentField.attr('lang') + ' - ' + currentField.val());
-            var ref = currentField.attr('id').replace('gn-field-', '');
+            var ref = currentField.attr('name');
             var langId = currentField.attr('lang');
             var value = currentField.val();
             newValueObject.push({ref: ref, lang: langId, value: value});

@@ -122,7 +122,7 @@
           var multilingualSeparator = ':::';
           var fields = scope.keys && scope.keys.split(separator);
           var values = scope.values && scope.values.split(separator);
-          var multilingualPattern = /(?:(.+):::(.*):::(.*))(?:@@@(.+):::(.*):::(.*))+/;
+          var multilingualPattern = /(?:(.+):::(.*):::(.*))/;
           var codelistFields = scope.codelistKeys && scope.codelistKeys.split(separator);
 
           var templatesBySchema = {
@@ -170,6 +170,30 @@
           }
 
 
+          var parseMultilingualField = function(value) {
+            var langValues = value.split("@@@");
+
+            var tokens = [];
+            var isMultilingual = true;
+            for(var i = 0; i < langValues.length; i++) {
+              var tokensLangValue = langValues[i].match(multilingualPattern);
+
+              if ((!tokensLangValue) ||
+                (tokensLangValue && tokensLangValue.length != 4)) {
+                isMultilingual = false;
+                break;
+              } else {
+                tokens = tokens.concat(tokensLangValue.slice(1,4));
+              }
+            }
+
+            if (!isMultilingual) {
+              return null;
+            } else {
+              return tokens;
+            }
+          };
+
           // Replace all occurence of {{fieldname}} by its value
           var generateSnippet = function() {
             var xmlSnippet = xmlSnippetTemplate, isOneFieldDefined = false;
@@ -185,7 +209,8 @@
                 value = field.val() || '';
               }
 
-              var isMultilingualTemplateField = value && value.match(multilingualPattern);
+
+              var isMultilingualTemplateField = parseMultilingualField(value);
               console.log("MainLanguage is " + scope.mainLanguage);
 
               var isCodelist = _.contains(codelistFieldsList, fieldName);
@@ -198,7 +223,7 @@
                   languageValues: []
                 };
                 var mainLanguageValue = "";
-                for (var i = 1; i < isMultilingualTemplateField.length; i = i + 3) {
+                for (var i = 0; i < isMultilingualTemplateField.length; i = i + 3) {
                   multilingualFields.languageValues.push({
                     "id": isMultilingualTemplateField[i],
                     "lang": isMultilingualTemplateField[i + 1],

@@ -129,6 +129,13 @@
     <xsl:variable name="parentRef" select="$base/*[1]/gn:element/@ref" />
 
     <xsl:choose>
+      <xsl:when test="not($base//gmd:PT_FreeText) and $base//gco:CharacterString">
+        <xsl:for-each select="$base//gco:CharacterString">
+          <value ref="{gn:element/@ref}" parentRef="{$parentRef}">
+            <xsl:value-of select="normalize-space(.)"/>
+          </value>
+        </xsl:for-each>
+      </xsl:when>
       <xsl:when test="not($base//gmd:PT_FreeText)">
         <value>
           <xsl:value-of select="normalize-space($base)"/>

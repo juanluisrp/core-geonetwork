@@ -665,31 +665,56 @@
                     <xsl:variable name="fieldName" select="$template/values/key[$keyIndex]/@tooltip" />
                     <xsl:variable name="isMultilingual" select="count($editorConfig/editor/multilingualFields/exclude[name = $fieldName]) = 0" />
 
-                    <xsl:message>
+                    <!--<xsl:message>
                       TEMPLATE FIELD: <xsl:value-of select="$keyIndex" />  -
                       <xsl:value-of select="$fieldName" /> -
                       <xsl:value-of select="$isMultilingual" /> -
                       <xsl:value-of select="$metadataIsMultilingual" />
-                    </xsl:message>
+                    </xsl:message>-->
 
                     <xsl:choose>
                       <xsl:when test="not(@use) and $isMultilingual and $metadataIsMultilingual">
                         <p>MULTILINGUAL TEMPLATE FIELD DIRECTIVE</p>
 
                         <xsl:for-each select="$keyValues/field[$keyIndex]">
+                          <xsl:variable name="parentRefMultilingualEl" select="value[1]/@parentRef" />
+
                           <p>Field name: <xls:value-of select="@name" /></p>
                           <p>Value(s):</p>
                           <ul>
                             <xsl:for-each select="value">
                               <li>Element ref: <xsl:value-of select="@ref" />, lang: <xsl:value-of select="@lang" />, value: <xsl:value-of select="." />, parentRef:  <xsl:value-of select="@parentRef" /></li>
                             </xsl:for-each>
+
+                            <!-- Metadata languages not present in the snippet -->
+                            <xsl:variable name="currentLangValues" select="value" />
+                            <xsl:for-each select="$metadataOtherLanguages/lang">
+                              <xsl:sort select="@id"/>
+
+                              <xsl:variable name="metadataOtherLanguagesLangId" select="@id" />
+                              <xsl:if test="count($currentLangValues[@lang = $metadataOtherLanguagesLangId]) = 0">
+                                <li>Element ref: <xsl:value-of select="concat('_lang_', @id, '_', $parentRefMultilingualEl)" />, lang: <xsl:value-of select="$metadataOtherLanguagesLangId" />, value: <xsl:value-of select="." />, parentRef:  <xsl:value-of select="$parentRefMultilingualEl" /></li>
+
+                              </xsl:if>
+                            </xsl:for-each>
                           </ul>
                         </xsl:for-each>
 
                         <div data-gn-multilingual-template-field="">
+                          <!--<xsl:message>
+                            FIELD: <xsl:copy-of select="$keyValues/field[$keyIndex]" />
+                          </xsl:message>-->
+
                           <xsl:for-each select="$keyValues/field[$keyIndex]">
 
                             <xsl:variable name="parentRefMultilingualEl" select="value[1]/@parentRef" />
+                            <xsl:variable name="refNoLang" select="value[not(@lang)]/@ref" />
+
+                            <!--<xsl:message>
+                              $refNoLang: <xsl:value-of select="$refNoLang" />
+                              $parentRefMultilingualEl: <xsl:value-of select="$parentRefMultilingualEl" />
+                            </xsl:message>-->
+
                             <div>
                               <xsl:attribute name="data-gn-multilingual-field"
                                              select="$metadataOtherLanguagesAsJson"/>
@@ -702,7 +727,7 @@
                                 <xsl:if test="@lang != ''">
                                   <input class="form-control"
                                          type="text"
-                                         id="gn-field-{@ref}"
+                                         id="gn-field-{$refNoLang}"
                                          name="_{@ref}"
                                          lang="{@lang}"
                                          value="{.}"/>
@@ -718,6 +743,7 @@
                                 <xsl:if test="count($currentLangValues[@lang = $metadataOtherLanguagesLangId]) = 0">
                                   <input class="form-control"
                                          type="text"
+                                         id="gn-field-{$refNoLang}"
                                          name="_lang_{@id}_{$parentRefMultilingualEl}"
                                          lang="{@id}"
                                          value="{.}"/>
@@ -863,12 +889,12 @@
                   <xsl:variable name="fieldName" select="$template/values/key[$keyIndex]/@tooltip" />
                   <xsl:variable name="isMultilingual" select="count($editorConfig/editor/multilingualFields/exclude[name = $fieldName]) = 0" />
 
-                  <xsl:message>
+                  <!--<xsl:message>
                     fieldName: <xsl:value-of select="$fieldName" />
                     isMultilingual: <xsl:value-of select="$isMultilingual" />
                     field: <xsl:copy-of select="$keyValues/field[$keyIndex]/codelist" />
                     name: <xsl:value-of select="$template/values/key[$keyIndex]/@label" />
-                  </xsl:message>
+                  </xsl:message>-->
 
                   <xsl:if test="$keyValues/field[$keyIndex]/codelist">
                     $$$<xsl:value-of select="$template/values/key[$keyIndex]/@label" />
