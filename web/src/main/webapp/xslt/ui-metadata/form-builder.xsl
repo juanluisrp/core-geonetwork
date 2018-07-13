@@ -818,10 +818,11 @@
 
                   <xsl:variable name="fieldName" select="$template/values/key[$keyIndex]/@tooltip" />
                   <xsl:variable name="isMultilingual" select="count($editorConfig/editor/multilingualFields/exclude[name = $fieldName]) = 0" />
+                  <xsl:variable name="isCodelist" select="count($keyValues/field[$keyIndex]/codelist) > 0" />
 
                   <xsl:variable name="fieldValue">
                     <xsl:choose>
-                      <xsl:when test="$isMultilingual">
+                      <xsl:when test="not($isCodelist) and $isMultilingual and $metadataIsMultilingual">
                         <!-- Metadata languages present in the snippet -->
                         <xsl:for-each select="$keyValues/field[$keyIndex]">
                           <xsl:variable name="parentRefMultilingualEl" select="value[1]/@parentRef" />
@@ -844,7 +845,7 @@
                       </xsl:when>
 
                       <xsl:otherwise>
-                        <xsl:for-each select="$keyValues/field[$keyIndex]">
+                        <xsl:for-each select="$keyValues/field[$keyIndex]/value">
                           <xsl:value-of select="." />
                         </xsl:for-each>
                       </xsl:otherwise>
@@ -854,16 +855,39 @@
                   <xsl:value-of select="normalize-space($fieldValue)" /><xsl:if test="position() != last()">$$$</xsl:if>
                 </xsl:for-each>
               </xsl:variable>
+
+              <xsl:variable name="codelistKeys">
+                <xsl:for-each select="$template/values/key">
+                  <xsl:variable name="keyIndex" select="position()"/>
+
+                  <xsl:variable name="fieldName" select="$template/values/key[$keyIndex]/@tooltip" />
+                  <xsl:variable name="isMultilingual" select="count($editorConfig/editor/multilingualFields/exclude[name = $fieldName]) = 0" />
+
+                  <xsl:message>
+                    fieldName: <xsl:value-of select="$fieldName" />
+                    isMultilingual: <xsl:value-of select="$isMultilingual" />
+                    field: <xsl:copy-of select="$keyValues/field[$keyIndex]/codelist" />
+                    name: <xsl:value-of select="$template/values/key[$keyIndex]/@label" />
+                  </xsl:message>
+
+                  <xsl:if test="$keyValues/field[$keyIndex]/codelist">
+                    $$$<xsl:value-of select="$template/values/key[$keyIndex]/@label" />
+                  </xsl:if>
+                </xsl:for-each>
+              </xsl:variable>
+
               <xsl:variable name="mainLangCode"
                             select="upper-case(java-xsl-util:twoCharLangCode($metadataLanguage, substring($metadataLanguage,0,2)))"/>
 
-              <textarea class="form-control gn-debug"
+              <textarea class="form-control gn-debug-1"
+                        rows="20"
                         name="{$id}"
                         data-gn-template-field="{$id}"
                         data-metadata-schema="{$schema}"
                         data-keys="{string-join($template/values/key/@label, '$$$')}"
                         data-values="{if ($keyValues and count($keyValues/*) > 0)
                           then $dataValues else ''}"
+                        data-codelist-keys="{normalize-space($codelistKeys)}"
                         data-main-language="{$mainLangCode}"
               >
                 <xsl:if test="$isMissingLabel != ''">

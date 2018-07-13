@@ -114,6 +114,7 @@
           notSetCheck: '@',
           mainLanguage: '@',
           metadataSchema: '@',
+          codelistKeys: '@'
         },
         link: function(scope, element, attrs) {
           var xmlSnippetTemplate = element[0].innerHTML;
@@ -122,19 +123,33 @@
           var fields = scope.keys && scope.keys.split(separator);
           var values = scope.values && scope.values.split(separator);
           var multilingualPattern = /(?:(.+):::(.*):::(.*))(?:@@@(.+):::(.*):::(.*))+/;
+          var codelistFields = scope.codelistKeys && scope.codelistKeys.split(separator);
 
           var templatesBySchema = {
             'iso19139': {
               multilingualTemplate:  '<gco:CharacterString><%= mainLanguageValue %></gco:CharacterString>'
-              + '<gmd:PT_FreeText>'
-              + '<% for(var i = 0; i < langValuesArray.length; i++) { %>'
-              + '<gmd:textGroup>'
-              + '<gmd:LocalisedCharacterString locale="#<%= langValuesArray[i].lang%>">'
-              + '<%= langValuesArray[i].value .replace(/\\&/g, \"&amp;amp;\").replace(/\\"/g, \"&quot;\")%>'
-              + '</gmd:LocalisedCharacterString>'
-              + '</gmd:textGroup>'
-              + '<% } %>'
+            + '<gmd:PT_FreeText>'
+            + '<% for(var i = 0; i < langValuesArray.length; i++) { %>'
+            + '<gmd:textGroup>'
+            + '<gmd:LocalisedCharacterString locale="#<%= langValuesArray[i].lang%>">'
+            + '<%= langValuesArray[i].value .replace(/\\&/g, \"&amp;amp;\").replace(/\\"/g, \"&quot;\")%>'
+            + '</gmd:LocalisedCharacterString>'
+            + '</gmd:textGroup>'
+            + '<% } %>'
               + '</gmd:PT_FreeText>',
+              noMultilingualTemplate: '<gco:CharacterString><%= mainLanguageValue %></gco:CharacterString>'
+            },
+            'iso19115-3': {
+              multilingualTemplate:  '<gco:CharacterString><%= mainLanguageValue %></gco:CharacterString>'
+              + '<lan:PT_FreeText>'
+              + '<% for(var i = 0; i < langValuesArray.length; i++) { %>'
+              + '<lan:textGroup>'
+              + '<lan:LocalisedCharacterString locale="#<%= langValuesArray[i].lang%>">'
+              + '<%= langValuesArray[i].value .replace(/\\&/g, \"&amp;amp;\").replace(/\\"/g, \"&quot;\")%>'
+              + '</lan:LocalisedCharacterString>'
+              + '</lan:textGroup>'
+              + '<% } %>'
+              + '</lan:PT_FreeText>',
               noMultilingualTemplate: '<gco:CharacterString><%= mainLanguageValue %></gco:CharacterString>'
             }
           };
@@ -142,18 +157,23 @@
           var multilingualTemplateCompiled;
           var noMultilingualTemplateCompiled;
 
-          if (templatesBySchema[scope.metadataSchema].multilingualTemplate) {
-            multilingualTemplateCompiled = _.template(templatesBySchema[scope.metadataSchema].multilingualTemplate);
+          var schemaToCheck = (scope.metadataSchema.indexOf('iso19139.') > -1)?
+            'iso19139':scope.metadataSchema;
+
+          var schemaTemplate = templatesBySchema[schemaToCheck];
+          if (schemaTemplate.multilingualTemplate) {
+            multilingualTemplateCompiled = _.template(schemaTemplate.multilingualTemplate);
           }
 
-          if (templatesBySchema[scope.metadataSchema].noMultilingualTemplate) {
-            noMultilingualTemplateCompiled = _.template(templatesBySchema[scope.metadataSchema].noMultilingualTemplate);
+          if (templatesBySchema[schemaToCheck].noMultilingualTemplate) {
+            noMultilingualTemplateCompiled = _.template(schemaTemplate.noMultilingualTemplate);
           }
 
 
           // Replace all occurence of {{fieldname}} by its value
           var generateSnippet = function() {
             var xmlSnippet = xmlSnippetTemplate, isOneFieldDefined = false;
+            var codelistFieldsList  = codelistFields;
 
             angular.forEach(fields, function (fieldName) {
 
@@ -167,6 +187,8 @@
 
               var isMultilingualTemplateField = value && value.match(multilingualPattern);
               console.log("MainLanguage is " + scope.mainLanguage);
+
+              var isCodelist = _.contains(codelistFieldsList, fieldName);
 
               if (isMultilingualTemplateField && multilingualTemplateCompiled) {
 
@@ -195,17 +217,20 @@
                 });
                 xmlSnippet = xmlSnippet.replace('{{' + fieldName + '}}', processedField);
                 console.info("Snippet value: ", xmlSnippet);
-              } else if (!isMultilingualTemplateField && noMultilingualTemplateCompiled) {
-                // non-multilingual field
+              } else if (!isCodelist && !isMultilingualTemplateField && noMultilingualTemplateCompiled) {
+                // non-multilingual field - no codelist
                 console.info("Non-multilingual field " + fieldName, value)
 
                 var processedField = noMultilingualTemplateCompiled({
                   mainLanguageValue: value
                 });
+                if (value !== '') {
+                  // If one value is defined the field
+                  // is defined
+                  isOneFieldDefined = true;
+                }
                 xmlSnippet = xmlSnippet.replace('{{' + fieldName + '}}', processedField);
                 console.info("Snippet value: ", xmlSnippet);
-
-
               } else {
                 if (value !== '') {
                   xmlSnippet = xmlSnippet.replace(

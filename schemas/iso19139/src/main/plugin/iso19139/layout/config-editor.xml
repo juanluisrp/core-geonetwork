@@ -457,7 +457,7 @@
                   <gmd:CI_ResponsibleParty>
                     <gn:copy select="gmd:individualName"/>
                     <gmd:organisationName>
-                      {{organisationName}}>
+                      {{organisationName}}
                     </gmd:organisationName>
                     <gn:copy select="gmd:positionName"/>
                     <gmd:contactInfo>
@@ -3080,8 +3080,7 @@
                     <gmd:CI_ResponsibleParty>
                       <gn:copy select="gmd:individualName"/>
                       <gmd:organisationName>
-                        <gco:CharacterString>{{organisationName}}</gco:CharacterString>
-                        <gn:copy select="gmd:PT_FreeText"/>
+                        {{organisationName}}
                       </gmd:organisationName>
                       <gn:copy select="gmd:positionName"/>
                       <gmd:contactInfo>
