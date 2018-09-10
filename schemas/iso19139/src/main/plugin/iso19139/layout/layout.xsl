@@ -251,7 +251,8 @@
   <xsl:template mode="mode-iso19139" priority="200"
                 match="*[gco:CharacterString|gco:Integer|gco:Decimal|
        gco:Boolean|gco:Real|gco:Measure|gco:Length|gco:Distance|gco:Angle|gmx:FileName|
-       gco:Scale|gco:Record|gco:RecordType|gmx:MimeFileType|gmd:URL|gco:LocalName|gmd:PT_FreeText]">
+       gco:Scale|gco:Record|gco:RecordType|gmx:MimeFileType|gmd:URL|gco:LocalName|gmd:PT_FreeText|
+       gts:TM_PeriodDuration|gml:duration]">
     <xsl:param name="schema" select="$schema" required="no"/>
     <xsl:param name="labels" select="$labels" required="no"/>
     <xsl:param name="overrideLabel" select="''" required="no"/>
@@ -277,7 +278,8 @@
     <!-- TODO: Support gmd:LocalisedCharacterString -->
     <xsl:variable name="monoLingualValue" select="gco:CharacterString|gco:Integer|gco:Decimal|
       gco:Boolean|gco:Real|gco:Measure|gco:Length|gco:Distance|gco:Angle|gmx:FileName|
-      gco:Scale|gco:Record|gco:RecordType|gmx:MimeFileType|gmd:URL|gco:LocalName"/>
+      gco:Scale|gco:Record|gco:RecordType|gmx:MimeFileType|gmd:URL|gco:LocalName|
+       gts:TM_PeriodDuration|gml:duration"/>
     <xsl:variable name="theElement"
                   select="if ($isMultilingualElement and $hasOnlyPTFreeText or not($monoLingualValue))
                           then gmd:PT_FreeText
@@ -390,7 +392,6 @@
       </xsl:choose>
     </xsl:variable>
 
-
     <xsl:call-template name="render-element">
       <xsl:with-param name="label"
                       select="$labelConfig/*"/>
@@ -404,6 +405,8 @@
       <xsl:with-param name="type"
                       select="gn-fn-metadata:getFieldType($editorConfig, name(),
         name($theElement))"/>
+      <xsl:with-param name="directive"
+                      select="gn-fn-metadata:getFieldDirective($editorConfig, name())"/>
       <xsl:with-param name="name" select="$theElement/gn:element/@ref"/>
       <xsl:with-param name="editInfo" select="$theElement/gn:element"/>
       <xsl:with-param name="parentEditInfo"
@@ -618,7 +621,7 @@
       <xsl:with-param name="value" select="$topicCategories"/>
       <xsl:with-param name="cls" select="local-name()"/>
       <xsl:with-param name="xpath" select="$xpath"/>
-      <xsl:with-param name="directive" select="'gn-topiccategory-selector'"/>
+      <xsl:with-param name="type" select="'data-gn-topiccategory-selector-div'"/>
       <xsl:with-param name="editInfo" select="gn:element"/>
       <xsl:with-param name="parentEditInfo" select="../gn:element"/>
     </xsl:call-template>
