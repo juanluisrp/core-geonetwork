@@ -25,6 +25,7 @@ package org.fao.geonet.kernel.schema;
 
 import com.google.common.collect.ImmutableSet;
 
+import org.jdom.Element;
 import org.jdom.Namespace;
 
 import java.util.ArrayList;
@@ -81,4 +82,16 @@ public abstract class SchemaPlugin implements CSWPlugin {
     public Set<Namespace> getNamespaces() {
         return allNamespaces;
     }
+
+    /**
+     * Processes the passed element. This base class just return the same element without modifications.
+     * @param el element to process.
+     * @param attributeName
+     * @param parsedAttributeName the name of the attribute, for example <code>xlink:href</code>
+     * @param attributeValue
+     * @return the same element passed without modifications.
+     */
+    public Element processElement(Element el, String attributeName, String parsedAttributeName, String attributeValue) {
+        return el;
+    };
 }
