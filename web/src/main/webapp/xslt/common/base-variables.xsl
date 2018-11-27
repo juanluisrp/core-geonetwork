@@ -138,4 +138,6 @@
                 select="'^WWW:DOWNLOAD.*|^FILE:GEO|FILE:RASTER|^DB:POSTGIS'"/>
   <xsl:variable name="layerMatchingPattern"
                 select="'^OGC:WMS.*'"/>
+  <xsl:variable name="isInspireEnabled" select="$env/system/inspire/enable" />
+
 </xsl:stylesheet>

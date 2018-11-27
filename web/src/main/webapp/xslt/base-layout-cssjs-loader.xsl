@@ -238,6 +238,7 @@
       gnGlobalSettings.init(
       <xsl:value-of select="if ($appConfig != '') then $appConfig else '{}'"/>,
       null, gnViewerSettings, gnSearchSettings);
+      gnGlobalSettings.isInspireEnabled = <xsl:value-of select="$isInspireEnabled"/>;
       }]);
     </script>
   </xsl:template>
