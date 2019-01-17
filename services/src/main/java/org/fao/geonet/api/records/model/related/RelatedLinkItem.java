@@ -33,6 +33,8 @@ import javax.xml.bind.annotation.XmlType;
  *             &lt;/complexContent>
  *           &lt;/complexType>
  *         &lt;/element>
+ *         &lt;element name="descriptionUri" type="{http://www.w3.org/2001/XMLSchema}string"
+ *  * minOccurs="0"/>
  *         &lt;element name="function" type="{http://www.w3.org/2001/XMLSchema}string"
  * minOccurs="0"/>
  *         &lt;element name="applicationProfile" type="{http://www.w3.org/2001/XMLSchema}string"
@@ -47,6 +49,7 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "relatedLinkItem", propOrder = {
     "protocol",
     "description",
+    "descriptionUri",
     "function",
     "applicationProfile"
 })
@@ -56,6 +59,7 @@ public class RelatedLinkItem
     protected String protocol;
     @XmlElement(required = true)
     protected RelatedLinkItem.Description description;
+    protected String descriptionUri;
     protected String function;
     protected String applicationProfile;
 
@@ -93,6 +97,24 @@ public class RelatedLinkItem
      */
     public void setDescription(RelatedLinkItem.Description value) {
         this.description = value;
+    }
+
+    /**
+     * Gets the value of the descriptionUri property.
+     *
+     * @return possible object is {@link String }
+     */
+    public String getDescriptionUri() {
+        return descriptionUri;
+    }
+
+    /**
+     * Sets the value of the descriptionUri property.
+     *
+     * @param descriptionUri allowed object is {@link String }
+     */
+    public void setDescriptionUri(String descriptionUri) {
+        this.descriptionUri = descriptionUri;
     }
 
     /**

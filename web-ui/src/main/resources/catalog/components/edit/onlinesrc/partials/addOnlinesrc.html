@@ -166,7 +166,7 @@
 
           <!-- Description Text area -->
           <div class="form-group"
-               data-ng-show="params.linkType.fields.desc &&
+               data-ng-show="!isInspireEnabled && params.linkType.fields.desc &&
                              !params.linkType.fields.desc.hidden && !(OGCProtocol && !isEditing)">
             <label for="onlinesrcDescr"
                    class="col-sm-2 control-label"
@@ -182,6 +182,44 @@
                         name="description"/>
             </div>
             <div class="col-sm-10"
+                 data-ng-if="isFieldMultilingual('desc')"
+                 gn-multilingual-field="{{mdOtherLanguages}}"
+                 data-main-language="{{mdLang}}"
+                 expanded="false">
+              <textarea data-ng-repeat="(key, val) in mdLangs"
+                        rows="3"
+                        lang="{{val}}"
+                        data-ng-model="params.desc[val]"
+                        class="form-control input-sm"
+                        placeholder="description"
+                        name="description"/>
+            </div>
+          </div>
+
+          <!-- Description Text area -->
+          <div class="form-group"
+               data-ng-show="isInspireEnabled && params.linkType.fields.descUri &&
+                             !params.linkType.fields.descUri.hidden && !(OGCProtocol && !isEditing)">
+            <label for="onlinesrcDescrInsp"
+                   class="col-sm-2 control-label"
+                   data-translate="">description</label>
+            <div class="col-sm-10">
+              <select
+                id="onlinesrcDescrInsp"
+                class="form-control"
+                data-ng-model="description.selectedDesc"
+                data-ng-options="keyword as keyword.label for keyword in descriptionOptions track by keyword.props.uri"></select>
+            </div>
+          </div>
+          <div class="form-group"
+               data-ng-show="isInspireEnabled && params.linkType.fields.desc &&
+                             !params.linkType.fields.desc.hidden && !(OGCProtocol && !isEditing)">
+            <div class="col-sm-10 col-sm-offset-2">
+              <textarea class="form-control"
+                     data-ng-model="params.desc"
+                     data-ng-readonly="!description.selectedDesc.gnOther"></textarea>
+            </div>
+            <div class="col-sm-10 col-sm-offset-2"
                  data-ng-if="isFieldMultilingual('desc')"
                  gn-multilingual-field="{{mdOtherLanguages}}"
                  data-main-language="{{mdLang}}"

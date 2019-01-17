@@ -28,6 +28,8 @@ Insert is made in first transferOptions found.
 -->
 <xsl:stylesheet xmlns:gmd="http://www.isotc211.org/2005/gmd"
                 xmlns:gco="http://www.isotc211.org/2005/gco"
+                xmlns:gmx="http://www.isotc211.org/2005/gmx"
+                xmlns:xlink="http://www.w3.org/1999/xlink"
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 version="2.0">
 
@@ -38,6 +40,7 @@ Insert is made in first transferOptions found.
   <xsl:param name="url"/>
   <xsl:param name="name"/>
   <xsl:param name="desc"/>
+  <xsl:param name="descUri"/>
   <xsl:param name="function"/>
   <xsl:param name="applicationProfile"/>
 
@@ -60,6 +63,21 @@ Insert is made in first transferOptions found.
   </xsl:variable>
 
   <xsl:template match="gmd:MD_Metadata|*[@gco:isoType='gmd:MD_Metadata']">
+    <xsl:message>
+      ======= XSLT params ========
+      protocol: <xsl:value-of select="$protocol" />
+      url: <xsl:value-of select="$url" />
+      name: <xsl:value-of select="$name" />
+      desc: <xsl:value-of select="$desc" />
+      descUri: <xsl:value-of select="$descUri" />
+      function: <xsl:value-of select="$function" />
+      applicationProfile: <xsl:value-of select="$applicationProfile" />
+      uuidref: <xsl:value-of select="$uuidref" />
+      extra_metadata_uuid: <xsl:value-of select="$extra_metadata_uuid" />
+      updateKey: <xsl:value-of select="$updateKey" />
+      mainLang: <xsl:value-of select="$mainLang" />
+    </xsl:message>
+
     <xsl:copy>
       <xsl:apply-templates select="@*"/>
       <xsl:apply-templates
@@ -162,7 +180,7 @@ Insert is made in first transferOptions found.
     <xsl:variable name="separator" select="'\|'"/>
     <xsl:variable name="useOnlyPTFreeText">
       <xsl:value-of
-        select="count(//*[gmd:PT_FreeText and not(gco:CharacterString)]) > 0"/>
+        select="count(//*[gmd:PT_FreeText and not(gco:CharacterString or gmx:Anchor)]) > 0"/>
     </xsl:variable>
 
 
@@ -300,9 +318,19 @@ Insert is made in first transferOptions found.
                                         select="substring-after(., '#')"></xsl:variable>
                           <xsl:if
                             test="$useOnlyPTFreeText = 'false' and $descLang = $mainLang">
-                            <gco:CharacterString>
-                              <xsl:value-of select="$descValue"/>
-                            </gco:CharacterString>
+                            <xsl:choose>
+                              <xsl:when test="normalize-space($descUri) != ''">
+                                <gmx:Anchor>
+                                  <xsl:attribute name="xlink:href" select="$descUri" />
+                                  <xsl:value-of select="$descValue" />
+                                </gmx:Anchor>
+                              </xsl:when>
+                              <xsl:otherwise>
+                                <gco:CharacterString>
+                                  <xsl:value-of select="$descValue"/>
+                                </gco:CharacterString>
+                              </xsl:otherwise>
+                            </xsl:choose>
                           </xsl:if>
                         </xsl:for-each>
 
@@ -325,9 +353,19 @@ Insert is made in first transferOptions found.
                         </gmd:PT_FreeText>
                       </xsl:when>
                       <xsl:otherwise>
-                        <gco:CharacterString>
-                          <xsl:value-of select="$curDesc"/>
-                        </gco:CharacterString>
+                        <xsl:choose>
+                          <xsl:when test="normalize-space($descUri) != ''">
+                            <gmx:Anchor>
+                              <xsl:attribute name="xlink:href" select="$descUri" />
+                              <xsl:value-of select="$curDesc" />
+                            </gmx:Anchor>
+                          </xsl:when>
+                          <xsl:otherwise>
+                            <gco:CharacterString>
+                              <xsl:value-of select="$curDesc"/>
+                            </gco:CharacterString>
+                          </xsl:otherwise>
+                        </xsl:choose>
                       </xsl:otherwise>
                     </xsl:choose>
                   </gmd:description>
@@ -471,9 +509,19 @@ Insert is made in first transferOptions found.
                                       select="substring-after(., '#')"></xsl:variable>
                         <xsl:if
                           test="$useOnlyPTFreeText = 'false' and $descLang = $mainLang">
-                          <gco:CharacterString>
-                            <xsl:value-of select="$descValue"/>
-                          </gco:CharacterString>
+                          <xsl:choose>
+                            <xsl:when test="normalize-space($descUri) != ''">
+                              <gmx:Anchor>
+                                <xsl:attribute name="xlink:href" select="$descUri" />
+                                <xsl:value-of select="$descValue" />
+                              </gmx:Anchor>
+                            </xsl:when>
+                            <xsl:otherwise>
+                              <gco:CharacterString>
+                                <xsl:value-of select="$descValue"/>
+                              </gco:CharacterString>
+                            </xsl:otherwise>
+                          </xsl:choose>
                         </xsl:if>
                       </xsl:for-each>
 
@@ -496,9 +544,19 @@ Insert is made in first transferOptions found.
                       </gmd:PT_FreeText>
                     </xsl:when>
                     <xsl:otherwise>
-                      <gco:CharacterString>
-                        <xsl:value-of select="$desc"/>
-                      </gco:CharacterString>
+                      <xsl:choose>
+                        <xsl:when test="normalize-space($descUri) != ''">
+                          <gmx:Anchor>
+                            <xsl:attribute name="xlink:href" select="$descUri" />
+                            <xsl:value-of select="$desc" />
+                          </gmx:Anchor>
+                        </xsl:when>
+                        <xsl:otherwise>
+                          <gco:CharacterString>
+                            <xsl:value-of select="$desc"/>
+                          </gco:CharacterString>
+                        </xsl:otherwise>
+                      </xsl:choose>
                     </xsl:otherwise>
                   </xsl:choose>
                 </gmd:description>

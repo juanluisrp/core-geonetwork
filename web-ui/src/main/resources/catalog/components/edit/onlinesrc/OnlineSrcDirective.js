@@ -27,6 +27,7 @@
 
   goog.require('ga_print_directive');
   goog.require('gn_utility');
+  goog.require('gn_thesaurus_service');
 
   /**
    * @ngdoc overview
@@ -44,7 +45,8 @@
   angular.module('gn_onlinesrc_directive', [
     'gn_utility',
     'blueimp.fileupload',
-    'ga_print_directive'
+    'ga_print_directive',
+    'gn_thesaurus_service'
   ])
 
       /**
@@ -171,6 +173,7 @@
         'gnCurrentEdit',
         'gnMap',
         'gnGlobalSettings',
+        'gnThesaurusService',
         'Metadata',
         '$rootScope',
         '$translate',
@@ -179,7 +182,7 @@
         '$filter',
         '$log',
         function(gnOnlinesrc, gnOwsCapabilities, gnWfsService,
-            gnEditor, gnCurrentEdit, gnMap, gnGlobalSettings, Metadata,
+            gnEditor, gnCurrentEdit, gnMap, gnGlobalSettings, gnThesaurusService, Metadata,
             $rootScope, $translate, $timeout, $http, $filter, $log) {
           return {
             restrict: 'A',
@@ -198,6 +201,15 @@
               },
               post: function(scope, element, attrs) {
                 scope.popupid = attrs['gnPopupid'];
+                scope.isInspireEnabled = gnGlobalSettings.isInspireEnabled;
+                var descOtherOption = {
+                  label: $translate.instant('other'),
+                  props: {
+                    uri: '',
+                    value: ''
+                  },
+                  gnOther: true
+                };
 
                 //{
                 //  // Optional / optGroup
@@ -260,6 +272,7 @@
                         },
                         'name': {},
                         'desc': {},
+                        'descUri': {isMultilingual: false},
                         'function': {isMultilingual: false},
                         'applicationProfile': {isMultilingual: false}
                       }
@@ -343,6 +356,7 @@
                           isMultilingual: false},
                         'name': {},
                         'desc': {},
+                        'descUri': {isMultilingual: false},
                         'function': {value: 'browsing', hidden: true,
                           isMultilingual: false}
                       }
@@ -366,6 +380,7 @@
                           isMultilingual: false},
                         'name': {},
                         'desc': {},
+                        'descUri': {isMultilingual: false},
                         'function': {value: 'browsing', hidden: true,
                           isMultilingual: false},
                         'applicationProfile': {
@@ -784,6 +799,26 @@
                   }
                 };
 
+
+
+                scope.description = {};
+                scope.$watch('description.selectedDesc', function(newKeyword, oldValue) {
+                  $log.info('"scope.selectedDesc changed:', newKeyword);
+                  if (newKeyword && newKeyword.gnOther === true) {
+                    // Other selected
+                    scope.params.descUri = '';
+                    if (!scope.justRegistered) {
+                      scope.params.desc = '';
+                    }
+                    scope.justRegistered = false;
+                  } else if (newKeyword && !newKeyword.gnOther) {
+                    // Selected a value from the thesaurus
+                    scope.params.desc = newKeyword.props.value;
+                    scope.params.descUri = newKeyword.props.uri;
+                    scope.justRegistered = false;
+                  }
+                });
+
                 // This object is used to share value between this
                 // directive and the SearchFormController scope that
                 // is contained by the directive
@@ -928,7 +963,9 @@
                 }
 
                 gnOnlinesrc.register('onlinesrc', function(linkToEdit) {
+                  var keywordsPromise;
                   scope.isEditing = angular.isDefined(linkToEdit);
+                  scope.justRegistered = true;
 
                   scope.metadataId = gnCurrentEdit.id;
                   scope.schema = gnCurrentEdit.schema;
@@ -1033,22 +1070,45 @@
                       }
                     });
 
+
+                    if (scope.isInspireEnabled) {
+                      keywordsPromise = gnThesaurusService.getKeywords('*',
+                        'external.theme.httpinspireeceuropaeumetadatacodelistOnLineDescriptionCode-OnLineDescriptionCode',
+                        gnCurrentEdit.mdLanguage || 'eng', 200).then(function(data) {
+                        scope.descriptionOptions = data;
+                        scope.descriptionOptions.push(descOtherOption);
+                        $log.info(data);
+
+
+                      }, function(error) {
+                        scope.descriptionOptions = [];
+                        scope.descriptionOptions.push(descOtherOption);
+                        $log.error('Error retrieving keywords');
+                        $log.error(error);
+                      })
+                    }
+
+                    selectDescriptionOption(keywordsPromise, linkToEdit['descriptionUri']);
+
                     scope.params = {
                       linkType: typeConfig,
                       url: fields.url,
                       protocol: linkToEdit.protocol,
                       name: fields.name,
                       desc: fields.desc,
+                      descUri: linkToEdit.descriptionUri,
                       applicationProfile: linkToEdit.applicationProfile,
                       function: linkToEdit.function,
                       selectedLayers: []
                       };
-                      } else {
+                  } else {
                       scope.editingKey= null;
                       scope.params.linkType= scope.config.types[0];
                       scope.params.protocol= null;
                       scope.params.name= '';
                       scope.params.desc= '';
+                      scope.params.descUri = '';
+                      selectDescriptionOption(keywordsPromise);
                       initMultilingualFields();
                     }
                   });
@@ -1069,6 +1129,34 @@
                   scope.params.url = url;
                 };
 
+                var selectDescriptionOption = function (keywordsPromise, descriptionUri) {
+                  if (keywordsPromise) {
+
+                    keywordsPromise.then(function() {
+                      if (!descriptionUri || descriptionUri === '') {
+                        scope.description.selectedDesc = descOtherOption;
+                      } else {
+                        var descFound;
+                        for (var i = 0; i < scope.descriptionOptions.length && !descFound; i++) {
+                          var option = scope.descriptionOptions[i];
+                          if (option.props && option.props.uri === descriptionUri) {
+                            descFound = option;
+                          }
+                          if (descFound) {
+                            scope.description.selectedDesc = descFound;
+                          } else {
+                            scope.description.selectedDesc = descOtherOption;
+                          }
+                        }
+                      }
+                    }, function() {
+                      scope.description.selectedDesc = descOtherOption;
+                    });
+                  } else {
+                    scope.description.selectedDesc = descOtherOption;
+                  }
+                };
+
                 var resetForm = function() {
                   if (scope.params) {
                     scope.params.url = '';
@@ -1084,6 +1172,8 @@
                   if (scope.params && !scope.isEditing) {
                     scope.params.name = '';
                     scope.params.desc = '';
+                    scope.params.descUri = '';
+                    scope.description.selectedDesc = descOtherOption;
                     initMultilingualFields();
                     scope.params.selectedLayers = [];
                     scope.params.layers = [];
